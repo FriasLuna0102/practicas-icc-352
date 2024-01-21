@@ -6,17 +6,20 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.Arrays;
+
 import java.util.Scanner;
-import java.util.stream.Stream;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         try {
-            // Utilizar Scanner para leer la URL desde la consola
-            Scanner scanner = new Scanner(System.in);
+            // Utilizar BufferedReader para leer la URL desde la consola
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             System.out.println("Ingrese una URL válida:");
-            String url = scanner.nextLine();
+            String url = reader.readLine();
 
             // Crear un cliente HTTP y realizar la solicitud
             HttpClient httpClient = HttpClient.newHttpClient();
