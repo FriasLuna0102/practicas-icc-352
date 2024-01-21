@@ -12,6 +12,10 @@ import java.io.InputStreamReader;
 
 
 public class Main {
+
+    //a) Indicar el tipo de recurso que estamos seleccionando, es decir, si es
+    //un documento HTML, PDF, Imágenes, entre otros.
+
     public static void main(String[] args) throws IOException {
         try {
             // Utilizar BufferedReader para leer la URL desde la consola
@@ -33,23 +37,42 @@ public class Main {
             // Imprimir el tipo de recurso
             System.out.println("Tipo de recurso seleccionado: " + contentType);
 
-            if (contentType.startsWith("text/html")) {
 
-                // Utilizar un BufferedReader para contar las líneas del HTML
-                BufferedReader htmlReader = new BufferedReader(new StringReader(response.body()));
-                int numberOfLines = 0;
-                while (htmlReader.readLine() != null) {
-                    numberOfLines++;
-                }
-                htmlReader.close();
 
-                // Imprime el número de líneas
-                System.out.println("Número de líneas: " + numberOfLines);
-
-            }
+            NumeroDeLineas(contentType,response);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+
+
+
+    //1) Indicar la cantidad de lineas del recurso retornado.
+
+    public static void NumeroDeLineas(String contentType,HttpResponse response) throws IOException {
+
+        if (contentType.startsWith("text/html")) {
+
+            // Utilizar un BufferedReader para contar las líneas del HTML
+            BufferedReader htmlReader = new BufferedReader(new StringReader((String) response.body()));
+            int numberOfLines = 0;
+            while (htmlReader.readLine() != null) {
+                numberOfLines++;
+            }
+            htmlReader.close();
+
+            // Imprime el número de líneas
+            System.out.println("Número de líneas: " + numberOfLines);
+
+        }
+    }
+
+    //2) Indicar la cantidad de párrafos (p) que contiene el documento HTML.
+
+
+
 }
+
+
