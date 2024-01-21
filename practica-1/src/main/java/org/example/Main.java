@@ -43,7 +43,7 @@ public class Main {
 
                 String[] lines = body.split("\n");
                 int numberOfLines = lines.length;
-                System.out.println("Número de líneas: " + numberOfLines);
+                System.out.println("Número de líneas : " + numberOfLines);
                 System.out.println(response2.headers());
 
             }
