@@ -36,7 +36,13 @@ public class Main {
             if(contentType.startsWith("text/html")){
                 HttpResponse<String> response2 = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
+                String body = response2.body();
+
+                String[] lines = body.split("\n");
+                int numberOfLines = lines.length;
+                System.out.println("Número de líneas: " + numberOfLines);
                 System.out.println(response2.headers());
+
             }
 
         } catch (Exception e) {
