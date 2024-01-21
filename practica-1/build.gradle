@@ -23,6 +23,11 @@ dependencies {
     // Aquí se especifica la versión de la librería
     implementation "org.apache.httpcomponents:httpmime:4.2.3"
 
+
+    //Libreria para analizar HTML:
+
+    implementation 'org.jsoup:jsoup:1.14.3'
+
 }
 
 test {

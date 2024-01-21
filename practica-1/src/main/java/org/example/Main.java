@@ -10,6 +10,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
+
 
 public class Main {
 
@@ -40,6 +44,7 @@ public class Main {
 
 
             NumeroDeLineas(contentType,response);
+            cantParrafos(contentType,response);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -69,9 +74,23 @@ public class Main {
         }
     }
 
+
     //2) Indicar la cantidad de párrafos (p) que contiene el documento HTML.
+    public static void cantParrafos(String contentType, HttpResponse response) throws IOException {
 
+        if (contentType.startsWith("text/html")) {
 
+            // Utiliza Jsoup para parsear el HTML
+            Document document = Jsoup.parse((String) response.body());
+
+            // Selecciona todos los elementos de párrafo y cuenta cuántos hay
+            Elements paragraphs = document.select("p");
+            int numberOfParagraphs = paragraphs.size();
+
+            System.out.println("Número de párrafos: " + numberOfParagraphs);
+        }
+
+    }
 
 }
 
