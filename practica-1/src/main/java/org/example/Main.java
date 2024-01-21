@@ -2,13 +2,13 @@ package org.example;
 
 import io.javalin.Javalin;
 
-import java.io.IOException;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.Arrays;
 import java.util.Scanner;
+import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) {
@@ -31,6 +31,13 @@ public class Main {
 
             // Imprimir el tipo de recurso
             System.out.println("Tipo de recurso seleccionado: " + contentType);
+
+
+            if(contentType.startsWith("text/html")){
+                HttpResponse<String> response2 = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+                System.out.println(response2.headers());
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
