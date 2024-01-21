@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import io.javalin.Javalin;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -22,7 +23,10 @@ public class Main {
     //un documento HTML, PDF, Imágenes, entre otros.
 
     public static void main(String[] args) throws IOException {
+
+
         try {
+
             // Utilizar BufferedReader para leer la URL desde la consola
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             System.out.println("Ingrese una URL válida:");
@@ -109,7 +113,7 @@ public class Main {
             // Utiliza Jsoup para parsear el HTML
             Document document = Jsoup.parse((String) response.body());
 
-            // Selecciona todos los elementos de párrafo y cuenta cuántos hay
+            // Selecciona todos los elementos de imagen y cuenta cuántos hay
             Elements img = document.select("img");
             int cantImg = img.size();
 
@@ -130,13 +134,9 @@ public class Main {
             // Utiliza Jsoup para parsear el HTML
             Document document = Jsoup.parse((String) response.body());
 
-            // Selecciona todos los elementos de párrafo y cuenta cuántos hay
+            // Selecciona todos los elementos de formularios y cuenta cuántos hay
             Elements form = document.select("form");
             int cantForm = form.size();
-
-            if(cantForm == 0){
-                System.out.println("Este recurso no contiene Formularios.");
-            }
 
             int postMethod = 0;
             int getMethod = 0;
@@ -148,13 +148,17 @@ public class Main {
                 } else if (method.equalsIgnoreCase("get")) {
                     getMethod++;
                 }
+            }
 
+            if(cantForm == 0){
+                System.out.println("Este recurso no contiene Formularios.");
+            }else {
                 // Imprime el número total de formularios y cuántos usan POST y GET
                 System.out.println("Número total de formularios: " + cantForm);
                 System.out.println("Número de formularios que usan POST: " + postMethod);
                 System.out.println("Número de formularios que usan GET: " + getMethod);
-
             }
+
 
         }
     }
@@ -186,6 +190,30 @@ public class Main {
             }
         }
     }
+
+
+   /* public static void requestServer(String contentType, HttpResponse response) throws IOException {
+
+        if (contentType.startsWith("text/html")) {
+
+            // Utiliza Jsoup para parsear el HTML
+            Document document = Jsoup.parse((String) response.body());
+
+            // Selecciona todos los elementos de formulario
+            Elements form = document.select("form");
+
+
+            for (Element forms : form) {
+                String method = forms.attr("method");
+                if (method.equalsIgnoreCase("post")) {
+                    postMethod++;
+                }
+
+            }
+
+        }
+    }*/
+
 
 }
 
