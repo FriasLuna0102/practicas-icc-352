@@ -40,14 +40,16 @@ public class Main {
             String contentType = response.headers().firstValue("Content-Type").orElse("Desconocido");
 
             // Imprimir el tipo de recurso
+            System.out.println(" ");
             System.out.println("Tipo de recurso seleccionado: " + contentType);
+            System.out.println(" ");
 
-
-
+            //Llamadas de metodos.
             NumeroDeLineas(contentType,response);
             cantParrafos(contentType,response);
             cantImg(contentType,response);
             cantFormularios(contentType, response);
+
             inputType(contentType,response);
 
 
@@ -132,22 +134,27 @@ public class Main {
             Elements form = document.select("form");
             int cantForm = form.size();
 
+            if(cantForm == 0){
+                System.out.println("Este recurso no contiene Formularios.");
+            }
+
             int postMethod = 0;
             int getMethod = 0;
 
             for (Element forms : form) {
-                String method = form.attr("method");
+                String method = forms.attr("method");
                 if (method.equalsIgnoreCase("post")) {
                     postMethod++;
                 } else if (method.equalsIgnoreCase("get")) {
                     getMethod++;
                 }
-            }
 
-            // Imprime el número total de formularios y cuántos usan POST y GET
-            System.out.println("Número total de formularios: " + cantForm);
-            System.out.println("Número de formularios que usan POST: " + postMethod);
-            System.out.println("Número de formularios que usan GET: " + getMethod);
+                // Imprime el número total de formularios y cuántos usan POST y GET
+                System.out.println("Número total de formularios: " + cantForm);
+                System.out.println("Número de formularios que usan POST: " + postMethod);
+                System.out.println("Número de formularios que usan GET: " + getMethod);
+
+            }
 
         }
     }
@@ -173,7 +180,7 @@ public class Main {
                 // Itera sobre los elementos de entrada
                 for (Element input : inputs) {
                     // Obtiene el atributo 'type' de cada elemento de entrada
-                    String type = input.attr("type");
+                    String  type = input.attr("type");
                     System.out.println("Campo de entrada encontrado con tipo: " + type);
                 }
             }
