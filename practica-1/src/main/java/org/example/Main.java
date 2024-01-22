@@ -2,6 +2,7 @@ package org.example;
 
 import java.io.StringReader;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -10,7 +11,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import io.javalin.Javalin;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -23,7 +23,6 @@ public class Main {
     //un documento HTML, PDF, Imágenes, entre otros.
 
     public static void main(String[] args) throws IOException {
-
 
         try {
 
@@ -48,6 +47,9 @@ public class Main {
             System.out.println("Tipo de recurso seleccionado: " + contentType);
             System.out.println(" ");
 
+
+            System.out.println(response.headers());
+
             //Llamadas de metodos.
             NumeroDeLineas(contentType,response);
             cantParrafos(contentType,response);
@@ -56,6 +58,9 @@ public class Main {
 
             inputType(contentType,response);
 
+            requestServer(contentType, response);
+
+            System.out.println(response.headers().firstValue("matricula-id"));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -80,6 +85,8 @@ public class Main {
 
             // Imprime el número de líneas
             System.out.println("Número de líneas: " + numberOfLines);
+            String content_length = response.headers().firstValue("Content-Length").orElse("Desconocido");
+            System.out.println("Content Length: " + content_length);
 
         }
     }
@@ -192,7 +199,9 @@ public class Main {
     }
 
 
-   /* public static void requestServer(String contentType, HttpResponse response) throws IOException {
+   public static void requestServer(String contentType, HttpResponse response) throws IOException, URISyntaxException, InterruptedException {
+
+        String url = String.valueOf(response.uri());
 
         if (contentType.startsWith("text/html")) {
 
@@ -205,14 +214,22 @@ public class Main {
 
             for (Element forms : form) {
                 String method = forms.attr("method");
-                if (method.equalsIgnoreCase("post")) {
-                    postMethod++;
-                }
+                if ("post".equalsIgnoreCase(forms.attr("method"))) {
+
+                    HttpClient client = HttpClient.newHttpClient();
+                    HttpRequest request = HttpRequest.newBuilder().
+                            header("matricula-id", "1014-3611").uri(new URI(url)).build();
+
+                    HttpResponse<String> response2 = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+
+                    System.out.println(response2.headers());
+
 
             }
 
         }
-    }*/
+    }
 
 
 }
