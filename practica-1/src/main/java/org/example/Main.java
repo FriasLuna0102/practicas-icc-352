@@ -143,9 +143,9 @@ public class Main {
 
             for (Element forms : form) {
                 String method = forms.attr("method");
-                if (method.equalsIgnoreCase("post")) {
+                if ("post".equalsIgnoreCase(form.attr("method"))){
                     postMethod++;
-                } else if (method.equalsIgnoreCase("get")) {
+                } else if ("get".equalsIgnoreCase(form.attr("method"))) {
                     getMethod++;
                 }
             }
