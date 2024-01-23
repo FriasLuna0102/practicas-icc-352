@@ -201,37 +201,33 @@ public class Main {
 
    public static void requestServer(String contentType, HttpResponse response) throws IOException, URISyntaxException, InterruptedException {
 
-        String url = String.valueOf(response.uri());
+       String url = String.valueOf(response.uri());
 
-        if (contentType.startsWith("text/html")) {
+       if (contentType.startsWith("text/html")) {
 
-            // Utiliza Jsoup para parsear el HTML
-            Document document = Jsoup.parse((String) response.body());
+           // Utiliza Jsoup para parsear el HTML
+           Document document = Jsoup.parse((String) response.body());
 
-            // Selecciona todos los elementos de formulario
-            Elements form = document.select("form");
-
-
-            for (Element forms : form) {
-                String method = forms.attr("method");
-                if ("post".equalsIgnoreCase(forms.attr("method"))) {
-
-                    HttpClient client = HttpClient.newHttpClient();
-                    HttpRequest request = HttpRequest.newBuilder().
-                            header("matricula-id", "1014-3611").uri(new URI(url)).build();
-
-                    HttpResponse<String> response2 = client.send(request, HttpResponse.BodyHandlers.ofString());
+           // Selecciona todos los elementos de formulario
+           Elements form = document.select("form");
 
 
-                    System.out.println(response2.headers());
+           for (Element forms : form) {
 
+               if ("post".equalsIgnoreCase(forms.attr("method"))) {
 
-            }
+                   HttpClient client = HttpClient.newHttpClient();
+                   HttpRequest request = HttpRequest.newBuilder().
+                           header("matricula-id", "1014-3611").uri(new URI(url)).POST(HttpRequest.BodyPublishers.noBody()).build();
 
-        }
-    }
+                   HttpResponse<String> response2 = client.send(request, HttpResponse.BodyHandlers.ofString());
 
+               }
 
+           }
+       }
+
+   }
 }
 
 
