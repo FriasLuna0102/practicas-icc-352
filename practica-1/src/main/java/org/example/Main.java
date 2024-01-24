@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import io.javalin.Javalin;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpParams;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -217,20 +219,25 @@ public class Main {
            // Selecciona todos los elementos de formulario
            Elements form = document.select("form");
 
-           HttpResponse <String> response2 = null;
+           HttpResponse<String> response2 = null;
+           HttpRequest request = null;
            for (Element forms : form) {
 
                if (forms.attr("method").equalsIgnoreCase("post")) {
 
                    HttpClient client = HttpClient.newHttpClient();
-                   HttpRequest request = HttpRequest.newBuilder()
-                                   .header("matricula-id", "1014-3611").uri(new URI(url))
-                                   .POST(HttpRequest.BodyPublishers.ofString("asignatura=practica1")).build();
+                   request = HttpRequest.newBuilder()
+                           .header("matricula-id", "1014-3611").uri(new URI(url))
+                           .POST(HttpRequest.BodyPublishers.ofString("asignatura=practica1")).build();
 
                    response2 = client.send(request, HttpResponse.BodyHandlers.ofString());
                }
 
            }
+           String id = String.valueOf(request.headers().allValues("matricula-id"));
+           System.out.println("La matricula es: "+ id);
+           System.out.println(request.uri());
+           System.out.println("El metodo utilizado para la peticion es: "+ request.method());
            System.out.println(response2.headers());
        }
 
