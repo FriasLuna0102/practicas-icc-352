@@ -209,6 +209,7 @@ public class Main {
     }
 
 
+    //Mandar parametro al action que contiene los formularios.
    public static void requestServer(String contentType, HttpResponse response) throws IOException, URISyntaxException, InterruptedException {
 
        String url = String.valueOf(response.uri());
@@ -232,9 +233,11 @@ public class Main {
                    HttpClient client = HttpClient.newHttpClient();
                    request = HttpRequest.newBuilder()
                            .header("matricula-id", "1014-3611").uri(new URI(urlWithParametro))
+                           .POST(HttpRequest.BodyPublishers.noBody())
                            .build();
 
                    response2 = client.send(request, HttpResponse.BodyHandlers.ofString());
+                   System.out.println(response.headers());
                }
 
            }
