@@ -19,6 +19,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import static org.eclipse.jetty.http.HttpURI.build;
+
 
 public class Main {
 
@@ -210,6 +212,7 @@ public class Main {
    public static void requestServer(String contentType, HttpResponse response) throws IOException, URISyntaxException, InterruptedException {
 
        String url = String.valueOf(response.uri());
+       String urlWithParametro = url+"?asignatura=practica1";
 
        if (contentType.startsWith("text/html")) {
 
@@ -218,6 +221,7 @@ public class Main {
 
            // Selecciona todos los elementos de formulario
            Elements form = document.select("form");
+           int cantForm = form.size();
 
            HttpResponse<String> response2 = null;
            HttpRequest request = null;
@@ -227,18 +231,22 @@ public class Main {
 
                    HttpClient client = HttpClient.newHttpClient();
                    request = HttpRequest.newBuilder()
-                           .header("matricula-id", "1014-3611").uri(new URI(url))
-                           .POST(HttpRequest.BodyPublishers.ofString("asignatura=practica1")).build();
+                           .header("matricula-id", "1014-3611").uri(new URI(urlWithParametro))
+                           .build();
 
                    response2 = client.send(request, HttpResponse.BodyHandlers.ofString());
                }
 
            }
-           String id = String.valueOf(request.headers().allValues("matricula-id"));
-           System.out.println("La matricula es: "+ id);
-           System.out.println(request.uri());
-           System.out.println("El metodo utilizado para la peticion es: "+ request.method());
-           System.out.println(response2.headers());
+
+           if(cantForm != 0){
+               String id = String.valueOf(request.headers().allValues("matricula-id"));
+               System.out.println("La matricula es: "+ id);
+               System.out.println("El parametro enviado es: " + request.uri().getQuery());
+               System.out.println("El metodo utilizado para la peticion es: "+ request.method());
+               //System.out.println(response2.headers());
+           }
+
        }
 
    }
