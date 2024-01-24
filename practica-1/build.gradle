@@ -9,6 +9,7 @@ version = '1.0-SNAPSHOT'
 
 mainClassName = 'org.example.Main'
 
+run.standardInput = System.in
 
 repositories {
     mavenCentral()

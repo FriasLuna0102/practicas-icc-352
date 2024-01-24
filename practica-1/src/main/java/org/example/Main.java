@@ -11,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import io.javalin.Javalin;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -53,18 +54,26 @@ public class Main {
             //Llamadas de metodos.
             NumeroDeLineas(contentType,response);
             cantParrafos(contentType,response);
-            cantImg(contentType,response);
             cantFormularios(contentType, response);
 
             inputType(contentType,response);
 
             requestServer(contentType, response);
 
-            System.out.println(response.headers().firstValue("matricula-id"));
+
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static void servicioJavalin (){
+
+        Javalin app = Javalin.create();
+        app.start(8080);
+        app.get("/get", ctx -> ctx.result("Hello world"));
+
+
     }
 
 
@@ -93,6 +102,9 @@ public class Main {
 
 
     //2) Indicar la cantidad de párrafos (p) que contiene el documento HTML.
+
+    //3. Indicar la cantidad de imágenes (img) dentro de los párrafos que
+    //contiene el archivo HTML.
     public static void cantParrafos(String contentType, HttpResponse response) throws IOException {
 
         if (contentType.startsWith("text/html")) {
@@ -105,34 +117,25 @@ public class Main {
             int numberOfParagraphs = paragraphs.size();
 
             System.out.println("Número de párrafos: " + numberOfParagraphs);
+
+            int cantImg = 0;
+
+            for(Element parraf : paragraphs){
+                Elements imagenes = parraf.select("img");
+                cantImg += imagenes.size();
+            }
+
+            System.out.println("Cantidad de imagenes dentro de los parrafos: "+cantImg);
         }
 
     }
 
 
 
-    //3. Indicar la cantidad de imágenes (img) dentro de los párrafos que
-    //contiene el archivo HTML.
-    public static void cantImg(String contentType, HttpResponse response) throws IOException {
-
-        if (contentType.startsWith("text/html")) {
-
-            // Utiliza Jsoup para parsear el HTML
-            Document document = Jsoup.parse((String) response.body());
-
-            // Selecciona todos los elementos de imagen y cuenta cuántos hay
-            Elements img = document.select("img");
-            int cantImg = img.size();
-
-            System.out.println("Número de imagenes: " + cantImg);
-        }
-
-    }
 
 
     //4. indicar la cantidad de formularios (form) que contiene el HTML por
     //categorizando por el método implementado POST o GET.
-
 
     public static void cantFormularios(String contentType, HttpResponse response) throws IOException {
 
@@ -149,10 +152,9 @@ public class Main {
             int getMethod = 0;
 
             for (Element forms : form) {
-                String method = forms.attr("method");
-                if ("post".equalsIgnoreCase(form.attr("method"))){
+                if (forms.attr("method").equalsIgnoreCase("post")){
                     postMethod++;
-                } else if ("get".equalsIgnoreCase(form.attr("method"))) {
+                } else if (forms.attr("method").equalsIgnoreCase("get")) {
                     getMethod++;
                 }
             }
@@ -161,7 +163,6 @@ public class Main {
                 System.out.println("Este recurso no contiene Formularios.");
             }else {
                 // Imprime el número total de formularios y cuántos usan POST y GET
-                System.out.println("Número total de formularios: " + cantForm);
                 System.out.println("Número de formularios que usan POST: " + postMethod);
                 System.out.println("Número de formularios que usan GET: " + getMethod);
             }
@@ -183,6 +184,7 @@ public class Main {
             // Selecciona todos los elementos de formulario
             Elements forms = document.select("form");
 
+            System.out.println("Tipos de Input:");
             // Itera sobre los formularios
             for (Element form : forms) {
                 // Selecciona todos los elementos de entrada dentro del formulario
@@ -192,7 +194,8 @@ public class Main {
                 for (Element input : inputs) {
                     // Obtiene el atributo 'type' de cada elemento de entrada
                     String  type = input.attr("type");
-                    System.out.println("Campo de entrada encontrado con tipo: " + type);
+                    System.out.println(type);
+
                 }
             }
         }
