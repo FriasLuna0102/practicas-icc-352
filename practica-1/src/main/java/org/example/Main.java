@@ -167,14 +167,12 @@ public class Main {
                 System.out.println("Número de formularios que usan GET: " + getMethod);
             }
 
-
         }
     }
 
 
     //5)Para cada formulario mostrar los campos del tipo input y su
     //respectivo tipo que contiene en el documento HTML.
-
 
     public static void inputType(String contentType, HttpResponse response) throws IOException {
         if (contentType.startsWith("text/html")) {
@@ -183,21 +181,26 @@ public class Main {
 
             // Selecciona todos los elementos de formulario
             Elements forms = document.select("form");
+            int cantForms = forms.size();
 
-            System.out.println("Tipos de Input:");
-            // Itera sobre los formularios
-            for (Element form : forms) {
-                // Selecciona todos los elementos de entrada dentro del formulario
-                Elements inputs = form.select("input");
+            if(cantForms != 0){
 
-                // Itera sobre los elementos de entrada
-                for (Element input : inputs) {
-                    // Obtiene el atributo 'type' de cada elemento de entrada
-                    String  type = input.attr("type");
-                    System.out.println(type);
+                System.out.println("Tipos de Input:");
+                // Itera sobre los formularios
+                for (Element form : forms) {
+                    // Selecciona todos los elementos de entrada dentro del formulario
+                    Elements inputs = form.select("input");
 
+                    // Itera sobre los elementos de entrada
+                    for (Element input : inputs) {
+                        // Obtiene el atributo 'type' de cada elemento de entrada
+                        String  type = input.attr("type");
+                        System.out.println(type);
+
+                    }
                 }
             }
+
         }
     }
 
@@ -214,20 +217,21 @@ public class Main {
            // Selecciona todos los elementos de formulario
            Elements form = document.select("form");
 
-
+           HttpResponse <String> response2 = null;
            for (Element forms : form) {
 
-               if ("post".equalsIgnoreCase(forms.attr("method"))) {
+               if (forms.attr("method").equalsIgnoreCase("post")) {
 
                    HttpClient client = HttpClient.newHttpClient();
-                   HttpRequest request = HttpRequest.newBuilder().
-                           header("matricula-id", "1014-3611").uri(new URI(url)).POST(HttpRequest.BodyPublishers.noBody()).build();
+                   HttpRequest request = HttpRequest.newBuilder()
+                                   .header("matricula-id", "1014-3611").uri(new URI(url))
+                                   .POST(HttpRequest.BodyPublishers.ofString("asignatura=practica1")).build();
 
-                   HttpResponse<String> response2 = client.send(request, HttpResponse.BodyHandlers.ofString());
-
+                   response2 = client.send(request, HttpResponse.BodyHandlers.ofString());
                }
 
            }
+           System.out.println(response2.headers());
        }
 
    }
