@@ -1,19 +1,13 @@
 package org.example;
 
-import java.io.StringReader;
+import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
 import io.javalin.Javalin;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpParams;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -62,7 +56,7 @@ public class Main {
 
             inputType(contentType,response);
 
-            requestServer(contentType, response);
+            requestServer(contentType,response);
 
 
 
@@ -210,49 +204,51 @@ public class Main {
 
 
     //Mandar parametro al action que contiene los formularios.
-   public static void requestServer(String contentType, HttpResponse response) throws IOException, URISyntaxException, InterruptedException {
+    public static void requestServer(String contentType, HttpResponse response) throws IOException, URISyntaxException, InterruptedException {
 
-       String url = String.valueOf(response.uri());
-       String urlWithParametro = url+"?asignatura=practica1";
+        if (contentType.startsWith("text/html")) {
 
-       if (contentType.startsWith("text/html")) {
+            // Utiliza Jsoup para parsear el HTML
+            Document document = Jsoup.parse((String) response.body());
 
-           // Utiliza Jsoup para parsear el HTML
-           Document document = Jsoup.parse((String) response.body());
+            // Selecciona todos los elementos de formulario
+            Elements form = document.select("form");
 
-           // Selecciona todos los elementos de formulario
-           Elements form = document.select("form");
-           int cantForm = form.size();
+            // URL del servidor y parámetros
+            String url = String.valueOf(response.uri());
+            String asignatura = "practica1";
+            String matriculaId = "1014";
 
-           HttpResponse<String> response2 = null;
-           HttpRequest request = null;
-           for (Element forms : form) {
+            // Construir la URL con los parámetros
+            URI uri = URI.create(url + "?asignatura=" + asignatura);
 
-               if (forms.attr("method").equalsIgnoreCase("post")) {
+            for (Element forms : form) {
 
-                   HttpClient client = HttpClient.newHttpClient();
-                   request = HttpRequest.newBuilder()
-                           .header("matricula-id", "1014-3611").uri(new URI(urlWithParametro))
-                           .POST(HttpRequest.BodyPublishers.noBody())
-                           .build();
+                if (forms.attr("method").equalsIgnoreCase("post")) {
 
-                   response2 = client.send(request, HttpResponse.BodyHandlers.ofString());
-                   System.out.println(response.headers());
-               }
 
-           }
+                    // Crear la solicitud HTTP con el método POST
+                    HttpRequest request = HttpRequest.newBuilder()
+                            .uri(uri)
+                            .header("Content-Type", "application/x-www-form-urlencoded")
+                            .header("matricula-id", matriculaId)
+                            .POST(HttpRequest.BodyPublishers.noBody())
+                            .build();
 
-           if(cantForm != 0){
-               String id = String.valueOf(request.headers().allValues("matricula-id"));
-               System.out.println("La matricula es: "+ id);
-               System.out.println("El parametro enviado es: " + request.uri().getQuery());
-               System.out.println("El metodo utilizado para la peticion es: "+ request.method());
-               //System.out.println(response2.headers());
-           }
+                    // Crear el cliente HTTP
+                    HttpClient client = HttpClient.newHttpClient();
 
-       }
+                    // Enviar la solicitud y obtener la respuesta
+                    HttpResponse<String> response2 = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-   }
+                    System.out.println("Código de respuesta: " + response2.statusCode());
+                    System.out.println("El metodo utilizado para la peticion es: "+ request.method());
+                }
+
+            }
+
+        }
+    }
 }
 
 
