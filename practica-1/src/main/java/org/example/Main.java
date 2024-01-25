@@ -225,6 +225,15 @@ public class Main {
 
                 String actionUrl = forms.attr("action");
                 String originalUrl = String.valueOf(response.uri());
+                int longitud = originalUrl.length();
+
+                if(longitud > 0){
+                    char ultimoCaracter = originalUrl.charAt(longitud - 1);
+
+                    if(ultimoCaracter == '/'){
+                        originalUrl = originalUrl.substring(0, originalUrl.length() - 1);
+                    }
+                }
 
                 if (!actionUrl.contains("/")) {
                     // Obtener la URL original del recurso
