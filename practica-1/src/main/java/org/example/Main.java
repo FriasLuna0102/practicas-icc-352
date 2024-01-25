@@ -47,7 +47,7 @@ public class Main {
             System.out.println(" ");
 
 
-            System.out.println(response.headers());
+            System.out.println("Codigo de respuesta: "+ response.statusCode());
 
             //Llamadas de metodos.
             NumeroDeLineas(contentType,response);
@@ -230,7 +230,6 @@ public class Main {
                     // Crear la solicitud HTTP con el método POST
                     HttpRequest request = HttpRequest.newBuilder()
                             .uri(uri)
-                            .header("Content-Type", "application/x-www-form-urlencoded")
                             .header("matricula-id", matriculaId)
                             .POST(HttpRequest.BodyPublishers.noBody())
                             .build();
