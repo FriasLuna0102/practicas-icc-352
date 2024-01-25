@@ -6,15 +6,22 @@ import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 
 import io.javalin.Javalin;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicNameValuePair;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-
-import static org.eclipse.jetty.http.HttpURI.build;
-
 
 public class Main {
 
@@ -58,23 +65,10 @@ public class Main {
 
             requestServer(contentType,response);
 
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
-    public static void servicioJavalin (){
-
-        Javalin app = Javalin.create();
-        app.start(8080);
-        app.get("/get", ctx -> ctx.result("Hello world"));
-
-
-    }
-
-
 
     //1) Indicar la cantidad de lineas del recurso retornado.
 
@@ -97,7 +91,6 @@ public class Main {
 
         }
     }
-
 
     //2) Indicar la cantidad de párrafos (p) que contiene el documento HTML.
 
@@ -127,10 +120,6 @@ public class Main {
         }
 
     }
-
-
-
-
 
     //4. indicar la cantidad de formularios (form) que contiene el HTML por
     //categorizando por el método implementado POST o GET.
@@ -167,7 +156,6 @@ public class Main {
 
         }
     }
-
 
     //5)Para cada formulario mostrar los campos del tipo input y su
     //respectivo tipo que contiene en el documento HTML.
@@ -217,50 +205,43 @@ public class Main {
             // URL del servidor y parámetros
             String url = String.valueOf(response.uri());
             String asignatura = "practica1";
-            String matriculaId = "1014";
-
-
+            String matriculaId = "1014-3611";
 
             for (Element forms : form) {
 
                 String actionUrl = forms.attr("action");
-                String originalUrl = String.valueOf(response.uri());
-                int longitud = originalUrl.length();
-
-                if(longitud > 0){
-                    char ultimoCaracter = originalUrl.charAt(longitud - 1);
-
-                    if(ultimoCaracter == '/'){
-                        originalUrl = originalUrl.substring(0, originalUrl.length() - 1);
-                    }
-                }
 
                 if (!actionUrl.contains("/")) {
                     // Obtener la URL original del recurso
                     actionUrl = "/"+actionUrl;
                 }
 
-                URI uri = URI.create(originalUrl + actionUrl + "?asignatura=" + asignatura);
+                URI originalUrl = URI.create(String.valueOf(response.uri()));
+                URI newUri = originalUrl.resolve(actionUrl);
 
                 if (forms.attr("method").equalsIgnoreCase("post")) {
 
+                    CloseableHttpClient client = HttpClients.createDefault();
+                    HttpPost httpPost = new HttpPost(newUri);
 
-                    // Crear la solicitud HTTP con el método POST
-                    HttpRequest request = HttpRequest.newBuilder()
-                            .uri(URI.create(String.valueOf(uri)))
-                            .header("matricula-id", matriculaId)
-                            .POST(HttpRequest.BodyPublishers.noBody())
-                            .build();
+                    // Agregar encabezados
+                    httpPost.addHeader("matricula-id", matriculaId);
+                    httpPost.addHeader("Content-Type", "application/x-www-form-urlencoded");
 
-                    // Crear el cliente HTTP
-                    HttpClient client = HttpClient.newHttpClient();
+                    List<NameValuePair> params = new ArrayList<>();
+                    params.add(new BasicNameValuePair("usuario", "starlin"));
+                    params.add(new BasicNameValuePair("contrasena", "123"));
+                    httpPost.setEntity(new UrlEncodedFormEntity(params, StandardCharsets.UTF_8));
+
+                    CloseableHttpResponse response2 = client.execute(httpPost);
 
                     // Enviar la solicitud y obtener la respuesta
-                    HttpResponse<String> response2 = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-                    System.out.println("Código de respuesta: " + response2.statusCode());
-                    System.out.println("El metodo utilizado para la peticion es: "+ request.method());
-                    System.out.println(uri);
+                    System.out.println("Código de respuesta: " + response2.getStatusLine().getStatusCode());
+                    System.out.println("El metodo utilizado para la peticion es: "+ httpPost.getMethod());
+                    System.out.println(response2);
+                    System.out.println(newUri);
+
                 }
 
             }
