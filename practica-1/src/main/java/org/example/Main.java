@@ -219,17 +219,26 @@ public class Main {
             String asignatura = "practica1";
             String matriculaId = "1014";
 
-            // Construir la URL con los parámetros
-            URI uri = URI.create(url + "?asignatura=" + asignatura);
+
 
             for (Element forms : form) {
+
+                String actionUrl = forms.attr("action");
+                String originalUrl = String.valueOf(response.uri());
+
+                if (!actionUrl.contains("/")) {
+                    // Obtener la URL original del recurso
+                    actionUrl = "/"+actionUrl;
+                }
+
+                URI uri = URI.create(originalUrl + actionUrl + "?asignatura=" + asignatura);
 
                 if (forms.attr("method").equalsIgnoreCase("post")) {
 
 
                     // Crear la solicitud HTTP con el método POST
                     HttpRequest request = HttpRequest.newBuilder()
-                            .uri(uri)
+                            .uri(URI.create(String.valueOf(uri)))
                             .header("matricula-id", matriculaId)
                             .POST(HttpRequest.BodyPublishers.noBody())
                             .build();
@@ -242,6 +251,7 @@ public class Main {
 
                     System.out.println("Código de respuesta: " + response2.statusCode());
                     System.out.println("El metodo utilizado para la peticion es: "+ request.method());
+                    System.out.println(uri);
                 }
 
             }
