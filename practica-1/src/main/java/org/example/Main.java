@@ -24,6 +24,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+
 public class Main {
 
     //a) Indicar el tipo de recurso que estamos seleccionando, es decir, si es
