@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.javalin.Javalin;
+import org.apache.http.Header;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -190,7 +191,6 @@ public class Main {
         }
     }
 
-
     //Mandar parametro al action que contiene los formularios.
     public static void requestServer(String contentType, HttpResponse response) throws IOException, URISyntaxException, InterruptedException {
 
@@ -229,19 +229,29 @@ public class Main {
                     httpPost.addHeader("Content-Type", "application/x-www-form-urlencoded");
 
                     List<NameValuePair> params = new ArrayList<>();
-                    params.add(new BasicNameValuePair("usuario", "starlin"));
-                    params.add(new BasicNameValuePair("contrasena", "123"));
+                    params.add(new BasicNameValuePair("asignatura", "practica1"));
                     httpPost.setEntity(new UrlEncodedFormEntity(params, StandardCharsets.UTF_8));
 
                     CloseableHttpResponse response2 = client.execute(httpPost);
 
                     // Enviar la solicitud y obtener la respuesta
-
-                    System.out.println("Código de respuesta: " + response2.getStatusLine().getStatusCode());
+                    System.out.println("Código de respuesta del servidor: " + response2.getStatusLine().getStatusCode());
                     System.out.println("El metodo utilizado para la peticion es: "+ httpPost.getMethod());
                     System.out.println(response2);
-                    System.out.println(newUri);
 
+                    Header header = httpPost.getFirstHeader("matricula-id");
+                    System.out.println("El header enviado: "+header.getName() + ": " + header.getValue());
+
+                    NameValuePair usuarioParam = params.stream()
+                            .filter(param -> param.getName().equals("asignatura"))
+                            .findFirst()
+                            .orElse(null);
+                    if (usuarioParam != null) {
+                        System.out.println("El parametro enviado: "+ usuarioParam.getName() +"=" +usuarioParam.getValue());
+
+                    System.out.println("URL a la que fue enviada la peticion post: " + newUri);
+
+                    }
                 }
 
             }
