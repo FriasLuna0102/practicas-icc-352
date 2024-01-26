@@ -203,9 +203,6 @@ public class Main {
             // Selecciona todos los elementos de formulario
             Elements form = document.select("form");
 
-            // URL del servidor y parámetros
-            String url = String.valueOf(response.uri());
-            String asignatura = "practica1";
             String matriculaId = "1014-3611";
 
             for (Element forms : form) {
