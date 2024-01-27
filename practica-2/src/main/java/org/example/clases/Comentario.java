@@ -42,7 +42,6 @@ public class Comentario {
     public Articulo getArticulo() {
         return articulo;
     }
-
     public void setArticulo(Articulo articulo) {
         this.articulo = articulo;
     }
