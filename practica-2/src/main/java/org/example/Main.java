@@ -35,8 +35,19 @@ public class Main {
 
         app.start(getHerokuAssignedPort());
 
-        app.get("/", cxt -> {
-            cxt.redirect("login.html");
+        app.post("/login", cxt -> {
+            String usuario = cxt.formParam("username");
+            String password = cxt.formParam("password");
+
+            System.out.println("Username: " + usuario);
+            System.out.println("Password: " + password);
+
+            if(usuario == null & password == null){
+                cxt.redirect("login.html");
+            }else{
+                System.out.println("good job");
+            }
+
         });
 
     }
