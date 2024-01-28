@@ -7,21 +7,25 @@ import  org.example.clases.Comentario;
 import  org.example.clases.Usuario;
 import  org.example.clases.Etiqueta;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+
+
 
 public class Main {
     public static void main(String[] args) {
 
+        Usuario admin = new Usuario("starlin0102","Starlin","1234",true,true);
+        Usuario usuario1 = new Usuario("star","Starlin","124",true,true);
 
-        Etiqueta prueba = new Etiqueta(1014,"SuperHeroes");
+        List<Usuario> usuarios = new ArrayList<>();
+        usuarios.add(admin);
+        usuarios.add(usuario1);
 
-        System.out.println(prueba.getId());
+        System.out.println(usuarios.getFirst().getNombre());
 
-        prueba.setId(256);
-
-        System.out.println(prueba.getId());
-
-//Creando la instancia del servidor y configurando.
+        //Creando la instancia del servidor y configurando.
         Javalin app = Javalin.create(config ->{
             //configurando los documentos estaticos.
             config.staticFiles.add(staticFileConfig -> {
@@ -44,20 +48,25 @@ public class Main {
 
 
         app.post("/login", cxt -> {
-            String usuario = cxt.formParam("username");
-            String password = cxt.formParam("password");
-
-            System.out.println("Username: " + usuario);
-            System.out.println("Password: " + password);
-
-            if(Objects.equals(usuario, "starlin") & Objects.equals(password, "frias")){
-                cxt.redirect("/blog.html");
-                System.out.println("good job");
-            }else{
+            if (usuarios.isEmpty()) {
                 cxt.redirect("login.html");
+                return;
             }
 
+            String usuarioLogin = cxt.formParam("username");
+            String passwordLogin = cxt.formParam("password");
+
+            for (Usuario usuario : usuarios) {
+                if (usuario.getUsername().equals(usuarioLogin) && usuario.getPassword().equals(passwordLogin)) {
+                    cxt.redirect("/blog.html");
+                    return;
+                }
+            }
+
+            // Si ninguna credencial coincide, redirigir de nuevo a la página de inicio de sesión
+            cxt.redirect("login.html");
         });
+
 
     }
 
