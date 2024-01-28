@@ -39,6 +39,17 @@ public class Main {
 
         });
 
+        // Configurar el manejo de sesiones
+        app.before("/login",ctx -> {
+            // Verificar si hay una sesión activa para cada solicitud
+            if (!ctx.path().startsWith("/login") && !ctx.path().startsWith("/public")) {
+                if (ctx.sessionAttribute(admin.getUsername()) == null) {
+                    // Redirigir al usuario a la página de inicio de sesión si no hay una sesión activa
+                    ctx.redirect("/login");
+                }
+            }
+        });
+
         app.start(getHerokuAssignedPort());
 
 
@@ -58,7 +69,7 @@ public class Main {
 
             for (Usuario usuario : usuarios) {
                 if (usuario.getUsername().equals(usuarioLogin) && usuario.getPassword().equals(passwordLogin)) {
-                    cxt.redirect("/blog.html");
+                    cxt.redirect("/html/blogUsuario.html");
                     return;
                 }
             }
