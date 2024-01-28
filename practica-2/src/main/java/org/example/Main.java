@@ -7,9 +7,11 @@ import  org.example.clases.Comentario;
 import  org.example.clases.Usuario;
 import  org.example.clases.Etiqueta;
 
+import java.util.Objects;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+
 
         Etiqueta prueba = new Etiqueta(1014,"SuperHeroes");
 
@@ -35,6 +37,12 @@ public class Main {
 
         app.start(getHerokuAssignedPort());
 
+
+        app.get("/blog", cxt -> {
+            cxt.redirect("blog.html");
+        });
+
+
         app.post("/login", cxt -> {
             String usuario = cxt.formParam("username");
             String password = cxt.formParam("password");
@@ -42,10 +50,11 @@ public class Main {
             System.out.println("Username: " + usuario);
             System.out.println("Password: " + password);
 
-            if(usuario == null & password == null){
-                cxt.redirect("login.html");
-            }else{
+            if(Objects.equals(usuario, "starlin") & Objects.equals(password, "frias")){
+                cxt.redirect("/blog.html");
                 System.out.println("good job");
+            }else{
+                cxt.redirect("login.html");
             }
 
         });
@@ -59,4 +68,5 @@ public class Main {
         }
         return 7000; //Retorna el puerto por defecto en caso de no estar en Heroku.
     }
+
 }
