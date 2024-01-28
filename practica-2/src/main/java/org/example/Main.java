@@ -10,17 +10,15 @@ import  org.example.clases.Etiqueta;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
+import java.util.Optional;
 
 
 public class Main {
     public static void main(String[] args) {
 
-        Usuario admin = new Usuario("starlin0102","Starlin","1234",true,true);
-        Usuario usuario1 = new Usuario("star","Starlin","124",true,true);
+        Usuario usuario1 = new Usuario("star","Starlin","123",true,true);
 
         List<Usuario> usuarios = new ArrayList<>();
-        usuarios.add(admin);
         usuarios.add(usuario1);
 
         System.out.println(usuarios.getFirst().getNombre());
@@ -40,15 +38,17 @@ public class Main {
         });
 
         // Configurar el manejo de sesiones
-        app.before("/login",ctx -> {
+        /*app.before("/login",ctx -> {
             // Verificar si hay una sesión activa para cada solicitud
             if (!ctx.path().startsWith("/login") && !ctx.path().startsWith("/public")) {
-                if (ctx.sessionAttribute(admin.getUsername()) == null) {
+                if (ctx.sessionAttribute("currentUser") == null) {
                     // Redirigir al usuario a la página de inicio de sesión si no hay una sesión activa
                     ctx.redirect("/login");
+                }else{
+                    System.out.println(Optional.ofNullable(ctx.sessionAttribute("currentUser")));
                 }
             }
-        });
+        });*/
 
         app.start(getHerokuAssignedPort());
 
@@ -69,6 +69,8 @@ public class Main {
 
             for (Usuario usuario : usuarios) {
                 if (usuario.getUsername().equals(usuarioLogin) && usuario.getPassword().equals(passwordLogin)) {
+                    cxt.sessionAttribute("currentUser", usuario);
+                    System.out.println("Nombre de usuario establecido en la sesión: " + usuario.getNombre());
                     cxt.redirect("/html/blogUsuario.html");
                     return;
                 }

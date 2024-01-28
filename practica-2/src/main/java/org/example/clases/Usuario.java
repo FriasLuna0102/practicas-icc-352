@@ -1,5 +1,7 @@
 package org.example.clases;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 public class Usuario {
@@ -60,4 +62,13 @@ public class Usuario {
     }
 //lo estaremos utilizando para los roles.
 
+
+    public List<Usuario> getUsuarios() {
+        //listando los estudiantes..
+        List<Usuario> listaUsuarios = new ArrayList<>();
+        listaUsuarios.add(new Usuario("dd", "Carlos Camacho", "123",true, true));
+        listaUsuarios.add(new Usuario("dd2", "Otro Estudiante", "ISC",true,true));
+        listaUsuarios.add(new Usuario("dd3", "Otro otro", "ISC",true,true));
+        return listaUsuarios;
+    }
 }

@@ -32,6 +32,9 @@ dependencies {
 
     implementation 'org.apache.httpcomponents:httpclient:4.5.14'
 
+    //Para las plantillas:
+    implementation "io.javalin:javalin-rendering:5.6.0"
+    implementation 'org.thymeleaf:thymeleaf:3.1.1.RELEASE'
 
 }
 
