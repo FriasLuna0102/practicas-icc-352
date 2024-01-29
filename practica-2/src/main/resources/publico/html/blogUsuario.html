@@ -36,7 +36,7 @@
         <div class="navbar-header">
             <!-- Botón de Login -->
             <span th:if="${session.getAttribute('currentUser') == null}">
-                <a class="btn btn-sm btn-primary navbar-btn" href="/login.html">Login</a>
+                <a class="btn btn-sm btn-primary navbar-btn" href="/login.html">Logout</a>
             </span>
             <!-- Nombre del usuario -->
             <span th:if="${session.getAttribute('currentUser') != null}">
