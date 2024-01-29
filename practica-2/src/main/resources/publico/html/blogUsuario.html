@@ -40,19 +40,33 @@
             </span>
             <!-- Nombre del usuario -->
             <span th:if="${session.getAttribute('currentUser') != null}">
-                 <a class="btn btn-sm btn-primary navbar-btn" href="/login.html">Login</a>
-            <span th:text="${session.getAttribute('currentUser').getNombre()}"></span>
+                <a class="btn btn-sm btn-primary navbar-btn" href="/login.html">Login</a>
+                <span th:text="${session.getAttribute('currentUser').getNombre()}"></span>
             </span>
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
                 <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
+                <span class="icon-bar">
+                </span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="">Blog Post</a>
         </div>
+        <!-- Botón para crear usuario -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li th:unless="${session.getAttribute('currentUser').isAutor()}">
+                    <a href="/html/crearUsuario.html" class="btn btn-sm btn-primary navbar-btn" style="color: white; margin-right: 10px; ">Crear Usuario</a>
+                </li>
+                <li><a href="/html/crearArticulo.html" class="btn btn-sm btn-primary navbar-btn" style="color: white;">Crear Artículo</a></li>
+            </ul>
+        </div>
     </div>
 </nav>
+
+
+
+
 
 
 <div class="container">
