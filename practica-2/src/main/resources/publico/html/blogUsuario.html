@@ -55,10 +55,10 @@
         <!-- Botón para crear usuario -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li th:unless="${session.getAttribute('currentUser').isAutor()}">
+                <li > <!-- th:unless="${session.getAttribute('currentUser').isAutor()}"> -->
                     <a href="/html/crearUsuario.html" class="btn btn-sm btn-primary navbar-btn" style="color: white; margin-right: 10px; ">Crear Usuario</a>
                 </li>
-                <li><a href="/html/crearArticulo.html" class="btn btn-sm btn-primary navbar-btn" style="color: white;">Crear Artículo</a></li>
+                <li><a href="/crearArticulo" class="btn btn-sm btn-primary navbar-btn" style="color: white;">Crear Artículo</a></li>
             </ul>
         </div>
     </div>

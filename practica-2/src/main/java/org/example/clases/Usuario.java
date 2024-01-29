@@ -21,9 +21,6 @@ public class Usuario {
         this.autor = autor;
     }
 
-    private static List<Usuario> listaUsuarios = new ArrayList<>();
-
-
     public String getUsername() {
         return username;
     }
@@ -72,11 +69,6 @@ public class Usuario {
         listaUsuarios.add(new Usuario("dd", "Carlos Camacho", "123",true, true));
         listaUsuarios.add(new Usuario("dd2", "Otro Estudiante", "ISC",true,true));
         listaUsuarios.add(new Usuario("dd3", "Otro otro", "ISC",true,true));
-        return listaUsuarios;
-    }
-
-    // Método estático para obtener la lista de usuarios
-    public static List<Usuario> obtenerListaUsuarios() {
         return listaUsuarios;
     }
 }

@@ -63,11 +63,16 @@ public class Main {
 
         // Configurar la ruta para renderizar una plantilla Thymeleaf
         app.get("/crearArticulo", ctx -> {
+            //ctx.redirect();
             Map<String, Object> model = new HashMap<>();
             // Obtener la lista de usuarios
             List<Usuario> usuarios2 = getUsuarios();
+            System.out.println("Imprimiendo Usuarios:");
+            for(Usuario iterador: usuarios2 ){
+                System.out.println(iterador.getNombre());
+            }
             model.put("usuarios", usuarios2);
-            ctx.render("/html/crearArticulo.html", model);
+            ctx.render("publico/html/crearArticulo.html", model);
         });
 
 
@@ -121,6 +126,7 @@ public class Main {
 
 
         // Lógica para permitir la creación de nuevos usuarios por parte de administradores
+
         app.post("/crearUsuario", ctx -> {
             Usuario currentUser = ctx.sessionAttribute("currentUser");
             if (currentUser != null && currentUser.isAdministrator()) {
