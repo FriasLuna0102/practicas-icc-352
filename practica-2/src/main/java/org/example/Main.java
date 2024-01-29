@@ -18,20 +18,24 @@ public class Main {
         List<Comentario> comentarios = new ArrayList<>();
         List<Etiqueta> etiquetas = new ArrayList<>();
 
-
-
         Usuario usuario1 = new Usuario("star","Starlin","123",true,true);
-        Etiqueta etiqueta = new Etiqueta(1, "Etiqueta1");
-        Articulo articulo = new Articulo(1, "Título del artículo", "Cuerpo del artículo...", usuario1, new Date(),comentarios,etiquetas);
-        Comentario comentario = new Comentario(1, "Este es un comentario", usuario1, articulo);
-
-
         usuarios.add(usuario1);
-        articulos.add(articulo);
-        comentarios.add(comentario);
+
+        Etiqueta etiqueta = new Etiqueta(1, "Etiqueta1");
         etiquetas.add(etiqueta);
 
-        System.out.println(usuarios.getFirst().getNombre());
+        Comentario comentario = new Comentario(1, "Este es un comentario", usuario1, null); // El artículo se establecerá más adelante
+        comentarios.add(comentario);
+
+        Articulo articulo = new Articulo(1, "Título del artículo", "Cuerpo del artículo...", usuario1, new Date(), comentarios, etiquetas);
+        articulos.add(articulo);
+
+        // Establecer el artículo en el comentario
+        comentario.setArticulo(articulo);
+
+
+
+
 
         //Creando la instancia del servidor y configurando.
         Javalin app = Javalin.create(config ->{
