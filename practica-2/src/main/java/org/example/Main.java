@@ -7,19 +7,29 @@ import  org.example.clases.Comentario;
 import  org.example.clases.Usuario;
 import  org.example.clases.Etiqueta;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 
 public class Main {
     public static void main(String[] args) {
 
-        Usuario usuario1 = new Usuario("star","Starlin","123",true,true);
-
         List<Usuario> usuarios = new ArrayList<>();
+        List<Articulo> articulos = new ArrayList<>();
+        List<Comentario> comentarios = new ArrayList<>();
+        List<Etiqueta> etiquetas = new ArrayList<>();
+
+
+
+        Usuario usuario1 = new Usuario("star","Starlin","123",true,true);
+        Etiqueta etiqueta = new Etiqueta(1, "Etiqueta1");
+        Articulo articulo = new Articulo(1, "Título del artículo", "Cuerpo del artículo...", usuario1, new Date(),comentarios,etiquetas);
+        Comentario comentario = new Comentario(1, "Este es un comentario", usuario1, articulo);
+
+
         usuarios.add(usuario1);
+        articulos.add(articulo);
+        comentarios.add(comentario);
+        etiquetas.add(etiqueta);
 
         System.out.println(usuarios.getFirst().getNombre());
 
@@ -79,6 +89,7 @@ public class Main {
             // Si ninguna credencial coincide, redirigir de nuevo a la página de inicio de sesión
             cxt.redirect("login.html");
         });
+
 
 
     }
