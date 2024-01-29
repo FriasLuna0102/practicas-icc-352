@@ -14,11 +14,16 @@ import io.javalin.rendering.JavalinRenderer;
 
 import java.util.*;
 
+import static org.example.clases.Usuario.getUsuarios;
+
 
 public class Main {
     public static void main(String[] args) {
 
-        List<Usuario> usuarios = new ArrayList<>();
+        List<Usuario> usuarios = getUsuarios();
+
+        System.out.println(usuarios.getFirst().getNombre());
+        //List<Usuario> usuarios = new ArrayList<>();
         List<Articulo> articulos = new ArrayList<>();
         List<Comentario> comentarios = new ArrayList<>();
         List<Etiqueta> etiquetas = new ArrayList<>();
@@ -54,6 +59,17 @@ public class Main {
             });
 
         });
+
+
+        // Configurar la ruta para renderizar una plantilla Thymeleaf
+        app.get("/crearArticulo", ctx -> {
+            Map<String, Object> model = new HashMap<>();
+            // Obtener la lista de usuarios
+            List<Usuario> usuarios2 = getUsuarios();
+            model.put("usuarios", usuarios2);
+            ctx.render("/html/crearArticulo.html", model);
+        });
+
 
         // Configurar el manejo de sesiones
         /*app.before("/login",ctx -> {
@@ -122,6 +138,7 @@ public class Main {
             }
         });
 
+
     }
 
     static int getHerokuAssignedPort() {
@@ -131,5 +148,7 @@ public class Main {
         }
         return 7000; //Retorna el puerto por defecto en caso de no estar en Heroku.
     }
+
+
 
 }
