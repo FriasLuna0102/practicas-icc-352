@@ -63,12 +63,13 @@ public class Usuario {
 //lo estaremos utilizando para los roles.
 
 
-    public static List<Usuario> getUsuarios() {
+    static List<Usuario> listaUsuarios = new ArrayList<>();
+    public static List<Usuario> getUsuarios(Usuario usuario) {
         //listando los estudiantes..
-        List<Usuario> listaUsuarios = new ArrayList<>();
-        listaUsuarios.add(new Usuario("dd", "Carlos Camacho", "123",true, true));
-        listaUsuarios.add(new Usuario("dd2", "Otro Estudiante", "ISC",true,true));
-        listaUsuarios.add(new Usuario("dd3", "Otro otro", "ISC",true,true));
+        listaUsuarios.add(usuario);
+        //listaUsuarios.add(new Usuario("dd", "Carlos Camacho", "123",true, true));
+        //listaUsuarios.add(new Usuario("dd2", "Otro Estudiante", "ISC",true,true));
+        //listaUsuarios.add(new Usuario("dd3", "Otro otro", "ISC",true,true));
         return listaUsuarios;
     }
 }

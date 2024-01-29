@@ -20,16 +20,17 @@ import static org.example.clases.Usuario.getUsuarios;
 public class Main {
     public static void main(String[] args) {
 
-        List<Usuario> usuarios = getUsuarios();
 
-        System.out.println(usuarios.getFirst().getNombre());
+
+        //System.out.println(usuarios.getFirst().getNombre());
         //List<Usuario> usuarios = new ArrayList<>();
         List<Articulo> articulos = new ArrayList<>();
         List<Comentario> comentarios = new ArrayList<>();
         List<Etiqueta> etiquetas = new ArrayList<>();
 
         Usuario usuario1 = new Usuario("star","Starlin","123",true,true);
-        usuarios.add(usuario1);
+
+        List<Usuario> usuarios = getUsuarios(usuario1);
 
         Etiqueta etiqueta = new Etiqueta(1, "Etiqueta1");
         etiquetas.add(etiqueta);
@@ -62,16 +63,16 @@ public class Main {
 
 
         // Configurar la ruta para renderizar una plantilla Thymeleaf
+
         app.get("/crearArticulo", ctx -> {
-            //ctx.redirect();
             Map<String, Object> model = new HashMap<>();
             // Obtener la lista de usuarios
-            List<Usuario> usuarios2 = getUsuarios();
+
             System.out.println("Imprimiendo Usuarios:");
-            for(Usuario iterador: usuarios2 ){
-                System.out.println(iterador.getNombre());
-            }
-            model.put("usuarios", usuarios2);
+            //for(Usuario iterador: usuarios ){
+            //    System.out.println(iterador.getNombre());
+           // }
+            model.put("usuarios", usuarios);
             ctx.render("publico/html/crearArticulo.html", model);
         });
 
@@ -139,7 +140,7 @@ public class Main {
 
                 // Crear el nuevo usuario y agregarlo a la lista de usuarios
                 Usuario nuevoUsuario = new Usuario(username, nombre, password, isAdmin, isAutor);
-                usuarios.add(nuevoUsuario);
+                getUsuarios(nuevoUsuario);
                 System.out.println(nuevoUsuario);
                 // Redirigir a la página de administración u otra página según corresponda
                 ctx.redirect("/html/blogUsuario.html");
