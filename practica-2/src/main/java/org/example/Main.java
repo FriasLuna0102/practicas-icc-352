@@ -86,6 +86,14 @@ public class Main {
 
         app.start(getHerokuAssignedPort());
 
+        //Si intenta acceder a blogUsuario sin login.
+        app.get("/blogUsuario", cxt -> {
+            cxt.redirect("login.html");
+        });
+
+        app.get("/blogUsuario.html", cxt -> {
+            cxt.result("Este recurso no ha sido encontrado.");
+        });
 
         app.get("/blog", cxt -> {
             cxt.redirect("blog.html");
