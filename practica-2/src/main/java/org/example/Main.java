@@ -2,10 +2,15 @@ package org.example;
 
 import io.javalin.Javalin;
 import io.javalin.http.staticfiles.Location;
+import io.javalin.rendering.FileRenderer;
+import io.javalin.rendering.template.JavalinThymeleaf;
 import  org.example.clases.Articulo;
 import  org.example.clases.Comentario;
 import  org.example.clases.Usuario;
 import  org.example.clases.Etiqueta;
+import org.thymeleaf.TemplateEngine;
+import io.javalin.rendering.template.JavalinThymeleaf;
+import io.javalin.rendering.JavalinRenderer;
 
 import java.util.*;
 
@@ -44,6 +49,7 @@ public class Main {
                 staticFileConfig.location = Location.CLASSPATH;
                 staticFileConfig.precompress=false;
                 staticFileConfig.aliasCheck=null;
+                JavalinRenderer.register(new JavalinThymeleaf(), ".html");
 
             });
 
