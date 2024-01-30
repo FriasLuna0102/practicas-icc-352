@@ -76,16 +76,6 @@ public class Main {
 
 
 
-        app.post("/blogUsuario", ctx -> {
-            System.out.println("Hello");
-            Map<String, Object> model = new HashMap<>();
-            // No necesitas obtener el nombre del usuario aquí, ya que Thymeleaf puede acceder a la sesión directamente
-            // Solo necesitas pasar el objeto Usuario o el nombre del usuario al modelo
-            // String usur = ctx.sessionAttribute("currentUser");
-            // model.put("usuarios", usur);
-            model.put("usuario", ctx.sessionAttribute("currentUser"));
-            ctx.render("publico/html/blogUsuario.html", model);
-        });
 
 
 
@@ -112,11 +102,11 @@ public class Main {
 
 
         //Si intenta acceder a blogUsuario sin login.
-        app.get("/blogUsuario", cxt -> {
+       /* app.get("/blogUsuario", cxt -> {
           //  if()
             cxt.redirect("/login");
         });
-
+*/
         //Creaar metodo para validar login, ese metodo debe agregarse en el metodo get /login y en el metodo /blogUsuario.
 
 

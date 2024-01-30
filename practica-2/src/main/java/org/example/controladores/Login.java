@@ -23,6 +23,10 @@ public class Login extends ControladorClass{
         });
 
 
+        app.get("/logout", cxt ->{
+            cxt.redirect("/login");
+        });
+
 
         app.post("/login", cxt -> {
             if (usuarios.isEmpty()) {
@@ -37,7 +41,7 @@ public class Login extends ControladorClass{
                 if (usuario.getUsername().equals(usuarioLogin) && usuario.getPassword().equals(passwordLogin)) {
                     cxt.sessionAttribute("currentUser", usuario);
                     System.out.println("Nombre de usuario establecido en la sesión: " + usuario.getNombre());
-                    cxt.redirect("/html/blogUsuario.html");
+                    cxt.redirect("/blogUsuario");
                     return;
                 }
             }

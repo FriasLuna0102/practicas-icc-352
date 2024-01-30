@@ -30,5 +30,22 @@ public class PlantillasControlador extends ControladorClass{
             model.put("usuarios", usuarios);
             ctx.render("publico/html/crearArticulo.html", model);
         });
+
+
+        app.get("/blogUsuario", ctx -> {
+            System.out.println("Hello");
+            // Retrieve the currentUser session attribute
+            Usuario currentUser = ctx.sessionAttribute("currentUser");
+            if (currentUser != null) {
+                // Set the currentUser attribute in the template context
+                ctx.attribute("currentUser", currentUser);
+                ctx.render("publico/html/blogUsuario.html");
+            } else {
+                // If the currentUser session attribute is not set, redirect to the login page
+                ctx.redirect("/login");
+            }
+        });
+
+
     }
 }
