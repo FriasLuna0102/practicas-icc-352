@@ -10,7 +10,7 @@
 <html lang="en"  xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -37,7 +37,7 @@
         <!-- Botón de Login -->
         <span th:if="${currentUser != null}">
             <span th:text="${currentUser.nombre}" style="color: white;"></span>
-              <a class="btn btn-sm btn-primary navbar-btn" href="/login">Logout</a>
+              <a class="btn btn-sm btn-primary navbar-btn" href="/logout">Logout</a>
 
     </span>
         <!-- Nombre del usuario -->
@@ -62,7 +62,7 @@
                 <li > <!-- th:unless="${session.getAttribute('currentUser').isAutor()}"> -->
                     <a href="/html/crearUsuario.html" class="btn btn-sm btn-primary navbar-btn" style="color: white; margin-right: 10px; ">Crear Usuario</a>
                 </li>
-                <li><a href="/crearArticulo" class="btn btn-sm btn-primary navbar-btn" style="color: white;">Crear Artículo</a></li>
+                <li><a href="/crearArticulo" class="btn btn-sm btn-primary navbar-btn" style="color: white; margin-right: 50px">Crear Articulo</a></li>
             </ul>
         </div>
     </div>

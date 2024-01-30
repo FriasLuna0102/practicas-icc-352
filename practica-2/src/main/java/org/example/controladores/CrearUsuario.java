@@ -31,7 +31,7 @@ public class CrearUsuario extends ControladorClass{
                 setUsuario(nuevoUsuario);
                 System.out.println(nuevoUsuario);
                 // Redirigir a la página de administración u otra página según corresponda
-                ctx.redirect("/html/blogUsuario.html");
+                ctx.redirect("/blogUsuario");
             } else {
                 // El usuario actual no tiene permisos para crear un nuevo usuario, redirigir o mostrar un mensaje de error
                 ctx.result("No tienes permiso para realizar esta acción.");

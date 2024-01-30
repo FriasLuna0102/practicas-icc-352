@@ -23,8 +23,13 @@ public class Login extends ControladorClass{
         });
 
 
-        app.get("/logout", cxt ->{
-            cxt.redirect("/login");
+        app.get("/logout", ctx -> {
+            System.out.println("salioo");
+            String id = ctx.req().getSession().getId();
+            //invalidando la sesion.
+            ctx.req().getSession().invalidate();
+            ctx.result(String.format("Sesion con ID: %s fue invalidada", id));
+            ctx.redirect("/login");
         });
 
 
