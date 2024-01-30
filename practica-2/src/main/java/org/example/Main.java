@@ -8,6 +8,8 @@ import  org.example.clases.Articulo;
 import  org.example.clases.Comentario;
 import  org.example.clases.Usuario;
 import  org.example.clases.Etiqueta;
+import org.example.controladores.Login;
+import org.example.controladores.PlantillasControlador;
 import org.thymeleaf.TemplateEngine;
 import io.javalin.rendering.template.JavalinThymeleaf;
 import io.javalin.rendering.JavalinRenderer;
@@ -15,10 +17,16 @@ import io.javalin.rendering.JavalinRenderer;
 import java.util.*;
 
 import static org.example.clases.Usuario.getUsuarios;
+import static org.example.clases.Usuario.setUsuario;
 
 
 public class Main {
     public static void main(String[] args) {
+
+        //Creacion de Usuario admin:
+
+        Usuario usuario1 = new Usuario("star","Starlin","123",true,true);
+        Usuario.setUsuario(usuario1);
 
 
 
@@ -28,10 +36,10 @@ public class Main {
         List<Comentario> comentarios = new ArrayList<>();
         List<Etiqueta> etiquetas = new ArrayList<>();
 
-        Usuario usuario1 = new Usuario("star","Starlin","123",true,true);
 
-        List<Usuario> usuarios = getUsuarios(usuario1);
+        //List<Usuario> usuarios = getUsuarios(usuario1);
 
+        /*
         Etiqueta etiqueta = new Etiqueta(1, "Etiqueta1");
         etiquetas.add(etiqueta);
 
@@ -44,7 +52,7 @@ public class Main {
         // Establecer el artículo en el comentario
         comentario.setArticulo(articulo);
 
-
+*/
 
         //Creando la instancia del servidor y configurando.
         Javalin app = Javalin.create(config ->{
@@ -60,21 +68,31 @@ public class Main {
             });
 
         });
+        app.start(getHerokuAssignedPort());
+        new Login(app).aplicarRutas();
+        new PlantillasControlador(app).aplicarRutas();
 
 
-        // Configurar la ruta para renderizar una plantilla Thymeleaf
 
-        app.get("/crearArticulo", ctx -> {
+
+        app.post("/blogUsuario", ctx -> {
+            System.out.println("Hello");
             Map<String, Object> model = new HashMap<>();
-            // Obtener la lista de usuarios
-
-            System.out.println("Imprimiendo Usuarios:");
-            //for(Usuario iterador: usuarios ){
-            //    System.out.println(iterador.getNombre());
-           // }
-            model.put("usuarios", usuarios);
-            ctx.render("publico/html/crearArticulo.html", model);
+            // No necesitas obtener el nombre del usuario aquí, ya que Thymeleaf puede acceder a la sesión directamente
+            // Solo necesitas pasar el objeto Usuario o el nombre del usuario al modelo
+            // String usur = ctx.sessionAttribute("currentUser");
+            // model.put("usuarios", usur);
+            model.put("usuario", ctx.sessionAttribute("currentUser"));
+            ctx.render("publico/html/blogUsuario.html", model);
         });
+
+
+
+
+
+
+
+
 
 
         // Configurar el manejo de sesiones
@@ -90,12 +108,15 @@ public class Main {
             }
         });*/
 
-        app.start(getHerokuAssignedPort());
+
 
         //Si intenta acceder a blogUsuario sin login.
         app.get("/blogUsuario", cxt -> {
-            cxt.redirect("login.html");
+          //  if()
+            cxt.redirect("/login");
         });
+
+        //Creaar metodo para validar login, ese metodo debe agregarse en el metodo get /login y en el metodo /blogUsuario.
 
 
         app.get("/blog", cxt -> {
@@ -103,6 +124,11 @@ public class Main {
         });
 
 
+        app.get("/login", cxt ->{
+            cxt.redirect("/login.html");
+        });
+
+        /*
         app.post("/login", cxt -> {
             if (usuarios.isEmpty()) {
                 cxt.redirect("login.html");
@@ -116,15 +142,15 @@ public class Main {
                 if (usuario.getUsername().equals(usuarioLogin) && usuario.getPassword().equals(passwordLogin)) {
                     cxt.sessionAttribute("currentUser", usuario);
                     System.out.println("Nombre de usuario establecido en la sesión: " + usuario.getNombre());
-                    cxt.redirect("/html/blogUsuario.html");
+                    cxt.redirect("/blogUsuario");
                     return;
                 }
             }
 
             // Si ninguna credencial coincide, redirigir de nuevo a la página de inicio de sesión
-            cxt.redirect("login.html");
+            cxt.redirect("/login");
         });
-
+*/
 
         // Lógica para permitir la creación de nuevos usuarios por parte de administradores
 
@@ -140,7 +166,7 @@ public class Main {
 
                 // Crear el nuevo usuario y agregarlo a la lista de usuarios
                 Usuario nuevoUsuario = new Usuario(username, nombre, password, isAdmin, isAutor);
-                getUsuarios(nuevoUsuario);
+                setUsuario(nuevoUsuario);
                 System.out.println(nuevoUsuario);
                 // Redirigir a la página de administración u otra página según corresponda
                 ctx.redirect("/html/blogUsuario.html");

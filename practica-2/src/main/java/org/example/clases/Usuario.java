@@ -60,16 +60,22 @@ public class Usuario {
     public void setAutor(boolean autor) {
         this.autor = autor;
     }
-//lo estaremos utilizando para los roles.
+
 
 
     static List<Usuario> listaUsuarios = new ArrayList<>();
-    public static List<Usuario> getUsuarios(Usuario usuario) {
-        //listando los estudiantes..
+
+    public static List<Usuario> setUsuario (Usuario usuario){
         listaUsuarios.add(usuario);
+        return listaUsuarios;
+    }
+    public static List<Usuario> getUsuarios() {
+        //listando los estudiantes..
         //listaUsuarios.add(new Usuario("dd", "Carlos Camacho", "123",true, true));
         //listaUsuarios.add(new Usuario("dd2", "Otro Estudiante", "ISC",true,true));
         //listaUsuarios.add(new Usuario("dd3", "Otro otro", "ISC",true,true));
         return listaUsuarios;
     }
+
+
 }
