@@ -66,6 +66,14 @@ public class Usuario {
     static List<Usuario> listaUsuarios = new ArrayList<>();
 
     public static List<Usuario> setUsuario (Usuario usuario){
+        for (Usuario user: listaUsuarios){
+            if(user.username.equals(usuario.username)){
+                return listaUsuarios;
+            }else if(user.nombre.equals(usuario.nombre)){
+                System.out.printf("Ya existe un usuario con: %s ",usuario.nombre);
+                return listaUsuarios;
+            }
+        }
         listaUsuarios.add(usuario);
         return listaUsuarios;
     }
