@@ -8,6 +8,7 @@ import  org.example.clases.Articulo;
 import  org.example.clases.Comentario;
 import  org.example.clases.Usuario;
 import  org.example.clases.Etiqueta;
+import org.example.controladores.CrearUsuario;
 import org.example.controladores.Login;
 import org.example.controladores.PlantillasControlador;
 import org.thymeleaf.TemplateEngine;
@@ -71,7 +72,7 @@ public class Main {
         app.start(getHerokuAssignedPort());
         new Login(app).aplicarRutas();
         new PlantillasControlador(app).aplicarRutas();
-
+        new CrearUsuario(app).aplicarRutas();
 
 
 
@@ -124,9 +125,6 @@ public class Main {
         });
 
 
-        app.get("/login", cxt ->{
-            cxt.redirect("/login.html");
-        });
 
         /*
         app.post("/login", cxt -> {
@@ -152,29 +150,7 @@ public class Main {
         });
 */
 
-        // Lógica para permitir la creación de nuevos usuarios por parte de administradores
 
-        app.post("/crearUsuario", ctx -> {
-            Usuario currentUser = ctx.sessionAttribute("currentUser");
-            if (currentUser != null && currentUser.isAdministrator()) {
-                // El usuario actual es administrador, se le permite crear un nuevo usuario
-                String username = ctx.formParam("username");
-                String nombre = ctx.formParam("nombre");
-                String password = ctx.formParam("password");
-                boolean isAdmin = ctx.formParam("isAdmin") != null; // Check si se marcó como administrador
-                boolean isAutor = ctx.formParam("isAutor") != null; // Check si se marcó como autor
-
-                // Crear el nuevo usuario y agregarlo a la lista de usuarios
-                Usuario nuevoUsuario = new Usuario(username, nombre, password, isAdmin, isAutor);
-                setUsuario(nuevoUsuario);
-                System.out.println(nuevoUsuario);
-                // Redirigir a la página de administración u otra página según corresponda
-                ctx.redirect("/html/blogUsuario.html");
-            } else {
-                // El usuario actual no tiene permisos para crear un nuevo usuario, redirigir o mostrar un mensaje de error
-                ctx.result("No tienes permiso para realizar esta acción.");
-            }
-        });
 
 
     }

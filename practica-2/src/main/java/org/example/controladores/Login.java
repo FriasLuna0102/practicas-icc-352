@@ -17,6 +17,13 @@ public class Login extends ControladorClass{
 
     @Override
     public void aplicarRutas() {
+
+        app.get("/login", cxt ->{
+            cxt.redirect("/login.html");
+        });
+
+
+
         app.post("/login", cxt -> {
             if (usuarios.isEmpty()) {
                 cxt.redirect("login.html");
@@ -38,5 +45,10 @@ public class Login extends ControladorClass{
             // Si ninguna credencial coincide, redirigir de nuevo a la página de inicio de sesión
             cxt.redirect("/login");
         });
+
+
+
+
+
     }
 }
