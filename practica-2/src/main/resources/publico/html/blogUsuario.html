@@ -57,14 +57,22 @@
             <a class="navbar-brand" href="">Blog Post</a>
         </div>
         <!-- Botón para crear usuario -->
-        <div class="collapse navbar-collapse navbar-ex1-collapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li > <!-- th:unless="${session.getAttribute('currentUser').isAutor()}"> -->
-                    <a href="/html/crearUsuario.html" class="btn btn-sm btn-primary navbar-btn" style="color: white; margin-right: 10px; ">Crear Usuario</a>
-                </li>
-                <li><a href="/crearArticulo" class="btn btn-sm btn-primary navbar-btn" style="color: white; margin-right: 50px">Crear Articulo</a></li>
-            </ul>
-        </div>
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+        <ul class="nav navbar-nav navbar-right">
+            <li th:if="${currentUser != null && currentUser.administrator}">
+                <a href="/html/crearUsuario.html" class="btn btn-sm btn-primary navbar-btn" style="color: white; margin-right: 10px;">
+                    Crear Usuario
+                </a>
+            </li>
+            <li th:if="${currentUser != null && currentUser.autor}">
+                <a href="/crearArticulo" class="btn btn-sm btn-primary navbar-btn" style="color: white; margin-right: 50px;">
+                    Crear Articulo
+                </a>
+            </li>
+        </ul>
+    </div>
+
+
     </div>
 </nav>
 
