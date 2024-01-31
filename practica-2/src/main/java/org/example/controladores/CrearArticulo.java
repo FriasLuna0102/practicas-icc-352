@@ -24,6 +24,15 @@ public class CrearArticulo extends ControladorClass{
 
         app.post("/crearArticulo", cxt ->{
 
+            //Lista de Etiquetas:
+            List<Etiqueta> listaEtiquetas = new ArrayList<>();
+
+            //Lista de comentarios:
+            List<Comentario> listaComentarios = Comentario.getComentarios();
+
+            //Lista de articulos
+            List<Articulo> listaArticulos = Articulo.getArticulos();
+
             String titulo = cxt.formParam("titulo");
             String cuerpo = cxt.formParam("cuerpo");
             Usuario autor = cxt.sessionAttribute("currentUser");
@@ -48,7 +57,7 @@ public class CrearArticulo extends ControladorClass{
                 if (etiquetas.charAt(i) == ',') {
                     String etiqueta = etiquetas.substring(startIndex, i).trim(); // Obtener la etiqueta y eliminar los espacios en blanco alrededor
                     Etiqueta newEtiqueta = new Etiqueta(i+1,etiqueta);
-                    Etiqueta.setEtiqueta(newEtiqueta);
+                    listaEtiquetas.add(newEtiqueta);
                     startIndex = i + 1; // Establecer el nuevo índice inicial para la próxima etiqueta
                 }
             }
@@ -57,19 +66,17 @@ public class CrearArticulo extends ControladorClass{
             String ultimaEtiqueta = etiquetas.substring(startIndex).trim();
             Etiqueta ultEtiqueta = new Etiqueta(56,ultimaEtiqueta);
             if (!ultimaEtiqueta.isEmpty()) {
-                Etiqueta.setEtiqueta(ultEtiqueta);
+                listaEtiquetas.add(ultEtiqueta);
             }
-            //Lista de Etiquetas:
-            List<Etiqueta> listaEtiquetas = Etiqueta.getEtiquetas();
-
-            //Lista de comentarios:
-            List<Comentario> listaComentarios = Comentario.getComentarios();
-
-            //Lista de articulos
-            List<Articulo> listaArticulos = Articulo.getArticulos();
 
             Articulo newArticulo = new Articulo(GenerarId.getId(),titulo,cuerpo,autor,fecha,listaComentarios,listaEtiquetas);
-            listaEtiquetas = null;
+
+            //Almacenando etiquetas.
+            for(Etiqueta etique: listaEtiquetas){
+                listaEtiquetas = Etiqueta.setEtiqueta(etique);
+            }
+
+
             /*
             System.out.printf("El id del articulo es: %d, su titulo: %s\n" +
                     "su cuerpo: %s\nSu autor:%s\nFecha: \nEtiquetas:%s ", newArticulo.getId(), newArticulo.getTitulo(),newArticulo.getCuerpo()
