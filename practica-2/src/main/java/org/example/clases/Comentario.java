@@ -1,5 +1,8 @@
 package org.example.clases;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Comentario {
 
     long id;
@@ -45,5 +48,17 @@ public class Comentario {
 
     public void setArticulo(Articulo articulo) {
         this.articulo = articulo;
+    }
+
+
+    static List<Comentario> comentarios = new ArrayList<>();
+
+    public static List<Comentario> setComentario(Comentario comentario) {
+        comentarios.add(comentario);
+        return comentarios;
+    }
+
+    public static List<Comentario> getComentarios() {
+        return comentarios;
     }
 }

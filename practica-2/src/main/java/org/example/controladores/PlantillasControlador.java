@@ -20,20 +20,18 @@ public class PlantillasControlador extends ControladorClass{
         // Configurar la ruta para renderizar una plantilla Thymeleaf.
 
         app.get("/crearArticulo", ctx -> {
-            Map<String, Object> model = new HashMap<>();
-            // Obtener la lista de usuarios
+            if(ctx.sessionAttribute("currentUser") == null){
+                ctx.redirect("/login");
+            }else {
 
-            System.out.println("Imprimiendo Usuarios:");
-            //for(Usuario iterador: usuarios ){
-            //    System.out.println(iterador.getNombre());
-            // }
-            model.put("usuarios", usuarios);
-            ctx.render("publico/html/crearArticulo.html", model);
+                Map<String, Object> model = new HashMap<>();
+                model.put("usuarios", usuarios);
+                ctx.render("publico/html/crearArticulo.html", model);
+            }
         });
 
 
         app.get("/blogUsuario", ctx -> {
-            System.out.println("Hello");
             // Retrieve the currentUser session attribute
             Usuario currentUser = ctx.sessionAttribute("currentUser");
             if (currentUser != null) {

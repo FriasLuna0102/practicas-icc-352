@@ -24,14 +24,10 @@ public class Login extends ControladorClass{
 
 
         app.get("/logout", ctx -> {
-            System.out.println("salioo");
-            String id = ctx.req().getSession().getId();
             //invalidando la sesion.
             ctx.req().getSession().invalidate();
-            ctx.result(String.format("Sesion con ID: %s fue invalidada", id));
             ctx.redirect("/login");
         });
-
 
         app.post("/login", cxt -> {
             if (usuarios.isEmpty()) {
@@ -45,18 +41,13 @@ public class Login extends ControladorClass{
             for (Usuario usuario : usuarios) {
                 if (usuario.getUsername().equals(usuarioLogin) && usuario.getPassword().equals(passwordLogin)) {
                     cxt.sessionAttribute("currentUser", usuario);
-                    System.out.println("Nombre de usuario establecido en la sesión: " + usuario.getNombre());
                     cxt.redirect("/blogUsuario");
                     return;
                 }
             }
-
             // Si ninguna credencial coincide, redirigir de nuevo a la página de inicio de sesión
             cxt.redirect("/login");
         });
-
-
-
 
 
     }

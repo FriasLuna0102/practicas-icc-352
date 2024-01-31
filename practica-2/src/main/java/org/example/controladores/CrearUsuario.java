@@ -14,8 +14,16 @@ public class CrearUsuario extends ControladorClass{
     public void aplicarRutas() {
 
 
-        // Lógica para permitir la creación de nuevos usuarios por parte de administradores
+        //Para evitar que despues de hacer logout no pueda acceder a crearUsuario.
+        app.get("/crearUsuario",cxt ->{
+            if(cxt.sessionAttribute("currentUser") == null){
+                cxt.redirect("/login");
+            }else{
+                cxt.redirect("/html/crearUsuario.html");
+            }
+        });
 
+        // Lógica para permitir la creación de nuevos usuarios por parte de administradores
         app.post("/crearUsuario", ctx -> {
             Usuario currentUser = ctx.sessionAttribute("currentUser");
             if (currentUser != null && currentUser.isAdministrator()) {
@@ -29,7 +37,6 @@ public class CrearUsuario extends ControladorClass{
                 // Crear el nuevo usuario y agregarlo a la lista de usuarios
                 Usuario nuevoUsuario = new Usuario(username, nombre, password, isAdmin, isAutor);
                 setUsuario(nuevoUsuario);
-                System.out.println(nuevoUsuario);
                 // Redirigir a la página de administración u otra página según corresponda
                 ctx.redirect("/blogUsuario");
             } else {

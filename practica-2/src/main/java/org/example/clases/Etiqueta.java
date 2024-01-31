@@ -1,5 +1,8 @@
 package org.example.clases;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Etiqueta {
     long id;
     String etiqueta;
@@ -23,5 +26,18 @@ public class Etiqueta {
 
     public void setEtiqueta(String etiqueta) {
         this.etiqueta = etiqueta;
+    }
+
+
+    static List<Etiqueta> etiquetas = new ArrayList<>();
+
+    public static List<Etiqueta> setEtiqueta(Etiqueta etiqueta) {
+        etiquetas.add(etiqueta);
+
+        return etiquetas;
+    }
+
+    public static List<Etiqueta> getEtiquetas() {
+        return etiquetas;
     }
 }

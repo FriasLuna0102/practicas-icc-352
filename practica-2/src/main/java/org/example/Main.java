@@ -8,6 +8,7 @@ import  org.example.clases.Articulo;
 import  org.example.clases.Comentario;
 import  org.example.clases.Usuario;
 import  org.example.clases.Etiqueta;
+import org.example.controladores.CrearArticulo;
 import org.example.controladores.CrearUsuario;
 import org.example.controladores.Login;
 import org.example.controladores.PlantillasControlador;
@@ -30,31 +31,6 @@ public class Main {
         Usuario.setUsuario(usuario1);
 
 
-
-        //System.out.println(usuarios.getFirst().getNombre());
-        //List<Usuario> usuarios = new ArrayList<>();
-        List<Articulo> articulos = new ArrayList<>();
-        List<Comentario> comentarios = new ArrayList<>();
-        List<Etiqueta> etiquetas = new ArrayList<>();
-
-
-        //List<Usuario> usuarios = getUsuarios(usuario1);
-
-        /*
-        Etiqueta etiqueta = new Etiqueta(1, "Etiqueta1");
-        etiquetas.add(etiqueta);
-
-        Comentario comentario = new Comentario(1, "Este es un comentario", usuario1, null); // El artículo se establecerá más adelante
-        comentarios.add(comentario);
-
-        Articulo articulo = new Articulo(1, "Título del artículo", "Cuerpo del artículo...", usuario1, new Date(), comentarios, etiquetas);
-        articulos.add(articulo);
-
-        // Establecer el artículo en el comentario
-        comentario.setArticulo(articulo);
-
-*/
-
         //Creando la instancia del servidor y configurando.
         Javalin app = Javalin.create(config ->{
             //configurando los documentos estaticos.
@@ -73,73 +49,12 @@ public class Main {
         new Login(app).aplicarRutas();
         new PlantillasControlador(app).aplicarRutas();
         new CrearUsuario(app).aplicarRutas();
-
-
-
-
-
-
-
-
-
-
-
-
-
-        // Configurar el manejo de sesiones
-        /*app.before("/login",ctx -> {
-            // Verificar si hay una sesión activa para cada solicitud
-            if (!ctx.path().startsWith("/login") && !ctx.path().startsWith("/public")) {
-                if (ctx.sessionAttribute("currentUser") == null) {
-                    // Redirigir al usuario a la página de inicio de sesión si no hay una sesión activa
-                    ctx.redirect("/login");
-                }else{
-                    System.out.println(Optional.ofNullable(ctx.sessionAttribute("currentUser")));
-                }
-            }
-        });*/
-
-
-
-        //Si intenta acceder a blogUsuario sin login.
-       /* app.get("/blogUsuario", cxt -> {
-          //  if()
-            cxt.redirect("/login");
-        });
-*/
-        //Creaar metodo para validar login, ese metodo debe agregarse en el metodo get /login y en el metodo /blogUsuario.
+        new CrearArticulo(app).aplicarRutas();
 
 
         app.get("/blog", cxt -> {
             cxt.redirect("blog.html");
         });
-
-
-
-        /*
-        app.post("/login", cxt -> {
-            if (usuarios.isEmpty()) {
-                cxt.redirect("login.html");
-                return;
-            }
-
-            String usuarioLogin = cxt.formParam("username");
-            String passwordLogin = cxt.formParam("password");
-
-            for (Usuario usuario : usuarios) {
-                if (usuario.getUsername().equals(usuarioLogin) && usuario.getPassword().equals(passwordLogin)) {
-                    cxt.sessionAttribute("currentUser", usuario);
-                    System.out.println("Nombre de usuario establecido en la sesión: " + usuario.getNombre());
-                    cxt.redirect("/blogUsuario");
-                    return;
-                }
-            }
-
-            // Si ninguna credencial coincide, redirigir de nuevo a la página de inicio de sesión
-            cxt.redirect("/login");
-        });
-*/
-
 
 
 
