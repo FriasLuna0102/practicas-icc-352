@@ -24,7 +24,6 @@ public class CrearArticulo extends ControladorClass{
 
         app.post("/crearArticulo", cxt ->{
 
-
             String titulo = cxt.formParam("titulo");
             String cuerpo = cxt.formParam("cuerpo");
             Usuario autor = cxt.sessionAttribute("currentUser");
@@ -77,6 +76,7 @@ public class CrearArticulo extends ControladorClass{
             }
 */
 
+            cxt.redirect("/blogUsuario");
 
         });
     }
