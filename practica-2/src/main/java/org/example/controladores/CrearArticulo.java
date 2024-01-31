@@ -65,6 +65,9 @@ public class CrearArticulo extends ControladorClass{
             //Lista de comentarios:
             List<Comentario> listaComentarios = Comentario.getComentarios();
 
+            //Lista de articulos
+            List<Articulo> listaArticulos = Articulo.getArticulos();
+
             Articulo newArticulo = new Articulo(GenerarId.getId(),titulo,cuerpo,autor,fecha,listaComentarios,listaEtiquetas);
 
             System.out.printf("El id del articulo es: %d, su titulo: %s\n" +
@@ -75,7 +78,7 @@ public class CrearArticulo extends ControladorClass{
                 System.out.println(listaEtiqueta.getEtiqueta());
             }
 */
-
+            listaArticulos.add(newArticulo);
             cxt.redirect("/blogUsuario");
 
         });
