@@ -1,5 +1,6 @@
 package org.example.clases;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -77,5 +78,19 @@ public class Articulo {
 
     public void setListaEtiquetas(List<Etiqueta> listaEtiquetas) {
         this.listaEtiquetas = listaEtiquetas;
+    }
+
+    //Lista para almacenar articulos:
+    static List<Articulo> articulos = new ArrayList<>();
+
+    //Para obtener lista de articulos.
+    static public List<Articulo> getArticulos(){
+        return articulos;
+    }
+
+    //Para agregar articulos a la lista.
+    static public List<Articulo> setArticulos(Articulo articulo){
+        articulos.add(articulo);
+        return articulos;
     }
 }
