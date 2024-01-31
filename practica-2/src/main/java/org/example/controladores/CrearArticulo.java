@@ -69,11 +69,12 @@ public class CrearArticulo extends ControladorClass{
             List<Articulo> listaArticulos = Articulo.getArticulos();
 
             Articulo newArticulo = new Articulo(GenerarId.getId(),titulo,cuerpo,autor,fecha,listaComentarios,listaEtiquetas);
-
+            listaEtiquetas = null;
+            /*
             System.out.printf("El id del articulo es: %d, su titulo: %s\n" +
                     "su cuerpo: %s\nSu autor:%s\nFecha: \nEtiquetas:%s ", newArticulo.getId(), newArticulo.getTitulo(),newArticulo.getCuerpo()
             ,newArticulo.getAutor().getNombre(),newArticulo.getFecha(),newArticulo.getListaEtiquetas().getFirst());
-/*
+
             for (Etiqueta listaEtiqueta : listaEtiquetas) {
                 System.out.println(listaEtiqueta.getEtiqueta());
             }

@@ -43,7 +43,6 @@ public class PlantillasControlador extends ControladorClass{
                 if(listArticulos.isEmpty()){
                     ctx.render("publico/html/blogUsuario.html");
                 }else{
-                    System.out.println("Entro");
                     Map<String, Object> model = new HashMap<>();
                     model.put("listArticulos", listArticulos);
                     ctx.render("publico/html/blogUsuario.html", model);
