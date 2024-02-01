@@ -15,6 +15,8 @@ public class buscarArticulos extends ControladorClass {
     @Override
     public void aplicarRutas() {
 
+
+
         /*
         app.post("/buscar", cxt ->{
             String busquedad = cxt.formParam("busquedaad");

@@ -29,12 +29,12 @@ public class Articulo {
         this.listaEtiquetas = listaEtiquetas;
     }
 
-    public long getId() {
-        id = setId() - 1;
+    static public long getId() {
+        contador = setId() - 1;
         return contador;
     }
 
-    public long setId() {
+    static public long setId() {
         contador += 1;
         return contador;
     }
@@ -111,7 +111,8 @@ public class Articulo {
         // Guardar el HTML en un archivo temporal en el directorio de trabajo
         String rutaDirectorio = System.getProperty("user.dir"); // Obtener el directorio de trabajo
         String ruta = rutaDirectorio + "/src/main/resources/publico/temp";
-        String nombreArchivo = articulo.getId() + articulo.getTitulo().replaceAll("\\s+", "_") + ".html"; // Nombre único del archivo
+        //String nombreArchivo = articulo.getId() + articulo.getTitulo().replaceAll("\\s+", "_") + ".html"; // Nombre único del archivo
+        String nombreArchivo = articulo.getId() + ".html"; // Nombre único del archivo
         String rutaArchivo = ruta + File.separator + nombreArchivo; // Ruta completa del archivo
 
         FileWriter writer = new FileWriter(rutaArchivo);

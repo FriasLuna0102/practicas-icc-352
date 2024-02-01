@@ -93,7 +93,7 @@
 
             <!-- the actual blog post: title/author/date/content -->
             <th:block th:each="articulo : ${listArticulos}">
-                <h1><a href="" th:text="${articulo.getTitulo}"></a></h1>
+                <h1><a th:href="'temp/'+${articulo.getId}+'.html'" th:text="${articulo.getTitulo}"></a></h1>
                 <p class="lead"><i class="fa fa-user"></i> <a href="" th:text="${articulo.getAutor().Username}"></a></p>
                 <hr>
                 <p> Posted on <i class="fa fa-calendar" th:text="${articulo.getFecha}"></i> </p>
@@ -167,7 +167,7 @@
                 <h4><i class="fa fa-search"></i> Blog Search...</h4>
                 <form action="/buscar" method="post">
                     <div class="input-group">
-                        <input type="text" class="form-control" name="busquedaad" placeholder="Buscar artículos...">
+                        <input type="text" class="form-control" name="busquedaad" placeholder="Buscar articulos...">
                         <span class="input-group-btn">
                 <button class="btn btn-default" type="submit">
                     <i class="fa fa-search"></i>
@@ -217,8 +217,7 @@
 
                     <th:block th:each="articulo : ${listArticulos}">
                         <li>
-                            <!-- Construye la URL con el ID y el título del artículo -->
-                            <a th:text="${articulo.getTitulo}"></a>
+                            <a th:text="${articulo.getTitulo}" ></a>
                         </li>
                     </th:block>
 
