@@ -40,13 +40,10 @@ public class PlantillasControlador extends ControladorClass{
                 // Set the currentUser attribute in the template context
                 ctx.attribute("currentUser", currentUser);
 
-                if(listArticulos.isEmpty()){
-                    ctx.render("publico/html/blogUsuario.html");
-                }else{
                     Map<String, Object> model = new HashMap<>();
                     model.put("listArticulos", listArticulos);
                     ctx.render("publico/html/blogUsuario.html", model);
-                }
+
             } else {
                 // If the currentUser session attribute is not set, redirect to the login page
                 ctx.redirect("/login");

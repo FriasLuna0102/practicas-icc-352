@@ -6,10 +6,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class Articulo {
 
-    private static long contador = 0;
+    private static long contador = -1;
 
     long id;
     String titulo;
@@ -30,12 +31,11 @@ public class Articulo {
     }
 
     static public long getId() {
-        contador = setId() - 1;
         return contador;
     }
 
     static public long setId() {
-        contador += 1;
+        ++contador;
         return contador;
     }
 
@@ -96,9 +96,8 @@ public class Articulo {
     }
 
     //Para agregar articulos a la lista.
-    static public List<Articulo> setArticulos(Articulo articulo){
+    static public void setArticulos(Articulo articulo){
         articulos.add(articulo);
-        return articulos;
     }
 
 
@@ -121,6 +120,21 @@ public class Articulo {
     }
 
 
+    static public boolean eliminarArti(List<Articulo> lista, String title) {
+        int i = 0;
+        for (i = 0; i < lista.size(); i++) {
+            Articulo articulo = lista.get(i);
+
+            if (Objects.equals(articulo.titulo, title)) {
+                //System.out.println(articulo.getTitulo());
+                lista.remove(i);
+                i=0;
+                return true;
+            }
+        }
+        System.out.println("No se encontro.");
+        return false;
+    }
 
 
 

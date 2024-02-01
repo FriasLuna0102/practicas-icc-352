@@ -88,7 +88,7 @@ public class CrearArticulo extends ControladorClass{
                 System.out.println(listaEtiqueta.getEtiqueta());
             }
 */
-            listaArticulos.add(newArticulo);
+            Articulo.setArticulos(newArticulo);
             Articulo.generarPaginaHTML(newArticulo);
             cxt.redirect("/blogUsuario");
 

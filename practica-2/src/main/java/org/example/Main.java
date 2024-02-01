@@ -8,10 +8,7 @@ import  org.example.clases.Articulo;
 import  org.example.clases.Comentario;
 import  org.example.clases.Usuario;
 import  org.example.clases.Etiqueta;
-import org.example.controladores.CrearArticulo;
-import org.example.controladores.CrearUsuario;
-import org.example.controladores.Login;
-import org.example.controladores.PlantillasControlador;
+import org.example.controladores.*;
 import org.thymeleaf.TemplateEngine;
 import io.javalin.rendering.template.JavalinThymeleaf;
 import io.javalin.rendering.JavalinRenderer;
@@ -50,7 +47,7 @@ public class Main {
         new PlantillasControlador(app).aplicarRutas();
         new CrearUsuario(app).aplicarRutas();
         new CrearArticulo(app).aplicarRutas();
-
+        new EliminarArticulo(app).aplicarRutas();
 
         app.get("/blog", cxt -> {
             cxt.redirect("blog.html");
