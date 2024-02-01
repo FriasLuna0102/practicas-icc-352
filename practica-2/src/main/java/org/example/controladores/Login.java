@@ -49,6 +49,5 @@ public class Login extends ControladorClass{
             cxt.redirect("/login");
         });
 
-
     }
 }
