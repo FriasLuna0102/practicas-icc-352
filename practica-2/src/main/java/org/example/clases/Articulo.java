@@ -1,10 +1,15 @@
 package org.example.clases;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class Articulo {
+
+    private static long contador = 0;
 
     long id;
     String titulo;
@@ -25,11 +30,13 @@ public class Articulo {
     }
 
     public long getId() {
-        return id;
+        id = setId() - 1;
+        return contador;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public long setId() {
+        contador += 1;
+        return contador;
     }
 
     public String getTitulo() {
@@ -93,4 +100,27 @@ public class Articulo {
         articulos.add(articulo);
         return articulos;
     }
+
+
+    static public void generarPaginaHTML(Articulo articulo) throws IOException {
+        String contenidoHTML = "<html><head><title>" + articulo.getTitulo() + "</title></head><body>"
+                + "<h1>" + articulo.getTitulo() + "</h1>"
+                + "<p>" + articulo.getCuerpo() + "</p>"
+                + "</body></html>";
+
+        // Guardar el HTML en un archivo temporal en el directorio de trabajo
+        String rutaDirectorio = System.getProperty("user.dir"); // Obtener el directorio de trabajo
+        String ruta = rutaDirectorio + "/src/main/resources/publico/temp";
+        String nombreArchivo = articulo.getId() + articulo.getTitulo().replaceAll("\\s+", "_") + ".html"; // Nombre único del archivo
+        String rutaArchivo = ruta + File.separator + nombreArchivo; // Ruta completa del archivo
+
+        FileWriter writer = new FileWriter(rutaArchivo);
+        writer.write(contenidoHTML);
+        writer.close();
+    }
+
+
+
+
+
 }

@@ -7,6 +7,8 @@ import org.example.clases.Etiqueta;
 import org.example.clases.Usuario;
 import org.example.controladores.GenerarId;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -87,8 +89,12 @@ public class CrearArticulo extends ControladorClass{
             }
 */
             listaArticulos.add(newArticulo);
+            Articulo.generarPaginaHTML(newArticulo);
             cxt.redirect("/blogUsuario");
 
         });
+
+
+
     }
 }
