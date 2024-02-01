@@ -3,16 +3,13 @@ package org.example.clases;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Articulo {
 
     private static long contador = -1;
 
-    long id;
+    static String id;
     String titulo;
     String cuerpo;
     Usuario autor;
@@ -20,8 +17,8 @@ public class Articulo {
     List<Comentario> listaComentarios;
     List<Etiqueta> listaEtiquetas;
 
-    public Articulo(long id, String titulo, String cuerpo, Usuario autor, Date fecha, List<Comentario> listaComentarios, List<Etiqueta> listaEtiquetas) {
-        this.id = id;
+    public Articulo(String id, String titulo, String cuerpo, Usuario autor, Date fecha, List<Comentario> listaComentarios, List<Etiqueta> listaEtiquetas) {
+        this.id = UUID.randomUUID().toString();
         this.titulo = titulo;
         this.cuerpo = cuerpo;
         this.autor = autor;
@@ -30,15 +27,15 @@ public class Articulo {
         this.listaEtiquetas = listaEtiquetas;
     }
 
-    static public long getId() {
-        return contador;
+    static public String getId() {
+        return id;
     }
 
-    static public long setId() {
+   /* static public long setId() {
         ++contador;
         return contador;
     }
-
+*/
     public String getTitulo() {
         return titulo;
     }
@@ -111,7 +108,7 @@ public class Articulo {
         String rutaDirectorio = System.getProperty("user.dir"); // Obtener el directorio de trabajo
         String ruta = rutaDirectorio + "/src/main/resources/publico/temp";
         //String nombreArchivo = articulo.getId() + articulo.getTitulo().replaceAll("\\s+", "_") + ".html"; // Nombre único del archivo
-        String nombreArchivo = articulo.getId() + ".html"; // Nombre único del archivo
+        String nombreArchivo = id + ".html"; // Nombre único del archivo
         String rutaArchivo = ruta + File.separator + nombreArchivo; // Ruta completa del archivo
 
         FileWriter writer = new FileWriter(rutaArchivo);
@@ -137,5 +134,12 @@ public class Articulo {
     }
 
 
-
+    static public Articulo obtenerArticuloPorId(String idEn){
+        for(Articulo articulo: articulos){
+            if(articulo.id.equals(idEn)){
+                return articulo;
+            }
+        }
+        return null; // Devuelve null si no se encuentra ningún artículo con ese ID
+    }
 }
