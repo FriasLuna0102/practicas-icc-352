@@ -71,7 +71,7 @@ public class CrearArticulo extends ControladorClass{
                 listaEtiquetas.add(ultEtiqueta);
             }
 
-            Articulo newArticulo = new Articulo(Articulo.getId(),titulo,cuerpo,autor,fecha,listaComentarios,listaEtiquetas);
+            Articulo newArticulo = new Articulo(titulo,cuerpo,autor,fecha,listaComentarios,listaEtiquetas);
 
             //Almacenando etiquetas.
             for(Etiqueta etique: listaEtiquetas){

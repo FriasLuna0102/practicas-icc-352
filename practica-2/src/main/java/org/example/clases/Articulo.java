@@ -7,9 +7,9 @@ import java.util.*;
 
 public class Articulo {
 
-    private static long contador = -1;
+    private static long contador = 0;
 
-    static String id;
+    String id;
     String titulo;
     String cuerpo;
     Usuario autor;
@@ -17,8 +17,8 @@ public class Articulo {
     List<Comentario> listaComentarios;
     List<Etiqueta> listaEtiquetas;
 
-    public Articulo(String id, String titulo, String cuerpo, Usuario autor, Date fecha, List<Comentario> listaComentarios, List<Etiqueta> listaEtiquetas) {
-        this.id = UUID.randomUUID().toString();
+    public Articulo(String titulo, String cuerpo, Usuario autor, Date fecha, List<Comentario> listaComentarios, List<Etiqueta> listaEtiquetas) {
+        this.id = String.valueOf(++contador);
         this.titulo = titulo;
         this.cuerpo = cuerpo;
         this.autor = autor;
@@ -27,7 +27,7 @@ public class Articulo {
         this.listaEtiquetas = listaEtiquetas;
     }
 
-    static public String getId() {
+    public String getId() {
         return id;
     }
 
@@ -108,7 +108,7 @@ public class Articulo {
         String rutaDirectorio = System.getProperty("user.dir"); // Obtener el directorio de trabajo
         String ruta = rutaDirectorio + "/src/main/resources/publico/temp";
         //String nombreArchivo = articulo.getId() + articulo.getTitulo().replaceAll("\\s+", "_") + ".html"; // Nombre único del archivo
-        String nombreArchivo = id + ".html"; // Nombre único del archivo
+        String nombreArchivo = articulo.getId() + ".html"; // Nombre único del archivo
         String rutaArchivo = ruta + File.separator + nombreArchivo; // Ruta completa del archivo
 
         FileWriter writer = new FileWriter(rutaArchivo);
@@ -142,4 +142,7 @@ public class Articulo {
         }
         return null; // Devuelve null si no se encuentra ningún artículo con ese ID
     }
+
+
+
 }

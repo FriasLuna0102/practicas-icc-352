@@ -22,9 +22,9 @@ public class PlantillasControlador extends ControladorClass{
         // Configurar la ruta para renderizar una plantilla Thymeleaf.
 
         app.get("/crearArticulo", ctx -> {
-            if(ctx.sessionAttribute("currentUser") == null){
+            if (ctx.sessionAttribute("currentUser") == null) {
                 ctx.redirect("/login");
-            }else {
+            } else {
 
                 Map<String, Object> model = new HashMap<>();
                 model.put("usuarios", usuarios);
@@ -40,9 +40,9 @@ public class PlantillasControlador extends ControladorClass{
                 // Set the currentUser attribute in the template context
                 ctx.attribute("currentUser", currentUser);
 
-                    Map<String, Object> model = new HashMap<>();
-                    model.put("listArticulos", listArticulos);
-                    ctx.render("publico/html/blogUsuario.html", model);
+                Map<String, Object> model = new HashMap<>();
+                model.put("listArticulos", listArticulos);
+                ctx.render("publico/html/blogUsuario.html", model);
 
             } else {
                 // If the currentUser session attribute is not set, redirect to the login page
@@ -51,12 +51,14 @@ public class PlantillasControlador extends ControladorClass{
         });
 
 
-
-        app.get("/articulo", ctx -> {
-            System.out.println("Entroo");
-           // if()
+        app.get("/articulo/{id}", ctx -> {
+            String id = ctx.pathParam("id");
+            // Busca el artículo por ID
+            Articulo articulo = Articulo.obtenerArticuloPorId(id);
+            System.out.println(articulo.getTitulo());
+            System.out.println(articulo.getId());
             Map<String, Object> model = new HashMap<>();
-            model.put("listArticulos", listArticulos);
+            model.put("articulo", articulo);
             ctx.render("publico/temp/articulo_plantila.html", model);
         });
     }
