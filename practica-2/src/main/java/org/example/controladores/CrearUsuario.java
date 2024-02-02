@@ -41,7 +41,7 @@ public class CrearUsuario extends ControladorClass{
                 ctx.redirect("/blogUsuario");
             } else {
                 // El usuario actual no tiene permisos para crear un nuevo usuario, redirigir o mostrar un mensaje de error
-                ctx.result("No tienes permiso para realizar esta acción.");
+                ctx.result("No tienes permiso para realizar esta accion.");
             }
         });
     }
