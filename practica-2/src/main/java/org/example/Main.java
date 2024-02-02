@@ -48,6 +48,7 @@ public class Main {
         new CrearUsuario(app).aplicarRutas();
         new CrearArticulo(app).aplicarRutas();
         new EliminarArticulo(app).aplicarRutas();
+        new editarArticulo(app).aplicarRutas();
 
         app.get("/blog", cxt -> {
             cxt.redirect("blog.html");

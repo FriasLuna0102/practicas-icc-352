@@ -19,15 +19,12 @@ public class EliminarArticulo extends ControladorClass{
         // Manejar la solicitud POST para eliminar un artículo
         app.post("/eliminarArticulo", ctx -> {
             // Obtener el ID del artículo a eliminar desde el formulario
-            String idArticulo = ctx.formParam("idTitulo");
+            String titulo = ctx.formParam("idTitulo");
 
             // Eliminar el artículo de la lista de artículos
-            boolean eliminado = Articulo.eliminarArti(listaArticulos,idArticulo);
+            boolean eliminado = Articulo.eliminarArti(listaArticulos,titulo);
 
             if (eliminado) {
-                for(Articulo articulo: listaArticulos){
-                    System.out.println(articulo.getTitulo());
-                }
                 // Redirigir a la página del blog del usuario
                 ctx.redirect("/blogUsuario");
             } else {

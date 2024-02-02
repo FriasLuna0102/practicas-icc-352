@@ -143,6 +143,33 @@ public class Articulo {
         return null; // Devuelve null si no se encuentra ningún artículo con ese ID
     }
 
+    static List<Usuario> listUsuarios = Usuario.getUsuarios();
+    static List<Etiqueta> listEtiquetas = Etiqueta.getEtiquetas();
+    static public Usuario buscarUsuarios (String usuario){
+        for(Usuario user: listUsuarios){
+            if(user.nombre.equals(usuario)){
+                return user;
+            }
+        }
+        return null;
+    }
+
+
+    static public List<Etiqueta> devolverEtiqueta(String[] etiquetasArray) {
+        List<Etiqueta> listEtiquetas = new ArrayList<>();
+
+        // Iterar sobre el array de etiquetas
+        for (int i = 0; i < etiquetasArray.length; i++) {
+            // Obtener la etiqueta y eliminar los espacios en blanco alrededor
+            String etiqueta = etiquetasArray[i].trim();
+
+            // Crear un nuevo objeto Etiqueta y añadirlo a la lista
+            Etiqueta newEtiqueta = new Etiqueta(i + 1, etiqueta);
+            listEtiquetas.add(newEtiqueta);
+        }
+
+        return listEtiquetas;
+    }
 
 
 }

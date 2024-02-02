@@ -55,8 +55,6 @@ public class PlantillasControlador extends ControladorClass{
             String id = ctx.pathParam("id");
             // Busca el artículo por ID
             Articulo articulo = Articulo.obtenerArticuloPorId(id);
-            System.out.println(articulo.getTitulo());
-            System.out.println(articulo.getId());
             Map<String, Object> model = new HashMap<>();
             model.put("articulo", articulo);
             ctx.render("publico/temp/articulo_plantila.html", model);

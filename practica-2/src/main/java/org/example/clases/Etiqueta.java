@@ -37,7 +37,11 @@ public class Etiqueta {
         return etiquetas;
     }
 
+
     public static List<Etiqueta> getEtiquetas() {
         return etiquetas;
     }
+
+
+
 }
