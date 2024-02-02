@@ -54,7 +54,7 @@ public class PlantillasControlador extends ControladorClass{
 
         app.get("/articulo", ctx -> {
             System.out.println("Entroo");
-
+           // if()
             Map<String, Object> model = new HashMap<>();
             model.put("listArticulos", listArticulos);
             ctx.render("publico/temp/articulo_plantila.html", model);

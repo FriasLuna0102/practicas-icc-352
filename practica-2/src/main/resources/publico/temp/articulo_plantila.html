@@ -29,9 +29,10 @@
             <!-- Formulario de eliminación -->
             <form th:action="@{/eliminarArticulo}" method="post">
                 <!-- Campo oculto para enviar el ID del artículo -->
-                <input type="hidden" name="idArticulo" th:value="${articulo.getId()}" />
-                <button type="submit" onclick="return confirm('¿Estás seguro de que deseas eliminar este artículo?')" style="background-color: red; color: white; padding: 5px 10px; border: none; cursor: pointer;">Eliminar</button>
+                <input type="hidden" name="idTitulo" th:value="${articulo.getTitulo}" />
+                <button type="submit" id="delete-button" style="background-color: red; color: white; padding: 5px 10px; border: none; cursor: pointer;">Eliminar</button>
             </form>
+
         </th:block>
     </th:block>
 </th:block>
