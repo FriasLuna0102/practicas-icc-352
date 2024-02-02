@@ -2,11 +2,10 @@ package org.example.controladores;
 
 import io.javalin.Javalin;
 import org.example.clases.Articulo;
+import org.example.clases.Etiqueta;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 
 public class editarArticulo extends ControladorClass{
@@ -14,7 +13,7 @@ public class editarArticulo extends ControladorClass{
         super(app);
     }
 
-    List<Articulo> listaArticulos = Articulo.getArticulos();
+    List<Articulo> listArticulos = Articulo.getArticulos();
     @Override
     public void aplicarRutas() {
 
@@ -33,6 +32,50 @@ public class editarArticulo extends ControladorClass{
             //Ejemplo: th:value="${articulo.titulo}", deben ser iguales.
             model.put("articulo", articuloEditar);
             ctx.render("publico/temp/editarArticulos.html", model);
+
+        });
+
+
+        app.post("/actualizarArticulo", cxt ->{
+
+            String id = cxt.formParam("idArticulo");
+            String titulo = cxt.formParam("titulo");
+            String cuerpo = cxt.formParam("cuerpo");
+
+            String fecha = cxt.formParam("fecha");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+            Date fechaDate = sdf.parse(fecha);
+
+            String etiqueta = cxt.formParam("etiquetas");
+            List<Etiqueta> lisEtiquetas = Articulo.devolverEtiqueta(etiqueta);
+
+            Articulo actiEditado = Articulo.obtenerArticuloPorId(id);
+            actiEditado.setTitulo(titulo);
+            actiEditado.setCuerpo(cuerpo);
+            actiEditado.setFecha(fechaDate);
+            actiEditado.setListaEtiquetas(lisEtiquetas);
+
+            boolean eliminado = Articulo.eliminarArtiPorId(listArticulos,id);
+
+            listArticulos.add(actiEditado);
+
+            if(eliminado){
+                System.out.println(Articulo.obtenerArticuloPorId(id).getTitulo());
+                System.out.println(id);
+                System.out.println(actiEditado.getTitulo());
+                System.out.println(actiEditado.getCuerpo());
+                System.out.println(fechaDate);
+                System.out.println(etiqueta);
+                // Map<String, Object> model = new HashMap<>();
+                //model.put("listArticulos", listArticulos);
+                cxt.redirect("/blogUsuario");
+            }else {
+                cxt.result("No se pudo editar");
+            }
+
+
+
 
         });
     }

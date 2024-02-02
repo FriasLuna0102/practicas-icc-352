@@ -155,8 +155,11 @@ public class Articulo {
     }
 
 
-    static public List<Etiqueta> devolverEtiqueta(String[] etiquetasArray) {
+    static public List<Etiqueta> devolverEtiqueta(String etiquetasString) {
         List<Etiqueta> listEtiquetas = new ArrayList<>();
+
+        // Dividir el string en etiquetas individuales utilizando una coma como delimitador
+        String[] etiquetasArray = etiquetasString.split(",");
 
         // Iterar sobre el array de etiquetas
         for (int i = 0; i < etiquetasArray.length; i++) {
@@ -172,4 +175,20 @@ public class Articulo {
     }
 
 
+
+    static public boolean eliminarArtiPorId(List<Articulo> lista, String id) {
+        int i = 0;
+        for (i = 0; i < lista.size(); i++) {
+            Articulo articulo = lista.get(i);
+
+            if (Objects.equals(articulo.id, id)) {
+                //System.out.println(articulo.getTitulo());
+                lista.remove(i);
+                i=0;
+                return true;
+            }
+        }
+        System.out.println("No se encontro.");
+        return false;
+    }
 }

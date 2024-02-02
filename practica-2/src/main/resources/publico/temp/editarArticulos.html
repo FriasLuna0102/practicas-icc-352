@@ -11,10 +11,13 @@
 
 <body>
 
+<form th:action="@{/actualizarArticulo}" method="post">
+
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-md-6">
       <div class="form-group">
+        <input type="hidden" name="idArticulo" th:value="${articulo.id}" />
         <label for="titulo">Titulo:</label>
         <input type="text" class="form-control" id="titulo" name="titulo" th:value="${articulo.titulo}" required>
       </div>
@@ -22,16 +25,16 @@
         <label for="cuerpo">Cuerpo:</label>
         <textarea class="form-control" id="cuerpo" name="cuerpo" rows="5" th:text="${articulo.cuerpo}" required></textarea>
       </div>
-      <div class="form-group">
-        <label for="autor">Autor:</label>
-        <select class="form-control" id="autor" name="autor" required>
-          <option value="">Seleccionar Autor</option>
-          <!-- Iterar sobre la lista de usuarios y generar opciones para cada uno -->
-          <th:block th:each="usuario : ${usuarios}">
+      <!-- <div class="form-group">
+         <label for="autor">Autor:</label>
+         <select class="form-control" id="autor" name="autor" required>
+           <option value="">Seleccionar Autor</option>
+           Iterar sobre la lista de usuarios y generar opciones para cada uno
+           <th:block th:each="usuario : ${usuarios}">
             <option th:value="${usuario.getUsername()}" th:text="${usuario.getNombre()}" th:selected="${usuario.getUsername == articulo.autor.username}"></option>
           </th:block>
         </select>
-      </div>
+      </div>  -->
       <div class="form-group">
         <label for="fecha">Fecha:</label>
         <input type="date" class="form-control" id="fecha" name="fecha" th:value="${#dates.format(articulo.fecha, 'yyyy-MM-dd')}" required>
@@ -45,6 +48,7 @@
   </div>
 </div>
 
+</form>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
