@@ -97,7 +97,7 @@
 
                 <h1><a th:href="@{'/articulo/' + ${articulo.getId()}}" th:text="${articulo.titulo}"></a></h1>
 
-                <p class="lead"><i class="fa fa-user"></i> <a href="" th:text="${articulo.getAutor().Username}"></a></p>
+                <p class="lead"><i class="fa fa-user"></i> <a href="" th:text="${articulo.getAutor().Nombre}"></a></p>
                 <hr>
                 <p> Posted on <i class="fa fa-calendar" th:text="${articulo.getFecha}"></i> </p>
                 <th:block th:with="etiquetasString=${''}">

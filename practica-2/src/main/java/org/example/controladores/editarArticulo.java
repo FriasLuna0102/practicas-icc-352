@@ -3,6 +3,7 @@ package org.example.controladores;
 import io.javalin.Javalin;
 import org.example.clases.Articulo;
 import org.example.clases.Etiqueta;
+import org.example.clases.Usuario;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -15,6 +16,7 @@ public class editarArticulo extends ControladorClass{
     }
 
     List<Articulo> listArticulos = Articulo.getArticulos();
+    List<Usuario> listUsuarios = Usuario.getUsuarios();
     @Override
     public void aplicarRutas() {
 
@@ -22,7 +24,6 @@ public class editarArticulo extends ControladorClass{
         app.post("/editarArticulo", ctx -> {
             // Obtener el ID del artículo a eliminar desde el formulario
             String idArticulo = ctx.formParam("idArticulo");
-            System.out.println(idArticulo);
 
 
             // Eliminar el artículo de la lista de artículos
@@ -38,13 +39,11 @@ public class editarArticulo extends ControladorClass{
 
             String etiquetasStr = String.join(",", etiquetas);
 
-            for(int i = 0; i<etiquetasStr.length(); i++){
-                System.out.println(etiquetasStr);
-            }
             //Este nombre de "articulo" sera el que la plantilla podra identificar:
             //Ejemplo: th:value="${articulo.titulo}", deben ser iguales.
             model.put("articulo", articuloEditar);
             model.put("etiquetasStr", etiquetasStr);
+            model.put("usuarios",listUsuarios);
             ctx.render("publico/temp/editarArticulos.html", model);
 
         });
@@ -55,6 +54,17 @@ public class editarArticulo extends ControladorClass{
             String id = cxt.formParam("idArticulo");
             String titulo = cxt.formParam("titulo");
             String cuerpo = cxt.formParam("cuerpo");
+            String autor = cxt.formParam("autor");
+
+            Usuario user = Usuario.buscarUsuario(autor);
+            //assert user != null;
+            System.out.println("El nombre que devuelve el servidor: "+autor);
+
+            System.out.println(user.getNombre());
+            Usuario autorNew = new Usuario(user.getUsername(),user.getNombre(),user.getPassword()
+            ,user.isAdministrator(),user.isAutor());
+
+            //System.out.println(autor);
 
             String fecha = cxt.formParam("fecha");
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -67,6 +77,7 @@ public class editarArticulo extends ControladorClass{
             Articulo actiEditado = Articulo.obtenerArticuloPorId(id);
             actiEditado.setTitulo(titulo);
             actiEditado.setCuerpo(cuerpo);
+            actiEditado.setAutor(autorNew);
             actiEditado.setFecha(fechaDate);
             actiEditado.setListaEtiquetas(lisEtiquetas);
 
@@ -75,12 +86,7 @@ public class editarArticulo extends ControladorClass{
             listArticulos.add(actiEditado);
 
             if(eliminado){
-                System.out.println(Articulo.obtenerArticuloPorId(id).getTitulo());
-                System.out.println(id);
-                System.out.println(actiEditado.getTitulo());
-                System.out.println(actiEditado.getCuerpo());
-                System.out.println(fechaDate);
-                System.out.println(etiqueta);
+
                 // Map<String, Object> model = new HashMap<>();
                 //model.put("listArticulos", listArticulos);
                 cxt.redirect("/blogUsuario");

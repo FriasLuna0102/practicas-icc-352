@@ -2,6 +2,7 @@ package org.example.clases;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 public class Usuario {
@@ -78,12 +79,22 @@ public class Usuario {
         return listaUsuarios;
     }
     public static List<Usuario> getUsuarios() {
-        //listando los estudiantes..
-        //listaUsuarios.add(new Usuario("dd", "Carlos Camacho", "123",true, true));
-        //listaUsuarios.add(new Usuario("dd2", "Otro Estudiante", "ISC",true,true));
-        //listaUsuarios.add(new Usuario("dd3", "Otro otro", "ISC",true,true));
         return listaUsuarios;
     }
 
+
+    static public Usuario buscarUsuario (String username){
+        for(Usuario usuario : listaUsuarios){
+            System.out.println("los de la lista:  "+usuario.getUsername());
+            if(usuario.getUsername().equals(username)){
+                System.out.println("se encontro");
+                return usuario;
+            }else{
+
+                System.out.println("No se encontro");
+            }
+        }
+        return null;
+    }
 
 }
