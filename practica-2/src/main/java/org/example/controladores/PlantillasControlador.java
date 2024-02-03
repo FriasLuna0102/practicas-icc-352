@@ -4,6 +4,7 @@ import io.javalin.Javalin;
 import org.example.clases.Articulo;
 import org.example.clases.Usuario;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +41,7 @@ public class PlantillasControlador extends ControladorClass{
                 // Set the currentUser attribute in the template context
                 ctx.attribute("currentUser", currentUser);
 
+                //Collections.reverse(listArticulos);
                 Map<String, Object> model = new HashMap<>();
                 model.put("listArticulos", listArticulos);
                 ctx.render("publico/html/blogUsuario.html", model);
@@ -49,6 +51,7 @@ public class PlantillasControlador extends ControladorClass{
                 ctx.redirect("/login");
             }
         });
+
 
 
         app.get("/articulo/{id}", ctx -> {

@@ -94,7 +94,7 @@ public class Articulo {
 
     //Para agregar articulos a la lista.
     static public void setArticulos(Articulo articulo){
-        articulos.add(articulo);
+        articulos.add(0,articulo);
     }
 
 

@@ -83,7 +83,7 @@ public class editarArticulo extends ControladorClass{
 
             boolean eliminado = Articulo.eliminarArtiPorId(listArticulos,id);
 
-            listArticulos.add(actiEditado);
+            listArticulos.add(0,actiEditado);
 
             if(eliminado){
 
