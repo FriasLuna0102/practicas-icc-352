@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Detalles del Artículo</title>
-    <!-- <link href="/css/mostrarArticulo.css" rel="stylesheet"> -->
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Agrega aquí tus enlaces a hojas de estilo o bibliotecas -->
 </head>
 <body>
-<!-- Verificar si hay al menos un artículo en la lista -->
-<!-- Verificar si hay al menos un artículo en la lista -->
+
+<!-- Botón de retroceso -->
+<a href="/blogUsuario" class="btn btn-secondary">Atrás</a>
+
 <!-- Contenido del artículo -->
 <h1><a th:href="'/articulo/' + ${articulo.id}" th:text="${articulo.titulo}"></a></h1>
 <p class="lead"><i class="fa fa-user"></i> <a href="" th:text="${articulo.autor.username}"></a></p>
@@ -27,7 +27,7 @@
 <th:block>
     <p th:text="${articulo.getCuerpo()}"></p>
 
-    <!-- No esta funcionando el condicionar, revisar luego -->
+    <!-- Botones de editar y eliminar -->
     <div style="display: inline-block;" th:if="${currentUser != null && (currentUser.administrator or currentUser.autor)}">
         <form th:action="@{/editarArticulo}" method="post">
             <input type="hidden" name="idArticulo" th:value="${articulo.getId}" />
@@ -41,8 +41,22 @@
             <button type="submit" id="delete-button" class="btn btn-danger">Eliminar</button>
         </form>
     </div>
-
-
 </th:block>
+
+<!-- Sección para visualizar comentarios -->
+<div>
+    <h2>Comentarios</h2>
+    <th:block th:if="${not #lists.isEmpty(comentarios)}">
+        <ul>
+            <li th:each="comentario : ${comentarios}">
+                <p th:text="${comentario.comentario}"></p>
+            </li>
+        </ul>
+    </th:block>
+    <th:block th:unless="${not #lists.isEmpty(comentarios)}">
+        <p>No hay comentarios</p>
+    </th:block>
+</div>
+
 </body>
 </html>

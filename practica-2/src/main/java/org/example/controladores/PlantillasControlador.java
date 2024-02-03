@@ -60,6 +60,7 @@ public class PlantillasControlador extends ControladorClass{
             Articulo articulo = Articulo.obtenerArticuloPorId(id);
             Map<String, Object> model = new HashMap<>();
             model.put("articulo", articulo);
+
             ctx.render("publico/temp/articulo_plantila.html", model);
         });
     }
