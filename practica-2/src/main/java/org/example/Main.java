@@ -24,7 +24,7 @@ public class Main {
 
         //Creacion de Usuario admin:
 
-        Usuario usuario1 = new Usuario("star","Starlin","123",true,true);
+        Usuario usuario1 = new Usuario("star","Starlin","123",true,false);
         Usuario.setUsuario(usuario1);
 
 

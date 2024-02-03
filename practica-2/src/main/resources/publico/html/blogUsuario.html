@@ -64,7 +64,7 @@
                     Crear Usuario
                 </a>
             </li>
-            <li th:if="${currentUser != null && currentUser.autor}">
+            <li th:if="${currentUser != null && (currentUser.administrator or currentUser.autor)}">
                 <a href="/crearArticulo" class="btn btn-sm btn-primary navbar-btn" style="color: white; margin-right: 50px;">
                     Crear Articulo
                 </a>
@@ -73,7 +73,6 @@
     </div>
 
 
-    </div>
 </nav>
 
 
