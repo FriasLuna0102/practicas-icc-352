@@ -114,20 +114,21 @@
 
 
 
-                    <div style="display: inline-block;">
+                    <div style="display: inline-block;" th:if="${currentUser != null && (currentUser.administrator or currentUser.autor)}">
                         <form th:action="@{/editarArticulo}" method="post">
                             <input type="hidden" name="idArticulo" th:value="${articulo.id}" />
                             <button type="submit" class="btn btn-primary">Editar</button>
                         </form>
                     </div>
 
-                    <div style="display: inline-block;">
+                    <div style="display: inline-block;" th:if="${currentUser != null && (currentUser.administrator or currentUser.autor)}">
                         <form th:action="@{/eliminarArticulo}" method="post">
                             <!-- Campo oculto para enviar el ID del artículo -->
                             <input type="hidden" name="idTitulo" th:value="${articulo.getTitulo}" />
                             <button type="submit" id="delete-button" style="background-color: red; color: white; padding: 5px 10px; border: none; cursor: pointer;">Eliminar</button>
                         </form>
                     </div>
+
 
 
 
