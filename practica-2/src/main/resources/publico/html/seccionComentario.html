@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div class="well">
+  <h4><i class="fa fa-paper-plane-o"></i> Leave a Comment:</h4>
+  <form role="form" action="/comentar" method="post">
+    <div class="form-group">
+      <textarea class="form-control" rows="3" name="contenidoComentario"></textarea>
+    </div>
+      <input type="hidden" name="idArticulo" th:value="${articulo.id}" />
+      <button type="submit" class="btn btn-primary" name="comentario"><i class="fa fa-reply"></i> Submit</button>
+  </form>
+</div>
+
+<script src="https://apis.google.com/js/plusone.js">
+</script>
+<hr>
+
+</body>
+</html>

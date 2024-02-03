@@ -4,26 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Comentario {
-
-    long id;
+    private static long contador = 0;
+    String id;
     String comentario;
     Usuario autor;
     Articulo articulo;
 
-    public Comentario(long id, String comentario, Usuario autor, Articulo articulo) {
-        this.id = id;
+    public Comentario(String comentario, Usuario autor, Articulo articulo) {
+        this.id = String.valueOf(++contador);
+
         this.comentario = comentario;
         this.autor = autor;
         this.articulo = articulo;
     }
 
 
-    public long getId() {
+    public String getId() {
         return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getComentario() {
@@ -60,5 +57,14 @@ public class Comentario {
 
     public static List<Comentario> getComentarios() {
         return comentarios;
+    }
+
+    static public Comentario buscarComentarioId(String id){
+        for (Comentario coment : comentarios){
+            if(coment.id.equals(id)){
+                return coment;
+            }
+        }
+        return null;
     }
 }

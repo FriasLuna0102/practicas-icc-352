@@ -121,6 +121,38 @@
                         </form>
                     </div>
 
+
+
+
+
+
+
+
+
+
+
+                    <div style="display: inline-block;" th:if="${currentUser != null}">
+                        <form th:action="@{/agregarComentario}" method="post">
+                            <input type="hidden" name="idArticulo" th:value="${articulo.id}" />
+                            <button type="submit" id="comment-button" class="btn btn-primary">Comentar</button>
+                        </form>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     <div style="display: inline-block;" th:if="${currentUser != null && (currentUser.administrator or currentUser.autor)}">
                         <form th:action="@{/eliminarArticulo}" method="post">
                             <!-- Campo oculto para enviar el ID del artículo -->
@@ -163,15 +195,19 @@
             <hr>
 
             <!-- the comment box -->
+
             <div class="well">
                 <h4><i class="fa fa-paper-plane-o"></i> Leave a Comment:</h4>
-                <form role="form" action="/comentario" method="post">
+                <form role="form" action="/agregarComentario" method="post">
                     <div class="form-group">
-                        <textarea class="form-control" rows="3"></textarea>
+                        <textarea class="form-control" rows="3" name="contenidoComentario"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary"><i class="fa fa-reply"></i> Submit</button>
+                    <button type="submit" class="btn btn-primary" name="comentario"><i class="fa fa-reply"></i> Submit</button>
                 </form>
             </div>
+
+
+
             <script src="https://apis.google.com/js/plusone.js">
             </script>
             <hr>
