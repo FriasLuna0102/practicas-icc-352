@@ -44,10 +44,12 @@
           <label for="fecha">Fecha:</label>
           <input type="date" class="form-control" id="fecha" name="fecha" th:value="${#dates.format(articulo.fecha, 'yyyy-MM-dd')}" required>
         </div>
+
         <div class="form-group">
           <label for="etiquetas">Etiquetas:</label>
-          <input type="text" class="form-control" id="etiquetas" name="etiquetas" th:value="${#strings.arrayJoin(articulo.listaEtiquetas, ',')}" placeholder="Separadas por comas">
+          <input type="text" class="form-control" id="etiquetas" name="etiquetas" th:value="${etiquetasStr}" placeholder="Separadas por comas">
         </div>
+
         <button type="submit" class="btn btn-primary">Editar</button>
       </div>
     </div>

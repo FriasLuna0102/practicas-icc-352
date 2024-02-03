@@ -6,6 +6,7 @@ import org.example.clases.Etiqueta;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 public class editarArticulo extends ControladorClass{
@@ -23,14 +24,27 @@ public class editarArticulo extends ControladorClass{
             String idArticulo = ctx.formParam("idArticulo");
             System.out.println(idArticulo);
 
+
             // Eliminar el artículo de la lista de artículos
             Articulo articuloEditar = Articulo.obtenerArticuloPorId(idArticulo);
 
+
             Map<String, Object> model = new HashMap<>();
 
+            List<String> etiquetas = articuloEditar.getListaEtiquetas().stream()
+                    .map(Etiqueta::getEtiqueta)
+                    .collect(Collectors.toList());
+
+
+            String etiquetasStr = String.join(",", etiquetas);
+
+            for(int i = 0; i<etiquetasStr.length(); i++){
+                System.out.println(etiquetasStr);
+            }
             //Este nombre de "articulo" sera el que la plantilla podra identificar:
             //Ejemplo: th:value="${articulo.titulo}", deben ser iguales.
             model.put("articulo", articuloEditar);
+            model.put("etiquetasStr", etiquetasStr);
             ctx.render("publico/temp/editarArticulos.html", model);
 
         });
