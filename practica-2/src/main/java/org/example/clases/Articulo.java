@@ -175,7 +175,6 @@ public class Articulo {
     }
 
 
-
     static public boolean eliminarArtiPorId(List<Articulo> lista, String id) {
         int i = 0;
         for (i = 0; i < lista.size(); i++) {

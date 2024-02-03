@@ -27,13 +27,17 @@
 <th:block>
     <p th:text="${articulo.getCuerpo()}"></p>
 
+    <div style="display: inline-block;">
     <form th:action="@{/editarArticulo}" method="post">
 
         <input type="hidden" name="idArticulo" th:value="${articulo.getId}" />
         <button type="submit" id="editar-button" class="btn btn-primary">Editar</button>
 
     </form>
+    </div>
 
+
+    <div style="display: inline-block;">
     <!-- Formulario de eliminación -->
     <form th:action="@{/eliminarArticulo}" method="post">
         <!-- Campo oculto para enviar el ID del artículo -->
@@ -41,6 +45,7 @@
         <button type="submit" id="delete-button" class="btn btn-danger">Eliminar</button>
 
     </form>
+    </div>
 
 </th:block>
 </body>
