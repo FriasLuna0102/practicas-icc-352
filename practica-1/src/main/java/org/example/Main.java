@@ -33,11 +33,13 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         try {
-
             // Utilizar BufferedReader para leer la URL desde la consola
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             System.out.println("Ingrese una URL válida:");
             String url = reader.readLine();
+
+            // Obtener la extensión del archivo de la URL
+            String fileExtension = url.substring(url.lastIndexOf("."));
 
             // Crear un cliente HTTP y realizar la solicitud
             HttpClient httpClient = HttpClient.newHttpClient();
@@ -47,16 +49,20 @@ public class Main {
 
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-            // Obtener el tipo de contenido del recurso desde los encabezados
-            String contentType = response.headers().firstValue("Content-Type").orElse("Desconocido");
+            // Si la extensión del archivo es .pdf, establecer el tipo de contenido a application/pdf
+            String contentType;
+            if (fileExtension.equals(".pdf")) {
+                contentType = "application/pdf";
+            } else {
+                // De lo contrario, obtener el tipo de contenido del recurso desde los encabezados
+                contentType = response.headers().firstValue("Content-Type").orElse("Desconocido");
+            }
 
             // Imprimir el tipo de recurso
             System.out.println(" ");
             System.out.println("Tipo de recurso seleccionado: " + contentType);
             System.out.println(" ");
 
-
-            System.out.println("Codigo de respuesta: "+ response.statusCode());
 
             //Llamadas de metodos.
             NumeroDeLineas(contentType,response);
@@ -70,6 +76,7 @@ public class Main {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     //1) Indicar la cantidad de lineas del recurso retornado.
