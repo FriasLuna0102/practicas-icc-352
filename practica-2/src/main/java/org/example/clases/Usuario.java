@@ -66,12 +66,12 @@ public class Usuario {
 
     static List<Usuario> listaUsuarios = new ArrayList<>();
 
+    //Obtener lista de usuarios y validando que no hayas usuarios repetidos.
     public static List<Usuario> setUsuario (Usuario usuario){
         for (Usuario user: listaUsuarios){
             if(user.username.equals(usuario.username)){
                 return listaUsuarios;
             }else if(user.nombre.equals(usuario.nombre)){
-                System.out.printf("Ya existe un usuario con: %s ",usuario.nombre);
                 return listaUsuarios;
             }
         }
@@ -83,15 +83,11 @@ public class Usuario {
     }
 
 
+    //Buscando un usuario por su username
     static public Usuario buscarUsuario (String username){
         for(Usuario usuario : listaUsuarios){
-            System.out.println("los de la lista:  "+usuario.getUsername());
             if(usuario.getUsername().equals(username)){
-                System.out.println("se encontro");
                 return usuario;
-            }else{
-
-                System.out.println("No se encontro");
             }
         }
         return null;

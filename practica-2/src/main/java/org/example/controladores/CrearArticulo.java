@@ -5,12 +5,7 @@ import org.example.clases.Articulo;
 import org.example.clases.Comentario;
 import org.example.clases.Etiqueta;
 import org.example.clases.Usuario;
-import org.example.controladores.GenerarId;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -21,7 +16,6 @@ public class CrearArticulo extends ControladorClass{
         super(app);
     }
 
-    List<Articulo> articulos = new ArrayList<>();
     @Override
     public void aplicarRutas() {
 
@@ -72,7 +66,6 @@ public class CrearArticulo extends ControladorClass{
             }
 
             Articulo.setArticulos(newArticulo);
-            //Articulo.generarPaginaHTML(newArticulo);
             cxt.redirect("/blogUsuario");
 
         });

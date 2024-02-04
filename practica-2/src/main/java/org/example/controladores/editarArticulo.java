@@ -57,14 +57,10 @@ public class editarArticulo extends ControladorClass{
             String autor = cxt.formParam("autor");
 
             Usuario user = Usuario.buscarUsuario(autor);
-            //assert user != null;
-            System.out.println("El nombre que devuelve el servidor: "+autor);
 
-            System.out.println(user.getNombre());
             Usuario autorNew = new Usuario(user.getUsername(),user.getNombre(),user.getPassword()
             ,user.isAdministrator(),user.isAutor());
 
-            //System.out.println(autor);
 
             String fecha = cxt.formParam("fecha");
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -86,16 +82,10 @@ public class editarArticulo extends ControladorClass{
             listArticulos.add(0,actiEditado);
 
             if(eliminado){
-
-                // Map<String, Object> model = new HashMap<>();
-                //model.put("listArticulos", listArticulos);
                 cxt.redirect("/blogUsuario");
             }else {
                 cxt.result("No se pudo editar");
             }
-
-
-
 
         });
     }

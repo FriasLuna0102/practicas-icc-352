@@ -59,6 +59,7 @@ public class Comentario {
         return comentarios;
     }
 
+    //Buscar comentarios por id
     static public Comentario buscarComentarioId(String id){
         for (Comentario coment : comentarios){
             if(coment.id.equals(id)){
@@ -68,6 +69,7 @@ public class Comentario {
         return null;
     }
 
+    //Buscar los comentarios relacionado a un articulo.
     static public List<Comentario> buscarComentPorArticulo(Articulo articulo){
         List<Comentario> listForArticulo = new ArrayList<>();
         for(Comentario cometarios : comentarios){

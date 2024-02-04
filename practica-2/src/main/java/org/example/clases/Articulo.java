@@ -98,32 +98,13 @@ public class Articulo {
     }
 
 
-    static public void generarPaginaHTML(Articulo articulo) throws IOException {
-        String contenidoHTML = "<html><head><title>" + articulo.getTitulo() + "</title></head><body>"
-                + "<h1>" + articulo.getTitulo() + "</h1>"
-                + "<p>" + articulo.getCuerpo() + "</p>"
-                + "</body></html>";
-
-        // Guardar el HTML en un archivo temporal en el directorio de trabajo
-        String rutaDirectorio = System.getProperty("user.dir"); // Obtener el directorio de trabajo
-        String ruta = rutaDirectorio + "/src/main/resources/publico/temp";
-        //String nombreArchivo = articulo.getId() + articulo.getTitulo().replaceAll("\\s+", "_") + ".html"; // Nombre único del archivo
-        String nombreArchivo = articulo.getId() + ".html"; // Nombre único del archivo
-        String rutaArchivo = ruta + File.separator + nombreArchivo; // Ruta completa del archivo
-
-        FileWriter writer = new FileWriter(rutaArchivo);
-        writer.write(contenidoHTML);
-        writer.close();
-    }
-
-
+    //Metodo para eliminar un articulo de una lista mediante el titulo.
     static public boolean eliminarArti(List<Articulo> lista, String title) {
         int i = 0;
         for (i = 0; i < lista.size(); i++) {
             Articulo articulo = lista.get(i);
 
             if (Objects.equals(articulo.titulo, title)) {
-                //System.out.println(articulo.getTitulo());
                 lista.remove(i);
                 i=0;
                 return true;
@@ -134,6 +115,7 @@ public class Articulo {
     }
 
 
+    //Metodo para obtener un articulo por el id.
     static public Articulo obtenerArticuloPorId(String idEn){
         for(Articulo articulo: articulos){
             if(articulo.id.equals(idEn)){
@@ -144,7 +126,7 @@ public class Articulo {
     }
 
     static List<Usuario> listUsuarios = Usuario.getUsuarios();
-    static List<Etiqueta> listEtiquetas = Etiqueta.getEtiquetas();
+
     static public Usuario buscarUsuarios (String usuario){
         for(Usuario user: listUsuarios){
             if(user.nombre.equals(usuario)){
@@ -155,6 +137,7 @@ public class Articulo {
     }
 
 
+    //Metodo para devolver un string de etiquetas en una lista.
     static public List<Etiqueta> devolverEtiqueta(String etiquetasString) {
         List<Etiqueta> listEtiquetas = new ArrayList<>();
 
@@ -181,13 +164,11 @@ public class Articulo {
             Articulo articulo = lista.get(i);
 
             if (Objects.equals(articulo.id, id)) {
-                //System.out.println(articulo.getTitulo());
                 lista.remove(i);
                 i=0;
                 return true;
             }
         }
-        System.out.println("No se encontro.");
         return false;
     }
 }

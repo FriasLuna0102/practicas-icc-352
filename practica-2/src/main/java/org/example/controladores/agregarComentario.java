@@ -22,17 +22,15 @@ public class agregarComentario extends ControladorClass{
 
         app.post("/agregarComentario", cxt ->{
 
-            //String comentario = cxt.formParam("contenidoComentario");
-            //Usuario autor = cxt.sessionAttribute("currentUser");
+            //Obtengo el id del formulario y busco el articul al cual se comentara por su id.
             String idArticulo = cxt.formParam("idArticulo");
             Articulo articulo = Articulo.obtenerArticuloPorId(idArticulo);
 
+            //Lo mando al seccionComentario html, para comentar.
             Map<String, Object> model = new HashMap<>();
             model.put("articulo", articulo);
 
             cxt.render("publico/html/seccionComentario.html", model);
-
-
 
         });
 
@@ -44,19 +42,21 @@ public class agregarComentario extends ControladorClass{
             Usuario autor = cxt.sessionAttribute("currentUser");
             String idArticulo = cxt.formParam("idArticulo");
             Articulo articulo = Articulo.obtenerArticuloPorId(idArticulo);
-            System.out.println(comentario);
-            System.out.println(autor.getNombre());
 
 
-
+            //Creo el comentario.
             Comentario newComent = new Comentario(comentario,autor,articulo);
 
             comenForArticulo.add(newComent);
 
+            //Creo el nuevo articulo con los comentarios asignado.
             Articulo newArticulo = new Articulo(articulo.getTitulo(),articulo.getCuerpo(),articulo.getAutor()
                     , articulo.getFecha(), comenForArticulo,articulo.getListaEtiquetas());
 
+            //Agrego los comentarios a la lista de comentario
             Comentario.setComentario(newComent);
+
+            //Obtengo la lista de comentario para un articulo en comun.
             List<Comentario> listComentario = Comentario.buscarComentPorArticulo(articulo);
 
 
