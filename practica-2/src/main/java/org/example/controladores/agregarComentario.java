@@ -56,13 +56,13 @@ public class agregarComentario extends ControladorClass{
             Articulo newArticulo = new Articulo(articulo.getTitulo(),articulo.getCuerpo(),articulo.getAutor()
                     , articulo.getFecha(), comenForArticulo,articulo.getListaEtiquetas());
 
-            listComentarios.add(newComent);
-
+            Comentario.setComentario(newComent);
+            List<Comentario> listComentario = Comentario.buscarComentPorArticulo(articulo);
 
 
             Map<String, Object> model = new HashMap<>();
             model.put("articulo", newArticulo);
-            model.put("comentarios", listComentarios); // Añadir la lista de comentarios al modelo
+            model.put("listComentarios", listComentario); // Añadir la lista de comentarios al modelo
 
             cxt.render("publico/temp/articulo_plantila.html", model);
 

@@ -67,4 +67,15 @@ public class Comentario {
         }
         return null;
     }
+
+    static public List<Comentario> buscarComentPorArticulo(Articulo articulo){
+        List<Comentario> listForArticulo = new ArrayList<>();
+        for(Comentario cometarios : comentarios){
+            if(cometarios.articulo.getId().equals(articulo.id)){
+                listForArticulo.add(cometarios);
+            }
+        }
+
+        return listForArticulo;
+    }
 }

@@ -2,6 +2,7 @@ package org.example.controladores;
 
 import io.javalin.Javalin;
 import org.example.clases.Articulo;
+import org.example.clases.Comentario;
 import org.example.clases.Usuario;
 
 import java.util.Collections;
@@ -41,9 +42,10 @@ public class PlantillasControlador extends ControladorClass{
                 // Set the currentUser attribute in the template context
                 ctx.attribute("currentUser", currentUser);
 
-                //Collections.reverse(listArticulos);
+
                 Map<String, Object> model = new HashMap<>();
                 model.put("listArticulos", listArticulos);
+
                 ctx.render("publico/html/blogUsuario.html", model);
 
             } else {
@@ -58,8 +60,11 @@ public class PlantillasControlador extends ControladorClass{
             String id = ctx.pathParam("id");
             // Busca el artículo por ID
             Articulo articulo = Articulo.obtenerArticuloPorId(id);
+            List<Comentario> listDeComentario = Comentario.buscarComentPorArticulo(articulo);
+
             Map<String, Object> model = new HashMap<>();
             model.put("articulo", articulo);
+            model.put("listComentarios",listDeComentario);
 
             ctx.render("publico/temp/articulo_plantila.html", model);
         });
