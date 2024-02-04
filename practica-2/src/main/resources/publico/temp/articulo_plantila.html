@@ -5,7 +5,16 @@
     <title>Detalles del Artículo</title>
     <!-- Agrega aquí tus enlaces a hojas de estilo o bibliotecas -->
     <link href="/css/plantilla_articulos.css" rel="stylesheet">
+    <!-- Asegúrate de incluir Bootstrap para utilizar sus clases -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 </head>
+
+<style>
+    body{
+        background-image: url("/img/shapelined-_JBKdviweXI-unsplash.jpg");
+    }
+</style>
+
 <body>
 
 
@@ -23,7 +32,7 @@
     <th:block th:with="etiquetasString=${''}">
         <p><i class="fa fa-tags"></i> Tags:
             <span th:each="etiqueta, etiquetaStat : ${articulo.listaEtiquetas}">
-            <span class="badge badge-info" th:text="${etiqueta.etiqueta}"></span>
+            <span class="badge badge-info text-muted" th:text="${etiqueta.etiqueta}"></span>
             <span th:if="${!etiquetaStat.last}"> </span>
         </span>
         </p>
@@ -61,17 +70,6 @@
                 </li>
             </ul>
         </th:block>
-        <th:block th:unless="${not #lists.isEmpty(listComentarios)}">
-            <p>No hay comentarios</p>
-        </th:block>
-    </div>
+        <th:block th:unless="${not #lists.isEmpty(listComentarios)}"> <p>No hay comentarios</p> </th:block> </div>
 
-
-
-
-
-</div>
-
-
-</body>
-</html>
+</div> </body> </html>

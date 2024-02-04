@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
+
+
 <body>
 
 <div class="well">
@@ -23,62 +25,57 @@
 
 <style>
 
-    /* Estilos generales */
     body {
         font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-image: url("/img/360_F_391461057_5P0BOWl4lY442Zoo9rzEeJU0S2c1WDZR.jpg");
+
     }
 
-    /* Estilos para el contenedor principal */
     .well {
-        background-color: #f5f5f5;
+        background-color: #fff;
         padding: 20px;
         border-radius: 5px;
-        margin: 20px auto;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         max-width: 600px;
+        width: 100%;
     }
 
-    /* Estilos para el título */
     .well h4 {
-        font-size: 20px;
-        margin-top: 0;
+        color: #333;
+        font-size: 24px;
         margin-bottom: 20px;
     }
 
-    /* Estilos para el formulario */
-    .well form {
-        margin-bottom: 0;
-    }
-
-    /* Estilos para el campo de texto */
-    .well textarea {
-        width: 100%;
-        min-height: 100px;
-        padding: 10px;
-        border: 1px solid #ccc;
+    .well .form-control {
         border-radius: 5px;
+        border: 1px solid #ddd;
+        padding: 10px;
         resize: none;
     }
 
-    /* Estilos para el botón de enviar */
-    .well button {
+    .well .btn {
         background-color: #007bff;
         color: #fff;
         border: none;
-        padding: 10px 20px;
         border-radius: 5px;
+        padding: 10px 20px;
         cursor: pointer;
         transition: background-color 0.3s ease;
     }
 
-    .well button:hover {
+    .well .btn:hover {
         background-color: #0056b3;
     }
 
-    /* Estilos para el icono de enviar */
-    .well button i {
+    .well .btn i {
         margin-right: 5px;
     }
-
 </style>
 
 </body>

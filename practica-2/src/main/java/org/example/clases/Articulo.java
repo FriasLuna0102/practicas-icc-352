@@ -110,7 +110,6 @@ public class Articulo {
                 return true;
             }
         }
-        System.out.println("No se encontro.");
         return false;
     }
 

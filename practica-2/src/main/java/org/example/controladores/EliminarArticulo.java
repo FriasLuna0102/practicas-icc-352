@@ -29,7 +29,7 @@ public class EliminarArticulo extends ControladorClass{
                 ctx.redirect("/blogUsuario");
             } else {
                 // Manejar el caso en que el artículo no se pudo eliminar
-                ctx.result("Error al eliminar el artículo.");
+                ctx.result("Error al eliminar el articulo.");
             }
         });
 
