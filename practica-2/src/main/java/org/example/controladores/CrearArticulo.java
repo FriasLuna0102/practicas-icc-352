@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -39,18 +40,10 @@ public class CrearArticulo extends ControladorClass{
             String cuerpo = cxt.formParam("cuerpo");
             Usuario autor = cxt.sessionAttribute("currentUser");
 
-            //Manejo de la fecha:
-            // Suponiendo que el formato de fecha recibido es "yyyy-MM-dd"
-            SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy");
-            String fechaString = cxt.formParam("fecha");
-            Date fecha;
-            try {
-                fecha = formatoFecha.parse(fechaString);
-            } catch (ParseException e) {
-                // Manejar la excepción si la cadena no está en el formato esperado
-                e.printStackTrace();
-                fecha = null; // O cualquier manejo que desees hacer en caso de error
-            }
+
+            // Obtenemos la fecha del sistema:
+            Date fechaActual = Calendar.getInstance().getTime();
+
             String etiquetas = cxt.formParam("etiquetas");
 
             //Logica pra tomar las etiquetas y añadirla a la lista de etiquetas separadas por coma.
@@ -71,23 +64,13 @@ public class CrearArticulo extends ControladorClass{
                 listaEtiquetas.add(ultEtiqueta);
             }
 
-            Articulo newArticulo = new Articulo(titulo,cuerpo,autor,fecha,listaComentarios,listaEtiquetas);
+            Articulo newArticulo = new Articulo(titulo,cuerpo,autor,fechaActual,listaComentarios,listaEtiquetas);
 
             //Almacenando etiquetas.
             for(Etiqueta etique: listaEtiquetas){
                 listaEtiquetas = Etiqueta.setEtiqueta(etique);
             }
 
-
-            /*
-            System.out.printf("El id del articulo es: %d, su titulo: %s\n" +
-                    "su cuerpo: %s\nSu autor:%s\nFecha: \nEtiquetas:%s ", newArticulo.getId(), newArticulo.getTitulo(),newArticulo.getCuerpo()
-            ,newArticulo.getAutor().getNombre(),newArticulo.getFecha(),newArticulo.getListaEtiquetas().getFirst());
-
-            for (Etiqueta listaEtiqueta : listaEtiquetas) {
-                System.out.println(listaEtiqueta.getEtiqueta());
-            }
-*/
             Articulo.setArticulos(newArticulo);
             //Articulo.generarPaginaHTML(newArticulo);
             cxt.redirect("/blogUsuario");

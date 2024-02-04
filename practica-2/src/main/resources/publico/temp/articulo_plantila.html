@@ -55,7 +55,7 @@
             <ul>
                 <li th:each="comentario : ${listComentarios}">
                     <h3><i class="fa fa-comment"></i> <span th:text="${comentario.autor.nombre}"></span>
-                        <!--<small><span th:text="${comentario.fecha}"></span></small> -->
+                        <small><span th:text="${comentario.articulo.fecha}"></span></small>
                     </h3>
                     <p th:text="${comentario.comentario}"></p>
                 </li>
