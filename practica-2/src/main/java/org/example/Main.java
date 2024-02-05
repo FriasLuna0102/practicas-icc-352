@@ -55,8 +55,15 @@ public class Main {
             cxt.redirect("blog.html");
         });
 
+        app.get("/", cxt->{
 
+            if (cxt.sessionAttribute("currentUser") == null){
+                cxt.redirect("/login");
+            }else{
+                cxt.redirect("/blogUsuario");
+            }
 
+        });
     }
 
     static int getHerokuAssignedPort() {
