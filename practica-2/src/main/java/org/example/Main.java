@@ -64,6 +64,11 @@ public class Main {
             }
 
         });
+
+        //Importante esto:
+        app.before("/html/{none}", cxt -> {
+            cxt.redirect("/");
+        });
     }
 
     static int getHerokuAssignedPort() {
