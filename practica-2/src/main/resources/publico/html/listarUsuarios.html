@@ -17,25 +17,37 @@
     th {
       background-color: #f2f2f2;
     }
+
+    body{
+      background-image: url("/img/shapelined-_JBKdviweXI-unsplash.jpg");
+    }
+
+    h2{
+      background-color: #007bff;
+    }
   </style>
+
 </head>
 <body>
 <h2>Listado de Usuarios</h2>
 <table>
   <thead>
   <tr>
-    <th>Username</th>
     <!-- <th>Fecha de Creación</th> -->
     <th>Nombre</th>
+    <th>Username</th>
+    <th>Password</th>
     <th>Administrador</th>
     <th>Autor</th>
   </tr>
   </thead>
   <tbody>
   <tr th:each="user : ${listUsuario}">
+    <td th:text="${user.nombre}"></td>
     <td th:text="${user.username}"></td>
     <!-- <td th:text="${user.creationDate}"></td> -->
-    <td th:text="${user.nombre}"></td>
+    <td th:text="${user.password}"></td>
+
 
     <td th:text="${user.administrator}"></td>
     <td th:text="${user.autor}"></td>

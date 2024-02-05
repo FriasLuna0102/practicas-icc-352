@@ -18,10 +18,13 @@ public class mostrarUsuarios extends ControladorClass{
     public void aplicarRutas() {
 
         app.get("/mostrarUsuario", cxt ->{
-            System.out.println("entro");
-            Map<String, Object> model = new HashMap<>();
-            model.put("listUsuario",listUsuario);
-            cxt.render("publico/html/listarUsuarios.html",model);
+            if(cxt.sessionAttribute("currentUser") == null){
+                cxt.redirect("/login");
+            }else{
+                Map<String, Object> model = new HashMap<>();
+                model.put("listUsuario",listUsuario);
+                cxt.render("publico/html/listarUsuarios.html",model);
+            }
         });
     }
 }
