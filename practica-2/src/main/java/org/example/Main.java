@@ -50,6 +50,7 @@ public class Main {
         new EliminarArticulo(app).aplicarRutas();
         new editarArticulo(app).aplicarRutas();
         new agregarComentario(app).aplicarRutas();
+        new mostrarUsuarios(app).aplicarRutas();
 
         app.get("/blog", cxt -> {
             cxt.redirect("blog.html");

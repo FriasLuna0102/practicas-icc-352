@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Listado de Usuarios</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+<h2>Listado de Usuarios</h2>
+<table>
+  <thead>
+  <tr>
+    <th>Username</th>
+    <!-- <th>Fecha de Creación</th> -->
+    <th>Nombre</th>
+    <th>Administrador</th>
+    <th>Autor</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="user : ${listUsuario}">
+    <td th:text="${user.username}"></td>
+    <!-- <td th:text="${user.creationDate}"></td> -->
+    <td th:text="${user.nombre}"></td>
+
+    <td th:text="${user.administrator}"></td>
+    <td th:text="${user.autor}"></td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>

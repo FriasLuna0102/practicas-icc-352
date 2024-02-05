@@ -71,6 +71,11 @@
                     Crear Articulo
                 </a>
             </li>
+            <li th:if="${currentUser != null && (currentUser.administrator or currentUser.autor)}">
+                <a href="/mostrarUsuario" class="btn btn-sm btn-primary navbar-btn" style="color: white; margin-right: 50px;">
+                    Usuarios
+                </a>
+            </li>
         </ul>
     </div>
 
