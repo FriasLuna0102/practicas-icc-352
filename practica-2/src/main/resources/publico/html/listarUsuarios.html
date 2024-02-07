@@ -25,6 +25,25 @@
     h2{
       background-color: #007bff;
     }
+
+    /* Estilos para el botón de atrás */
+    .container {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .back-button {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .back-button:hover {
+      background-color: #0056b3;
+    }
   </style>
 
 </head>
@@ -54,5 +73,18 @@
   </tr>
   </tbody>
 </table>
+
+<!-- Botón de atrás -->
+<div class="container">
+  <button class="back-button" onclick="goBack()">Atras</button>
+</div>
+
+<script>
+  // Función para retroceder en la historia del navegador al hacer clic en el botón
+  function goBack() {
+    window.history.back();
+  }
+</script>
+
 </body>
 </html>
