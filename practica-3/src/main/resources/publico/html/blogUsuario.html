@@ -120,15 +120,15 @@
             <th:block th:each="articulo : ${listArticulos}">
               <!-- <h1><a th:href="'temp/'+${articulo.getId}+'.html'" th:text="${articulo.getTitulo}"></a></h1> -->
 
-                <h1 class="mayusculaallmoment"><a th:href="@{'/blogUsuario/articulo/' + ${articulo.getId()}}" th:text="${articulo.titulo}"></a></h1>
+                <h1 class="mayusculaallmoment"><a th:href="@{'/blogUsuario/articulo/' + ${articulo.getId()}}" th:text="${articulo.getTitulo}"></a></h1>
 
-                <p class="lead"><i class="fa fa-user"></i> <a href="" th:text="${articulo.getAutor().Nombre}"></a></p>
+                <p class="lead"><i class="fa fa-user"></i> <a href="" th:text="${articulo.getAutor().getNombre}"></a></p>
                 <hr>
                 <p> Posted on <i class="fa fa-calendar" th:text="${articulo.getFecha}"></i> </p>
                 <th:block th:with="etiquetasString=${''}">
                     <p><i class="fa fa-tags"></i> Tags:
-                        <span th:each="etiqueta, iterStat : ${articulo.listaEtiquetas}">
-                <span class="badge badge-info" th:text="${etiqueta.etiqueta}"></span>
+                        <span th:each="etiqueta, iterStat : ${articulo.getListaEtiquetas}">
+                <span class="badge badge-info" th:text="${etiqueta.getEtiqueta}"></span>
                 <span th:if="${!iterStat.last}"> </span>
             </span>
                     </p>
@@ -142,7 +142,7 @@
 
                     <div style="display: inline-block;" th:if="${currentUser != null && (currentUser.administrator or currentUser.autor)}">
                         <form th:action="@{/editarArticulo}" method="post">
-                            <input type="hidden" name="idArticulo" th:value="${articulo.id}" />
+                            <input type="hidden" name="idArticulo" th:value="${articulo.getId}" />
                             <button type="submit" class="btn btn-primary">Editar</button>
                         </form>
                     </div>
@@ -159,7 +159,7 @@
 
                     <div style="display: inline-block;" th:if="${currentUser != null}">
                         <form th:action="@{/agregarComentario}" method="post">
-                            <input type="hidden" name="idArticulo" th:value="${articulo.id}" />
+                            <input type="hidden" name="idArticulo" th:value="${articulo.getId}" />
                             <button type="submit" id="comment-button" class="btn btn-primary">Comentar</button>
                         </form>
                     </div>
@@ -241,7 +241,7 @@
 
                                 <th:block th:with="etiquetasString=${''}">
                                         <span th:each="etiqueta, iterStat : ${articulo.listaEtiquetas}">
-                                        <span class="badge badge-info" th:text="${etiqueta.etiqueta}"></span>
+                                        <span class="badge badge-info" th:text="${etiqueta.getEtiqueta}"></span>
                                         <span th:if="${!iterStat.last}"> </span>
                                         </span>
 

@@ -29,16 +29,7 @@
             <label for="cuerpo">Cuerpo:</label>
             <textarea class="form-control" id="cuerpo" name="cuerpo" rows="5" required></textarea>
         </div>
-        <div class="form-group">
-            <label for="autor">Autor:</label>
-            <select class="form-control" id="autor" name="autor" required>
-                <option value="">Seleccionar Autor</option>
-                <!-- Iterar sobre la lista de usuarios y generar opciones para cada uno -->
-                <th:block th:each="usuario : ${usuarios}">
-                    <option th:value="${usuario.getUsername()}" th:text="${usuario.getNombre()}"></option>
-                </th:block>
-            </select>
-        </div>
+
 
         <div class="form-group">
             <label for="etiquetas">Etiquetas:</label>
