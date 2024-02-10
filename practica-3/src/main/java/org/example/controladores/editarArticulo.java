@@ -2,6 +2,7 @@ package org.example.controladores;
 
 import io.javalin.Javalin;
 import org.example.clases.Articulo;
+import org.example.clases.Blog;
 import org.example.clases.Etiqueta;
 import org.example.clases.Usuario;
 import org.example.util.ControladorClass;
@@ -57,7 +58,7 @@ public class editarArticulo extends ControladorClass {
             String cuerpo = cxt.formParam("cuerpo");
             String autor = cxt.formParam("autor");
 
-            Usuario user = Usuario.buscarUsuario(autor);
+            Usuario user = Blog.getInstance().buscarUsuario(autor);
 
             Usuario autorNew = new Usuario(user.getUsername(),user.getNombre(),user.getPassword()
             ,user.isAdministrator(),user.isAutor());
