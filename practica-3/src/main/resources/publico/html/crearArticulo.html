@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Articulo</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+</head>
+
+
+<style>
+    body{
+        background-image: url("/img/shapelined-_JBKdviweXI-unsplash.jpg");
+    }
+</style>
+
+<body>
+
+<div class="container">
+    <h2>Crear Nuevo Articulo</h2>
+    <form action="/crearArticulo" method="post">
+        <div class="form-group">
+            <label for="titulo">Titulo:</label>
+            <input type="text" class="form-control" id="titulo" name="titulo" required>
+        </div>
+        <div class="form-group">
+            <label for="cuerpo">Cuerpo:</label>
+            <textarea class="form-control" id="cuerpo" name="cuerpo" rows="5" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="autor">Autor:</label>
+            <select class="form-control" id="autor" name="autor" required>
+                <option value="">Seleccionar Autor</option>
+                <!-- Iterar sobre la lista de usuarios y generar opciones para cada uno -->
+                <th:block th:each="usuario : ${usuarios}">
+                    <option th:value="${usuario.getUsername()}" th:text="${usuario.getNombre()}"></option>
+                </th:block>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="etiquetas">Etiquetas:</label>
+            <input type="text" class="form-control" id="etiquetas" name="etiquetas" placeholder="Separadas por comas">
+        </div>
+        <button type="submit" class="btn btn-primary">Crear Articulo</button>
+    </form>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
