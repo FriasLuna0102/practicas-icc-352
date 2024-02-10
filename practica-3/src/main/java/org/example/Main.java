@@ -2,30 +2,21 @@ package org.example;
 
 import io.javalin.Javalin;
 import io.javalin.http.staticfiles.Location;
-import io.javalin.rendering.FileRenderer;
 import io.javalin.rendering.template.JavalinThymeleaf;
-import  org.example.clases.Articulo;
-import  org.example.clases.Comentario;
+import org.example.clases.Blog;
 import  org.example.clases.Usuario;
-import  org.example.clases.Etiqueta;
 import org.example.controladores.*;
-import org.thymeleaf.TemplateEngine;
-import io.javalin.rendering.template.JavalinThymeleaf;
 import io.javalin.rendering.JavalinRenderer;
-
-import java.util.*;
-
-import static org.example.clases.Usuario.getUsuarios;
-import static org.example.clases.Usuario.setUsuario;
 
 
 public class Main {
     public static void main(String[] args) {
 
-        //Creacion de Usuario admin:
-
+        //Creacion de Usuarios admin:
         Usuario usuario1 = new Usuario("star","Starlin","123",true,false);
-        Usuario.setUsuario(usuario1);
+        Usuario usuario2 = new Usuario("admin", "randae", "admin", true, false);
+        Blog.getInstance().addUsuario(usuario1);
+        Blog.getInstance().addUsuario(usuario2);
 
 
         //Creando la instancia del servidor y configurando.

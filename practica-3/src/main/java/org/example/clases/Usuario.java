@@ -2,8 +2,6 @@ package org.example.clases;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.Set;
 
 public class Usuario {
 
@@ -11,8 +9,7 @@ public class Usuario {
     private String nombre;
     private String password;
     private boolean administrator;
-
-    boolean autor;
+    private boolean autor;
 
     public Usuario(String username, String nombre, String password, boolean administrator, boolean autor) {
         this.username = username;
@@ -61,14 +58,5 @@ public class Usuario {
     public void setAutor(boolean autor) {
         this.autor = autor;
     }
-
-
-
-    static List<Usuario> listaUsuarios = new ArrayList<>();
-
-    public static List<Usuario> getUsuarios() {
-        return listaUsuarios;
-    }
-
 
 }

@@ -1,12 +1,9 @@
 package org.example.controladores;
 
 import io.javalin.Javalin;
+import org.example.clases.Blog;
 import org.example.clases.Usuario;
 import org.example.util.ControladorClass;
-
-import static io.javalin.apibuilder.ApiBuilder.get;
-import static io.javalin.apibuilder.ApiBuilder.path;
-import static org.example.clases.Usuario.setUsuario;
 
 public class CrearUsuario extends ControladorClass {
     public CrearUsuario(Javalin app) {
@@ -30,7 +27,7 @@ public class CrearUsuario extends ControladorClass {
 
                 // Crear el nuevo usuario y agregarlo a la lista de usuarios
                 Usuario nuevoUsuario = new Usuario(username, nombre, password, isAdmin, isAutor);
-                setUsuario(nuevoUsuario);
+                Blog.getInstance().addUsuario(nuevoUsuario);
                 // Redirigir a la página de administración u otra página según corresponda
                 ctx.redirect("/blogUsuario");
             } else {

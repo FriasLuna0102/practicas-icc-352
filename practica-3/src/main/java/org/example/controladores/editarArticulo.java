@@ -18,7 +18,7 @@ public class editarArticulo extends ControladorClass {
     }
 
     List<Articulo> listArticulos = Articulo.getArticulos();
-    List<Usuario> listUsuarios = Usuario.getUsuarios();
+    List<Usuario> listUsuarios = Blog.getInstance().getUsuarioList();
     @Override
     public void aplicarRutas() {
 
