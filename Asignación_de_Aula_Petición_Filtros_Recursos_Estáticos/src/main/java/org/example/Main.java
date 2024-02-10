@@ -2,6 +2,7 @@ package org.example;
 
 import io.javalin.Javalin;
 import io.javalin.http.staticfiles.Location;
+import io.javalin.rendering.JavalinRenderer;
 
 
 public class Main {
@@ -20,6 +21,9 @@ public class Main {
                 staticFileConfig.precompress=false;
                 staticFileConfig.aliasCheck=null;
 
+                //Importante para permitir renderizar los html:
+                //JavalinRenderer.register(new JavalinThymeleaf(), ".html");
+
             });
 
         });
@@ -30,12 +34,20 @@ public class Main {
             if(session == null){
                 cxt.redirect("/login");
             }else{
-                cxt.result("Buen trabajo");
+                // Ajusta la ruta del archivo según la estructura de tu proyecto
+                cxt.render("publico/bienvenido.html");
             }
         });
 
+
         app.get("/login", cxt ->{
-            cxt.redirect("/login.html");
+            String session = cxt.sessionAttribute("currentUser");
+            if(session == null){
+                cxt.render("publico/login.html");
+            }else{
+                // Ajusta la ruta del archivo según la estructura de tu proyecto
+                cxt.render("publico/bienvenido.html");
+            }
         });
 
 
