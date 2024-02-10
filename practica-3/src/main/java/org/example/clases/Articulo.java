@@ -126,15 +126,6 @@ public class Articulo {
 
     static List<Usuario> listUsuarios = Blog.getInstance().getUsuarioList();
 
-    static public Usuario buscarUsuarios (String usuario){
-        for(Usuario user: listUsuarios){
-            if(user.getNombre().equals(usuario)){
-                return user;
-            }
-        }
-        return null;
-    }
-
 
     //Metodo para devolver un string de etiquetas en una lista.
     static public List<Etiqueta> devolverEtiqueta(String etiquetasString) {
