@@ -2,6 +2,7 @@ package org.example.controladores;
 
 import io.javalin.Javalin;
 import org.example.clases.Articulo;
+import org.example.clases.Blog;
 import org.example.clases.Comentario;
 import org.example.clases.Usuario;
 import org.example.util.ControladorClass;
@@ -24,7 +25,7 @@ public class agregarComentario extends ControladorClass {
 
             //Obtengo el id del formulario y busco el articul al cual se comentara por su id.
             String idArticulo = cxt.formParam("idArticulo");
-            Articulo articulo = Articulo.obtenerArticuloPorId(idArticulo);
+            Articulo articulo = Blog.getInstance().obtenerArticuloPorId(idArticulo);
 
             //Lo mando al seccionComentario html, para comentar.
             Map<String, Object> model = new HashMap<>();
@@ -41,7 +42,7 @@ public class agregarComentario extends ControladorClass {
             String comentario = cxt.formParam("contenidoComentario");
             Usuario autor = cxt.sessionAttribute("currentUser");
             String idArticulo = cxt.formParam("idArticulo");
-            Articulo articulo = Articulo.obtenerArticuloPorId(idArticulo);
+            Articulo articulo = Blog.getInstance().obtenerArticuloPorId(idArticulo);
 
 
             //Creo el comentario.

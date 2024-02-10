@@ -12,6 +12,16 @@ public class Blog {
 	private Usuario usuario;
 
 
+	//Metodo para obtener un articulo por el id.
+	public Articulo obtenerArticuloPorId(String id){
+		for(Articulo articulo: articuloList){
+			if(articulo.getId().equals(id)){
+				return articulo;
+			}
+		}
+		return null; // Devuelve null si no se encuentra ningún artículo con ese ID
+	}
+
 	public boolean eliminarArticuloById(String id) {
 		int size = articuloList.size();
 		for (int i = 0; i < size; i++) {
