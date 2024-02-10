@@ -66,7 +66,7 @@ public class editarArticulo extends ControladorClass {
             Date fechaDate = sdf.parse(fecha);
 
             String etiqueta = cxt.formParam("etiquetas");
-            List<Etiqueta> lisEtiquetas = Articulo.devolverEtiqueta(etiqueta);
+            List<Etiqueta> lisEtiquetas = Blog.getInstance().stringToEtiqueta(etiqueta);
 
             Articulo actiEditado = Blog.getInstance().obtenerArticuloPorId(id);
             actiEditado.setTitulo(titulo);

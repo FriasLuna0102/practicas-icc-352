@@ -11,6 +11,25 @@ public class Blog {
 	private List<Usuario> usuarioList;
 	private Usuario usuario;
 
+	//Metodo para devolver un string de etiquetas en una lista.
+	public List<Etiqueta> stringToEtiqueta(String etiquetasString) {
+		List<Etiqueta> listEtiquetas = new ArrayList<>();
+
+		// Dividir el string en etiquetas individuales utilizando una coma como delimitador
+		String[] etiquetasArray = etiquetasString.split(",");
+
+		// Iterar sobre el array de etiquetas
+		for (int i = 0; i < etiquetasArray.length; i++) {
+			// Obtener la etiqueta y eliminar los espacios en blanco alrededor
+			String etiqueta = etiquetasArray[i].trim();
+
+			// Crear un nuevo objeto Etiqueta y añadirlo a la lista
+			Etiqueta newEtiqueta = new Etiqueta(i + 1, etiqueta);
+			listEtiquetas.add(newEtiqueta);
+		}
+
+		return listEtiquetas;
+	}
 
 	//Metodo para obtener un articulo por el id.
 	public Articulo obtenerArticuloPorId(String id){
