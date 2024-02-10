@@ -66,31 +66,9 @@ public class Usuario {
 
     static List<Usuario> listaUsuarios = new ArrayList<>();
 
-    //Obtener lista de usuarios y validando que no hayas usuarios repetidos.
-    public static List<Usuario> setUsuario (Usuario usuario){
-        for (Usuario user: listaUsuarios){
-            if(user.getUsername().equals(usuario.getUsername())){
-                return listaUsuarios;
-            }else if(user.getNombre().equals(usuario.getNombre())){
-                return listaUsuarios;
-            }
-        }
-        listaUsuarios.add(usuario);
-        return listaUsuarios;
-    }
     public static List<Usuario> getUsuarios() {
         return listaUsuarios;
     }
 
-
-    //Buscando un usuario por su username
-    static public Usuario buscarUsuario (String username){
-        for(Usuario usuario : listaUsuarios){
-            if(usuario.getUsername().equals(username)){
-                return usuario;
-            }
-        }
-        return null;
-    }
 
 }
