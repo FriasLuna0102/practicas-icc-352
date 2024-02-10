@@ -27,17 +27,14 @@ public class editarArticulo extends ControladorClass {
             // Obtener el ID del artículo a eliminar desde el formulario
             String idArticulo = ctx.formParam("idArticulo");
 
-
             // Eliminar el artículo de la lista de artículos
             Articulo articuloEditar = Articulo.obtenerArticuloPorId(idArticulo);
-
 
             Map<String, Object> model = new HashMap<>();
 
             List<String> etiquetas = articuloEditar.getListaEtiquetas().stream()
                     .map(Etiqueta::getEtiqueta)
                     .collect(Collectors.toList());
-
 
             String etiquetasStr = String.join(",", etiquetas);
 
@@ -63,7 +60,6 @@ public class editarArticulo extends ControladorClass {
             Usuario autorNew = new Usuario(user.getUsername(),user.getNombre(),user.getPassword()
             ,user.isAdministrator(),user.isAutor());
 
-
             String fecha = cxt.formParam("fecha");
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -79,9 +75,9 @@ public class editarArticulo extends ControladorClass {
             actiEditado.setFecha(fechaDate);
             actiEditado.setListaEtiquetas(lisEtiquetas);
 
-            boolean eliminado = Articulo.eliminarArtiPorId(listArticulos,id);
+            boolean eliminado = Blog.getInstance().eliminarArticuloById(id);
 
-            listArticulos.add(0,actiEditado);
+            listArticulos.addFirst(actiEditado);
 
             if(eliminado){
                 cxt.redirect("/blogUsuario");

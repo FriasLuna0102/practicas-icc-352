@@ -124,8 +124,6 @@ public class Articulo {
         return null; // Devuelve null si no se encuentra ningún artículo con ese ID
     }
 
-    static List<Usuario> listUsuarios = Blog.getInstance().getUsuarioList();
-
 
     //Metodo para devolver un string de etiquetas en una lista.
     static public List<Etiqueta> devolverEtiqueta(String etiquetasString) {
@@ -145,20 +143,5 @@ public class Articulo {
         }
 
         return listEtiquetas;
-    }
-
-
-    static public boolean eliminarArtiPorId(List<Articulo> lista, String id) {
-        int i = 0;
-        for (i = 0; i < lista.size(); i++) {
-            Articulo articulo = lista.get(i);
-
-            if (Objects.equals(articulo.getId(), id)) {
-                lista.remove(i);
-                i=0;
-                return true;
-            }
-        }
-        return false;
     }
 }
