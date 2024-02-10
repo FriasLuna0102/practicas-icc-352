@@ -28,7 +28,7 @@ public class editarArticulo extends ControladorClass {
             String idArticulo = ctx.formParam("idArticulo");
 
             // Eliminar el artículo de la lista de artículos
-            Articulo articuloEditar = Articulo.obtenerArticuloPorId(idArticulo);
+            Articulo articuloEditar = Blog.getInstance().obtenerArticuloPorId(idArticulo);
 
             Map<String, Object> model = new HashMap<>();
 
@@ -68,7 +68,7 @@ public class editarArticulo extends ControladorClass {
             String etiqueta = cxt.formParam("etiquetas");
             List<Etiqueta> lisEtiquetas = Articulo.devolverEtiqueta(etiqueta);
 
-            Articulo actiEditado = Articulo.obtenerArticuloPorId(id);
+            Articulo actiEditado = Blog.getInstance().obtenerArticuloPorId(id);
             actiEditado.setTitulo(titulo);
             actiEditado.setCuerpo(cuerpo);
             actiEditado.setAutor(autorNew);

@@ -71,7 +71,7 @@ public class PlantillasControlador extends ControladorClass {
                 get("/articulo/{id}", ctx -> {
                     String id = ctx.pathParam("id");
                     // Busca el artículo por ID
-                    Articulo articulo = Articulo.obtenerArticuloPorId(id);
+                    Articulo articulo = Blog.getInstance().obtenerArticuloPorId(id);
                     List<Comentario> listDeComentario = Comentario.buscarComentPorArticulo(articulo);
 
                     Map<String, Object> model = new HashMap<>();

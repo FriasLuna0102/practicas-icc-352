@@ -114,16 +114,6 @@ public class Articulo {
     }
 
 
-    //Metodo para obtener un articulo por el id.
-    static public Articulo obtenerArticuloPorId(String idEn){
-        for(Articulo articulo: articulos){
-            if(articulo.getId().equals(idEn)){
-                return articulo;
-            }
-        }
-        return null; // Devuelve null si no se encuentra ningún artículo con ese ID
-    }
-
 
     //Metodo para devolver un string de etiquetas en una lista.
     static public List<Etiqueta> devolverEtiqueta(String etiquetasString) {
