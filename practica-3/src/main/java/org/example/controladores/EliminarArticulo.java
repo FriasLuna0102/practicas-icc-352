@@ -2,6 +2,7 @@ package org.example.controladores;
 
 import io.javalin.Javalin;
 import org.example.clases.Articulo;
+import org.example.clases.Blog;
 import org.example.util.ControladorClass;
 
 import java.util.List;
@@ -12,7 +13,7 @@ public class EliminarArticulo extends ControladorClass {
         super(app);
     }
 
-    List<Articulo> listaArticulos = Articulo.getArticulos();
+    List<Articulo> listaArticulos = Blog.getInstance().getArticuloList();
     @Override
     public void aplicarRutas() {
 

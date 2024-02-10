@@ -11,7 +11,7 @@ public class Blog {
 	private List<Usuario> usuarioList;
 	private Usuario usuario;
 
-	//Metodo para devolver un string de etiquetas en una lista.
+	//Metodo para convertir un string de etiquetas en una lista.
 	public List<Etiqueta> stringToEtiqueta(String etiquetasString) {
 		List<Etiqueta> listEtiquetas = new ArrayList<>();
 

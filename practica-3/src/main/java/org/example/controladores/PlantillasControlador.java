@@ -20,7 +20,7 @@ public class PlantillasControlador extends ControladorClass {
     }
 
     List<Usuario> usuarios = Blog.getInstance().getUsuarioList();
-    List<Articulo> listArticulos = Articulo.getArticulos();
+    List<Articulo> listArticulos = Blog.getInstance().getArticuloList();
 
     @Override
     public void aplicarRutas() {
