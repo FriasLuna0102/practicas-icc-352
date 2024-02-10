@@ -1,10 +1,7 @@
 package org.example.controladores;
 
 import io.javalin.Javalin;
-import org.example.clases.Articulo;
-import org.example.clases.Comentario;
-import org.example.clases.Etiqueta;
-import org.example.clases.Usuario;
+import org.example.clases.*;
 import org.example.util.ControladorClass;
 
 import java.util.ArrayList;
@@ -29,7 +26,7 @@ public class CrearArticulo extends ControladorClass {
             List<Comentario> listaComentarios = Comentario.getComentarios();
 
             //Lista de articulos
-            List<Articulo> listaArticulos = Articulo.getArticulos();
+            List<Articulo> listaArticulos = Blog.getInstance().getArticuloList();
 
             String titulo = cxt.formParam("titulo");
             String cuerpo = cxt.formParam("cuerpo");
@@ -66,7 +63,7 @@ public class CrearArticulo extends ControladorClass {
                 listaEtiquetas = Etiqueta.setEtiqueta(etique);
             }
 
-            Articulo.setArticulos(newArticulo);
+            Blog.getInstance().getArticuloList().addFirst(newArticulo);
             cxt.redirect("/blogUsuario");
 
         });

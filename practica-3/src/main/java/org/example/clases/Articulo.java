@@ -84,20 +84,6 @@ public class Articulo {
         this.listaEtiquetas = listaEtiquetas;
     }
 
-    //Lista para almacenar articulos:
-    static List<Articulo> articulos = new ArrayList<>();
-
-    //Para obtener lista de articulos.
-    static public List<Articulo> getArticulos(){
-        return articulos;
-    }
-
-    //Para agregar articulos a la lista.
-    static public void setArticulos(Articulo articulo){
-        articulos.add(0,articulo);
-    }
-
-
     //Metodo para eliminar un articulo de una lista mediante el titulo.
     static public boolean eliminarArti(List<Articulo> lista, String title) {
         int i = 0;
