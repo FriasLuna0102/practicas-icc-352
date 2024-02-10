@@ -2,6 +2,7 @@ package org.example.clases;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Blog {
 
@@ -10,6 +11,19 @@ public class Blog {
 	private List<Usuario> usuarioList;
 	private Usuario usuario;
 
+
+	public boolean eliminarArticuloById(String id) {
+		int size = articuloList.size();
+		for (int i = 0; i < size; i++) {
+			Articulo articulo = articuloList.get(i);
+
+			if (Objects.equals(articulo.getId(), id)) {
+				articuloList.remove(i);
+				return true;
+			}
+		}
+		return false;
+	}
 
 	//Add usuarios si no estan repetidos.
 	public void addUsuario(Usuario usuario){
