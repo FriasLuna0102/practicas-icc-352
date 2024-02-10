@@ -46,7 +46,7 @@ public class Main {
                 cxt.render("publico/login.html");
             }else{
                 // Ajusta la ruta del archivo según la estructura de tu proyecto
-                cxt.render("publico/bienvenido.html");
+                cxt.redirect("/bienvenido");
             }
         });
 
