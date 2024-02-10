@@ -8,19 +8,17 @@ public class Blog {
 	private static Blog instancia;
 	private List<Articulo> articuloList;
 	private List<Usuario> usuarioList;
+	private Usuario usuario;
 
 
-	//Obtener lista de usuarios y validando que no hayas usuarios repetidos.
-	public List<Usuario> setUsuario (Usuario usuario){
+	//Add usuarios si no estan repetidos.
+	public void addUsuario(Usuario usuario){
 		for (Usuario user: usuarioList){
-			if(user.getUsername().equals(usuario.getUsername())){
-				return usuarioList;
-			}else if(user.getNombre().equals(usuario.getNombre())){
-				return usuarioList;
+			if(user.getUsername().equals(usuario.getUsername()) || user.getNombre().equals(usuario.getNombre())){
+				return;
 			}
 		}
 		usuarioList.add(usuario);
-		return usuarioList;
 	}
 
 	//Buscar usuario por username
@@ -59,5 +57,13 @@ public class Blog {
 
 	public void setUsuarioList(List<Usuario> usuarioList) {
 		this.usuarioList = usuarioList;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 }

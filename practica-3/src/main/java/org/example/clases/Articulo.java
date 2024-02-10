@@ -124,7 +124,7 @@ public class Articulo {
         return null; // Devuelve null si no se encuentra ningún artículo con ese ID
     }
 
-    static List<Usuario> listUsuarios = Usuario.getUsuarios();
+    static List<Usuario> listUsuarios = Blog.getInstance().getUsuarioList();
 
     static public Usuario buscarUsuarios (String usuario){
         for(Usuario user: listUsuarios){

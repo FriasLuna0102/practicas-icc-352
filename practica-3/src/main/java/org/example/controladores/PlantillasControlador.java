@@ -2,6 +2,7 @@ package org.example.controladores;
 
 import io.javalin.Javalin;
 import org.example.clases.Articulo;
+import org.example.clases.Blog;
 import org.example.clases.Comentario;
 import org.example.clases.Usuario;
 import org.example.util.ControladorClass;
@@ -18,7 +19,7 @@ public class PlantillasControlador extends ControladorClass {
         super(app);
     }
 
-    List<Usuario> usuarios = Usuario.getUsuarios();
+    List<Usuario> usuarios = Blog.getInstance().getUsuarioList();
     List<Articulo> listArticulos = Articulo.getArticulos();
 
     @Override

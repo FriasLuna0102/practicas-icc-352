@@ -1,6 +1,7 @@
 package org.example.controladores;
 
 import io.javalin.Javalin;
+import org.example.clases.Blog;
 import org.example.clases.Usuario;
 import org.example.util.ControladorClass;
 
@@ -16,7 +17,7 @@ public class mostrarUsuarios extends ControladorClass {
         super(app);
     }
 
-    List<Usuario> listUsuario = Usuario.getUsuarios();
+    List<Usuario> listUsuario = Blog.getInstance().getUsuarioList();
     @Override
     public void aplicarRutas() {
 
