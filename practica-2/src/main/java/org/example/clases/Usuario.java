@@ -7,10 +7,10 @@ import java.util.Set;
 
 public class Usuario {
 
-    String username;
-    String nombre;
-    String password;
-    boolean administrator;
+    private String username;
+    private String nombre;
+    private String password;
+    private boolean administrator;
 
     boolean autor;
 
@@ -69,9 +69,9 @@ public class Usuario {
     //Obtener lista de usuarios y validando que no hayas usuarios repetidos.
     public static List<Usuario> setUsuario (Usuario usuario){
         for (Usuario user: listaUsuarios){
-            if(user.username.equals(usuario.username)){
+            if(user.getUsername().equals(usuario.getUsername())){
                 return listaUsuarios;
-            }else if(user.nombre.equals(usuario.nombre)){
+            }else if(user.getNombre().equals(usuario.getNombre())){
                 return listaUsuarios;
             }
         }

@@ -5,10 +5,10 @@ import java.util.List;
 
 public class Comentario {
     private static long contador = 0;
-    String id;
-    String comentario;
-    Usuario autor;
-    Articulo articulo;
+    private String id;
+    private String comentario;
+    private Usuario autor;
+    private Articulo articulo;
 
     public Comentario(String comentario, Usuario autor, Articulo articulo) {
         this.id = String.valueOf(++contador);
@@ -62,7 +62,7 @@ public class Comentario {
     //Buscar comentarios por id
     static public Comentario buscarComentarioId(String id){
         for (Comentario coment : comentarios){
-            if(coment.id.equals(id)){
+            if(coment.getId().equals(id)){
                 return coment;
             }
         }
@@ -73,7 +73,7 @@ public class Comentario {
     static public List<Comentario> buscarComentPorArticulo(Articulo articulo){
         List<Comentario> listForArticulo = new ArrayList<>();
         for(Comentario cometarios : comentarios){
-            if(cometarios.articulo.getId().equals(articulo.id)){
+            if(cometarios.getArticulo().getId().equals(articulo.getId())){
                 listForArticulo.add(cometarios);
             }
         }

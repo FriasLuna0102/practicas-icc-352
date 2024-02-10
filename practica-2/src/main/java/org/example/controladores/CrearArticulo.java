@@ -5,13 +5,14 @@ import org.example.clases.Articulo;
 import org.example.clases.Comentario;
 import org.example.clases.Etiqueta;
 import org.example.clases.Usuario;
+import org.example.util.ControladorClass;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class CrearArticulo extends ControladorClass{
+public class CrearArticulo extends ControladorClass {
     public CrearArticulo(Javalin app) {
         super(app);
     }

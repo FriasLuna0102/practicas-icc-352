@@ -4,13 +4,14 @@ import io.javalin.Javalin;
 import org.example.clases.Articulo;
 import org.example.clases.Etiqueta;
 import org.example.clases.Usuario;
+import org.example.util.ControladorClass;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
 
-public class editarArticulo extends ControladorClass{
+public class editarArticulo extends ControladorClass {
     public editarArticulo(Javalin app) {
         super(app);
     }

@@ -9,13 +9,13 @@ public class Articulo {
 
     private static long contador = 0;
 
-    String id;
-    String titulo;
-    String cuerpo;
-    Usuario autor;
-    Date fecha;
-    List<Comentario> listaComentarios;
-    List<Etiqueta> listaEtiquetas;
+    private String id;
+    private String titulo;
+    private String cuerpo;
+    private Usuario autor;
+    private Date fecha;
+    private List<Comentario> listaComentarios;
+    private List<Etiqueta> listaEtiquetas;
 
     public Articulo(String titulo, String cuerpo, Usuario autor, Date fecha, List<Comentario> listaComentarios, List<Etiqueta> listaEtiquetas) {
         this.id = String.valueOf(++contador);
@@ -104,7 +104,7 @@ public class Articulo {
         for (i = 0; i < lista.size(); i++) {
             Articulo articulo = lista.get(i);
 
-            if (Objects.equals(articulo.titulo, title)) {
+            if (Objects.equals(articulo.getTitulo(), title)) {
                 lista.remove(i);
                 i=0;
                 return true;
@@ -117,7 +117,7 @@ public class Articulo {
     //Metodo para obtener un articulo por el id.
     static public Articulo obtenerArticuloPorId(String idEn){
         for(Articulo articulo: articulos){
-            if(articulo.id.equals(idEn)){
+            if(articulo.getId().equals(idEn)){
                 return articulo;
             }
         }
@@ -128,7 +128,7 @@ public class Articulo {
 
     static public Usuario buscarUsuarios (String usuario){
         for(Usuario user: listUsuarios){
-            if(user.nombre.equals(usuario)){
+            if(user.getNombre().equals(usuario)){
                 return user;
             }
         }
@@ -162,7 +162,7 @@ public class Articulo {
         for (i = 0; i < lista.size(); i++) {
             Articulo articulo = lista.get(i);
 
-            if (Objects.equals(articulo.id, id)) {
+            if (Objects.equals(articulo.getId(), id)) {
                 lista.remove(i);
                 i=0;
                 return true;

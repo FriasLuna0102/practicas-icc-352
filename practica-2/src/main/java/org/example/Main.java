@@ -51,6 +51,8 @@ public class Main {
         new editarArticulo(app).aplicarRutas();
         new agregarComentario(app).aplicarRutas();
         new mostrarUsuarios(app).aplicarRutas();
+        new CookiesSeccionesControlador(app).aplicarRutas();
+
 
         app.get("/blog", cxt -> {
             cxt.redirect("blog.html");
@@ -80,7 +82,5 @@ public class Main {
         }
         return 7000; //Retorna el puerto por defecto en caso de no estar en Heroku.
     }
-
-
 
 }

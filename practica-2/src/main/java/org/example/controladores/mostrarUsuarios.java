@@ -2,13 +2,16 @@ package org.example.controladores;
 
 import io.javalin.Javalin;
 import org.example.clases.Usuario;
+import org.example.util.ControladorClass;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
-public class mostrarUsuarios extends ControladorClass{
+import static io.javalin.apibuilder.ApiBuilder.get;
+import static io.javalin.apibuilder.ApiBuilder.path;
+
+public class mostrarUsuarios extends ControladorClass {
     public mostrarUsuarios(Javalin app) {
         super(app);
     }
@@ -17,14 +20,24 @@ public class mostrarUsuarios extends ControladorClass{
     @Override
     public void aplicarRutas() {
 
-        app.get("/mostrarUsuario", cxt ->{
-            if(cxt.sessionAttribute("currentUser") == null){
-                cxt.redirect("/login");
-            }else{
-                Map<String, Object> model = new HashMap<>();
-                model.put("listUsuario",listUsuario);
-                cxt.render("publico/html/listarUsuarios.html",model);
-            }
+
+        app.routes(()->{
+
+            path("/blogUsuario", ()->{
+
+                get("/mostrarUsuario", cxt ->{
+                    if(cxt.sessionAttribute("currentUser") == null){
+                        cxt.redirect("/login");
+                    }else{
+                        Map<String, Object> model = new HashMap<>();
+                        model.put("listUsuario",listUsuario);
+                        cxt.render("publico/html/listarUsuarios.html",model);
+                    }
+                });
+
+            });
+
         });
+
     }
 }

@@ -36,8 +36,32 @@
                         <input type="password" class="form-control" placeholder="password" name="password">
                     </div>
                     <div class="row align-items-center remember">
-                        <input type="checkbox">Remember Me
+                        <input type="checkbox" id="rememberCheckbox">Remember Me
                     </div>
+
+
+                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                    <script>
+                        $(document).ready(function() {
+                            $('#rememberCheckbox').change(function() {
+                                var isChecked = $(this).prop('checked');
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/login-cookies',
+                                    data: JSON.stringify({ remember: isChecked }),
+                                    contentType: 'application/json',
+                                    success: function(response) {
+                                        console.log('Cookie establecida correctamente');
+                                    },
+                                    error: function(xhr, status, error) {
+                                        console.error('Error al establecer la cookie:', error);
+                                    }
+                                });
+                            });
+                        });
+                    </script>
+
+
                     <div class="form-group">
                         <input type="submit" value="Login" class="btn float-right login_btn">
                     </div>

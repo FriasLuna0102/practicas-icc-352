@@ -2,11 +2,11 @@ package org.example.controladores;
 
 import io.javalin.Javalin;
 import org.example.clases.Articulo;
+import org.example.util.ControladorClass;
 
 import java.util.List;
-import java.util.UUID;
 
-public class EliminarArticulo extends ControladorClass{
+public class EliminarArticulo extends ControladorClass {
 
     public EliminarArticulo(Javalin app) {
         super(app);

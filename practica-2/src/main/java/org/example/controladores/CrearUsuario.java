@@ -2,10 +2,13 @@ package org.example.controladores;
 
 import io.javalin.Javalin;
 import org.example.clases.Usuario;
+import org.example.util.ControladorClass;
 
+import static io.javalin.apibuilder.ApiBuilder.get;
+import static io.javalin.apibuilder.ApiBuilder.path;
 import static org.example.clases.Usuario.setUsuario;
 
-public class CrearUsuario extends ControladorClass{
+public class CrearUsuario extends ControladorClass {
     public CrearUsuario(Javalin app) {
         super(app);
     }
@@ -13,15 +16,6 @@ public class CrearUsuario extends ControladorClass{
     @Override
     public void aplicarRutas() {
 
-
-        //Para evitar que despues de hacer logout no pueda acceder a crearUsuario.
-        app.get("/crearUsuario",cxt ->{
-            if(cxt.sessionAttribute("currentUser") == null){
-                cxt.redirect("/login");
-            }else{
-                cxt.redirect("/html/crearUsuario.html");
-            }
-        });
 
         // Lógica para permitir la creación de nuevos usuarios por parte de administradores
         app.post("/crearUsuario", ctx -> {
