@@ -10,26 +10,39 @@ public class Blog {
 	private List<Articulo> articuloList;
 	private List<Usuario> usuarioList;
 	private List<Etiqueta> etiquetaList;
+	private long contadorEtiqueta;
 	private Usuario usuario;
 
 	//Metodo para convertir un string de etiquetas en una lista.
 	public List<Etiqueta> stringToEtiqueta(String etiquetasString) {
-		List<Etiqueta> listEtiquetas = new ArrayList<>();
 
-		// Dividir el string en etiquetas individuales utilizando una coma como delimitador
-		String[] etiquetasArray = etiquetasString.split(",");
+		List<Etiqueta> etiquetaList = new ArrayList<>();
+		String[] etiquetaArray = etiquetasString.split(",", 0);
+		boolean existe = false;
 
-		// Iterar sobre el array de etiquetas
-		for (int i = 0; i < etiquetasArray.length; i++) {
-			// Obtener la etiqueta y eliminar los espacios en blanco alrededor
-			String etiqueta = etiquetasArray[i].trim();
-
-			// Crear un nuevo objeto Etiqueta y añadirlo a la lista
-			Etiqueta newEtiqueta = new Etiqueta(i + 1, etiqueta);
-			listEtiquetas.add(newEtiqueta);
+		for (String s : etiquetaArray) {
+			for (Etiqueta etiqueta : this.etiquetaList) {
+				if (etiqueta.getEtiqueta().equalsIgnoreCase(s)) {
+					etiquetaList.add(etiqueta);
+					existe = true;
+				}
+			}
+			if (!existe) {
+				crearEtiqueta(s.trim());
+				etiquetaList.add(this.etiquetaList.getLast());
+			}
+			existe = false;
 		}
 
-		return listEtiquetas;
+		return etiquetaList;
+	}
+
+	//Metodo auxiliar para crear etiqueta
+	private void crearEtiqueta(String nombre){
+		Etiqueta tmp = new Etiqueta(contadorEtiqueta,nombre);
+		this.etiquetaList.add(tmp);
+		contadorEtiqueta++;
+		System.out.println(tmp.getEtiqueta());
 	}
 
 	//Metodo para obtener un articulo por el id.
@@ -86,6 +99,7 @@ public class Blog {
 		articuloList = new ArrayList<>();
 		usuarioList = new ArrayList<>();
 		etiquetaList = new ArrayList<>();
+		contadorEtiqueta = 1;
 	}
 
 	public List<Articulo> getArticuloList() {
