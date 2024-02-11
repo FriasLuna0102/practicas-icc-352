@@ -9,6 +9,7 @@ public class Blog {
 	private static Blog instancia;
 	private List<Articulo> articuloList;
 	private List<Usuario> usuarioList;
+	private List<Etiqueta> etiquetaList;
 	private Usuario usuario;
 
 	//Metodo para convertir un string de etiquetas en una lista.
@@ -84,6 +85,7 @@ public class Blog {
 	private Blog(){
 		articuloList = new ArrayList<>();
 		usuarioList = new ArrayList<>();
+		etiquetaList = new ArrayList<>();
 	}
 
 	public List<Articulo> getArticuloList() {
@@ -108,5 +110,9 @@ public class Blog {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+
+	public List<Etiqueta> getEtiquetaList() {
+		return etiquetaList;
 	}
 }

@@ -25,13 +25,9 @@ public class CrearArticulo extends ControladorClass {
             //Lista de comentarios:
             List<Comentario> listaComentarios = Comentario.getComentarios();
 
-            //Lista de articulos
-            List<Articulo> listaArticulos = Blog.getInstance().getArticuloList();
-
             String titulo = cxt.formParam("titulo");
             String cuerpo = cxt.formParam("cuerpo");
             Usuario autor = cxt.sessionAttribute("currentUser");
-
 
             // Obtenemos la fecha del sistema:
             Date fechaActual = Calendar.getInstance().getTime();
@@ -56,13 +52,13 @@ public class CrearArticulo extends ControladorClass {
                 listaEtiquetas.add(ultEtiqueta);
             }
 
-            Articulo newArticulo = new Articulo(titulo,cuerpo,autor,fechaActual,listaComentarios,listaEtiquetas);
 
             //Almacenando etiquetas.
-            for(Etiqueta etique: listaEtiquetas){
-                listaEtiquetas = Etiqueta.setEtiqueta(etique);
+            for(Etiqueta etiqueta: listaEtiquetas){
+                Blog.getInstance().getEtiquetaList().add(etiqueta);
             }
 
+            Articulo newArticulo = new Articulo(titulo,cuerpo,autor,fechaActual,listaComentarios,listaEtiquetas);
             Blog.getInstance().getArticuloList().addFirst(newArticulo);
             cxt.redirect("/blogUsuario");
 

@@ -23,25 +23,4 @@ public class Etiqueta {
     public String getEtiqueta() {
         return etiqueta;
     }
-
-    public void setEtiqueta(String etiqueta) {
-        this.etiqueta = etiqueta;
-    }
-
-
-    static List<Etiqueta> etiquetas = new ArrayList<>();
-
-    public static List<Etiqueta> setEtiqueta(Etiqueta etiqueta) {
-        etiquetas.add(etiqueta);
-
-        return etiquetas;
-    }
-
-
-    public static List<Etiqueta> getEtiquetas() {
-        return etiquetas;
-    }
-
-
-
 }
