@@ -4,7 +4,6 @@ import io.javalin.Javalin;
 import org.example.clases.*;
 import org.example.util.ControladorClass;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -19,9 +18,6 @@ public class CrearArticulo extends ControladorClass {
 
         app.post("/crearArticulo", cxt ->{
 
-            //Lista de Etiquetas:
-            List<Etiqueta> listaEtiquetas = new ArrayList<>();
-
             //Lista de comentarios:
             List<Comentario> listaComentarios = Comentario.getComentarios();
 
@@ -34,15 +30,12 @@ public class CrearArticulo extends ControladorClass {
 
             String etiquetas = cxt.formParam("etiquetas");
 
-            listaEtiquetas = Blog.getInstance().stringToEtiqueta(etiquetas);
+            List<Etiqueta> listaEtiquetas = Blog.getInstance().stringToEtiqueta(etiquetas);
 
             Articulo newArticulo = new Articulo(titulo,cuerpo,autor,fechaActual,listaComentarios,listaEtiquetas);
             Blog.getInstance().getArticuloList().addFirst(newArticulo);
             cxt.redirect("/blogUsuario");
 
         });
-
-
-
     }
 }

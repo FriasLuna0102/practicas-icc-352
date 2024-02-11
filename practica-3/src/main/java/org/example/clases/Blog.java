@@ -56,12 +56,9 @@ public class Blog {
 	}
 
 	public boolean eliminarArticuloById(String id) {
-		int size = articuloList.size();
-		for (int i = 0; i < size; i++) {
-			Articulo articulo = articuloList.get(i);
-
-			if (Objects.equals(articulo.getId(), id)) {
-				articuloList.remove(i);
+		for (Articulo articulo: this.articuloList){
+			if (articulo.getId().equals(id)){
+				this.articuloList.remove(articulo);
 				return true;
 			}
 		}
