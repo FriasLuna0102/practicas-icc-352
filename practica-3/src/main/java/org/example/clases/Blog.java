@@ -103,16 +103,8 @@ public class Blog {
 		return articuloList;
 	}
 
-	public void setArticuloList(List<Articulo> articuloList) {
-		this.articuloList = articuloList;
-	}
-
 	public List<Usuario> getUsuarioList() {
 		return usuarioList;
-	}
-
-	public void setUsuarioList(List<Usuario> usuarioList) {
-		this.usuarioList = usuarioList;
 	}
 
 	public Usuario getUsuario() {
@@ -121,9 +113,5 @@ public class Blog {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
-	}
-
-	public List<Etiqueta> getEtiquetaList() {
-		return etiquetaList;
 	}
 }
