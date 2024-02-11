@@ -85,12 +85,12 @@ public class Articulo {
     }
 
     //Metodo para eliminar un articulo de una lista mediante el titulo.
-    static public boolean eliminarArti(List<Articulo> lista, String title) {
+    static public boolean eliminarArti(List<Articulo> lista, String id) {
         int i = 0;
         for (i = 0; i < lista.size(); i++) {
             Articulo articulo = lista.get(i);
 
-            if (Objects.equals(articulo.getTitulo(), title)) {
+            if (Objects.equals(articulo.getId(), id)) {
                 lista.remove(i);
                 i=0;
                 return true;

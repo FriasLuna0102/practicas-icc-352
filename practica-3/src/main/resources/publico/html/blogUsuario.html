@@ -182,7 +182,7 @@
                     <div style="display: inline-block;" th:if="${currentUser != null && (currentUser.administrator or currentUser.autor)}">
                         <form th:action="@{/eliminarArticulo}" method="post">
                             <!-- Campo oculto para enviar el ID del artículo -->
-                            <input type="hidden" name="idTitulo" th:value="${articulo.getTitulo}" />
+                            <input type="hidden" name="idArticulo" th:value="${articulo.getId}" />
                             <button type="submit" id="delete-button" style="background-color: red; color: white; padding: 5px 10px; border: none; cursor: pointer;">Eliminar</button>
                         </form>
                     </div>
