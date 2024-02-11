@@ -1,14 +1,30 @@
 package org.example.clases;
 
+import jakarta.persistence.*;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Comentario {
+@Entity
+public class Comentario implements Serializable {
+
+
     private static long contador = 0;
+
+    @Id
     private String id;
     private String comentario;
+
+    @OneToOne
     private Usuario autor;
+
+    @OneToOne
     private Articulo articulo;
+
+    public Comentario (){
+
+    }
 
     public Comentario(String comentario, Usuario autor, Articulo articulo) {
         this.id = String.valueOf(++contador);

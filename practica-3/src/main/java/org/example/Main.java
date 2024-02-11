@@ -28,6 +28,7 @@ public class Main {
             BootStrapServices.getInstancia().init();
         }
 
+
         for(int i=0;i<2;i++){
             UsuarioServices.getInstancia().crear(new Usuario("star","Starlin","123",true,false));
 

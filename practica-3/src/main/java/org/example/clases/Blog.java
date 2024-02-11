@@ -1,5 +1,8 @@
 package org.example.clases;
 
+import org.example.services.BootStrapServices;
+import org.example.services.UsuarioServices;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -39,6 +42,7 @@ public class Blog {
 
 	//Metodo auxiliar para crear etiqueta
 	private void crearEtiqueta(String nombre){
+
 		Etiqueta tmp = new Etiqueta(contadorEtiqueta,nombre);
 		this.etiquetaList.add(tmp);
 		contadorEtiqueta++;
@@ -72,6 +76,8 @@ public class Blog {
 				return;
 			}
 		}
+		UsuarioServices.getInstancia().crear(new Usuario(usuario.getUsername(),usuario.getNombre(),usuario.getPassword()
+		,usuario.isAdministrator(),usuario.isAutor()));
 		usuarioList.add(usuario);
 	}
 
