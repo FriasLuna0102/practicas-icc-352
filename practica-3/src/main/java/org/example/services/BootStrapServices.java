@@ -4,33 +4,42 @@ import org.h2.tools.Server;
 
 import java.sql.SQLException;
 
+/**
+ * Created by vacax on 07/06/17.
+ */
 public class BootStrapServices {
 
-    private static Server server;
+    private static BootStrapServices instancia;
 
-    /**
-     *
-     * @throws SQLException
-     */
-    public static void startDb()  {
+    private BootStrapServices(){
+
+    }
+
+    public static BootStrapServices getInstancia(){
+        if(instancia == null){
+            instancia=new BootStrapServices();
+        }
+        return instancia;
+    }
+
+    public void startDb() {
         try {
-            server = Server.createTcpServer("-tcpPort", "9092", "-tcpAllowOthers", "-ifNotExists").start();
+            //Modo servidor H2.
+            Server.createTcpServer("-tcpPort",
+                    "9092",
+                    "-tcpAllowOthers",
+                    "-tcpDaemon",
+                    "-ifNotExists").start();
+            //Abriendo el cliente web. El valor 0 representa puerto aleatorio.
+            String status = Server.createWebServer("-trace", "-webPort", "0").start().getStatus();
+            //
+            System.out.println("Status Web: "+status);
         }catch (SQLException ex){
-            ex.printStackTrace();
+            System.out.println("Problema con la base de datos: "+ex.getMessage());
         }
     }
 
-    /**
-     *
-     * @throws SQLException
-     */
-    public static void stopDb() throws SQLException {
-        if(server!=null) {
-            server.stop();
-        }
-    }
     public void init(){
         startDb();
     }
-
 }
