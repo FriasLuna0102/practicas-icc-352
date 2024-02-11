@@ -34,29 +34,7 @@ public class CrearArticulo extends ControladorClass {
 
             String etiquetas = cxt.formParam("etiquetas");
 
-            //Logica pra tomar las etiquetas y añadirla a la lista de etiquetas separadas por coma.
-            int startIndex = 0;
-            for (int i = 0; i < etiquetas.length(); i++) {
-                if (etiquetas.charAt(i) == ',') {
-                    String etiqueta = etiquetas.substring(startIndex, i).trim(); // Obtener la etiqueta y eliminar los espacios en blanco alrededor
-                    Etiqueta newEtiqueta = new Etiqueta(i+1,etiqueta);
-                    listaEtiquetas.add(newEtiqueta);
-                    startIndex = i + 1; // Establecer el nuevo índice inicial para la próxima etiqueta
-                }
-            }
-
-            // Agregar la última etiqueta después de la última coma o si no hay coma al final
-            String ultimaEtiqueta = etiquetas.substring(startIndex).trim();
-            Etiqueta ultEtiqueta = new Etiqueta(56,ultimaEtiqueta);
-            if (!ultimaEtiqueta.isEmpty()) {
-                listaEtiquetas.add(ultEtiqueta);
-            }
-
-
-            //Almacenando etiquetas.
-            for(Etiqueta etiqueta: listaEtiquetas){
-                Blog.getInstance().getEtiquetaList().add(etiqueta);
-            }
+            listaEtiquetas = Blog.getInstance().stringToEtiqueta(etiquetas);
 
             Articulo newArticulo = new Articulo(titulo,cuerpo,autor,fechaActual,listaComentarios,listaEtiquetas);
             Blog.getInstance().getArticuloList().addFirst(newArticulo);
