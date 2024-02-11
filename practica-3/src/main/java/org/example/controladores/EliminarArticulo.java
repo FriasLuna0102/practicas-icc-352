@@ -34,6 +34,5 @@ public class EliminarArticulo extends ControladorClass {
                 ctx.result("Error al eliminar el articulo.");
             }
         });
-
     }
 }
