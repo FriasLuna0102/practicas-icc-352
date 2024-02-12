@@ -2,6 +2,7 @@ package org.example.controladores;
 
 import io.javalin.Javalin;
 import org.example.clases.*;
+import org.example.services.ArticuloServices;
 import org.example.util.ControladorClass;
 
 import java.util.Calendar;
@@ -33,6 +34,8 @@ public class CrearArticulo extends ControladorClass {
             List<Etiqueta> listaEtiquetas = Blog.getInstance().stringToEtiqueta(etiquetas);
 
             Articulo newArticulo = new Articulo(titulo,cuerpo,autor,fechaActual,listaComentarios,listaEtiquetas);
+            //ArticuloServices.getInstancia().crear(new Articulo(titulo,cuerpo,autor,fechaActual,listaComentarios,listaEtiquetas));
+
             Blog.getInstance().getArticuloList().addFirst(newArticulo);
             cxt.redirect("/blogUsuario");
 

@@ -28,16 +28,16 @@ public class Main {
             BootStrapServices.getInstancia().init();
         }
 
+        UsuarioServices.getInstancia().crear(new Usuario("star","Starlin","123",true,false));
+        UsuarioServices.getInstancia().crear(new Usuario("admin", "randae", "admin", true, false));
 
-        for(int i=0;i<2;i++){
-            UsuarioServices.getInstancia().crear(new Usuario("star","Starlin","123",true,false));
 
-        }
+
         //Creacion de Usuarios admin:
-        Usuario usuario1 = new Usuario("star","Starlin","123",true,false);
-        Usuario usuario2 = new Usuario("admin", "randae", "admin", true, false);
-        Blog.getInstance().addUsuario(usuario1);
-        Blog.getInstance().addUsuario(usuario2);
+        //Usuario usuario1 = new Usuario("star","Starlin","123",true,false);
+        //Usuario usuario2 = new Usuario("admin", "randae", "admin", true, false);
+        //Blog.getInstance().addUsuario(usuario1);
+        //Blog.getInstance().addUsuario(usuario2);
 
 
         //Creando la instancia del servidor y configurando.

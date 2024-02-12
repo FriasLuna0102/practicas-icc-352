@@ -3,6 +3,7 @@ package org.example.controladores;
 import io.javalin.Javalin;
 import org.example.clases.Blog;
 import org.example.clases.Usuario;
+import org.example.services.UsuarioServices;
 import org.example.util.ControladorClass;
 
 import java.util.List;
@@ -31,22 +32,25 @@ public class Login extends ControladorClass {
         });
 
         app.post("/login", cxt -> {
-            if (usuarios.isEmpty()) {
-                cxt.redirect("login.html");
-                return;
-            }
-
             String usuarioLogin = cxt.formParam("username");
             String passwordLogin = cxt.formParam("password");
 
-            for (Usuario usuario : usuarios) {
-                if (usuario.getUsername().equals(usuarioLogin) && usuario.getPassword().equals(passwordLogin)) {
+            // Buscar el usuario en la base de datos utilizando Hibernate
+            List<Usuario> usuarios = UsuarioServices.getInstancia().findAllByNombre(usuarioLogin);
+
+
+            if (!usuarios.isEmpty()) {
+                Usuario usuario = usuarios.get(0); // Suponiendo que hay solo un usuario con el mismo nombre
+
+                if (usuario.getPassword().equals(passwordLogin)) {
+                    // Si las credenciales coinciden, establecer el usuario en la sesión y redirigir
                     cxt.sessionAttribute("currentUser", usuario);
                     cxt.redirect("/blogUsuario");
                     return;
                 }
             }
-            // Si ninguna credencial coincide, redirigir de nuevo a la página de inicio de sesión
+
+            // Si ninguna credencial coincide o no se encuentra el usuario, redirigir de nuevo a la página de inicio de sesión
             cxt.redirect("/login");
         });
 

@@ -71,14 +71,18 @@ public class Blog {
 
 	//Add usuarios si no estan repetidos.
 	public void addUsuario(Usuario usuario){
-		for (Usuario user: usuarioList){
+
+		// Buscar el usuario en la base de datos utilizando Hibernate
+		List<Usuario> usuarios = UsuarioServices.getInstancia().findAllByNombre(usuario.getUsername());
+
+		for (Usuario user: usuarios){
 			if(user.getUsername().equals(usuario.getUsername()) || user.getNombre().equals(usuario.getNombre())){
 				return;
 			}
 		}
 		UsuarioServices.getInstancia().crear(new Usuario(usuario.getUsername(),usuario.getNombre(),usuario.getPassword()
 		,usuario.isAdministrator(),usuario.isAutor()));
-		usuarioList.add(usuario);
+		//usuarioList.add(usuario);
 	}
 
 	//Buscar usuario por username

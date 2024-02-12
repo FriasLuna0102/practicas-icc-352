@@ -2,32 +2,33 @@ package org.example.services;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
+import org.example.clases.Articulo;
+import org.example.clases.Comentario;
 import org.example.clases.Usuario;
 
-import java.awt.dnd.DragGestureEvent;
 import java.util.List;
 
-public class UsuarioServices extends GestionDb<Usuario>{
+public class ArticuloServices extends GestionDb<Articulo>{
 
-        private static UsuarioServices instancia;
+    private static ArticuloServices instancia;
 
 
-    private UsuarioServices() {
-        super(Usuario.class);
+    private ArticuloServices() {
+        super(Articulo.class);
     }
 
-    public static UsuarioServices getInstancia(){
+    public static ArticuloServices getInstancia(){
         if(instancia==null){
-            instancia = new UsuarioServices();
+            instancia = new ArticuloServices();
         }
         return instancia;
     }
 
-    public List<Usuario> findAllByNombre(String username){
+    public List<Articulo> findAllByNombre(String idArticulo){
         EntityManager em = getEntityManager();
-        Query query = em.createQuery("select u from Usuario u where u.username like :username");
-        query.setParameter("username", username+"%");
-        List<Usuario> lista = query.getResultList();
+        Query query = em.createQuery("select a from Articulo a where a.id like :idArticulo");
+        query.setParameter("idArticulo", idArticulo+"%");
+        List<Articulo> lista = query.getResultList();
         return lista;
     }
 
