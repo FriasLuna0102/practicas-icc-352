@@ -46,5 +46,14 @@ public class ArticuloServices extends GestionDb<Articulo>{
         }
     }
 
+    public List<Articulo> obtenerTodosLosArticulos() {
+        EntityManager em = getEntityManager();
+        try {
+            return em.createQuery("SELECT a FROM Articulo a", Articulo.class).getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
 
 }

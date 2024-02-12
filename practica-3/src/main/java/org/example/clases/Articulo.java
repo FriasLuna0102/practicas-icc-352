@@ -1,6 +1,7 @@
 package org.example.clases;
 
 import jakarta.persistence.*;
+import org.example.services.EtiquetaServices;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -91,7 +92,7 @@ public class Articulo implements Serializable {
     }
 
     public List<Etiqueta> getListaEtiquetas() {
-        return listaEtiquetas;
+        return EtiquetaServices.getInstancia().obtenerTodasLasEtiquetas();
     }
 
     public void setListaEtiquetas(List<Etiqueta> listaEtiquetas) {

@@ -35,6 +35,15 @@ public class EtiquetaServices extends GestionDb<Etiqueta>{
 
 
 
+    public List<Etiqueta> obtenerTodasLasEtiquetas() {
+        EntityManager em = getEntityManager();
+        try {
+            return em.createQuery("SELECT e FROM Etiqueta e", Etiqueta.class).getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
     public void pruebaActualizacion(){
         EntityManager em = getEntityManager();
         Usuario usuario1 = new Usuario("star","Starlin","123",true,false);

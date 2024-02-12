@@ -2,6 +2,7 @@ package org.example.clases;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import org.example.services.EtiquetaServices;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -32,5 +33,22 @@ public class Etiqueta implements Serializable {
 
     public String getEtiqueta() {
         return etiqueta;
+    }
+
+
+    public List<Etiqueta> getListEtiqueta() {
+        return EtiquetaServices.getInstancia().obtenerTodasLasEtiquetas();
+    }
+
+    static public Etiqueta buscarEtiquet(String nombre){
+        List<Etiqueta> listEtiqueta = EtiquetaServices.getInstancia().findAllByNombre(nombre);
+
+        for(Etiqueta etique: listEtiqueta){
+            if(etique.getEtiqueta().equals(nombre)){
+                return etique;
+            }
+        }
+
+        return null;
     }
 }
