@@ -101,7 +101,7 @@ public class Articulo implements Serializable {
     }
 
     //Metodo para eliminar un articulo de una lista mediante el titulo.
-    static public boolean eliminarArti(List<Articulo> lista, String id) {
+    static public boolean eliminarArti(List<Articulo> lista, long id) {
         int i = 0;
         for (i = 0; i < lista.size(); i++) {
             Articulo articulo = lista.get(i);

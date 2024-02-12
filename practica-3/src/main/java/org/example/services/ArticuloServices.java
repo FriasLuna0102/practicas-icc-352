@@ -24,13 +24,14 @@ public class ArticuloServices extends GestionDb<Articulo>{
         return instancia;
     }
 
-    public List<Articulo> findAllByNombre(String idArticulo){
+    public List<Articulo> findAllByNombre(long idArticulo){
         EntityManager em = getEntityManager();
-        Query query = em.createQuery("select a from Articulo a where a.id like :idArticulo");
-        query.setParameter("idArticulo", idArticulo+"%");
+        Query query = em.createQuery("select a from Articulo a where a.id = :idArticulo");
+        query.setParameter("idArticulo", idArticulo);
         List<Articulo> lista = query.getResultList();
         return lista;
     }
+
 
 
 

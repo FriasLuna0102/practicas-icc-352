@@ -13,7 +13,8 @@ public class Comentario implements Serializable {
     private static long contador = 0;
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     private String comentario;
 
     @OneToOne
@@ -27,15 +28,13 @@ public class Comentario implements Serializable {
     }
 
     public Comentario(String comentario, Usuario autor, Articulo articulo) {
-        this.id = String.valueOf(++contador);
-
         this.comentario = comentario;
         this.autor = autor;
         this.articulo = articulo;
     }
 
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
@@ -76,9 +75,9 @@ public class Comentario implements Serializable {
     }
 
     //Buscar comentarios por id
-    static public Comentario buscarComentarioId(String id){
+    static public Comentario buscarComentarioId(long id){
         for (Comentario coment : comentarios){
-            if(coment.getId().equals(id)){
+            if(coment.getId() == id){
                 return coment;
             }
         }
