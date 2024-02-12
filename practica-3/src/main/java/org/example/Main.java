@@ -7,16 +7,37 @@ import org.example.clases.Blog;
 import  org.example.clases.Usuario;
 import org.example.controladores.*;
 import io.javalin.rendering.JavalinRenderer;
+import org.example.services.BootStrapServices;
+import org.example.services.UsuarioServices;
 
 
 public class Main {
+
+    private static String modoConexion = "";
+
     public static void main(String[] args) {
 
+        if(args.length >= 1){
+            modoConexion = args[0];
+            System.out.println("Modo de Operacion: "+modoConexion);
+        }
+
+        //Iniciando la base de datos.
+        if(modoConexion.isEmpty()) {
+            System.out.println("hey");
+            BootStrapServices.getInstancia().init();
+        }
+
+        UsuarioServices.getInstancia().crear(new Usuario("star","Starlin","123",true,false));
+        UsuarioServices.getInstancia().crear(new Usuario("admin", "randae", "admin", true, false));
+
+
+
         //Creacion de Usuarios admin:
-        Usuario usuario1 = new Usuario("star","Starlin","123",true,false);
-        Usuario usuario2 = new Usuario("admin", "randae", "admin", true, false);
-        Blog.getInstance().addUsuario(usuario1);
-        Blog.getInstance().addUsuario(usuario2);
+        //Usuario usuario1 = new Usuario("star","Starlin","123",true,false);
+        //Usuario usuario2 = new Usuario("admin", "randae", "admin", true, false);
+        //Blog.getInstance().addUsuario(usuario1);
+        //Blog.getInstance().addUsuario(usuario2);
 
 
         //Creando la instancia del servidor y configurando.
@@ -72,6 +93,10 @@ public class Main {
             return Integer.parseInt(processBuilder.environment().get("PORT"));
         }
         return 7000; //Retorna el puerto por defecto en caso de no estar en Heroku.
+    }
+
+    public static String getModoConexion(){
+        return modoConexion;
     }
 
 }

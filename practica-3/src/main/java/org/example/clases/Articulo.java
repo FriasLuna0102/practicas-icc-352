@@ -1,21 +1,35 @@
 package org.example.clases;
 
+import jakarta.persistence.*;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.*;
 
-public class Articulo {
+@Entity
+public class Articulo implements Serializable {
+
 
     private static long contador = 0;
 
+    @Id
     private String id;
     private String titulo;
     private String cuerpo;
+    @OneToOne
     private Usuario autor;
     private Date fecha;
+    @OneToMany
     private List<Comentario> listaComentarios;
+
+    @OneToMany
     private List<Etiqueta> listaEtiquetas;
+
+    public Articulo(){
+
+    }
 
     public Articulo(String titulo, String cuerpo, Usuario autor, Date fecha, List<Comentario> listaComentarios, List<Etiqueta> listaEtiquetas) {
         this.id = String.valueOf(++contador);

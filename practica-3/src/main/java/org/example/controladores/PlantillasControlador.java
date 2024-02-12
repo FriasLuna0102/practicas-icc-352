@@ -1,7 +1,10 @@
 package org.example.controladores;
 
 import io.javalin.Javalin;
-import org.example.clases.*;
+import org.example.clases.Articulo;
+import org.example.clases.Blog;
+import org.example.clases.Comentario;
+import org.example.clases.Usuario;
 import org.example.util.ControladorClass;
 
 import java.util.HashMap;
@@ -16,9 +19,8 @@ public class PlantillasControlador extends ControladorClass {
         super(app);
     }
 
-    private List<Usuario> usuarios = Blog.getInstance().getUsuarioList();
-    private List<Articulo> listArticulos = Blog.getInstance().getArticuloList();
-    private List<Etiqueta> etiquetaList = Blog.getInstance().getEtiquetaList();
+    List<Usuario> usuarios = Blog.getInstance().getUsuarioList();
+    List<Articulo> listArticulos = Blog.getInstance().getArticuloList();
 
     @Override
     public void aplicarRutas() {
@@ -37,7 +39,6 @@ public class PlantillasControlador extends ControladorClass {
 
                         Map<String, Object> model = new HashMap<>();
                         model.put("listArticulos", listArticulos);
-                        model.put("listEtiquetas", etiquetaList);
 
                         ctx.render("publico/html/blogUsuario.html", model);
 
@@ -45,19 +46,6 @@ public class PlantillasControlador extends ControladorClass {
                         // If the currentUser session attribute is not set, redirect to the login page
                         ctx.redirect("/login");
                     }
-                });
-
-                get("/poretiqueta", context -> {
-
-                    Usuario currentUser = context.sessionAttribute("currentUser");
-                    context.attribute("currentUser", currentUser);
-                    String stringEtiqueta = context.queryParam("etiqueta");
-
-                    Map<String, Object> model = new HashMap<>();
-                    model.put("listArticulos", Blog.getInstance().listArticulosByEtiqueta(stringEtiqueta));
-                    model.put("listEtiquetas", etiquetaList);
-
-                    context.render("publico/html/blogUsuario.html", model);
                 });
 
                 //Para evitar que despues de hacer logout no pueda acceder a crearUsuario.
@@ -92,7 +80,14 @@ public class PlantillasControlador extends ControladorClass {
 
                     ctx.render("publico/temp/articulo_plantila.html", model);
                 });
+
+
+
             });
+
+
+
         });
+
     }
 }

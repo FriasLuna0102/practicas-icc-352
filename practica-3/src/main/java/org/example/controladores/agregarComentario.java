@@ -5,6 +5,7 @@ import org.example.clases.Articulo;
 import org.example.clases.Blog;
 import org.example.clases.Comentario;
 import org.example.clases.Usuario;
+import org.example.services.ComentarioServices;
 import org.example.util.ControladorClass;
 
 import java.util.ArrayList;
@@ -44,6 +45,8 @@ public class agregarComentario extends ControladorClass {
             String idArticulo = cxt.formParam("idArticulo");
             Articulo articulo = Blog.getInstance().obtenerArticuloPorId(idArticulo);
 
+
+            ComentarioServices.getInstancia().crear(new Comentario(comentario,autor,articulo));
 
             //Creo el comentario.
             Comentario newComent = new Comentario(comentario,autor,articulo);

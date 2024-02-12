@@ -5,6 +5,8 @@ import org.example.clases.Articulo;
 import org.example.clases.Blog;
 import org.example.clases.Etiqueta;
 import org.example.clases.Usuario;
+import org.example.services.ArticuloServices;
+import org.example.services.UsuarioServices;
 import org.example.util.ControladorClass;
 
 import java.text.SimpleDateFormat;
@@ -18,7 +20,7 @@ public class editarArticulo extends ControladorClass {
     }
 
     List<Articulo> listArticulos = Blog.getInstance().getArticuloList();
-    List<Usuario> listUsuarios = Blog.getInstance().getUsuarioList();
+
     @Override
     public void aplicarRutas() {
 
@@ -42,6 +44,7 @@ public class editarArticulo extends ControladorClass {
             //Ejemplo: th:value="${articulo.titulo}", deben ser iguales.
             model.put("articulo", articuloEditar);
             model.put("etiquetasStr", etiquetasStr);
+            List<Usuario> listUsuarios = UsuarioServices.getInstancia().obtenerTodosLosUsuarios();
             model.put("usuarios",listUsuarios);
             ctx.render("publico/temp/editarArticulos.html", model);
 
@@ -55,10 +58,18 @@ public class editarArticulo extends ControladorClass {
             String cuerpo = cxt.formParam("cuerpo");
             String autor = cxt.formParam("autor");
 
+
             Usuario user = Blog.getInstance().buscarUsuario(autor);
 
-            Usuario autorNew = new Usuario(user.getUsername(),user.getNombre(),user.getPassword()
-            ,user.isAdministrator(),user.isAutor());
+            Usuario autorr = UsuarioServices.getInstancia().findByNombre(autor);
+
+            //Usuario autorNew = new Usuario(user.getUsername(),user.getNombre(),user.getPassword()
+            //,user.isAdministrator(),user.isAutor());
+
+            //UsuarioServices.getInstancia().crear(new Usuario(user.getUsername(),user.getNombre(),user.getPassword()
+              //      ,user.isAdministrator(),user.isAutor()));
+
+
 
             String fecha = cxt.formParam("fecha");
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -71,9 +82,12 @@ public class editarArticulo extends ControladorClass {
             Articulo actiEditado = Blog.getInstance().obtenerArticuloPorId(id);
             actiEditado.setTitulo(titulo);
             actiEditado.setCuerpo(cuerpo);
-            actiEditado.setAutor(autorNew);
+            actiEditado.setAutor(autorr);
             actiEditado.setFecha(fechaDate);
             actiEditado.setListaEtiquetas(lisEtiquetas);
+
+            // Actualiza el Articulo en la base de datos
+            ArticuloServices.getInstancia().actualizar(actiEditado);
 
             boolean eliminado = Blog.getInstance().eliminarArticuloById(id);
 
