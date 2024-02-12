@@ -13,6 +13,17 @@ public class Blog {
 	private long contadorEtiqueta;
 	private Usuario usuario;
 
+	public List<Articulo> articulosByEtiqueta(String etiqueta){
+		List<Articulo> articulos = new ArrayList<>();
+
+		for (Articulo articulo: articuloList){
+		}
+
+		return articulos;
+	}
+
+
+
 	//Metodo para convertir un string de etiquetas en una lista.
 	public List<Etiqueta> stringToEtiqueta(String etiquetasString) {
 
@@ -113,5 +124,9 @@ public class Blog {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+
+	public List<Etiqueta> getEtiquetaList() {
+		return etiquetaList;
 	}
 }
