@@ -90,9 +90,7 @@
             </ul>
         </div>
 
-
     </nav>
-
 
     <style>
         .container {
@@ -142,10 +140,6 @@
                             th:text="${#strings.length(articulo.cuerpo) &gt; 70 ? #strings.substring(articulo.cuerpo, 0, 70) + '...' : articulo.cuerpo}">
                         </p>
 
-
-
-
-
                         <div style="display: inline-block;"
                             th:if="${currentUser != null && (currentUser.administrator or currentUser.autor)}">
                             <form th:action="@{/editarArticulo}" method="post">
@@ -154,37 +148,12 @@
                             </form>
                         </div>
 
-
-
-
-
-
-
-
-
-
-
                         <div style="display: inline-block;" th:if="${currentUser != null}">
                             <form th:action="@{/agregarComentario}" method="post">
                                 <input type="hidden" name="idArticulo" th:value="${articulo.getId}" />
                                 <button type="submit" id="comment-button" class="btn btn-primary">Comentar</button>
                             </form>
                         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                         <div style="display: inline-block;"
                             th:if="${currentUser != null && (currentUser.administrator or currentUser.autor)}">
@@ -196,23 +165,13 @@
                             </form>
                         </div>
 
-
-
-
-
                     </th:block>
                     <hr>
 
                 </th:block>
 
-
-
-
                 <br />
-
-
                 <br />
-
 
                 <script>!function (d, s, id) {var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) {js = d.createElement(s); js.id = id; js.src = p + '://platform.twitter.com/widgets.js'; fjs.parentNode.insertBefore(js, fjs);} }(document, 'script', 'twitter-wjs');</script>
 
