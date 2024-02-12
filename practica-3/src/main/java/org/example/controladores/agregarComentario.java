@@ -48,25 +48,30 @@ public class agregarComentario extends ControladorClass {
 
             ComentarioServices.getInstancia().crear(new Comentario(comentario,autor,articulo));
 
+            List<Comentario> listBD = ComentarioServices.getInstancia().obtenerTodosLosComentarios();
             //Creo el comentario.
-            Comentario newComent = new Comentario(comentario,autor,articulo);
 
-            comenForArticulo.add(newComent);
+
+            List<Comentario> listComeEnParticular = new ArrayList<>();
+            for(Comentario coment : listBD){
+                if(coment.getArticulo().getId() == articulo.getId()){
+                    listComeEnParticular.add(coment);
+                }
+            }
 
             //Creo el nuevo articulo con los comentarios asignado.
             Articulo newArticulo = new Articulo(articulo.getTitulo(),articulo.getCuerpo(),articulo.getAutor()
-                    , articulo.getFecha(), comenForArticulo,articulo.getListaEtiquetas());
+                    , articulo.getFecha(), listComeEnParticular,articulo.getListaEtiquetas());
 
-            //Agrego los comentarios a la lista de comentario
-            Comentario.setComentario(newComent);
+
 
             //Obtengo la lista de comentario para un articulo en comun.
-            List<Comentario> listComentario = Comentario.buscarComentPorArticulo(articulo);
+            List<Comentario> listComentario = Comentario.buscarComentPorArticulo(newArticulo);
 
 
             Map<String, Object> model = new HashMap<>();
             model.put("articulo", newArticulo);
-            model.put("listComentarios", listComentario); // Añadir la lista de comentarios al modelo
+            model.put("listComentarios", listComeEnParticular); // Añadir la lista de comentarios al modelo
 
             cxt.render("publico/temp/articulo_plantila.html", model);
 

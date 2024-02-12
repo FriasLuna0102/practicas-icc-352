@@ -3,6 +3,7 @@ package org.example.controladores;
 import io.javalin.Javalin;
 import org.example.clases.*;
 import org.example.services.ArticuloServices;
+import org.example.services.ComentarioServices;
 import org.example.util.ControladorClass;
 
 import java.util.ArrayList;
@@ -71,11 +72,21 @@ public class PlantillasControlador extends ControladorClass {
                     long id = Long.parseLong(ctx.pathParam("id"));
                     // Busca el artículo por ID
                     Articulo articulo = Blog.getInstance().obtenerArticuloPorId(id);
+                    System.out.println(articulo.getTitulo());
                     List<Comentario> listDeComentario = Comentario.buscarComentPorArticulo(articulo);
+
+                    List<Comentario> listBD = ComentarioServices.getInstancia().obtenerTodosLosComentarios();
+
+                    List<Comentario> listComeEnParticular = new ArrayList<>();
+                    for(Comentario coment : listBD){
+                        if(coment.getArticulo().getId() == articulo.getId()){
+                            listComeEnParticular.add(coment);
+                        }
+                    }
 
                     Map<String, Object> model = new HashMap<>();
                     model.put("articulo", articulo);
-                    model.put("listComentarios",listDeComentario);
+                    model.put("listComentarios",listComeEnParticular);
 
                     ctx.render("publico/temp/articulo_plantila.html", model);
                 });

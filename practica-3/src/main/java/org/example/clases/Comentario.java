@@ -1,6 +1,7 @@
 package org.example.clases;
 
 import jakarta.persistence.*;
+import org.example.services.ComentarioServices;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -63,7 +64,7 @@ public class Comentario implements Serializable {
     }
 
 
-    static List<Comentario> comentarios = new ArrayList<>();
+    static List<Comentario> comentarios = ComentarioServices.getInstancia().obtenerTodosLosComentarios();
 
     public static List<Comentario> setComentario(Comentario comentario) {
         comentarios.add(comentario);
@@ -71,7 +72,7 @@ public class Comentario implements Serializable {
     }
 
     public static List<Comentario> getComentarios() {
-        return comentarios;
+        return ComentarioServices.getInstancia().obtenerTodosLosComentarios();
     }
 
     //Buscar comentarios por id
@@ -87,9 +88,9 @@ public class Comentario implements Serializable {
     //Buscar los comentarios relacionado a un articulo.
     static public List<Comentario> buscarComentPorArticulo(Articulo articulo){
         List<Comentario> listForArticulo = new ArrayList<>();
-        for(Comentario cometarios : comentarios){
-            if(cometarios.getArticulo().getId() == articulo.getId()){
-                listForArticulo.add(cometarios);
+        for(Comentario cometario : comentarios){
+            if(cometario.getArticulo().getId() == articulo.getId()){
+                listForArticulo.add(cometario);
             }
         }
 
