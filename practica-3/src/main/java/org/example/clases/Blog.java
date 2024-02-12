@@ -1,6 +1,7 @@
 package org.example.clases;
 
 import org.example.services.BootStrapServices;
+import org.example.services.EtiquetaServices;
 import org.example.services.UsuarioServices;
 
 import java.util.ArrayList;
@@ -45,8 +46,13 @@ public class Blog {
 
 		Etiqueta tmp = new Etiqueta(contadorEtiqueta,nombre);
 		this.etiquetaList.add(tmp);
+
+		//Solucionar lo del id en la base de datos, ya que el contador se reinicia
+		//y vuelve a 1 y en la base de datos ya hay informacion con id 1.
+		EtiquetaServices.getInstancia().crear(new Etiqueta(contadorEtiqueta,nombre));
 		contadorEtiqueta++;
 		System.out.println(tmp.getEtiqueta());
+		System.out.println(contadorEtiqueta);
 	}
 
 	//Metodo para obtener un articulo por el id.
