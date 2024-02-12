@@ -70,18 +70,18 @@ public class Blog {
 
 
 	//Metodo para obtener un articulo por el id.
-	public Articulo obtenerArticuloPorId(String id){
+	public Articulo obtenerArticuloPorId(long id){
 		for(Articulo articulo: articuloList){
-			if(articulo.getId().equals(id)){
+			if(articulo.getId() == id){
 				return articulo;
 			}
 		}
 		return null; // Devuelve null si no se encuentra ningún artículo con ese ID
 	}
 
-	public boolean eliminarArticuloById(String id) {
+	public boolean eliminarArticuloById(long id) {
 		for (Articulo articulo: this.articuloList){
-			if (articulo.getId().equals(id)){
+			if (articulo.getId() == id){
 				this.articuloList.remove(articulo);
 				return true;
 			}

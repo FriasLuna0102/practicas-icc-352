@@ -16,7 +16,8 @@ public class Articulo implements Serializable {
     private static long contador = 0;
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     private String titulo;
     private String cuerpo;
     @OneToOne
@@ -33,7 +34,7 @@ public class Articulo implements Serializable {
     }
 
     public Articulo(String titulo, String cuerpo, Usuario autor, Date fecha, List<Comentario> listaComentarios, List<Etiqueta> listaEtiquetas) {
-        this.id = String.valueOf(++contador);
+        //this.id = String.valueOf(++contador);
         this.titulo = titulo;
         this.cuerpo = cuerpo;
         this.autor = autor;
@@ -42,7 +43,7 @@ public class Articulo implements Serializable {
         this.listaEtiquetas = listaEtiquetas;
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 

@@ -25,7 +25,7 @@ public class agregarComentario extends ControladorClass {
         app.post("/agregarComentario", cxt ->{
 
             //Obtengo el id del formulario y busco el articul al cual se comentara por su id.
-            String idArticulo = cxt.formParam("idArticulo");
+            long idArticulo = Long.parseLong(cxt.formParam("idArticulo"));
             Articulo articulo = Blog.getInstance().obtenerArticuloPorId(idArticulo);
 
             //Lo mando al seccionComentario html, para comentar.
@@ -42,7 +42,7 @@ public class agregarComentario extends ControladorClass {
             List<Comentario> comenForArticulo = new ArrayList<>();
             String comentario = cxt.formParam("contenidoComentario");
             Usuario autor = cxt.sessionAttribute("currentUser");
-            String idArticulo = cxt.formParam("idArticulo");
+            long idArticulo = Long.parseLong(cxt.formParam("idArticulo"));
             Articulo articulo = Blog.getInstance().obtenerArticuloPorId(idArticulo);
 
 

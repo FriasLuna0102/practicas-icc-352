@@ -27,7 +27,7 @@ public class editarArticulo extends ControladorClass {
         // Manejar la solicitud POST para eliminar un artículo
         app.post("/editarArticulo", ctx -> {
             // Obtener el ID del artículo a eliminar desde el formulario
-            String idArticulo = ctx.formParam("idArticulo");
+            long idArticulo = Long.parseLong(ctx.formParam("idArticulo"));
 
             // Eliminar el artículo de la lista de artículos
             Articulo articuloEditar = Blog.getInstance().obtenerArticuloPorId(idArticulo);
@@ -53,7 +53,7 @@ public class editarArticulo extends ControladorClass {
 
         app.post("/actualizarArticulo", cxt ->{
 
-            String id = cxt.formParam("idArticulo");
+            long id = Long.parseLong(cxt.formParam("idArticulo"));
             String titulo = cxt.formParam("titulo");
             String cuerpo = cxt.formParam("cuerpo");
             String autor = cxt.formParam("autor");
@@ -68,8 +68,6 @@ public class editarArticulo extends ControladorClass {
 
             //UsuarioServices.getInstancia().crear(new Usuario(user.getUsername(),user.getNombre(),user.getPassword()
               //      ,user.isAdministrator(),user.isAutor()));
-
-
 
             String fecha = cxt.formParam("fecha");
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

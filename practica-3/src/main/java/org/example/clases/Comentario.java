@@ -89,7 +89,7 @@ public class Comentario implements Serializable {
     static public List<Comentario> buscarComentPorArticulo(Articulo articulo){
         List<Comentario> listForArticulo = new ArrayList<>();
         for(Comentario cometarios : comentarios){
-            if(cometarios.getArticulo().getId().equals(articulo.getId())){
+            if(cometarios.getArticulo().getId() == articulo.getId()){
                 listForArticulo.add(cometarios);
             }
         }
