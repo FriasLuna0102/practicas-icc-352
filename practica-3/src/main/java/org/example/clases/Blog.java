@@ -13,7 +13,7 @@ public class Blog {
 	private long contadorEtiqueta;
 	private Usuario usuario;
 
-	public List<Articulo> articulosByEtiqueta(String nombreEtiqueta){
+	public List<Articulo> listArticulosByEtiqueta(String nombreEtiqueta){
 		List<Articulo> articulos = new ArrayList<>();
 		Etiqueta etiqueta = etiquetaByName(nombreEtiqueta);
 

@@ -47,11 +47,12 @@ public class PlantillasControlador extends ControladorClass {
                     }
                 });
 
-                get("/blogUsuario/{etiqueta}", context -> {
+                get("poretiqueta", context -> {
 
+                    String stringEtiqueta = context.queryParam("etiqueta");
 
                     Map<String, Object> model = new HashMap<>();
-                    model.put("listArticulos", listArticulos);
+                    model.put("listArticulos", Blog.getInstance().listArticulosByEtiqueta(stringEtiqueta));
                     model.put("listEtiquetas", etiquetaList);
 
                     context.render("publico/html/blogUsuario.html", model);
