@@ -49,6 +49,8 @@ public class PlantillasControlador extends ControladorClass {
 
                 get("/poretiqueta", context -> {
 
+                    Usuario currentUser = context.sessionAttribute("currentUser");
+                    context.attribute("currentUser", currentUser);
                     String stringEtiqueta = context.queryParam("etiqueta");
 
                     Map<String, Object> model = new HashMap<>();
