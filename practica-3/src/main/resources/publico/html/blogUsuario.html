@@ -246,7 +246,7 @@
                                 <th:block>
 
                                     <th:block th:each="etiqueta : ${listEtiquetas}">
-                                        <a th:href="'/poretiqueta?etiqueta=' + ${etiqueta.etiqueta}">
+                                        <a th:href="'/blogUsuario/poretiqueta?etiqueta=' + ${etiqueta.etiqueta}">
                                             <span class="badge badge-info" th:text="${etiqueta.etiqueta}"></span>
                                         </a>
                                     </th:block>

@@ -47,7 +47,7 @@ public class PlantillasControlador extends ControladorClass {
                     }
                 });
 
-                get("poretiqueta", context -> {
+                get("/poretiqueta", context -> {
 
                     String stringEtiqueta = context.queryParam("etiqueta");
 
