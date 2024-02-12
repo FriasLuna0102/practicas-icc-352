@@ -13,16 +13,27 @@ public class Blog {
 	private long contadorEtiqueta;
 	private Usuario usuario;
 
-	public List<Articulo> articulosByEtiqueta(String etiqueta){
+	public List<Articulo> articulosByEtiqueta(String nombreEtiqueta){
 		List<Articulo> articulos = new ArrayList<>();
+		Etiqueta etiqueta = etiquetaByName(nombreEtiqueta);
 
 		for (Articulo articulo: articuloList){
+			if (articulo.getListaEtiquetas().contains(etiqueta)){
+				articulos.add(articulo);
+			}
 		}
 
 		return articulos;
 	}
 
-
+	private Etiqueta etiquetaByName(String name){
+		for (Etiqueta etiqueta: etiquetaList){
+			if (etiqueta.getEtiqueta().equals(name)){
+				return etiqueta;
+			}
+		}
+		return null;
+	}
 
 	//Metodo para convertir un string de etiquetas en una lista.
 	public List<Etiqueta> stringToEtiqueta(String etiquetasString) {
