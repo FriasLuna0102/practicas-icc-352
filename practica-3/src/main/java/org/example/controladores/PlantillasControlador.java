@@ -83,7 +83,7 @@ public class PlantillasControlador extends ControladorClass {
 
 
 
-                get("/buscar}", ctx -> {
+                get("/buscar", ctx -> {
                     String etiqueta = ctx.queryParam("etiqueta");
                     // Realiza la búsqueda con la etiqueta
                     ctx.result("Buscando artículos con la etiqueta: " + etiqueta);

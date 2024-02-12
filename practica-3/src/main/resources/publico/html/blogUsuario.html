@@ -236,7 +236,7 @@
                             <th:block th:each="articulo : ${listArticulos}">
                                 <th:block th:with="etiquetasString=${''}">
         <span th:each="etiqueta, iterStat : ${articulo.listaEtiquetas}">
-<a th:href="'/buscar?etiqueta=' + ${etiqueta.etiqueta}" class="badge badge-info" th:text="${etiqueta.getEtiqueta}"></a>
+<a th:href="'/blogUsuario/buscar?etiqueta=' + ${etiqueta.etiqueta}" class="badge badge-info" th:text="${etiqueta.getEtiqueta}"></a>
             <span th:if="${!iterStat.last}"> </span>
         </span>
                                 </th:block>
