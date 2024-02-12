@@ -1,6 +1,8 @@
 package org.example.clases;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import org.example.services.EtiquetaServices;
 
@@ -12,14 +14,14 @@ import java.util.List;
 public class Etiqueta implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String etiqueta;
 
     public Etiqueta(){
 
     }
-    public Etiqueta(long id, String etiqueta) {
-        this.id = id;
+    public Etiqueta(String etiqueta) {
         this.etiqueta = etiqueta;
     }
 
