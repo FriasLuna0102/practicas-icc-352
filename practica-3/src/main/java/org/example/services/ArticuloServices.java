@@ -34,28 +34,17 @@ public class ArticuloServices extends GestionDb<Articulo>{
 
 
 
-    public void pruebaActualizacion(){
+    public Articulo actualizar(Articulo articulo) {
         EntityManager em = getEntityManager();
-        Usuario usuario1 = new Usuario("star","Starlin","123",true,false);
-        em.getTransaction().begin();
-        em.persist(usuario1); //creando el registro.
-        em.flush();
-        em.getTransaction().commit(); //persistiendo el registro.
-        em.getTransaction().begin();
-        usuario1.setNombre("Otro Nombre");
-        em.flush();
-        em.getTransaction().commit();
-        em.getTransaction().begin();
-        usuario1.setNombre("Nuevamente otro nombre...");
-        em.flush();
-        em.getTransaction().commit();
-        em.close(); //todos los objetos abiertos y manejados fueron cerrados.
-        //
-        usuario1.setNombre("Cambiando el objeto..."); //en memoria, no en la base datos.
-        em = getEntityManager();
-        em.getTransaction().begin();
-        em.merge(usuario1);
-        em.getTransaction().commit();
-        em.close();
+        try {
+            em.getTransaction().begin();
+            Articulo articuloActualizado = em.merge(articulo);
+            em.getTransaction().commit();
+            return articuloActualizado;
+        } finally {
+            em.close();
+        }
     }
+
+
 }

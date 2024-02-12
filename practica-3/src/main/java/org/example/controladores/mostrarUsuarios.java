@@ -3,6 +3,7 @@ package org.example.controladores;
 import io.javalin.Javalin;
 import org.example.clases.Blog;
 import org.example.clases.Usuario;
+import org.example.services.UsuarioServices;
 import org.example.util.ControladorClass;
 
 import java.util.HashMap;
@@ -17,7 +18,6 @@ public class mostrarUsuarios extends ControladorClass {
         super(app);
     }
 
-    List<Usuario> listUsuario = Blog.getInstance().getUsuarioList();
     @Override
     public void aplicarRutas() {
 
@@ -30,6 +30,7 @@ public class mostrarUsuarios extends ControladorClass {
                     if(cxt.sessionAttribute("currentUser") == null){
                         cxt.redirect("/login");
                     }else{
+                        List<Usuario> listUsuario = UsuarioServices.getInstancia().obtenerTodosLosUsuarios();
                         Map<String, Object> model = new HashMap<>();
                         model.put("listUsuario",listUsuario);
                         cxt.render("publico/html/listarUsuarios.html",model);

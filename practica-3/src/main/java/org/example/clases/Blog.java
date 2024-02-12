@@ -12,7 +12,7 @@ public class Blog {
 
 	private static Blog instancia;
 	private List<Articulo> articuloList;
-	private List<Usuario> usuarioList;
+	private List<Usuario> usuarioList = UsuarioServices.getInstancia().obtenerTodosLosUsuarios();
 	private List<Etiqueta> etiquetaList;
 	private long contadorEtiqueta;
 	private Usuario usuario;
@@ -110,7 +110,7 @@ public class Blog {
 
 	private Blog(){
 		articuloList = new ArrayList<>();
-		usuarioList = new ArrayList<>();
+		usuarioList = UsuarioServices.getInstancia().obtenerTodosLosUsuarios();
 		etiquetaList = new ArrayList<>();
 		contadorEtiqueta = 1;
 	}
