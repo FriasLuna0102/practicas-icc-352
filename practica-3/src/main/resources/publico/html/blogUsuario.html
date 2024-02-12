@@ -233,20 +233,13 @@
                     <div class="col-lg-6">
                         <ul class="list-unstyled">
 
-                            <th:block>
-                                <th th:unless="${not #lists.isEmpty(listArticulos)}"></th>
-                            </th:block>
-                            <p><i class="fa fa-tags"></i> Tags: </p>
                             <th:block th:each="articulo : ${listArticulos}">
-
                                 <th:block th:with="etiquetasString=${''}">
-                                        <span th:each="etiqueta, iterStat : ${articulo.listaEtiquetas}">
-                                        <span class="badge badge-info" th:text="${etiqueta.getEtiqueta}"></span>
-                                        <span th:if="${!iterStat.last}"> </span>
-                                        </span>
-
-                                 </th:block>
-
+        <span th:each="etiqueta, iterStat : ${articulo.listaEtiquetas}">
+<a th:href="'/buscar?etiqueta=' + ${etiqueta.etiqueta}" class="badge badge-info" th:text="${etiqueta.getEtiqueta}"></a>
+            <span th:if="${!iterStat.last}"> </span>
+        </span>
+                                </th:block>
                             </th:block>
 
 
