@@ -1,6 +1,7 @@
 package org.example.clases;
 
 import jakarta.persistence.*;
+import org.example.services.ArticuloServices;
 import org.example.services.EtiquetaServices;
 
 import java.io.File;
@@ -108,6 +109,7 @@ public class Articulo implements Serializable {
             Articulo articulo = lista.get(i);
 
             if (Objects.equals(articulo.getId(), id)) {
+                ArticuloServices.getInstancia().eliminar(articulo.id);
                 lista.remove(i);
                 i=0;
                 return true;

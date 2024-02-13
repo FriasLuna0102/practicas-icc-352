@@ -3,6 +3,7 @@ package org.example.controladores;
 import io.javalin.Javalin;
 import org.example.clases.Articulo;
 import org.example.clases.Blog;
+import org.example.services.ArticuloServices;
 import org.example.util.ControladorClass;
 
 import java.util.List;
@@ -20,10 +21,10 @@ public class EliminarArticulo extends ControladorClass {
         // Manejar la solicitud POST para eliminar un artículo
         app.post("/eliminarArticulo", ctx -> {
             // Obtener el ID del artículo a eliminar desde el formulario
-            long idTituloo = Long.parseLong(ctx.formParam("idArticulo"));
+            long idArticulo = Long.parseLong(ctx.formParam("idArticulo"));
 
             // Eliminar el artículo de la lista de artículos
-            boolean eliminado = Articulo.eliminarArti(listaArticulos,idTituloo);
+            boolean eliminado = Articulo.eliminarArti(listaArticulos,idArticulo);
 
             if (eliminado) {
                 // Redirigir a la página del blog del usuario
