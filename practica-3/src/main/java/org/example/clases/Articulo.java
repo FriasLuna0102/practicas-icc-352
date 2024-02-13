@@ -94,7 +94,7 @@ public class Articulo implements Serializable {
     }
 
     public List<Etiqueta> getListaEtiquetas() {
-        return EtiquetaServices.getInstancia().obtenerTodasLasEtiquetas();
+        return listaEtiquetas;
     }
 
     public void setListaEtiquetas(List<Etiqueta> listaEtiquetas) {
