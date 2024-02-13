@@ -45,20 +45,7 @@
 
 
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="navbar-header">
-        <!-- Botón de Login -->
-        <span th:if="${currentUser != null}">
-            <span th:text="${currentUser.nombre}" style="color: white;"></span>
-              <a class="btn btn-sm btn-primary navbar-btn" href="/logout">Logout</a>
 
-    </span>
-        <!-- Nombre del usuario -->
-        <span th:if="${currentUser == null}">
-        <a class="btn btn-sm btn-primary navbar-btn" href="/login">Login</a>
-
-    </span>
-        <!-- ... -->
-    </div>
     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar">
@@ -66,7 +53,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
     </button>
-    <a class="navbar-brand" href="">Blog Post</a>
+    <a class="navbar-brand" href="/blogUsuario">Blog Post</a>
     </div>
     <!-- Botón para crear usuario -->
     <div class="collapse navbar-collapse navbar-ex1-collapse">

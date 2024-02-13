@@ -89,8 +89,6 @@ public class PlantillasControlador extends ControladorClass {
                     long id = Long.parseLong(ctx.pathParam("id"));
                     // Busca el artículo por ID
                     Articulo articulo = Blog.getInstance().obtenerArticuloPorId(id);
-                    System.out.println(articulo.getTitulo());
-                    List<Comentario> listDeComentario = Comentario.buscarComentPorArticulo(articulo);
 
                     List<Comentario> listBD = ComentarioServices.getInstancia().obtenerTodosLosComentarios();
 
@@ -112,35 +110,24 @@ public class PlantillasControlador extends ControladorClass {
 
                 get("/buscar", ctx -> {
 
-                    Map<String, Object> model = new HashMap<>();
+                    if(ctx.sessionAttribute("currentUser") == null){
 
-                    List<Articulo> listShow = new ArrayList<>();
+                        ctx.redirect("/login");
 
-                    String etiqueta = ctx.queryParam("etiqueta");
-                    Etiqueta etique = Etiqueta.buscarEtiquet(etiqueta);
-                    List<Articulo> listArticulo = ArticuloServices.getInstancia().obtenerTodosLosArticulos();
+                    }else{
 
-                    List<Articulo> listArticuloos = etique.getListArticulos();
+                        Map<String, Object> model = new HashMap<>();
 
-                    for(Articulo ar: listArticuloos){
-                        System.out.println(ar.getTitulo());
+                        String etiqueta = ctx.queryParam("etiqueta");
+                        Etiqueta etique = Etiqueta.buscarEtiquet(etiqueta);
+
+                        List<Articulo> listArticuloos = etique.getListArticulos();
+
+                        model.put("listArticulos", listArticuloos);
+
+                        ctx.render("publico/html/blogPorEtiqueta.html", model);
                     }
 
-
-//                    for(Articulo arti: listArticulo){
-//                        for (Etiqueta eti : arti.getListaEtiquetas()){
-//                            if (eti.getId() == etique.getId()){
-//                                listShow.add(arti);
-//                            }
-//                        }
-//                    }
-
-                    model.put("listArticulos", listArticuloos);
-
-                    ctx.render("publico/html/blogPorEtiqueta.html", model);
-
-                    // Realiza la búsqueda con la etiqueta
-                    //ctx.result("Buscando artículos con la etiqueta: " + art);
                 });
 
 
