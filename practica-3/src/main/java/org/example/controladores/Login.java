@@ -30,7 +30,6 @@ public class Login extends ControladorClass {
             if (cxt.cookie("username") != null){
                 String username = textEncryptor.decrypt(cxt.cookie("username"));
                 usuario = UsuarioServices.getInstancia().findByNombre(username);
-                System.out.println(usuario.getPassword() + 1);
                 cxt.sessionAttribute("currentUser", usuario);
                 cxt.redirect("/blogUsuario");
                 return;
@@ -39,7 +38,6 @@ public class Login extends ControladorClass {
         });
 
         app.before("/logout", ctx -> {
-            System.out.println("Invalidando");
             ctx.cookie("username", "invalido", 0);
             //invalidando la sesion.
             ctx.req().getSession().invalidate();
@@ -51,15 +49,9 @@ public class Login extends ControladorClass {
             String passwordLogin = cxt.formParam("password");
             boolean remember = cxt.formParam("remember") != null;
 
-            // Buscar el usuario en la base de datos utilizando Hibernate
-            // Que sea una lista esta de mas
-            List<Usuario> usuarios = UsuarioServices.getInstancia().findAllByNombre(usuarioLogin);
-
-            if (!usuarios.isEmpty()) {
-                usuario = usuarios.get(0); // Suponiendo que hay solo un usuario con el mismo nombre
+            if ((usuario = UsuarioServices.getInstancia().findByNombre(usuarioLogin)) != null) {
 
                 if (usuario.getPassword().equals(passwordLogin)) {
-
                     if (remember){
                         cxt.cookie("username", textEncryptor.encrypt(usuario.getUsername()), 604800);
                     }
