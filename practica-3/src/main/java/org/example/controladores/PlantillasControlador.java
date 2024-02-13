@@ -1,12 +1,12 @@
 package org.example.controladores;
 
 import io.javalin.Javalin;
-import org.example.clases.Articulo;
-import org.example.clases.Blog;
-import org.example.clases.Comentario;
-import org.example.clases.Usuario;
+import org.example.clases.*;
+import org.example.services.ArticuloServices;
+import org.example.services.ComentarioServices;
 import org.example.util.ControladorClass;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,18 +69,55 @@ public class PlantillasControlador extends ControladorClass {
                 });
 
                 get("/articulo/{id}", ctx -> {
-                    String id = ctx.pathParam("id");
+                    long id = Long.parseLong(ctx.pathParam("id"));
                     // Busca el artículo por ID
                     Articulo articulo = Blog.getInstance().obtenerArticuloPorId(id);
+                    System.out.println(articulo.getTitulo());
                     List<Comentario> listDeComentario = Comentario.buscarComentPorArticulo(articulo);
+
+                    List<Comentario> listBD = ComentarioServices.getInstancia().obtenerTodosLosComentarios();
+
+                    List<Comentario> listComeEnParticular = new ArrayList<>();
+                    for(Comentario coment : listBD){
+                        if(coment.getArticulo().getId() == articulo.getId()){
+                            listComeEnParticular.add(coment);
+                        }
+                    }
 
                     Map<String, Object> model = new HashMap<>();
                     model.put("articulo", articulo);
-                    model.put("listComentarios",listDeComentario);
+                    model.put("listComentarios",listComeEnParticular);
 
                     ctx.render("publico/temp/articulo_plantila.html", model);
                 });
 
+
+
+                get("/buscar", ctx -> {
+
+                    Map<String, Object> model = new HashMap<>();
+
+                    List<Articulo> listShow = new ArrayList<>();
+
+                    String etiqueta = ctx.queryParam("etiqueta");
+                    Etiqueta etique = Etiqueta.buscarEtiquet(etiqueta);
+                    List<Articulo> listArticulo = ArticuloServices.getInstancia().obtenerTodosLosArticulos();
+
+                    for(Articulo arti: listArticulo){
+                        for (Etiqueta eti : arti.getListaEtiquetas()){
+                            if (eti.getId() == etique.getId()){
+                                listShow.add(arti);
+                            }
+                        }
+                    }
+
+                    model.put("listArticulos", listShow);
+
+                    ctx.render("publico/html/blogUsuario.html", model);
+
+                    // Realiza la búsqueda con la etiqueta
+                    //ctx.result("Buscando artículos con la etiqueta: " + art);
+                });
 
 
             });

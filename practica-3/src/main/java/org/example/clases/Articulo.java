@@ -1,6 +1,7 @@
 package org.example.clases;
 
 import jakarta.persistence.*;
+import org.example.services.EtiquetaServices;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -15,7 +16,8 @@ public class Articulo implements Serializable {
     private static long contador = 0;
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     private String titulo;
     private String cuerpo;
     @OneToOne
@@ -32,7 +34,7 @@ public class Articulo implements Serializable {
     }
 
     public Articulo(String titulo, String cuerpo, Usuario autor, Date fecha, List<Comentario> listaComentarios, List<Etiqueta> listaEtiquetas) {
-        this.id = String.valueOf(++contador);
+        //this.id = String.valueOf(++contador);
         this.titulo = titulo;
         this.cuerpo = cuerpo;
         this.autor = autor;
@@ -41,7 +43,7 @@ public class Articulo implements Serializable {
         this.listaEtiquetas = listaEtiquetas;
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
@@ -91,7 +93,7 @@ public class Articulo implements Serializable {
     }
 
     public List<Etiqueta> getListaEtiquetas() {
-        return listaEtiquetas;
+        return EtiquetaServices.getInstancia().obtenerTodasLasEtiquetas();
     }
 
     public void setListaEtiquetas(List<Etiqueta> listaEtiquetas) {
@@ -99,7 +101,7 @@ public class Articulo implements Serializable {
     }
 
     //Metodo para eliminar un articulo de una lista mediante el titulo.
-    static public boolean eliminarArti(List<Articulo> lista, String id) {
+    static public boolean eliminarArti(List<Articulo> lista, long id) {
         int i = 0;
         for (i = 0; i < lista.size(); i++) {
             Articulo articulo = lista.get(i);

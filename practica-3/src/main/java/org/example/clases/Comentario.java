@@ -1,6 +1,7 @@
 package org.example.clases;
 
 import jakarta.persistence.*;
+import org.example.services.ComentarioServices;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -13,13 +14,14 @@ public class Comentario implements Serializable {
     private static long contador = 0;
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     private String comentario;
 
     @OneToOne
     private Usuario autor;
 
-    @OneToOne
+    @ManyToOne
     private Articulo articulo;
 
     public Comentario (){
@@ -27,15 +29,13 @@ public class Comentario implements Serializable {
     }
 
     public Comentario(String comentario, Usuario autor, Articulo articulo) {
-        this.id = String.valueOf(++contador);
-
         this.comentario = comentario;
         this.autor = autor;
         this.articulo = articulo;
     }
 
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
@@ -64,7 +64,7 @@ public class Comentario implements Serializable {
     }
 
 
-    static List<Comentario> comentarios = new ArrayList<>();
+    static List<Comentario> comentarios = ComentarioServices.getInstancia().obtenerTodosLosComentarios();
 
     public static List<Comentario> setComentario(Comentario comentario) {
         comentarios.add(comentario);
@@ -72,13 +72,13 @@ public class Comentario implements Serializable {
     }
 
     public static List<Comentario> getComentarios() {
-        return comentarios;
+        return ComentarioServices.getInstancia().obtenerTodosLosComentarios();
     }
 
     //Buscar comentarios por id
-    static public Comentario buscarComentarioId(String id){
+    static public Comentario buscarComentarioId(long id){
         for (Comentario coment : comentarios){
-            if(coment.getId().equals(id)){
+            if(coment.getId() == id){
                 return coment;
             }
         }
@@ -88,9 +88,9 @@ public class Comentario implements Serializable {
     //Buscar los comentarios relacionado a un articulo.
     static public List<Comentario> buscarComentPorArticulo(Articulo articulo){
         List<Comentario> listForArticulo = new ArrayList<>();
-        for(Comentario cometarios : comentarios){
-            if(cometarios.getArticulo().getId().equals(articulo.getId())){
-                listForArticulo.add(cometarios);
+        for(Comentario cometario : comentarios){
+            if(cometario.getArticulo().getId() == articulo.getId()){
+                listForArticulo.add(cometario);
             }
         }
 

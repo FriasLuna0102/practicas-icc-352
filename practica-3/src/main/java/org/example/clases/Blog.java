@@ -13,13 +13,14 @@ public class Blog {
 	private static Blog instancia;
 	private List<Articulo> articuloList;
 	private List<Usuario> usuarioList = UsuarioServices.getInstancia().obtenerTodosLosUsuarios();
-	private List<Etiqueta> etiquetaList;
+	private List<Etiqueta> etiquetaList = EtiquetaServices.getInstancia().obtenerTodasLasEtiquetas();
 	private long contadorEtiqueta;
 	private Usuario usuario;
 
 	//Metodo para convertir un string de etiquetas en una lista.
 	public List<Etiqueta> stringToEtiqueta(String etiquetasString) {
 
+		List<Etiqueta> listEtiBD = EtiquetaServices.getInstancia().obtenerTodasLasEtiquetas();
 		List<Etiqueta> etiquetaList = new ArrayList<>();
 		String[] etiquetaArray = etiquetasString.split(",", 0);
 		boolean existe = false;
@@ -33,8 +34,11 @@ public class Blog {
 			}
 			if (!existe) {
 				crearEtiqueta(s.trim());
-				etiquetaList.add(this.etiquetaList.getLast());
+				if (!this.etiquetaList.isEmpty()) {
+					etiquetaList.add(this.etiquetaList.getLast());
+				}
 			}
+
 			existe = false;
 		}
 
@@ -43,31 +47,41 @@ public class Blog {
 
 	//Metodo auxiliar para crear etiqueta
 	private void crearEtiqueta(String nombre){
+		Etiqueta tmp = new Etiqueta(nombre);
+		List<Etiqueta> listEtiqueta = EtiquetaServices.getInstancia().obtenerTodasLasEtiquetas();
 
-		Etiqueta tmp = new Etiqueta(contadorEtiqueta,nombre);
-		this.etiquetaList.add(tmp);
+		boolean existe = false;
+		for(Etiqueta etiquetaaa: listEtiqueta){
+			if(Objects.equals(etiquetaaa.getEtiqueta(), tmp.getEtiqueta())){
+				existe = true;
+				break;
+			}
+		}
 
-		//Solucionar lo del id en la base de datos, ya que el contador se reinicia
-		//y vuelve a 1 y en la base de datos ya hay informacion con id 1.
-		EtiquetaServices.getInstancia().crear(new Etiqueta(contadorEtiqueta,nombre));
-		contadorEtiqueta++;
-		System.out.println(tmp.getEtiqueta());
-		System.out.println(contadorEtiqueta);
+		if (!existe) {
+			EtiquetaServices.getInstancia().crear(tmp); // Guarda la etiqueta en la base de datos primero
+			this.etiquetaList.add(tmp); // Luego agrega la etiqueta a la lista
+			contadorEtiqueta++;
+		}
 	}
 
+
+
+
+
 	//Metodo para obtener un articulo por el id.
-	public Articulo obtenerArticuloPorId(String id){
+	public Articulo obtenerArticuloPorId(long id){
 		for(Articulo articulo: articuloList){
-			if(articulo.getId().equals(id)){
+			if(articulo.getId() == id){
 				return articulo;
 			}
 		}
 		return null; // Devuelve null si no se encuentra ningún artículo con ese ID
 	}
 
-	public boolean eliminarArticuloById(String id) {
+	public boolean eliminarArticuloById(long id) {
 		for (Articulo articulo: this.articuloList){
-			if (articulo.getId().equals(id)){
+			if (articulo.getId() == id){
 				this.articuloList.remove(articulo);
 				return true;
 			}
