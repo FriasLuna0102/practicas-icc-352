@@ -1,6 +1,7 @@
 package org.example.clases;
 
 import jakarta.persistence.*;
+import org.example.services.ArticuloServices;
 import org.example.services.EtiquetaServices;
 
 import java.io.Serializable;
@@ -20,6 +21,15 @@ public class Etiqueta implements Serializable {
     public Etiqueta(){
 
     }
+
+    private static Etiqueta instancia;
+
+    public static Etiqueta getInstancia(){
+        if(instancia==null){
+            instancia = new Etiqueta();
+        }
+        return instancia;
+    }
     public Etiqueta(String etiqueta) {
         this.etiqueta = etiqueta;
     }
@@ -28,6 +38,9 @@ public class Etiqueta implements Serializable {
         return id;
     }
 
+    public List<Articulo> getListArticulos() {
+        return articulos;
+    }
     public void setId(long id) {
         this.id = id;
     }

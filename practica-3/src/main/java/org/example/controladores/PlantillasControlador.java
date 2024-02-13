@@ -103,15 +103,22 @@ public class PlantillasControlador extends ControladorClass {
                     Etiqueta etique = Etiqueta.buscarEtiquet(etiqueta);
                     List<Articulo> listArticulo = ArticuloServices.getInstancia().obtenerTodosLosArticulos();
 
-                    for(Articulo arti: listArticulo){
-                        for (Etiqueta eti : arti.getListaEtiquetas()){
-                            if (eti.getId() == etique.getId()){
-                                listShow.add(arti);
-                            }
-                        }
+                    List<Articulo> listArticuloos = etique.getListArticulos();
+
+                    for(Articulo ar: listArticuloos){
+                        System.out.println(ar.getTitulo());
                     }
 
-                    model.put("listArticulos", listShow);
+
+//                    for(Articulo arti: listArticulo){
+//                        for (Etiqueta eti : arti.getListaEtiquetas()){
+//                            if (eti.getId() == etique.getId()){
+//                                listShow.add(arti);
+//                            }
+//                        }
+//                    }
+
+                    model.put("listArticulos", listArticuloos);
 
                     ctx.render("publico/html/blogUsuario.html", model);
 
