@@ -21,7 +21,7 @@ public class Comentario implements Serializable {
     @OneToOne
     private Usuario autor;
 
-    @OneToOne
+    @ManyToOne
     private Articulo articulo;
 
     public Comentario (){
