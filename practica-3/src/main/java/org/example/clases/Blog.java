@@ -27,10 +27,11 @@ public class Blog {
 
 		for (String s : etiquetaArray) {
 			for (Etiqueta etiqueta : this.etiquetaList) {
-				if (etiqueta.getEtiqueta().equalsIgnoreCase(s)) {
-					//etiquetaList.add(etiqueta);
-					existe = true;
-				}
+                if (etiqueta.getEtiqueta().equalsIgnoreCase(s)) {
+                    //etiquetaList.add(etiqueta);
+                    existe = true;
+                    break;
+                }
 			}
 			if (!existe) {
 				crearEtiqueta(s.trim());
