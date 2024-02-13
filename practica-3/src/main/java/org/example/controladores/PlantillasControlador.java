@@ -4,12 +4,14 @@ import io.javalin.Javalin;
 import org.example.clases.*;
 import org.example.services.ArticuloServices;
 import org.example.services.ComentarioServices;
+import org.example.services.EtiquetaServices;
 import org.example.util.ControladorClass;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static io.javalin.apibuilder.ApiBuilder.get;
 import static io.javalin.apibuilder.ApiBuilder.path;
@@ -36,9 +38,24 @@ public class PlantillasControlador extends ControladorClass {
                         // Set the currentUser attribute in the template context
                         ctx.attribute("currentUser", currentUser);
 
+                        List<Etiqueta> listEtiqueta = EtiquetaServices.getInstancia().obtenerTodasLasEtiquetas();
 
                         Map<String, Object> model = new HashMap<>();
                         model.put("listArticulos", listArticulos);
+
+                        for (Articulo articulo : listArticulos) {
+                            List<Etiqueta> nuevasEtiquetas = articulo.getListaEtiquetas().stream()
+                                    .filter(etiqueta -> !listEtiqueta.contains(etiqueta))
+                                    .collect(Collectors.toList());
+                            articulo.setListaEtiquetas(nuevasEtiquetas);
+                        }
+
+                        for(Etiqueta eti : listEtiqueta){
+
+                            System.out.println("Esta :"+ eti.getEtiqueta());
+                        }
+                        model.put("listEtiquetas", listEtiqueta);
+
 
                         ctx.render("publico/html/blogUsuario.html", model);
 
@@ -72,8 +89,6 @@ public class PlantillasControlador extends ControladorClass {
                     long id = Long.parseLong(ctx.pathParam("id"));
                     // Busca el artículo por ID
                     Articulo articulo = Blog.getInstance().obtenerArticuloPorId(id);
-                    System.out.println(articulo.getTitulo());
-                    List<Comentario> listDeComentario = Comentario.buscarComentPorArticulo(articulo);
 
                     List<Comentario> listBD = ComentarioServices.getInstancia().obtenerTodosLosComentarios();
 
@@ -95,28 +110,24 @@ public class PlantillasControlador extends ControladorClass {
 
                 get("/buscar", ctx -> {
 
-                    Map<String, Object> model = new HashMap<>();
+                    if(ctx.sessionAttribute("currentUser") == null){
 
-                    List<Articulo> listShow = new ArrayList<>();
+                        ctx.redirect("/login");
 
-                    String etiqueta = ctx.queryParam("etiqueta");
-                    Etiqueta etique = Etiqueta.buscarEtiquet(etiqueta);
-                    List<Articulo> listArticulo = ArticuloServices.getInstancia().obtenerTodosLosArticulos();
+                    }else{
 
-                    for(Articulo arti: listArticulo){
-                        for (Etiqueta eti : arti.getListaEtiquetas()){
-                            if (eti.getId() == etique.getId()){
-                                listShow.add(arti);
-                            }
-                        }
+                        Map<String, Object> model = new HashMap<>();
+
+                        String etiqueta = ctx.queryParam("etiqueta");
+                        Etiqueta etique = Etiqueta.buscarEtiquet(etiqueta);
+
+                        List<Articulo> listArticuloos = etique.getListArticulos();
+
+                        model.put("listArticulos", listArticuloos);
+
+                        ctx.render("publico/html/blogPorEtiqueta.html", model);
                     }
 
-                    model.put("listArticulos", listShow);
-
-                    ctx.render("publico/html/blogUsuario.html", model);
-
-                    // Realiza la búsqueda con la etiqueta
-                    //ctx.result("Buscando artículos con la etiqueta: " + art);
                 });
 
 

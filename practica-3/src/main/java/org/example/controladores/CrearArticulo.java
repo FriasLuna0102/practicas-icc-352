@@ -33,6 +33,7 @@ public class CrearArticulo extends ControladorClass {
 
             List<Etiqueta> listaEtiquetas = Blog.getInstance().stringToEtiqueta(etiquetas);
 
+
             Articulo newArticulo = new Articulo(titulo,cuerpo,autor,fechaActual,listaComentarios,listaEtiquetas);
 
             // Guarda el nuevo Articulo en la base de datos

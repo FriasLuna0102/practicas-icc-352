@@ -26,8 +26,9 @@ public class Articulo implements Serializable {
     @OneToMany
     private List<Comentario> listaComentarios;
 
-    @OneToMany
+    @ManyToMany
     private List<Etiqueta> listaEtiquetas;
+
 
     public Articulo(){
 
@@ -93,7 +94,7 @@ public class Articulo implements Serializable {
     }
 
     public List<Etiqueta> getListaEtiquetas() {
-        return EtiquetaServices.getInstancia().obtenerTodasLasEtiquetas();
+        return listaEtiquetas;
     }
 
     public void setListaEtiquetas(List<Etiqueta> listaEtiquetas) {
