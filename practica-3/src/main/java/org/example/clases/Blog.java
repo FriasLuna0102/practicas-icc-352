@@ -20,51 +20,46 @@ public class Blog {
 	//Metodo para convertir un string de etiquetas en una lista.
 	public List<Etiqueta> stringToEtiqueta(String etiquetasString) {
 
-		List<Etiqueta> listEtiBD = EtiquetaServices.getInstancia().obtenerTodasLasEtiquetas();
 		List<Etiqueta> etiquetaList = new ArrayList<>();
 		String[] etiquetaArray = etiquetasString.split(",", 0);
-		boolean existe = false;
 
 		for (String s : etiquetaArray) {
-			for (Etiqueta etiqueta : this.etiquetaList) {
-                if (etiqueta.getEtiqueta().equalsIgnoreCase(s)) {
-                    //etiquetaList.add(etiqueta);
-                    existe = true;
-                    break;
-                }
-			}
-			if (!existe) {
-				crearEtiqueta(s.trim());
-				if (!this.etiquetaList.isEmpty()) {
-					etiquetaList.add(this.etiquetaList.getLast());
-				}
+			Etiqueta etiqueta = this.etiquetaList.stream()
+					.filter(e -> e.getEtiqueta().equalsIgnoreCase(s))
+					.findFirst()
+					.orElse(null);
+
+			if (etiqueta == null) {
+				etiqueta = crearEtiqueta(s.trim());
 			}
 
-			existe = false;
+			etiquetaList.add(etiqueta);
 		}
 
 		return etiquetaList;
 	}
 
 
+
+
+
 	//Metodo auxiliar para crear etiqueta
-	private void crearEtiqueta(String nombre){
-		Etiqueta tmp = new Etiqueta(nombre);
-		List<Etiqueta> listEtiqueta = EtiquetaServices.getInstancia().obtenerTodasLasEtiquetas();
+	private Etiqueta crearEtiqueta(String nombre){
+		// Busca en la base de datos una Etiqueta con el mismo nombre
+		Etiqueta etiqueta = Etiqueta.buscarEtiquet(nombre);
 
-		boolean existe = false;
-		for(Etiqueta etiquetaaa: listEtiqueta){
-			if(Objects.equals(etiquetaaa.getEtiqueta(), tmp.getEtiqueta())){
-				existe = true;
-				break;
-			}
+		// Si no se encontró la Etiqueta, la crea y la guarda en la base de datos
+		if (etiqueta == null) {
+			etiqueta = new Etiqueta(nombre);
+			EtiquetaServices.getInstancia().crear(etiqueta);
+			this.etiquetaList.add(etiqueta);
 		}
 
-		if (!existe) {
-			EtiquetaServices.getInstancia().crear(tmp); // Guarda la etiqueta en la base de datos primero
-			this.etiquetaList.add(tmp); // Luego agrega la etiqueta a la lista
-		}
+		return etiqueta;
 	}
+
+
+
 
 
 

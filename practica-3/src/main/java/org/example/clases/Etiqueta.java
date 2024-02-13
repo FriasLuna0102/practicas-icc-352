@@ -1,9 +1,6 @@
 package org.example.clases;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import org.example.services.EtiquetaServices;
 
 import java.io.Serializable;
@@ -18,6 +15,8 @@ public class Etiqueta implements Serializable {
     private long id;
     private String etiqueta;
 
+    @ManyToMany(mappedBy = "listaEtiquetas")
+    private List<Articulo> articulos;
     public Etiqueta(){
 
     }

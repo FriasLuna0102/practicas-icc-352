@@ -6,10 +6,7 @@ import org.example.Main;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.StringTokenizer;
+import java.util.*;
 
 /**
  * Created by vacax on 03/06/16.
@@ -112,6 +109,29 @@ public class GestionDb<T> {
         }
         return entidad;
     }
+
+    public List<T> crearLista(List<T> entidades) throws IllegalArgumentException, EntityExistsException, PersistenceException {
+        EntityManager em = getEntityManager();
+        List<T> entidadesPersistidas = new ArrayList<>();
+
+        try {
+            em.getTransaction().begin();
+
+            for (T entidad : entidades) {
+                em.persist(entidad);
+                entidadesPersistidas.add(entidad);
+            }
+
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+
+        return entidadesPersistidas;
+    }
+
+
+
 
     /**
      *

@@ -26,8 +26,9 @@ public class Articulo implements Serializable {
     @OneToMany
     private List<Comentario> listaComentarios;
 
-    @OneToMany
+    @ManyToMany
     private List<Etiqueta> listaEtiquetas;
+
 
     public Articulo(){
 
