@@ -137,7 +137,7 @@ public class PlantillasControlador extends ControladorClass {
 
                     model.put("listArticulos", listArticuloos);
 
-                    ctx.render("publico/html/blogUsuario.html", model);
+                    ctx.render("publico/html/blogPorEtiqueta.html", model);
 
                     // Realiza la búsqueda con la etiqueta
                     //ctx.result("Buscando artículos con la etiqueta: " + art);
