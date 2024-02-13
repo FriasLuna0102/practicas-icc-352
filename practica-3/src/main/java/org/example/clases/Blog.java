@@ -13,7 +13,7 @@ public class Blog {
 	private static Blog instancia;
 	private List<Articulo> articuloList;
 	private List<Usuario> usuarioList = UsuarioServices.getInstancia().obtenerTodosLosUsuarios();
-	private List<Etiqueta> etiquetaList = EtiquetaServices.getInstancia().obtenerTodasLasEtiquetas();
+	private List<Etiqueta> etiquetaList;
 	private long contadorEtiqueta;
 	private Usuario usuario;
 
@@ -28,7 +28,7 @@ public class Blog {
 		for (String s : etiquetaArray) {
 			for (Etiqueta etiqueta : this.etiquetaList) {
 				if (etiqueta.getEtiqueta().equalsIgnoreCase(s)) {
-					etiquetaList.add(etiqueta);
+					//etiquetaList.add(etiqueta);
 					existe = true;
 				}
 			}
@@ -44,6 +44,7 @@ public class Blog {
 
 		return etiquetaList;
 	}
+
 
 	//Metodo auxiliar para crear etiqueta
 	private void crearEtiqueta(String nombre){
@@ -61,7 +62,6 @@ public class Blog {
 		if (!existe) {
 			EtiquetaServices.getInstancia().crear(tmp); // Guarda la etiqueta en la base de datos primero
 			this.etiquetaList.add(tmp); // Luego agrega la etiqueta a la lista
-			contadorEtiqueta++;
 		}
 	}
 
@@ -125,7 +125,7 @@ public class Blog {
 	private Blog(){
 		articuloList = new ArrayList<>();
 		usuarioList = UsuarioServices.getInstancia().obtenerTodosLosUsuarios();
-		etiquetaList = new ArrayList<>();
+		etiquetaList = EtiquetaServices.getInstancia().obtenerTodasLasEtiquetas();
 		contadorEtiqueta = 1;
 	}
 
