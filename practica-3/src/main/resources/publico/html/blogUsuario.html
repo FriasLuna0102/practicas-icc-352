@@ -233,14 +233,13 @@
                     <div class="col-lg-6">
                         <ul class="list-unstyled">
 
-                            <th:block th:each="articulo : ${listArticulos}">
-                                <th:block th:with="etiquetasString=${''}">
-        <span th:each="etiqueta, iterStat : ${articulo.listaEtiquetas}">
+
+        <span th:each="etiqueta, iterStat : ${listEtiquetas}">
 <a th:href="'/blogUsuario/buscar?etiqueta=' + ${etiqueta.etiqueta}" class="badge badge-info" th:text="${etiqueta.getEtiqueta}"></a>
             <span th:if="${!iterStat.last}"> </span>
         </span>
-                                </th:block>
-                            </th:block>
+
+
 
 
                         </ul>

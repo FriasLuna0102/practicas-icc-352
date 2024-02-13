@@ -4,12 +4,14 @@ import io.javalin.Javalin;
 import org.example.clases.*;
 import org.example.services.ArticuloServices;
 import org.example.services.ComentarioServices;
+import org.example.services.EtiquetaServices;
 import org.example.util.ControladorClass;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static io.javalin.apibuilder.ApiBuilder.get;
 import static io.javalin.apibuilder.ApiBuilder.path;
@@ -36,9 +38,24 @@ public class PlantillasControlador extends ControladorClass {
                         // Set the currentUser attribute in the template context
                         ctx.attribute("currentUser", currentUser);
 
+                        List<Etiqueta> listEtiqueta = EtiquetaServices.getInstancia().obtenerTodasLasEtiquetas();
 
                         Map<String, Object> model = new HashMap<>();
                         model.put("listArticulos", listArticulos);
+
+                        for (Articulo articulo : listArticulos) {
+                            List<Etiqueta> nuevasEtiquetas = articulo.getListaEtiquetas().stream()
+                                    .filter(etiqueta -> !listEtiqueta.contains(etiqueta))
+                                    .collect(Collectors.toList());
+                            articulo.setListaEtiquetas(nuevasEtiquetas);
+                        }
+
+                        for(Etiqueta eti : listEtiqueta){
+
+                            System.out.println("Esta :"+ eti.getEtiqueta());
+                        }
+                        model.put("listEtiquetas", listEtiqueta);
+
 
                         ctx.render("publico/html/blogUsuario.html", model);
 
