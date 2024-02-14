@@ -51,6 +51,7 @@ public class PlantillasControlador extends ControladorClass {
                         }
 
                         model.put("listEtiquetas", listEtiqueta);
+                        model.put("foto", currentUser.getFoto());
 
 
                         ctx.render("publico/html/blogUsuario.html", model);

@@ -98,7 +98,7 @@ public class Blog {
 			}
 		}
 		UsuarioServices.getInstancia().crear(new Usuario(usuario.getUsername(),usuario.getNombre(),usuario.getPassword()
-		,usuario.isAdministrator(),usuario.isAutor()));
+		,usuario.isAdministrator(),usuario.isAutor(), usuario.getFoto()));
 		//usuarioList.add(usuario);
 	}
 
