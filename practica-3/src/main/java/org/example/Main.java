@@ -28,8 +28,8 @@ public class Main {
             BootStrapServices.getInstancia().init();
         }
 
-        UsuarioServices.getInstancia().crear(new Usuario("star","Starlin","123",true,false));
-        UsuarioServices.getInstancia().crear(new Usuario("admin", "randae", "admin", true, false));
+        //UsuarioServices.getInstancia().crear(new Usuario("star","Starlin","123",true,false));
+        //UsuarioServices.getInstancia().crear(new Usuario("admin", "randae", "admin", true, false));
 
 
 

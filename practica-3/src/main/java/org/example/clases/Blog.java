@@ -1,5 +1,6 @@
 package org.example.clases;
 
+import org.example.services.ArticuloServices;
 import org.example.services.BootStrapServices;
 import org.example.services.EtiquetaServices;
 import org.example.services.UsuarioServices;
@@ -119,7 +120,7 @@ public class Blog {
 	}
 
 	private Blog(){
-		articuloList = new ArrayList<>();
+		articuloList = ArticuloServices.getInstancia().obtenerTodosLosArticulosConEtiquetas();
 		usuarioList = UsuarioServices.getInstancia().obtenerTodosLosUsuarios();
 		etiquetaList = EtiquetaServices.getInstancia().obtenerTodasLasEtiquetas();
 		contadorEtiqueta = 1;

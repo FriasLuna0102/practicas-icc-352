@@ -57,4 +57,16 @@ public class ArticuloServices extends GestionDb<Articulo>{
     }
 
 
+    public List<Articulo> obtenerTodosLosArticulosConEtiquetas() {
+        EntityManager em = getEntityManager();
+        try {
+            // Utilizamos LEFT JOIN FETCH para traer todas las etiquetas asociadas a cada artículo en una sola consulta
+            return em.createQuery("SELECT DISTINCT a FROM Articulo a LEFT JOIN FETCH a.listaEtiquetas", Articulo.class)
+                    .getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+
 }

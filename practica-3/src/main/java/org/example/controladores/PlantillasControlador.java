@@ -50,10 +50,6 @@ public class PlantillasControlador extends ControladorClass {
                             articulo.setListaEtiquetas(nuevasEtiquetas);
                         }
 
-                        for(Etiqueta eti : listEtiqueta){
-
-                            System.out.println("Esta :"+ eti.getEtiqueta());
-                        }
                         model.put("listEtiquetas", listEtiqueta);
 
 
