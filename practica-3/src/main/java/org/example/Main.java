@@ -28,8 +28,15 @@ public class Main {
             BootStrapServices.getInstancia().init();
         }
 
-        //UsuarioServices.getInstancia().crear(new Usuario("star","Starlin","123",true,false));
-        //UsuarioServices.getInstancia().crear(new Usuario("admin", "randae", "admin", true, false));
+
+
+        if(UsuarioServices.getInstancia().findByNombre("star") == null){
+            UsuarioServices.getInstancia().crear(new Usuario("star","Starlin","123",true,false,null));
+        }
+
+        if(UsuarioServices.getInstancia().findByNombre("admin") == null){
+            UsuarioServices.getInstancia().crear(new Usuario("admin", "randae", "admin", true, false,null));
+        }
 
 
 
