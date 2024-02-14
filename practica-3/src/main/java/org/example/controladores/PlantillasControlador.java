@@ -91,9 +91,9 @@ public class PlantillasControlador extends ControladorClass {
                 get("/articulo/{id}", ctx -> {
                     long id = Long.parseLong(ctx.pathParam("id"));
                     // Busca el artículo por ID
-                    Articulo articulo = Blog.getInstance().obtenerArticuloPorId(id);
+                    Articulo articulo = ArticuloServices.getInstancia().obtenerArticuloConEtiquetasPorId(id);
 
-                    List<Comentario> listBD = ComentarioServices.getInstancia().obtenerTodosLosComentarios();
+                    List<Comentario> listBD = ComentarioServices.getInstancia().obtenerTodosLosComentariosConArticulos();
 
                     List<Comentario> listComeEnParticular = new ArrayList<>();
                     for(Comentario coment : listBD){

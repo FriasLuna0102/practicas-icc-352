@@ -5,7 +5,9 @@ import org.example.clases.Articulo;
 import org.example.clases.Blog;
 import org.example.clases.Comentario;
 import org.example.clases.Usuario;
+import org.example.services.ArticuloServices;
 import org.example.services.ComentarioServices;
+import org.example.services.UsuarioServices;
 import org.example.util.ControladorClass;
 
 import java.util.ArrayList;
@@ -26,7 +28,7 @@ public class agregarComentario extends ControladorClass {
 
             //Obtengo el id del formulario y busco el articul al cual se comentara por su id.
             long idArticulo = Long.parseLong(cxt.formParam("idArticulo"));
-            Articulo articulo = Blog.getInstance().obtenerArticuloPorId(idArticulo);
+            Articulo articulo = ArticuloServices.getInstancia().obtenerArticuloConEtiquetasPorId(idArticulo);
 
             //Lo mando al seccionComentario html, para comentar.
             Map<String, Object> model = new HashMap<>();
@@ -39,16 +41,16 @@ public class agregarComentario extends ControladorClass {
 
         app.post("/comentar", cxt ->{
 
-            List<Comentario> comenForArticulo = new ArrayList<>();
             String comentario = cxt.formParam("contenidoComentario");
             Usuario autor = cxt.sessionAttribute("currentUser");
             long idArticulo = Long.parseLong(cxt.formParam("idArticulo"));
-            Articulo articulo = Blog.getInstance().obtenerArticuloPorId(idArticulo);
+            Articulo articulo = ArticuloServices.getInstancia().obtenerArticuloConEtiquetasPorId(idArticulo);
 
+            System.out.println(articulo.getTitulo());
 
             ComentarioServices.getInstancia().crear(new Comentario(comentario,autor,articulo));
 
-            List<Comentario> listBD = ComentarioServices.getInstancia().obtenerTodosLosComentarios();
+            List<Comentario> listBD = ComentarioServices.getInstancia().obtenerTodosLosComentariosConArticulos();
             //Creo el comentario.
 
 
@@ -62,11 +64,6 @@ public class agregarComentario extends ControladorClass {
             //Creo el nuevo articulo con los comentarios asignado.
             Articulo newArticulo = new Articulo(articulo.getTitulo(),articulo.getCuerpo(),articulo.getAutor()
                     , articulo.getFecha(), listComeEnParticular,articulo.getListaEtiquetas());
-
-
-
-            //Obtengo la lista de comentario para un articulo en comun.
-            List<Comentario> listComentario = Comentario.buscarComentPorArticulo(newArticulo);
 
 
             Map<String, Object> model = new HashMap<>();

@@ -84,6 +84,24 @@ public class ArticuloServices extends GestionDb<Articulo>{
         }
     }
 
+    public Articulo obtenerArticuloConEtiquetasPorId(long id) {
+        EntityManager em = getEntityManager();
+        try {
+            // Utilizamos LEFT JOIN FETCH para traer todas las etiquetas asociadas al artículo en una sola consulta
+            List<Articulo> resultados = em.createQuery("SELECT a FROM Articulo a LEFT JOIN FETCH a.listaEtiquetas WHERE a.id = :id", Articulo.class)
+                    .setParameter("id", id)
+                    .getResultList();
+            if (!resultados.isEmpty()) {
+                return resultados.get(0);  // Devolvemos el primer (y único) resultado
+            } else {
+                return null;  // No se encontró ningún artículo con ese id
+            }
+        } finally {
+            em.close();
+        }
+    }
+
+
     public long contarArticulos() {
         EntityManager em = getEntityManager();
         try {

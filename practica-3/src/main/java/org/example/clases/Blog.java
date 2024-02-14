@@ -13,7 +13,7 @@ public class Blog {
 
 	private static Blog instancia;
 	private List<Articulo> articuloList;
-	private List<Usuario> usuarioList = UsuarioServices.getInstancia().obtenerTodosLosUsuarios();
+	private List<Usuario> usuarioList;
 	private List<Etiqueta> etiquetaList;
 	private long contadorEtiqueta;
 	private Usuario usuario;
