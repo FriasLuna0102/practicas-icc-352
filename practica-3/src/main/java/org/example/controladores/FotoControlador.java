@@ -25,9 +25,9 @@ public class FotoControlador {
 
 				});
 
-				get("/eliminar", context -> {
+				get("/eliminar/{id}", context -> {
 					try {
-						long id = context.pathParamAsClass("idfoto", long.class).get();
+						long id = context.pathParamAsClass("id", long.class).get();
 						Foto foto = fotoServices.find(id);
 						if (foto !=  null){
 							fotoServices.eliminar(foto);
