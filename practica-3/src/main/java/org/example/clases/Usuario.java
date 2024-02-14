@@ -1,9 +1,6 @@
 package org.example.clases;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -20,6 +17,8 @@ public class Usuario implements Serializable {
     private String password;
     private boolean administrator;
     private boolean autor;
+    @OneToOne
+    private Foto foto;
 
     /*
     public Usuario(String username, String nombre, String password, boolean administrator, boolean autor) {
@@ -83,4 +82,11 @@ public class Usuario implements Serializable {
         this.autor = autor;
     }
 
+    public Foto getFoto() {
+        return foto;
+    }
+
+    public void setFoto(Foto foto) {
+        this.foto = foto;
+    }
 }
