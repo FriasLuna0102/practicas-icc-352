@@ -48,7 +48,7 @@
             <span th:if="${currentUser != null}">
                 <span th:if="${foto != null}">
                     <img th:src="@{'data:'+${foto.getMimeType()}+';base64,'+${foto.getFotoBase64()}}"
-                        class="card-img-top" alt="Foto enviada">
+                        class="card-img-top" alt="Foto enviada" id="foto">
                 </span>
                 <span th:text="${currentUser.nombre}" style="color: white;"></span>
                 <a class="btn btn-sm btn-primary navbar-btn" href="/logout">Logout</a>

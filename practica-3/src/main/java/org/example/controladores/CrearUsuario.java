@@ -31,9 +31,7 @@ public class CrearUsuario extends ControladorClass {
                 boolean isAdmin = ctx.formParam("isAdmin") != null; // Check si se marcó como administrador
                 boolean isAutor = ctx.formParam("isAutor") != null; // Check si se marcó como autor
                 UploadedFile file = ctx.uploadedFile("foto");
-                if (file ==  null){
-                    System.out.println("No hay archivo");
-                }
+
                 Foto foto = null;
                 try {
                     byte[] bytes = file.content().readAllBytes();
