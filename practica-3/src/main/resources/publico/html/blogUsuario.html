@@ -46,7 +46,7 @@
         <div class="navbar-header">
             <!-- Botón de Login -->
             <span th:if="${currentUser != null}">
-                <span th:if"${foto !=null}">
+                <span th:if="${foto != null}">
                     <img th:src="@{'data:'+${foto.getMimeType()}+';base64,'+${foto.getFotoBase64()}}"
                         class="card-img-top" alt="Foto enviada">
                 </span>

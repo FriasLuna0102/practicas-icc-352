@@ -29,6 +29,9 @@ public class Usuario implements Serializable {
         this.autor = autor;
     }*/
 
+    public Usuario() {
+    }
+
     public Usuario(String username, String nombre, String password, boolean administrator, boolean autor, Foto foto) {
         this.username = username;
         this.nombre = nombre;

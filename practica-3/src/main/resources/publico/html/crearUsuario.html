@@ -18,7 +18,7 @@
 
 <body>
     <h2 style="background-color: #007bff">Crear Nuevo Usuario</h2>
-    <form action="/crearUsuario" method="post">
+    <form action="/crearUsuario" method="post" enctype="multipart/form-data">
         <label for="username">Nombre de Usuario:</label><br>
         <input type="text" id="username" name="username" required><br>
 
@@ -35,7 +35,7 @@
         <label for="isAutor">Autor</label><br>
 
         <label for="foto">Foto</label>
-        <input id="foto" type="file" name="foto" multiple required>
+        <input id="foto" type="file" name="foto" required>
 
         <button type="submit">Crear Usuario</button>
     </form>

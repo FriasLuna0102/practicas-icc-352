@@ -44,6 +44,7 @@ public class EtiquetaServices extends GestionDb<Etiqueta>{
         }
     }
 
+    /*
     public void pruebaActualizacion(){
         EntityManager em = getEntityManager();
         Usuario usuario1 = new Usuario("star","Starlin","123",true,false);
@@ -68,4 +69,6 @@ public class EtiquetaServices extends GestionDb<Etiqueta>{
         em.getTransaction().commit();
         em.close();
     }
+    */
+
 }

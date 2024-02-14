@@ -55,6 +55,7 @@ public class PlantillasControlador extends ControladorClass {
                             System.out.println("Esta :"+ eti.getEtiqueta());
                         }
                         model.put("listEtiquetas", listEtiqueta);
+                        model.put("foto", currentUser.getFoto());
 
 
                         ctx.render("publico/html/blogUsuario.html", model);

@@ -55,6 +55,7 @@ public class UsuarioServices extends GestionDb<Usuario>{
     }
 
 
+    /*
     public void pruebaActualizacion(){
         EntityManager em = getEntityManager();
         Usuario usuario1 = new Usuario("star","Starlin","123",true,false);
@@ -79,4 +80,6 @@ public class UsuarioServices extends GestionDb<Usuario>{
         em.getTransaction().commit();
         em.close();
     }
+
+     */
 }

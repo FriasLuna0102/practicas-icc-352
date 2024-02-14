@@ -1,9 +1,11 @@
 package org.example.controladores;
 
 import io.javalin.Javalin;
+import io.javalin.http.UploadedFile;
 import org.example.clases.Blog;
 import org.example.clases.Foto;
 import org.example.clases.Usuario;
+import org.example.services.FotoServices;
 import org.example.util.ControladorClass;
 
 import java.io.IOException;
@@ -28,19 +30,22 @@ public class CrearUsuario extends ControladorClass {
                 String password = ctx.formParam("password");
                 boolean isAdmin = ctx.formParam("isAdmin") != null; // Check si se marcó como administrador
                 boolean isAutor = ctx.formParam("isAutor") != null; // Check si se marcó como autor
+                UploadedFile file = ctx.uploadedFile("foto");
+                if (file ==  null){
+                    System.out.println("No hay archivo");
+                }
+                Foto foto = null;
+                try {
+                    byte[] bytes = file.content().readAllBytes();
+                    String encodedString = Base64.getEncoder().encodeToString(bytes);
+                    foto = new Foto(file.filename(), file.contentType(), encodedString);
+                    FotoServices.getInstancia().crear(foto);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
 
-                //Procesando foto
-                ctx.uploadedFiles("foto").forEach(uploadedFile -> {
-                    try {
-                        byte[] bytes = uploadedFile.content().readAllBytes();
-                        String encodedString = Base64.getEncoder().encodeToString(bytes);
-                        Foto foto = new Foto(uploadedFile.filename(), uploadedFile.contentType(), encodedString);
-                        fotoServices.crear(foto);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                        // Crear el nuevo usuario y agregarlo a la lista de usuarios
-                Usuario nuevoUsuario = new Usuario(username, nombre, password, isAdmin, isAutor);
+                // Crear el nuevo usuario y agregarlo a la lista de usuarios
+                Usuario nuevoUsuario = new Usuario(username, nombre, password, isAdmin, isAutor, foto);
                 Blog.getInstance().addUsuario(nuevoUsuario);
                 // Redirigir a la página de administración u otra página según corresponda
                 ctx.redirect("/blogUsuario");
@@ -49,5 +54,5 @@ public class CrearUsuario extends ControladorClass {
                 ctx.result("No tienes permiso para realizar esta accion.");
             }
         });
+        }
     }
-}
