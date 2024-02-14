@@ -120,7 +120,7 @@ public class Blog {
 	}
 
 	private Blog(){
-		articuloList = ArticuloServices.getInstancia().obtenerTodosLosArticulosConEtiquetas();
+		articuloList = ArticuloServices.getInstancia().obtenerArticulosConEtiquetasPorPagina(1,5);
 		usuarioList = UsuarioServices.getInstancia().obtenerTodosLosUsuarios();
 		etiquetaList = EtiquetaServices.getInstancia().obtenerTodasLasEtiquetas();
 		contadorEtiqueta = 1;

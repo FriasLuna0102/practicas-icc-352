@@ -7,10 +7,7 @@ import org.example.services.ComentarioServices;
 import org.example.services.EtiquetaServices;
 import org.example.util.ControladorClass;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static io.javalin.apibuilder.ApiBuilder.get;
@@ -38,6 +35,12 @@ public class PlantillasControlador extends ControladorClass {
                         // Set the currentUser attribute in the template context
                         ctx.attribute("currentUser", currentUser);
 
+                        // Get the page number from the query parameters, or default to 1 if it's not present
+                        int numeroPagina = Optional.ofNullable(ctx.queryParam("pagina")).map(Integer::parseInt).orElse(1);
+
+                        // Fetch the articles for the current page
+                        List<Articulo> listArticulos = ArticuloServices.getInstancia().obtenerArticulosConEtiquetasPorPagina(numeroPagina, 5);
+
                         List<Etiqueta> listEtiqueta = EtiquetaServices.getInstancia().obtenerTodasLasEtiquetas();
 
                         Map<String, Object> model = new HashMap<>();
@@ -53,6 +56,9 @@ public class PlantillasControlador extends ControladorClass {
                         model.put("listEtiquetas", listEtiqueta);
                         model.put("foto", currentUser.getFoto());
 
+                        // Add the current page number and total pages to the model
+                        model.put("paginaActual", numeroPagina);
+                        model.put("totalPaginas", (int) Math.ceil((double) ArticuloServices.getInstancia().contarArticulos() / 5));
 
                         ctx.render("publico/html/blogUsuario.html", model);
 
