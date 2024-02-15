@@ -214,23 +214,26 @@
 
 
 
-                <nav aria-label="...">
-                    <ul class="pagination">
-                        <li class="page-item" th:if="${paginaActual > 1}">
-                            <th:block th:with="paginaPrev=${paginaActual - 1}">
-                                <a class="page-link" th:href="@{/blogUsuario(pagina=${paginaPrev})}" tabindex="-1">Previous</a>
-                            </th:block>
-                        </li>
-                        <li class="page-item" th:each="pagina : ${#numbers.sequence(1, totalPaginas)}" th:class="${pagina == paginaActual} ? 'active' : ''">
-                            <a class="page-link" th:href="@{/blogUsuario(pagina=${pagina})}" th:text="${pagina}"></a>
-                        </li>
-                        <li class="page-item" th:if="${paginaActual < totalPaginas}">
-                            <th:block th:with="paginaNext=${paginaActual + 1}">
-                                <a class="page-link" th:href="@{/blogUsuario(pagina=${paginaNext})}">Next</a>
-                            </th:block>
-                        </li>
-                    </ul>
-                </nav>
+                <div th:if="${not #lists.isEmpty(listArticulos)}">
+                    <nav aria-label="...">
+                        <ul class="pagination">
+                            <li class="page-item" th:if="${paginaActual > 1}">
+                                <th:block th:with="paginaPrev=${paginaActual - 1}">
+                                    <a class="page-link" th:href="@{/blogUsuario(pagina=${paginaPrev})}" tabindex="-1">Previous</a>
+                                </th:block>
+                            </li>
+                            <li class="page-item" th:each="pagina : ${#numbers.sequence(1, totalPaginas)}" th:class="${pagina == paginaActual} ? 'active' : ''">
+                                <a class="page-link" th:href="@{/blogUsuario(pagina=${pagina})}" th:text="${pagina}"></a>
+                            </li>
+                            <li class="page-item" th:if="${paginaActual < totalPaginas}">
+                                <th:block th:with="paginaNext=${paginaActual + 1}">
+                                    <a class="page-link" th:href="@{/blogUsuario(pagina=${paginaNext})}">Next</a>
+                                </th:block>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+
 
 
 
