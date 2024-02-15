@@ -2,6 +2,7 @@ package org.example.jdbc;
 
 import org.postgresql.ds.PGSimpleDataSource;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -15,16 +16,20 @@ public class CockroachDB {
 		ds.setPassword("In8zhS6I3sRtuWAmE-R80A");
 	}
 
-	public static void insertarDataLogueo(String username) {
+	public static void insertarDataLogueo(String username) throws SQLException {
 		if (ds == null){
 			inicializar();
 		}
+		Connection con = ds.getConnection();
 
 		StringBuilder sb = new StringBuilder("INSERT INTO ").append("actividad")
 						.append("(usuario)")
 						.append("VALUES (?)");
 
 		String query = sb.toString();
-		PreparedStatement preparedStatement =
+		PreparedStatement preparedStatement = con.prepareStatement(query);
+		preparedStatement.setString(1, username);
+
+		con.close();
 	}
 }
