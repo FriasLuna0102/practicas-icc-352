@@ -1,5 +1,6 @@
 package org.example.clases;
 
+import org.example.services.ArticuloServices;
 import org.example.services.BootStrapServices;
 import org.example.services.EtiquetaServices;
 import org.example.services.UsuarioServices;
@@ -12,7 +13,7 @@ public class Blog {
 
 	private static Blog instancia;
 	private List<Articulo> articuloList;
-	private List<Usuario> usuarioList = UsuarioServices.getInstancia().obtenerTodosLosUsuarios();
+	private List<Usuario> usuarioList;
 	private List<Etiqueta> etiquetaList;
 	private long contadorEtiqueta;
 	private Usuario usuario;
@@ -97,7 +98,7 @@ public class Blog {
 			}
 		}
 		UsuarioServices.getInstancia().crear(new Usuario(usuario.getUsername(),usuario.getNombre(),usuario.getPassword()
-		,usuario.isAdministrator(),usuario.isAutor()));
+		,usuario.isAdministrator(),usuario.isAutor(), usuario.getFoto()));
 		//usuarioList.add(usuario);
 	}
 
@@ -119,7 +120,7 @@ public class Blog {
 	}
 
 	private Blog(){
-		articuloList = new ArrayList<>();
+		articuloList = ArticuloServices.getInstancia().obtenerArticulosConEtiquetasPorPagina(1,5);
 		usuarioList = UsuarioServices.getInstancia().obtenerTodosLosUsuarios();
 		etiquetaList = EtiquetaServices.getInstancia().obtenerTodasLasEtiquetas();
 		contadorEtiqueta = 1;

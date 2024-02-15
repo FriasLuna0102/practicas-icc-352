@@ -3,6 +3,8 @@ package org.example.services;
 import jakarta.persistence.*;
 import jakarta.persistence.criteria.CriteriaQuery;
 import org.example.Main;
+import org.example.clases.Usuario;
+import org.hibernate.sql.ast.tree.expression.Literal;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;

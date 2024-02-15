@@ -32,14 +32,15 @@ public class ComentarioServices extends GestionDb<Comentario>{
         return lista;
     }
 
-    public List<Comentario> obtenerTodosLosComentarios() {
+    public List<Comentario> obtenerTodosLosComentariosConArticulos() {
         EntityManager em = getEntityManager();
         try {
-            return em.createQuery("SELECT c FROM Comentario c", Comentario.class).getResultList();
+            return em.createQuery("SELECT c FROM Comentario c JOIN FETCH c.articulo", Comentario.class).getResultList();
         } finally {
             em.close();
         }
     }
+
 
 
 }
