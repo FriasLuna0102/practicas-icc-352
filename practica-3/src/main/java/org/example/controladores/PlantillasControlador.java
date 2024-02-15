@@ -109,6 +109,7 @@ public class PlantillasControlador extends ControladorClass {
                     ctx.render("publico/temp/articulo_plantila.html", model);
                 });
 
+
                 get("/buscar", ctx -> {
 
                     if(ctx.sessionAttribute("currentUser") == null){
