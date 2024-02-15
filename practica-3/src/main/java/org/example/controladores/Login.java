@@ -31,13 +31,12 @@ public class Login extends ControladorClass {
             if (cxt.cookie("username") != null){
                 String username = textEncryptor.decrypt(cxt.cookie("username"));
                 usuario = UsuarioServices.getInstancia().findByNombre(username);
-                //CockroachDB.insertarDataLogueo(usuario.getUsername());
+                CockroachDB.insertarDataLogueo(usuario.getUsername());
                 cxt.sessionAttribute("currentUser", usuario);
                 cxt.redirect("/blogUsuario");
                 return;
             }
 
-            System.out.println("Esta es la variable de ambiente: " + System.getenv("JDBC_DATABASE_URL"));
             cxt.render("/publico/login.html");
         });
 
