@@ -5,6 +5,7 @@ import io.javalin.validation.Validator;
 import org.eclipse.jetty.util.IO;
 import org.example.clases.Blog;
 import org.example.clases.Usuario;
+import org.example.jdbc.CockroachDB;
 import org.example.services.UsuarioServices;
 import org.example.util.ControladorClass;
 import org.jasypt.util.text.BasicTextEncryptor;
@@ -30,10 +31,12 @@ public class Login extends ControladorClass {
             if (cxt.cookie("username") != null){
                 String username = textEncryptor.decrypt(cxt.cookie("username"));
                 usuario = UsuarioServices.getInstancia().findByNombre(username);
+                CockroachDB.insertarDataLogueo(usuario.getUsername());
                 cxt.sessionAttribute("currentUser", usuario);
                 cxt.redirect("/blogUsuario");
                 return;
             }
+
             cxt.render("/publico/login.html");
         });
 
@@ -55,6 +58,7 @@ public class Login extends ControladorClass {
                     if (remember){
                         cxt.cookie("username", textEncryptor.encrypt(usuario.getUsername()), 604800);
                     }
+                    CockroachDB.insertarDataLogueo(usuario.getUsername());
                     // Si las credenciales coinciden, establecer el usuario en la sesión y redirigir
                     cxt.sessionAttribute("currentUser", usuario);
                     cxt.redirect("/blogUsuario");
