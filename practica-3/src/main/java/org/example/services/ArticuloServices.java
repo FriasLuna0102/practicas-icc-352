@@ -1,6 +1,7 @@
 package org.example.services;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceException;
 import jakarta.persistence.Query;
 import org.example.clases.Articulo;
 import org.example.clases.Comentario;
@@ -110,6 +111,32 @@ public class ArticuloServices extends GestionDb<Articulo>{
         } finally {
             em.close();
         }
+    }
+
+    public boolean eliminarArticuloConComentarios(long idArticulo) throws PersistenceException {
+        boolean ok = false;
+        EntityManager em = getEntityManager();
+        em.getTransaction().begin();
+        try {
+            // Buscamos el artículo por su id con sus comentarios asociados
+            List<Articulo> resultados = em.createQuery("SELECT a FROM Articulo a LEFT JOIN FETCH a.listaComentarios WHERE a.id = :id", Articulo.class)
+                    .setParameter("id", idArticulo)
+                    .getResultList();
+            if (!resultados.isEmpty()) {
+                Articulo articulo = resultados.get(0);
+                // Eliminamos todos los comentarios asociados al artículo
+                for (Comentario comentario : articulo.getListaComentarios()) {
+                    em.remove(comentario);
+                }
+                // Ahora eliminamos el artículo
+                em.remove(articulo);
+                em.getTransaction().commit();
+                ok = true;
+            }
+        } finally {
+            em.close();
+        }
+        return ok;
     }
 
 

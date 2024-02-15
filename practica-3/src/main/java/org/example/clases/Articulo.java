@@ -24,7 +24,7 @@ public class Articulo implements Serializable {
     @OneToOne
     private Usuario autor;
     private Date fecha;
-    @OneToMany
+    @OneToMany(mappedBy = "articulo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comentario> listaComentarios;
 
     @ManyToMany

@@ -14,7 +14,7 @@ public class EliminarArticulo extends ControladorClass {
         super(app);
     }
 
-    List<Articulo> listaArticulos = Blog.getInstance().getArticuloList();
+    List<Articulo> listaArticulos =ArticuloServices.getInstancia().obtenerTodosLosArticulos();
     @Override
     public void aplicarRutas() {
 
@@ -23,8 +23,9 @@ public class EliminarArticulo extends ControladorClass {
             // Obtener el ID del artículo a eliminar desde el formulario
             long idArticulo = Long.parseLong(ctx.formParam("idArticulo"));
 
+            System.out.println(idArticulo);
             // Eliminar el artículo de la lista de artículos
-            boolean eliminado = Articulo.eliminarArti(listaArticulos,idArticulo);
+            boolean eliminado = ArticuloServices.getInstancia().eliminarArticuloConComentarios(idArticulo);
 
             if (eliminado) {
                 // Redirigir a la página del blog del usuario
