@@ -24,6 +24,9 @@ dependencies {
     //Para encriptar cookies
     implementation("org.jasypt:jasypt:1.9.3")
 
+    //Para postgresql
+    implementation group: 'org.postgresql', name: 'postgresql', version: '42.1.4'
+
     //Para las plantillas:
     implementation "io.javalin:javalin-rendering:5.6.0"
     implementation 'org.thymeleaf:thymeleaf:3.1.2.RELEASE'
