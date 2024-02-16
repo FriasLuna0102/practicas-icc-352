@@ -17,7 +17,7 @@ public class Usuario implements Serializable {
     private String password;
     private boolean administrator;
     private boolean autor;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Foto foto;
 
     /*

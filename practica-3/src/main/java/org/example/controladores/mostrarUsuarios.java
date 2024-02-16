@@ -3,6 +3,7 @@ package org.example.controladores;
 import io.javalin.Javalin;
 import org.example.clases.Blog;
 import org.example.clases.Usuario;
+import org.example.services.ArticuloServices;
 import org.example.services.UsuarioServices;
 import org.example.util.ControladorClass;
 
@@ -40,6 +41,8 @@ public class mostrarUsuarios extends ControladorClass {
 
                 get("/eliminarUsuario", context -> {
                     String username = context.queryParam("username");
+
+                    ArticuloServices.getInstancia()
 
                     context.redirect("/blogUsuario/mostrarUsuario");
                 });
