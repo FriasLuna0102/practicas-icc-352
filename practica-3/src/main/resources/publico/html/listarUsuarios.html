@@ -76,7 +76,8 @@
         <td th:text="${user.password}"></td>
         <td th:text="${user.administrator}"></td>
         <td th:text="${user.autor}"></td>
-        <td> <a href=""><button type="button" class="btn btn-danger btn-sm">Eliminar</button></a>
+        <td> <a th:href="'/blogUsuario/eliminarUsuario?username=' + ${user.username}"><button type="button"
+              class="btn btn-danger btn-sm">Eliminar</button></a>
         </td>
       </tr>
     </tbody>

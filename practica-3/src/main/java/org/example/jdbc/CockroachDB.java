@@ -22,7 +22,6 @@ public class CockroachDB {
 		}
 		Connection con = ds.getConnection();
 
-		System.out.println("Este es el url: " + ds.getUrl());
 		StringBuilder sb = new StringBuilder("INSERT INTO ").append("actividad")
 						.append("(usuario)")
 						.append("VALUES (?)");

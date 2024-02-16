@@ -6,6 +6,7 @@ import org.example.clases.Usuario;
 import org.example.services.UsuarioServices;
 import org.example.util.ControladorClass;
 
+import javax.print.attribute.standard.JobOriginatingUserName;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +36,12 @@ public class mostrarUsuarios extends ControladorClass {
                         model.put("listUsuario",listUsuario);
                         cxt.render("publico/html/listarUsuarios.html",model);
                     }
+                });
+
+                get("/eliminarUsuario", context -> {
+                    String username = context.queryParam("username");
+
+                    context.redirect("/blogUsuario/mostrarUsuario");
                 });
 
             });
