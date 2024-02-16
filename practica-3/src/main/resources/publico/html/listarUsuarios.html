@@ -1,28 +1,34 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <title>Listado de Usuarios</title>
   <style>
     table {
       border-collapse: collapse;
       width: 100%;
     }
-    th, td {
+
+    th,
+    td {
       border: 1px solid #dddddd;
       text-align: left;
       padding: 8px;
     }
+
     th {
       background-color: #f2f2f2;
     }
 
-    body{
+    body {
       background-image: url("/img/shapelined-_JBKdviweXI-unsplash.jpg");
     }
 
-    h2{
+    h2 {
       background-color: #007bff;
     }
 
@@ -47,45 +53,47 @@
   </style>
 
 </head>
+
 <body>
-<h2>Listado de Usuarios</h2>
-<table>
-  <thead>
-  <tr>
-    <!-- <th>Fecha de Creación</th> -->
-    <th>Nombre</th>
-    <th>Username</th>
-    <th>Password</th>
-    <th>Administrador</th>
+  <h2>Listado de Usuarios</h2>
+  <table>
+    <thead>
+      <tr>
+        <!-- <th>Fecha de Creación</th> -->
+        <th>Nombre</th>
+        <th>Username</th>
+        <th>Password</th>
+        <th>Administrador</th>
+        <th>Autor</th>
+        <th>Opciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="user : ${listUsuario}">
+        <td th:text="${user.nombre}"></td>
+        <td th:text="${user.username}"></td>
+        <!-- <td th:text="${user.creationDate}"></td> -->
+        <td th:text="${user.password}"></td>
+        <td th:text="${user.administrator}"></td>
+        <td th:text="${user.autor}"></td>
+        <td> <a href=""><button type="button" class="btn btn-danger btn-sm">Eliminar</button></a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
-    <th>Autor</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="user : ${listUsuario}">
-    <td th:text="${user.nombre}"></td>
-    <td th:text="${user.username}"></td>
-    <!-- <td th:text="${user.creationDate}"></td> -->
-    <td th:text="${user.password}"></td>
+  <!-- Botón de atrás -->
+  <div class="container">
+    <button class="back-button" onclick="goBack()">Atras</button>
+  </div>
 
-
-    <td th:text="${user.administrator}"></td>
-    <td th:text="${user.autor}"></td>
-  </tr>
-  </tbody>
-</table>
-
-<!-- Botón de atrás -->
-<div class="container">
-  <button class="back-button" onclick="goBack()">Atras</button>
-</div>
-
-<script>
-  // Función para retroceder en la historia del navegador al hacer clic en el botón
-  function goBack() {
-    window.history.back();
-  }
-</script>
+  <script>
+    // Función para retroceder en la historia del navegador al hacer clic en el botón
+    function goBack() {
+      window.history.back();
+    }
+  </script>
 
 </body>
+
 </html>
