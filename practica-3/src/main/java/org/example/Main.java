@@ -3,7 +3,6 @@ package org.example;
 import io.javalin.Javalin;
 import io.javalin.http.staticfiles.Location;
 import io.javalin.rendering.template.JavalinThymeleaf;
-import org.example.clases.Blog;
 import  org.example.clases.Usuario;
 import org.example.controladores.*;
 import io.javalin.rendering.JavalinRenderer;
@@ -30,11 +29,11 @@ public class Main {
 
 
 
-        if(UsuarioServices.getInstancia().findByNombre("star") == null){
+        if(UsuarioServices.getInstancia().findByUsername("star") == null){
             UsuarioServices.getInstancia().crear(new Usuario("star","Starlin","123",true,false,null));
         }
 
-        if(UsuarioServices.getInstancia().findByNombre("admin") == null){
+        if(UsuarioServices.getInstancia().findByUsername("admin") == null){
             UsuarioServices.getInstancia().crear(new Usuario("admin", "randae", "admin", true, false,null));
         }
 

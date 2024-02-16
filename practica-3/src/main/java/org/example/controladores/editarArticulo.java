@@ -61,7 +61,7 @@ public class editarArticulo extends ControladorClass {
 
             Usuario user = Blog.getInstance().buscarUsuario(autor);
 
-            Usuario autorr = UsuarioServices.getInstancia().findByNombre(autor);
+            Usuario autorr = UsuarioServices.getInstancia().findByUsername(autor);
 
             //Usuario autorNew = new Usuario(user.getUsername(),user.getNombre(),user.getPassword()
             //,user.isAdministrator(),user.isAutor());

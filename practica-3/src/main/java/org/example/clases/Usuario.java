@@ -17,7 +17,7 @@ public class Usuario implements Serializable {
     private String password;
     private boolean administrator;
     private boolean autor;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(orphanRemoval = true)
     private Foto foto;
 
     /*
@@ -87,5 +87,9 @@ public class Usuario implements Serializable {
 
     public void setFoto(Foto foto) {
         this.foto = foto;
+    }
+
+    public long getId() {
+        return id;
     }
 }

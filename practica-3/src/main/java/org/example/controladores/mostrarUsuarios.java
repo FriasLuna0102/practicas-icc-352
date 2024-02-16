@@ -1,13 +1,11 @@
 package org.example.controladores;
 
 import io.javalin.Javalin;
-import org.example.clases.Blog;
 import org.example.clases.Usuario;
 import org.example.services.ArticuloServices;
 import org.example.services.UsuarioServices;
 import org.example.util.ControladorClass;
 
-import javax.print.attribute.standard.JobOriginatingUserName;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,8 +39,10 @@ public class mostrarUsuarios extends ControladorClass {
 
                 get("/eliminarUsuario", context -> {
                     String username = context.queryParam("username");
+                    Usuario usuario = UsuarioServices.getInstancia().findByUsername(username);
 
-                    ArticuloServices.getInstancia()
+                    ArticuloServices.getInstancia().eliminarArticuloByAutor(username);
+                    UsuarioServices.getInstancia().eliminarUsuarioConFoto(usuario);
 
                     context.redirect("/blogUsuario/mostrarUsuario");
                 });

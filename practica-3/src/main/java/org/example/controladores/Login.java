@@ -1,18 +1,11 @@
 package org.example.controladores;
 
 import io.javalin.Javalin;
-import io.javalin.validation.Validator;
-import org.eclipse.jetty.util.IO;
-import org.example.clases.Blog;
 import org.example.clases.Usuario;
 import org.example.jdbc.CockroachDB;
 import org.example.services.UsuarioServices;
 import org.example.util.ControladorClass;
 import org.jasypt.util.text.BasicTextEncryptor;
-import org.jasypt.util.text.TextEncryptor;
-
-import javax.print.attribute.standard.JobOriginatingUserName;
-import java.util.List;
 
 public class Login extends ControladorClass {
 
@@ -30,7 +23,7 @@ public class Login extends ControladorClass {
         app.get("/login", cxt ->{
             if (cxt.cookie("username") != null){
                 String username = textEncryptor.decrypt(cxt.cookie("username"));
-                usuario = UsuarioServices.getInstancia().findByNombre(username);
+                usuario = UsuarioServices.getInstancia().findByUsername(username);
                 CockroachDB.insertarDataLogueo(usuario.getUsername());
                 cxt.sessionAttribute("currentUser", usuario);
                 cxt.redirect("/blogUsuario");
@@ -52,7 +45,7 @@ public class Login extends ControladorClass {
             String passwordLogin = cxt.formParam("password");
             boolean remember = cxt.formParam("remember") != null;
 
-            if ((usuario = UsuarioServices.getInstancia().findByNombre(usuarioLogin)) != null) {
+            if ((usuario = UsuarioServices.getInstancia().findByUsername(usuarioLogin)) != null) {
 
                 if (usuario.getPassword().equals(passwordLogin)) {
                     if (remember){

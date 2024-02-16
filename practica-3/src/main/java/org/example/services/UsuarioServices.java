@@ -2,13 +2,10 @@ package org.example.services;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
-import jakarta.persistence.PersistenceException;
 import jakarta.persistence.Query;
-import org.example.clases.Articulo;
-import org.example.clases.Comentario;
+import org.example.clases.Foto;
 import org.example.clases.Usuario;
 
-import java.awt.dnd.DragGestureEvent;
 import java.util.List;
 
 public class UsuarioServices extends GestionDb<Usuario>{
@@ -35,7 +32,7 @@ public class UsuarioServices extends GestionDb<Usuario>{
         return lista;
     }
 
-    public Usuario findByNombre(String username) {
+    public Usuario findByUsername(String username) {
         EntityManager em = getEntityManager();
         try {
             Query query = em.createQuery("select u from Usuario u where u.username = :username", Usuario.class);
@@ -55,6 +52,15 @@ public class UsuarioServices extends GestionDb<Usuario>{
         } finally {
             em.close();
         }
+    }
+
+    public void eliminarUsuarioConFoto(Usuario usuario) {
+        EntityManager em = getEntityManager();
+        Foto foto = usuario.getFoto();
+        if (foto != null) {
+            em.remove(foto);
+        }
+        em.remove(usuario);
     }
 
 }
