@@ -12,8 +12,6 @@ public class CockroachDB {
 	private static void inicializar() {
 		ds = new PGSimpleDataSource();
 		ds.setUrl(System.getenv("JDBC_DATABASE_URL"));
-		ds.setUser("randae");
-		ds.setPassword("In8zhS6I3sRtuWAmE-R80A");
 	}
 
 	public static void insertarDataLogueo(String username) throws SQLException {
