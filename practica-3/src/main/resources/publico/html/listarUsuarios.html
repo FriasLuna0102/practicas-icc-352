@@ -77,7 +77,7 @@
         <td th:text="${user.administrator}"></td>
         <td th:text="${user.autor}"></td>
         <td th:unless="${user.username} == ${usuario.username}">
-          <a href="pon tu endpoint"><button type="button" class="btn btn-warning btn-sm">Modificar</button></a>
+          <a th:href="'/blogUsuario/plantillaUsuarioModificar?username=' + ${user.username}"><button type="button" class="btn btn-warning btn-sm">Modificar</button></a>
 
           <a th:href="'/blogUsuario/eliminarUsuario?username=' + ${user.username}"><button type="button"
               class="btn btn-danger btn-sm">Eliminar</button>
@@ -88,9 +88,12 @@
   </table>
 
   <!-- Botón de atrás -->
-  <div class="container">
-    <button class="back-button" onclick="goBack()">Atras</button>
+  <div class="container" >
+    <form th:action="@{/blogUsuario}" method="get">
+      <button class="back-button" > Atras</button>
+    </form>
   </div>
+
 
   <script>
     // Función para retroceder en la historia del navegador al hacer clic en el botón

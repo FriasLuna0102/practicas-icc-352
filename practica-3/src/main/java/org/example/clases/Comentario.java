@@ -64,7 +64,7 @@ public class Comentario implements Serializable {
     }
 
 
-    static List<Comentario> comentarios = ComentarioServices.getInstancia().obtenerTodosLosComentariosConArticulos();
+    static List<Comentario> comentarios = new ArrayList<>();
 
     public static List<Comentario> setComentario(Comentario comentario) {
         comentarios.add(comentario);
@@ -72,7 +72,7 @@ public class Comentario implements Serializable {
     }
 
     public static List<Comentario> getComentarios() {
-        return ComentarioServices.getInstancia().obtenerTodosLosComentariosConArticulos();
+        return comentarios;
     }
 
     //Buscar comentarios por id

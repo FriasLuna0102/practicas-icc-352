@@ -31,6 +31,11 @@ public class UsuarioServices extends GestionDb<Usuario>{
         return lista;
     }
 
+    public Usuario findById(long id) {
+        EntityManager em = getEntityManager();
+        return em.find(Usuario.class, id);
+    }
+
     public Usuario findByUsername(String username) {
         EntityManager em = getEntityManager();
         try {
