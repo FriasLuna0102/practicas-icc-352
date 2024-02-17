@@ -18,11 +18,13 @@ public class Comentario implements Serializable {
     private long id;
     private String comentario;
 
-    @OneToOne
+    @ManyToOne
     private Usuario autor;
 
     @ManyToOne
     private Articulo articulo;
+
+
 
     public Comentario (){
 
