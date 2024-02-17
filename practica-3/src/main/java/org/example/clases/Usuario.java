@@ -20,6 +20,9 @@ public class Usuario implements Serializable {
     @OneToOne(cascade = CascadeType.REMOVE)
     private Foto foto;
 
+    @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comentario> listComentarios;
+
     /*
     public Usuario(String username, String nombre, String password, boolean administrator, boolean autor) {
         this.username = username;
@@ -91,5 +94,13 @@ public class Usuario implements Serializable {
 
     public long getId() {
         return id;
+    }
+
+    public List<Comentario> getListComentarios() {
+        return listComentarios;
+    }
+
+    public void setListComentarios(List<Comentario> listComentarios) {
+        this.listComentarios = listComentarios;
     }
 }
