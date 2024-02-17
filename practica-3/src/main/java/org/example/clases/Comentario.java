@@ -64,6 +64,7 @@ public class Comentario implements Serializable {
     }
 
 
+
     static List<Comentario> comentarios = new ArrayList<>();
 
     public static List<Comentario> setComentario(Comentario comentario) {
