@@ -42,9 +42,10 @@ public class CrearUsuario extends ControladorClass {
                     e.printStackTrace();
                 }
 
+
                 // Crear el nuevo usuario y agregarlo a la lista de usuarios
                 Usuario nuevoUsuario = null;
-                if (foto == null){
+                if (file.filename().isEmpty()){
                     nuevoUsuario = new Usuario(username, nombre, password, isAdmin, isAutor, null);
                 }else {
                     nuevoUsuario = new Usuario(username, nombre, password, isAdmin, isAutor, foto);

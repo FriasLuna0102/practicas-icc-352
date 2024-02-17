@@ -94,7 +94,10 @@ public class mostrarUsuarios extends ControladorClass {
                     usuarioExistente.setPassword(password);
                     usuarioExistente.setAdministrator(isAdmin);
                     usuarioExistente.setAutor(isAutor);
-                    if (foto != null) {
+                    assert file != null;
+                    if (file.filename().isEmpty()) {
+                        usuarioExistente.setFoto(null);
+                    }else{
                         usuarioExistente.setFoto(foto);
                     }
 
