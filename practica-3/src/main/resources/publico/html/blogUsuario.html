@@ -2,7 +2,6 @@
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 
-
 <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 <!DOCTYPE html>
 
@@ -39,13 +38,11 @@
 
 <body>
 
-
-
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="navbar-header">
             <!-- Botón de Login -->
             <span th:if="${currentUser != null}">
-                <span th:if="${foto != null}">
+                <span th:if="${currentUser.foto != null}">
                     <img th:src="@{'data:'+${foto.getMimeType()}+';base64,'+${foto.getFotoBase64()}}"
                         class="card-img-top" alt="Foto enviada" id="foto">
                 </span>
@@ -145,13 +142,6 @@
                             th:text="${#strings.length(articulo.cuerpo) &gt; 70 ? #strings.substring(articulo.cuerpo, 0, 70) + '...' : articulo.cuerpo}">
                         </p>
 
-
-
-
-
-
-
-
                         <div style="display: inline-block;"
                             th:if="${currentUser != null && (currentUser.administrator or currentUser.autor)}">
                             <form th:action="@{/editarArticulo}" method="post">
@@ -160,37 +150,12 @@
                             </form>
                         </div>
 
-
-
-
-
-
-
-
-
-
-
                         <div style="display: inline-block;" th:if="${currentUser != null}">
                             <form th:action="@{/agregarComentario}" method="post">
                                 <input type="hidden" name="idArticulo" th:value="${articulo.getId}" />
                                 <button type="submit" id="comment-button" class="btn btn-primary">Comentar</button>
                             </form>
                         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                         <div style="display: inline-block;"
                             th:if="${currentUser != null && (currentUser.administrator or currentUser.autor)}">
@@ -201,18 +166,10 @@
                                     style="background-color: red; color: white; padding: 5px 10px; border: none; cursor: pointer;">Eliminar</button>
                             </form>
                         </div>
-
-
-
-
-
                     </th:block>
                     <hr>
 
                 </th:block>
-
-
-
 
                 <div th:if="${not #lists.isEmpty(listArticulos)}">
                     <nav aria-label="...">
@@ -236,18 +193,8 @@
                         </ul>
                     </nav>
                 </div>
-
-
-
-
-
-
                 <br />
-
-
                 <br />
-
-
                 <script>!function (d, s, id) {var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) {js = d.createElement(s); js.id = id; js.src = p + '://platform.twitter.com/widgets.js'; fjs.parentNode.insertBefore(js, fjs);} }(document, 'script', 'twitter-wjs');</script>
 
                 <div class="g-plusone" data-annotation="inline" data-width="300" data-href=""></div>
@@ -262,9 +209,6 @@
                 </script>
                 <br />
                 <hr>
-
-
-
             </div>
 
             <div class="col-lg-4">
@@ -282,9 +226,6 @@
                                         class="badge badge-info" th:text="${etiqueta.getEtiqueta}"></a>
                                     <span th:if="${!iterStat.last}"> </span>
                                 </span>
-
-
-
 
                             </ul>
                         </div>

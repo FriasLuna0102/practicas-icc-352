@@ -43,7 +43,12 @@ public class CrearUsuario extends ControladorClass {
                 }
 
                 // Crear el nuevo usuario y agregarlo a la lista de usuarios
-                Usuario nuevoUsuario = new Usuario(username, nombre, password, isAdmin, isAutor, foto);
+                Usuario nuevoUsuario = null;
+                if (foto == null){
+                    nuevoUsuario = new Usuario(username, nombre, password, isAdmin, isAutor, null);
+                }else {
+                    nuevoUsuario = new Usuario(username, nombre, password, isAdmin, isAutor, foto);
+                }
                 Blog.getInstance().addUsuario(nuevoUsuario);
                 // Redirigir a la página de administración u otra página según corresponda
                 ctx.redirect("/blogUsuario");
