@@ -19,7 +19,6 @@ public class CrearUsuario extends ControladorClass {
     @Override
     public void aplicarRutas() {
 
-
         // Lógica para permitir la creación de nuevos usuarios por parte de administradores
         app.post("/crearUsuario", ctx -> {
             Usuario currentUser = ctx.sessionAttribute("currentUser");
@@ -41,9 +40,6 @@ public class CrearUsuario extends ControladorClass {
                 }catch (Exception e){
                     e.printStackTrace();
                 }
-
-
-
 
                 // Crear el nuevo usuario y agregarlo a la lista de usuarios
                 Usuario nuevoUsuario = null;
