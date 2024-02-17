@@ -20,6 +20,7 @@ public class Usuario implements Serializable {
     @OneToOne(cascade = CascadeType.REMOVE)
     private Foto foto;
 
+
     @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comentario> listComentarios;
 
