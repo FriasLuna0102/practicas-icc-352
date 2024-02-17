@@ -3,7 +3,6 @@ package org.example.services;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
-import org.example.clases.Foto;
 import org.example.clases.Usuario;
 
 import java.util.List;
@@ -24,7 +23,7 @@ public class UsuarioServices extends GestionDb<Usuario>{
         return instancia;
     }
 
-    public List<Usuario> findAllByNombre(String username){
+    public List<Usuario> findAllByUsername(String username){
         EntityManager em = getEntityManager();
         Query query = em.createQuery("select u from Usuario u where u.username like :username");
         query.setParameter("username", username+"%");
@@ -52,15 +51,6 @@ public class UsuarioServices extends GestionDb<Usuario>{
         } finally {
             em.close();
         }
-    }
-
-    public void eliminarUsuarioConFoto(Usuario usuario) {
-        EntityManager em = getEntityManager();
-        Foto foto = usuario.getFoto();
-        if (foto != null) {
-            em.remove(foto);
-        }
-        em.remove(usuario);
     }
 
 }

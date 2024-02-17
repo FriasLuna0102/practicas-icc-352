@@ -1,6 +1,7 @@
 package org.example.controladores;
 
 import io.javalin.Javalin;
+import org.example.clases.Blog;
 import org.example.clases.Usuario;
 import org.example.jdbc.CockroachDB;
 import org.example.services.UsuarioServices;
@@ -52,6 +53,7 @@ public class Login extends ControladorClass {
                         cxt.cookie("username", textEncryptor.encrypt(usuario.getUsername()), 604800);
                     }
                     CockroachDB.insertarDataLogueo(usuario.getUsername());
+                    Blog.getInstance().setUsuario(usuario);
                     // Si las credenciales coinciden, establecer el usuario en la sesión y redirigir
                     cxt.sessionAttribute("currentUser", usuario);
                     cxt.redirect("/blogUsuario");

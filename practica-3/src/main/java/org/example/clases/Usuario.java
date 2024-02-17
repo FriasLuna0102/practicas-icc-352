@@ -17,7 +17,7 @@ public class Usuario implements Serializable {
     private String password;
     private boolean administrator;
     private boolean autor;
-    @OneToOne(orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.REMOVE)
     private Foto foto;
 
     /*

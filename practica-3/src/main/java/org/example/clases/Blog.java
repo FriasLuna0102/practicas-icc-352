@@ -1,13 +1,11 @@
 package org.example.clases;
 
 import org.example.services.ArticuloServices;
-import org.example.services.BootStrapServices;
 import org.example.services.EtiquetaServices;
 import org.example.services.UsuarioServices;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class Blog {
 
@@ -90,7 +88,7 @@ public class Blog {
 	public void addUsuario(Usuario usuario){
 
 		// Buscar el usuario en la base de datos utilizando Hibernate
-		List<Usuario> usuarios = UsuarioServices.getInstancia().findAllByNombre(usuario.getUsername());
+		List<Usuario> usuarios = UsuarioServices.getInstancia().findAllByUsername(usuario.getUsername());
 
 		for (Usuario user: usuarios){
 			if(user.getUsername().equals(usuario.getUsername()) || user.getNombre().equals(usuario.getNombre())){

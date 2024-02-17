@@ -1,6 +1,7 @@
 package org.example.controladores;
 
 import io.javalin.Javalin;
+import org.example.clases.Blog;
 import org.example.clases.Usuario;
 import org.example.services.ArticuloServices;
 import org.example.services.UsuarioServices;
@@ -10,8 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static io.javalin.apibuilder.ApiBuilder.get;
-import static io.javalin.apibuilder.ApiBuilder.path;
+import static io.javalin.apibuilder.ApiBuilder.*;
 
 public class mostrarUsuarios extends ControladorClass {
     public mostrarUsuarios(Javalin app) {
@@ -20,7 +20,6 @@ public class mostrarUsuarios extends ControladorClass {
 
     @Override
     public void aplicarRutas() {
-
 
         app.routes(()->{
 
@@ -33,6 +32,7 @@ public class mostrarUsuarios extends ControladorClass {
                         List<Usuario> listUsuario = UsuarioServices.getInstancia().obtenerTodosLosUsuarios();
                         Map<String, Object> model = new HashMap<>();
                         model.put("listUsuario",listUsuario);
+                        model.put("usuario", Blog.getInstance().getUsuario());
                         cxt.render("publico/html/listarUsuarios.html",model);
                     }
                 });
@@ -42,8 +42,7 @@ public class mostrarUsuarios extends ControladorClass {
                     Usuario usuario = UsuarioServices.getInstancia().findByUsername(username);
 
                     ArticuloServices.getInstancia().eliminarArticuloByAutor(username);
-                    UsuarioServices.getInstancia().eliminarUsuarioConFoto(usuario);
-
+                    UsuarioServices.getInstancia().eliminar(usuario.getId());
                     context.redirect("/blogUsuario/mostrarUsuario");
                 });
 
