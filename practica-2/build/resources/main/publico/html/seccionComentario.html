@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+
+<body>
+
+<div class="well">
+  <h4><i class="fa fa-paper-plane-o"></i> Leave a Comment:</h4>
+  <form role="form" action="/comentar" method="post">
+    <div class="form-group">
+      <textarea class="form-control" rows="3" name="contenidoComentario"></textarea>
+    </div>
+      <input type="hidden" name="idArticulo" th:value="${articulo.id}" />
+      <button type="submit" class="btn btn-primary" name="comentario"><i class="fa fa-reply"></i> Submit</button>
+  </form>
+</div>
+
+<script src="https://apis.google.com/js/plusone.js">
+</script>
+<hr>
+
+<style>
+
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-image: url("/img/360_F_391461057_5P0BOWl4lY442Zoo9rzEeJU0S2c1WDZR.jpg");
+
+    }
+
+    .well {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        width: 100%;
+    }
+
+    .well h4 {
+        color: #333;
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .well .form-control {
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        padding: 10px;
+        resize: none;
+    }
+
+    .well .btn {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .well .btn:hover {
+        background-color: #0056b3;
+    }
+
+    .well .btn i {
+        margin-right: 5px;
+    }
+</style>
+
+</body>
+</html>

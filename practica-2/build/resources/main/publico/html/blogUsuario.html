@@ -1,0 +1,283 @@
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"
+     >
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+<!DOCTYPE html>
+
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Blog Post</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/css/blog.css" rel="stylesheet">
+
+    <!-- Add custom CSS here -->
+    <link href="css/blog-post.css" rel="stylesheet">
+    <link href="css/youtube.css" rel="stylesheet">
+    <link href="css/books.css" rel="stylesheet">
+
+    <link href="/css/blog.css" rel="stylesheet">
+</head>
+
+
+<style>
+    body{
+        background-image: url("/img/laptop-2559795_1280.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        width: 100%;
+        height: 100%;
+    }
+
+</style>
+
+<body>
+
+
+
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="navbar-header">
+        <!-- Botón de Login -->
+        <span th:if="${currentUser != null}">
+            <span th:text="${currentUser.nombre}" style="color: white;"></span>
+              <a class="btn btn-sm btn-primary navbar-btn" href="/logout">Logout</a>
+
+    </span>
+        <!-- Nombre del usuario -->
+        <span th:if="${currentUser == null}">
+        <a class="btn btn-sm btn-primary navbar-btn" href="/login">Login</a>
+
+    </span>
+        <!-- ... -->
+    </div>
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar">
+        </span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="">Blog Post</a>
+        </div>
+        <!-- Botón para crear usuario -->
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+        <ul class="nav navbar-nav navbar-right">
+            <li th:if="${currentUser != null && currentUser.administrator}">
+                <a href="/blogUsuario/plantillaUsuario" class="btn btn-sm btn-primary navbar-btn" style="color: white; margin-right: 10px;">
+                    Crear Usuario
+                </a>
+            </li>
+            <li th:if="${currentUser != null && (currentUser.administrator or currentUser.autor)}">
+                <a href="/blogUsuario/crearArticulo" class="btn btn-sm btn-primary navbar-btn" style="color: white; margin-right: 50px;">
+                    Crear Articulo
+                </a>
+            </li>
+            <li th:if="${currentUser != null && (currentUser.administrator)}">
+                <a href="/blogUsuario/mostrarUsuario" class="btn btn-sm btn-primary navbar-btn" style="color: white; margin-right: 50px;">
+                    Usuarios
+                </a>
+            </li>
+        </ul>
+    </div>
+
+
+</nav>
+
+
+<style>
+    .container{
+        background-color: #E5E5E5;
+
+    }
+
+    .mayusculaallmoment{
+        text-transform: uppercase;
+        font-weight: bold;
+        font-family: "Arial Rounded MT Bold",serif;
+    }
+</style>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-lg-8">
+
+
+            <th:block th:unless="${not #lists.isEmpty(listArticulos)}">
+                <p style="text-align: center; color: #666; font-size: 18px; margin-top: 50px;">No hay articulos publicados.</p>
+            </th:block>
+
+            <!-- the actual blog post: title/author/date/content -->
+            <th:block th:each="articulo : ${listArticulos}">
+              <!-- <h1><a th:href="'temp/'+${articulo.getId}+'.html'" th:text="${articulo.getTitulo}"></a></h1> -->
+
+                <h1 class="mayusculaallmoment"><a th:href="@{'/blogUsuario/articulo/' + ${articulo.getId()}}" th:text="${articulo.getTitulo}"></a></h1>
+
+                <p class="lead"><i class="fa fa-user"></i> <a href="" th:text="${articulo.getAutor().getNombre}"></a></p>
+                <hr>
+                <p> Posted on <i class="fa fa-calendar" th:text="${articulo.getFecha}"></i> </p>
+                <th:block th:with="etiquetasString=${''}">
+                    <p><i class="fa fa-tags"></i> Tags:
+                        <span th:each="etiqueta, iterStat : ${articulo.getListaEtiquetas}">
+                <span class="badge badge-info" th:text="${etiqueta.getEtiqueta}"></span>
+                <span th:if="${!iterStat.last}"> </span>
+            </span>
+                    </p>
+                </th:block>
+                <th:block>
+                    <p th:text="${#strings.length(articulo.cuerpo) &gt; 70 ? #strings.substring(articulo.cuerpo, 0, 70) + '...' : articulo.cuerpo}"></p>
+
+
+
+
+
+                    <div style="display: inline-block;" th:if="${currentUser != null && (currentUser.administrator or currentUser.autor)}">
+                        <form th:action="@{/editarArticulo}" method="post">
+                            <input type="hidden" name="idArticulo" th:value="${articulo.getId}" />
+                            <button type="submit" class="btn btn-primary">Editar</button>
+                        </form>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+                    <div style="display: inline-block;" th:if="${currentUser != null}">
+                        <form th:action="@{/agregarComentario}" method="post">
+                            <input type="hidden" name="idArticulo" th:value="${articulo.getId}" />
+                            <button type="submit" id="comment-button" class="btn btn-primary">Comentar</button>
+                        </form>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <div style="display: inline-block;" th:if="${currentUser != null && (currentUser.administrator or currentUser.autor)}">
+                        <form th:action="@{/eliminarArticulo}" method="post">
+                            <!-- Campo oculto para enviar el ID del artículo -->
+                            <input type="hidden" name="idTitulo" th:value="${articulo.getTitulo}" />
+                            <button type="submit" id="delete-button" style="background-color: red; color: white; padding: 5px 10px; border: none; cursor: pointer;">Eliminar</button>
+                        </form>
+                    </div>
+
+
+
+
+
+                </th:block>
+                <hr>
+
+            </th:block>
+
+
+
+
+            <br/>
+
+
+            <br/>
+
+
+            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+            <div class="g-plusone" data-annotation="inline" data-width="300" data-href=""></div>
+
+
+            <script type="text/javascript">
+                (function() {
+                    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                    po.src = 'https://apis.google.com/js/platform.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+                })();
+            </script>
+            <br/>
+            <hr>
+
+
+
+        </div>
+
+        <div class="col-lg-4">
+
+            <!-- /well -->
+            <div class="well">
+                <h4><i class="fa fa-tags"></i> Popular Tags:</h4>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <ul class="list-unstyled">
+
+                            <th:block>
+                                <th th:unless="${not #lists.isEmpty(listArticulos)}"></th>
+                            </th:block>
+                            <p><i class="fa fa-tags"></i> Tags: </p>
+                            <th:block th:each="articulo : ${listArticulos}">
+
+                                <th:block th:with="etiquetasString=${''}">
+                                        <span th:each="etiqueta, iterStat : ${articulo.listaEtiquetas}">
+                                        <span class="badge badge-info" th:text="${etiqueta.getEtiqueta}"></span>
+                                        <span th:if="${!iterStat.last}"> </span>
+                                        </span>
+
+                                 </th:block>
+
+                            </th:block>
+
+
+                        </ul>
+                    </div>
+                    <div class="col-lg-6">
+
+                    </div>
+                </div>
+            </div>
+            <!-- /well -->
+
+            <div class="well">
+                <h4><i class="fa fa-fire"></i> Popular Posts:</h4>
+                <ul>
+
+                    <th:block th:each="articulo : ${listArticulos}">
+                        <li>
+                            <a class="mayusculaallmoment" th:href="@{'/blogUsuario/articulo/' + ${articulo.getId()}}" th:text="${articulo.getTitulo}"> </a>
+                        </li>
+                    </th:block>
+
+                </ul>
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+
+</body>
+
+</html>

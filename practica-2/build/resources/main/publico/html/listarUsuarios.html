@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Listado de Usuarios</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+
+    body{
+      background-image: url("/img/shapelined-_JBKdviweXI-unsplash.jpg");
+    }
+
+    h2{
+      background-color: #007bff;
+    }
+
+    /* Estilos para el botón de atrás */
+    .container {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .back-button {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .back-button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+
+</head>
+<body>
+<h2>Listado de Usuarios</h2>
+<table>
+  <thead>
+  <tr>
+    <!-- <th>Fecha de Creación</th> -->
+    <th>Nombre</th>
+    <th>Username</th>
+    <th>Password</th>
+    <th>Administrador</th>
+
+    <th>Autor</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="user : ${listUsuario}">
+    <td th:text="${user.nombre}"></td>
+    <td th:text="${user.username}"></td>
+    <!-- <td th:text="${user.creationDate}"></td> -->
+    <td th:text="${user.password}"></td>
+
+
+    <td th:text="${user.administrator}"></td>
+    <td th:text="${user.autor}"></td>
+  </tr>
+  </tbody>
+</table>
+
+<!-- Botón de atrás -->
+<div class="container">
+  <button class="back-button" onclick="goBack()">Atras</button>
+</div>
+
+<script>
+  // Función para retroceder en la historia del navegador al hacer clic en el botón
+  function goBack() {
+    window.history.back();
+  }
+</script>
+
+</body>
+</html>
