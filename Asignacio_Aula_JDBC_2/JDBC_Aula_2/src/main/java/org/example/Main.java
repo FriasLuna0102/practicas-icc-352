@@ -43,7 +43,7 @@ public class Main {
 
 
         //creando el manejador
-        app.get("/", ctx -> ctx.result("Hola Mundo en Javalin :-D"));
+        app.get("/", ctx -> ctx.redirect("/crud-simple/"));
         //aplicando los diferentes conceptos.
         new CrudTradicionalControlador(app).aplicarRutas();
 
