@@ -136,14 +136,15 @@ public class CrudTradicionalControlador extends BaseControlador {
                             estudiante = e;
                         }
                     }
-                    //
+
                     Map<String, Object> modelo = new HashMap<>();
                     modelo.put("titulo", "Formulario Editar Estudiante "+estudiante.getMatricula());
                     modelo.put("estudiante", estudiante);
+                    modelo.put("visualizar", true); // para hacer el campo de matrícula solo de lectura en la página de edición
                     modelo.put("accion", "/crud-simple/editar");
 
                     //enviando al sistema de ,plantilla.
-                    ctx.render("/templates/crud-tradicional/crearEditarVisualizar.html", modelo);
+                    ctx.render("/templates/crud-tradicional/editar.html", modelo);
                 });
 
                 /**
