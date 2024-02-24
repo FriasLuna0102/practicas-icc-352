@@ -22,7 +22,13 @@ public class FakeServices {
      */
     private FakeServices(){
         //añadiendo los estudiantes.
-        listaEstudiante.add(new Estudiante(20011136, "Carlos Camacho", "ITT"));
+        Estudiante cama = new Estudiante(20011136, "Carlos Camacho", "ITT");
+
+        Estudiante est = EstudianteServices.getInstancia().findByMatricula(cama.getMatricula());
+
+        if(est == null){
+            EstudianteServices.getInstancia().crear(cama);
+        }
         //anadiendo los usuarios.
         listaUsuarios.add(new Usuario("admin", "admin", "1234", Set.of(RolesApp.ROLE_ADMIN, RolesApp.CUALQUIERA, RolesApp.LOGUEADO)));
         listaUsuarios.add(new Usuario("logueado", "logueado", "logueado", Set.of(RolesApp.CUALQUIERA)));
@@ -65,6 +71,7 @@ public class FakeServices {
             System.out.println("Estudiante registrado...");
             return null; //generar una excepcion...
         }
+        EstudianteServices.getInstancia().crear(estudiante);
         listaEstudiante.add(estudiante);
         return estudiante;
     }
@@ -74,7 +81,8 @@ public class FakeServices {
         if(tmp == null){//no existe, no puede se actualizado
             throw new NoExisteEstudianteException("No Existe el estudiante: "+estudiante.getMatricula());
         }
-        tmp.mezclar(estudiante);
+        Estudiante newEstu = tmp.mezclarEstudiante(estudiante);
+        EstudianteServices.getInstancia().editar(newEstu);
         return tmp;
     }
 

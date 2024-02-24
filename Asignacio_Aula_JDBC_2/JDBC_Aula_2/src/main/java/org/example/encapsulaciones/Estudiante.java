@@ -1,12 +1,18 @@
 package org.example.encapsulaciones;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * Objeto con estructura POJO.
  */
-public class Estudiante {
+@Entity
+public class Estudiante implements Serializable {
 
+    @Id
     private int matricula;
     private String nombre;
     private String carrera;
@@ -49,6 +55,15 @@ public class Estudiante {
         nombre = e.getNombre();
         carrera = e.getCarrera();
     }
+
+    public Estudiante mezclarEstudiante(Estudiante e){
+        matricula = e.getMatricula();
+        nombre = e.getNombre();
+        carrera = e.getCarrera();
+
+        return e;
+    }
+
 
     @Override
     public boolean equals(Object o) {

@@ -3,6 +3,7 @@ package org.example.controladores;
 
 import io.javalin.Javalin;
 import org.example.encapsulaciones.Estudiante;
+import org.example.servicios.EstudianteServices;
 import org.example.servicios.FakeServices;
 import org.example.util.BaseControlador;
 
@@ -61,7 +62,7 @@ public class CrudTradicionalControlador extends BaseControlador {
 
                 get("/listar", ctx -> {
                     //tomando el parametro utl y validando el tipo.
-                    List<Estudiante> lista = fakeServices.listarEstudiante();
+                    List<Estudiante> lista = EstudianteServices.getInstancia().consultaNativa();
                     //
                     Map<String, Object> modelo = new HashMap<>();
                     modelo.put("titulo", "Listado de Estudiante");
@@ -79,6 +80,11 @@ public class CrudTradicionalControlador extends BaseControlador {
                     ctx.render("/templates/crud-tradicional/crearEditarVisualizar.html", modelo);
                 });
 
+
+
+                get("/matriculaExiste", cxt ->{
+                    cxt.result("Ya existe un estudiante con esta matricula.");
+                });
                 /**
                  * manejador para la creación del estudiante, una vez creado
                  * pasa nuevamente al listado.
@@ -88,11 +94,24 @@ public class CrudTradicionalControlador extends BaseControlador {
                     int matricula = ctx.formParamAsClass("matricula", Integer.class).get();
                     String nombre = ctx.formParam("nombre");
                     String carrera = ctx.formParam("carrera");
-                    //
-                    Estudiante tmp = new Estudiante(matricula, nombre, carrera);
-                    //realizar algún tipo de validación...
-                    fakeServices.crearEstudiante(tmp); //puedo validar, existe un error enviar a otro vista.
-                    ctx.redirect("/crud-simple/");
+
+                    List<Estudiante> listEstu = EstudianteServices.getInstancia().consultaNativa();
+
+                    boolean matriculaExistente = false;
+                    for(Estudiante e : listEstu ){
+                        if(e.getMatricula() == matricula){
+                            matriculaExistente = true;
+                            break;
+                        }
+                    }
+
+                    if (matriculaExistente) {
+                        ctx.redirect("/crud-simple/matriculaExiste");
+                    } else {
+                        Estudiante tmp = new Estudiante(matricula, nombre, carrera);
+                        fakeServices.crearEstudiante(tmp);
+                        ctx.redirect("/crud-simple/");
+                    }
                 });
 
                 get("/visualizar/{matricula}", ctx -> {
