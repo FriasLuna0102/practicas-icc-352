@@ -87,8 +87,7 @@ public class FakeServices {
     }
 
     public boolean eliminandoEstudiante(int matricula){
-        Estudiante tmp = new Estudiante();
-        tmp.setMatricula(matricula);
+        Estudiante tmp = EstudianteServices.getInstancia().findByMatricula(matricula);
         return listaEstudiante.remove(tmp);
     }
 
