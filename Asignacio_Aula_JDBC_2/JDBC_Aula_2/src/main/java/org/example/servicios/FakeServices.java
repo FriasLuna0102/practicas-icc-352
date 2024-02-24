@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 public class FakeServices {
 
     private static FakeServices instancia;
-    private List<Estudiante> listaEstudiante = new ArrayList<>();
+    private List<Estudiante> listaEstudiante = EstudianteServices.getInstancia().consultaNativa();
     private List<Usuario> listaUsuarios = new ArrayList<>();
 
     /**
@@ -81,13 +81,17 @@ public class FakeServices {
         if(tmp == null){//no existe, no puede se actualizado
             throw new NoExisteEstudianteException("No Existe el estudiante: "+estudiante.getMatricula());
         }
-        Estudiante newEstu = tmp.mezclarEstudiante(estudiante);
-        EstudianteServices.getInstancia().editar(newEstu);
+        tmp.setNombre(estudiante.getNombre());
+        tmp.setCarrera(estudiante.getCarrera());
+        // No cambies la matrícula aquí si es la clave primaria
+        EstudianteServices.getInstancia().editar(tmp);
         return tmp;
     }
 
+
     public boolean eliminandoEstudiante(int matricula){
         Estudiante tmp = EstudianteServices.getInstancia().findByMatricula(matricula);
+        EstudianteServices.getInstancia().eliminar(matricula);
         return listaEstudiante.remove(tmp);
     }
 

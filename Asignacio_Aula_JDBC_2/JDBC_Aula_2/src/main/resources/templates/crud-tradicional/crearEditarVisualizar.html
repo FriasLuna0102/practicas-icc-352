@@ -26,7 +26,7 @@
       <label for="carreraForm">Carrera</label>
       <input th:readonly="${visualizar}" th:value="${estudiante} ? ${estudiante.carrera} : ''" type="text"  name="carrera" class="form-control" id="carreraForm">
     </div>
-    <!-- Los botones para la creación del estudiante -->
+    <!-- Los botones para la creación d el estudiante -->
     <button th:if="${!visualizar}" type="submit" class="btn btn-primary">Crear</button>
     <a href="/crud-simple/" class="btn btn-primary">Cancelar</a>
   </form>

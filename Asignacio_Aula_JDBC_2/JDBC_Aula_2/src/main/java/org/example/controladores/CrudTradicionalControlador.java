@@ -128,7 +128,14 @@ public class CrudTradicionalControlador extends BaseControlador {
                 });
 
                 get("/editar/{matricula}", ctx -> {
-                    Estudiante estudiante = fakeServices.getEstudiantePorMatricula(ctx.pathParamAsClass("matricula", Integer.class).get());
+                    List<Estudiante> listEs = EstudianteServices.getInstancia().consultaNativa();
+                    Estudiante estudiante = null;
+
+                    for(Estudiante e : listEs){
+                        if(e.getMatricula() == ctx.pathParamAsClass("matricula", Integer.class).get()){
+                            estudiante = e;
+                        }
+                    }
                     //
                     Map<String, Object> modelo = new HashMap<>();
                     modelo.put("titulo", "Formulario Editar Estudiante "+estudiante.getMatricula());
@@ -148,9 +155,11 @@ public class CrudTradicionalControlador extends BaseControlador {
                     String nombre = ctx.formParam("nombre");
                     String carrera = ctx.formParam("carrera");
                     //
+
                     Estudiante tmp = new Estudiante(matricula, nombre, carrera);
+                    EstudianteServices.getInstancia().editar(tmp);
                     //realizar algún tipo de validación...
-                    fakeServices.actualizarEstudiante(tmp); //puedo validar, existe un error enviar a otro vista.
+                    //fakeServices.actualizarEstudiante(tmp); //puedo validar, existe un error enviar a otro vista.
                     ctx.redirect("/crud-simple/");
                 });
 
