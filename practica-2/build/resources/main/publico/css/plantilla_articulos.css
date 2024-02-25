@@ -1,0 +1,92 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+/* Estilos para el encabezado */
+h1 {
+    color: #333;
+}
+
+/* Estilos para el contenido del artículo */
+.article-content {
+    margin-top: 20px;
+}
+
+.article-content p {
+    line-height: 1.6;
+}
+
+.article-content .lead {
+    font-style: italic;
+    color: #666;
+}
+
+.article-content hr {
+    border: 1px solid #ccc;
+    margin: 20px 0;
+}
+
+.article-content .tags {
+    margin-top: 10px;
+}
+
+.article-content .tags .badge {
+    margin-right: 5px;
+}
+
+/* Estilos para los botones */
+.btn {
+    display: inline-block;
+    padding: 8px 16px;
+    text-decoration: none;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+}
+
+.btn-primary:hover,
+.btn-secondary:hover,
+.btn-danger:hover {
+    background-color: #0056b3;
+}
+
+/* Estilos para los comentarios */
+.comments-section {
+    margin-top: 40px;
+}
+
+.comments-section h2 {
+    color: #333;
+}
+
+.comments-section ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.comments-section ul li {
+    margin-bottom: 20px;
+}
+
+/* Estilos para los iconos */
+.fa {
+    margin-right: 5px;
+}

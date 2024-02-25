@@ -18,6 +18,7 @@ public class Etiqueta implements Serializable {
 
     @ManyToMany(mappedBy = "listaEtiquetas")
     private List<Articulo> articulos;
+
     public Etiqueta(){
 
     }
