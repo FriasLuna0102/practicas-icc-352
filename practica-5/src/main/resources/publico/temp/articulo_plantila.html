@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalles del Artículo</title>
+    <!-- Agrega aquí tus enlaces a hojas de estilo o bibliotecas -->
+    <link href="/css/plantilla_articulos.css" rel="stylesheet">
+    <!-- Asegúrate de incluir Bootstrap para utilizar sus clases -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+
+<style>
+    body{
+        background-image: url("/img/shapelined-_JBKdviweXI-unsplash.jpg");
+    }
+
+    .mayusculaallmoment{
+        text-transform: uppercase;
+        font-weight: bold;
+        font-family: "Arial Rounded MT Bold",serif;
+    }
+</style>
+
+
+
+<body>
+
+
+<div class="container">
+
+
+    <!-- Botón de retroceso -->
+    <a href="/blogUsuario" class="btn btn-secondary">Atras</a>
+
+    <!-- Contenido del artículo -->
+    <h1 class="mayusculaallmoment" ><a th:text="${articulo.titulo}"></a></h1>
+    <p class="lead"><i class="fa fa-user"></i> <a href="" th:text="${articulo.autor.username}"></a></p>
+    <hr>
+    <p> Posted on <i class="fa fa-calendar" th:text="${articulo.fecha}"></i> </p>
+    <th:block th:with="etiquetasString=${''}">
+        <p><i class="fa fa-tags"></i> Tags:
+            <span th:each="etiqueta, etiquetaStat : ${articulo.listaEtiquetas}">
+            <span class="badge badge-info text-muted" th:text="${etiqueta.etiqueta}"></span>
+            <span th:if="${!etiquetaStat.last}"> </span>
+        </span>
+        </p>
+    </th:block>
+
+    <th:block>
+        <p th:text="${articulo.getCuerpo()}"></p>
+
+        <!-- Botones de editar y eliminar -->
+        <div style="display: inline-block;" th:if="${currentUser != null && (currentUser.administrator or currentUser.autor)}">
+            <form th:action="@{/editarArticulo}" method="post">
+                <input type="hidden" name="idArticulo" th:value="${articulo.getId}" />
+                <button type="submit" id="editar-button" class="btn btn-primary">Editar</button>
+            </form>
+        </div>
+
+        <div style="display: inline-block;" th:if="${currentUser != null && (currentUser.administrator or currentUser.autor)}">
+            <form th:action="@{/eliminarArticulo}" method="post">
+                <input type="hidden" name="idTitulo" th:value="${articulo.getTitulo}" />
+                <button type="submit" id="delete-button" class="btn btn-danger">Eliminar</button>
+            </form>
+        </div>
+    </th:block>
+
+    <!-- Sección para visualizar comentarios -->
+    <div>
+        <h2>Comentarios</h2>
+        <th:block th:if="${not #lists.isEmpty(listComentarios)}">
+            <ul>
+                <li th:each="comentario : ${listComentarios}">
+                    <h3><i class="fa fa-comment"></i> <span th:text="${comentario.autor.nombre}"></span>
+                        <small><span th:text="${comentario.articulo.fecha}"></span></small>
+                    </h3>
+                    <p th:text="${comentario.comentario}"></p>
+                </li>
+            </ul>
+        </th:block>
+        <th:block th:unless="${not #lists.isEmpty(listComentarios)}"> <p>No hay comentarios</p> </th:block> </div>
+
+</div> </body> </html>
