@@ -13,6 +13,7 @@ import java.util.*;
 @Entity
 public class Articulo implements Serializable {
 
+    private static Articulo instance;
 
     private static long contador = 0;
 
@@ -43,6 +44,13 @@ public class Articulo implements Serializable {
         this.fecha = fecha;
         this.listaComentarios = listaComentarios;
         this.listaEtiquetas = listaEtiquetas;
+    }
+
+    public static Articulo getInstancia(){
+        if(instance==null){
+            instance = new Articulo();
+        }
+        return instance;
     }
 
     public long getId() {
@@ -118,6 +126,10 @@ public class Articulo implements Serializable {
         return false;
     }
 
+    public Articulo ultimoArticuloCreado(){
+        List<Articulo> listAr = ArticuloServices.getInstancia().obtenerTodosLosArticulosConEtiquetas();
+        return listAr.getLast();
 
+    }
 
 }
