@@ -16,8 +16,7 @@ $(document).ready(function() {
     function cargarArticulos(pagina) {
         $.get("/blogUsuario/blogUsuarioAjax", { pagina: pagina }, function(data) {
             if (data !== null) {
-                console.log('Respuesta del servidor:', data); // Agrega este registro para ver qué datos se reciben del servidor
-                // Procesa la respuesta JSON y genera el HTML correspondiente
+                console.log('Respuesta del servidor:', data);
                 var html = '';
                 for (var i = 0; i < data.length; i++) {
                     var articulo = data[i];
@@ -27,13 +26,37 @@ $(document).ready(function() {
                     html += '<hr>';
                     html += '<p> Posted on <i class="fa fa-calendar">' + articulo.fecha + '</i> </p>';
                     html += '<p><i class="fa fa-tags"></i> Tags: ';
-                    // for (var j = 0; j < articulo.listaEtiquetas.length; j++) {
-                    //     html += '<span class="badge badge-info">' + articulo.listaEtiquetas[j] + '</span> ';
-                    // }
+                    for (var j = 0; j < articulo.listaEtiquetas.length; j++) {
+                        html += '<span class="badge badge-info">' + articulo.listaEtiquetas[j] + '</span> ';
+                    }
                     html += '</p>';
                     html += '<p>' + (articulo.cuerpo.length > 70 ? articulo.cuerpo.substring(0, 70) + '...' : articulo.cuerpo) + '</p>';
+
+                    // Agrega los botones a cada artículo
+                    html += '<div id="botoness">';
+                    html += '<div style="display: inline-block;">';
+                    html += '<form action="/editarArticulo" method="post">';
+                    html += '<input type="hidden" name="idArticulo" value="' + articulo.id + '" />';
+                    html += '<button type="submit" class="btn btn-primary">Editar</button>';
+                    html += '</form>';
+                    html += '</div>';
+
+                    html += '<div style="display: inline-block;">';
+                    html += '<form action="/agregarComentario" method="post">';
+                    html += '<input type="hidden" name="idArticulo" value="' + articulo.id + '" />';
+                    html += '<button type="submit" id="comment-button" class="btn btn-primary">Comentar</button>';
+                    html += '</form>';
+                    html += '</div>';
+
+                    html += '<div style="display: inline-block;">';
+                    html += '<form action="/eliminarArticulo" method="post">';
+                    html += '<input type="hidden" name="idArticulo" value="' + articulo.id + '" />';
+                    html += '<button type="submit" id="delete-button" style="background-color: red; color: white; padding: 5px 10px; border: none; cursor: pointer;">Eliminar</button>';
+                    html += '</form>';
+                    html += '</div>';
+
+                    html += '</div>';
                 }
-                // Actualiza el contenido de la sección de blog con los nuevos artículos recibidos
                 $('#ajaxx').html(html);
             } else {
                 console.log('No se recibieron datos.');
@@ -41,13 +64,21 @@ $(document).ready(function() {
         });
     }
 
-    // Maneja los clics en la paginación
+
     $(document).on('click', '#pagination .page-link', function(e) {
         e.preventDefault();
-        var pagina = $(this).text(); // Obtén el número de página del texto del botón
-        console.log('Página seleccionada:', pagina); // Agrega este registro para asegurarte de que la página seleccionada sea la correcta
-        cargarArticulos(pagina); // Carga los artículos correspondientes a la página seleccionada
+
+        // Elimina la clase 'active' de cualquier otro enlace de página
+        $('#pagination .page-link').removeClass('active');
+
+        // Agrega la clase 'active' al enlace de página seleccionado
+        $(this).addClass('active');
+
+        var pagina = $(this).text();
+        console.log('Página seleccionada:', pagina);
+        cargarArticulos(pagina);
     });
+
 
 
     // Carga los artículos de la primera página al cargar la página inicialmente

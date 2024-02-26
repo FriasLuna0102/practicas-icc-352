@@ -91,7 +91,7 @@ public class PlantillasControlador extends ControladorClass {
                         dto.setNombreAutor(articulo.getAutor().getNombre()); // Aquí asumo que hay un método getNombre() en la clase Usuario
                         dto.setFecha(articulo.getFecha());
                         //dto.setListaComentarios(articulo.getListaComentarios().stream().map(Comentario::getComentario).collect(Collectors.toList()));
-                        //dto.setListaEtiquetas(articulo.getListaEtiquetas().stream().map(Etiqueta::getEtiqueta).collect(Collectors.toList()));
+                        dto.setListaEtiquetas(articulo.getListaEtiquetas().stream().map(Etiqueta::getEtiqueta).collect(Collectors.toList()));
                         return dto;
                     }).collect(Collectors.toList());
 

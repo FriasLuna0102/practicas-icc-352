@@ -74,5 +74,9 @@ footer {
     width: 40px;
     height: 40px;
 }
-    
-    
+
+
+.page-link.active {
+    background-color: blue;
+    color: white;
+}
