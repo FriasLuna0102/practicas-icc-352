@@ -97,6 +97,23 @@ public class ArticuloServices extends GestionDb<Articulo>{
         }
     }
 
+    public List<Articulo> obtenerArticulosConEtiquetasPorPagina2(int numeroPagina, int articulosPorPagina) {
+        EntityManager em = getEntityManager();
+        try {
+            // Calculamos el primer resultado de la página
+            int primerResultado = (numeroPagina - 1) * articulosPorPagina;
+
+            // Utilizamos LEFT JOIN FETCH para traer todas las etiquetas asociadas a cada artículo en una sola consulta
+            return em.createQuery("SELECT DISTINCT a FROM Articulo a LEFT JOIN FETCH a.listaEtiquetas", Articulo.class)
+                    .setFirstResult(primerResultado) // Establecemos el primer resultado
+                    .setMaxResults(articulosPorPagina) // Establecemos el número máximo de resultados
+                    .getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+
     public Articulo obtenerArticuloConEtiquetasPorId(long id) {
         EntityManager em = getEntityManager();
         try {

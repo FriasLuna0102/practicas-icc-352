@@ -5,6 +5,7 @@ import org.example.clases.*;
 import org.example.services.ArticuloServices;
 import org.example.services.ComentarioServices;
 import org.example.services.EtiquetaServices;
+import org.example.services.UsuarioServices;
 import org.example.util.ControladorClass;
 
 import java.util.*;
@@ -67,6 +68,46 @@ public class PlantillasControlador extends ControladorClass {
                         ctx.redirect("/login");
                     }
                 });
+
+                get("/articuloAjax", cxt ->{
+
+                    //List<Articulo> lisAr = ArticuloServices.getInstancia().obtenerArticulosConEtiquetasPorPagina(1,5);
+                    List<Comentario> lisU = UsuarioServices.getInstancia().obtenerUsuariosConComentarios();
+                    cxt.json(lisU);
+                    System.out.println("hey");
+                });
+
+                // Controlador para manejar solicitudes AJAX de paginación
+                get("/blogUsuarioAjax", ctx -> {
+                    int numeroPagina = Optional.ofNullable(ctx.queryParam("pagina")).map(Integer::parseInt).orElse(1);
+
+                    //int numeroPagina = Integer.parseInt(ctx.queryParam("pagina"));
+                    List<Articulo> listArticulos = ArticuloServices.getInstancia().obtenerArticulosConEtiquetasPorPagina(numeroPagina, 5);
+                    List<ArticuloDTO> articulosDTO = listArticulos.stream().map(articulo -> {
+                        ArticuloDTO dto = new ArticuloDTO();
+                        dto.setId(articulo.getId());
+                        dto.setTitulo(articulo.getTitulo());
+                        dto.setCuerpo(articulo.getCuerpo());
+                        dto.setNombreAutor(articulo.getAutor().getNombre()); // Aquí asumo que hay un método getNombre() en la clase Usuario
+                        dto.setFecha(articulo.getFecha());
+                        //dto.setListaComentarios(articulo.getListaComentarios().stream().map(Comentario::getComentario).collect(Collectors.toList()));
+                        //dto.setListaEtiquetas(articulo.getListaEtiquetas().stream().map(Etiqueta::getEtiqueta).collect(Collectors.toList()));
+                        return dto;
+                    }).collect(Collectors.toList());
+
+                    System.out.println(articulosDTO.size());
+                    for(ArticuloDTO ar : articulosDTO){
+                        System.out.println(ar.getTitulo());
+                    }
+                    Map<String, Object> model = new HashMap<>();
+                    model.put("paginaActual", numeroPagina);
+                    model.put("totalPaginas", (int) Math.ceil((double) ArticuloServices.getInstancia().contarArticulos() / 5));
+                    ctx.render("publico/html/blogUsuario.html", model);
+                    ctx.json(articulosDTO); // Serializar los datos como JSON y enviar como respuesta
+                });
+
+
+
 
                 //Para evitar que despues de hacer logout no pueda acceder a crearUsuario.
                 get("/plantillaUsuario",cxt ->{

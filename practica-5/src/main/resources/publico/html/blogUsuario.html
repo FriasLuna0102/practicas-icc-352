@@ -118,6 +118,8 @@
                         publicados.</p>
                 </th:block>
 
+
+                <div id="ajaxx">
                 <!-- the actual blog post: title/author/date/content -->
                 <th:block th:each="articulo : ${listArticulos}">
                     <!-- <h1><a th:href="'temp/'+${articulo.getId}+'.html'" th:text="${articulo.getTitulo}"></a></h1> -->
@@ -141,6 +143,7 @@
                         <p
                             th:text="${#strings.length(articulo.cuerpo) &gt; 70 ? #strings.substring(articulo.cuerpo, 0, 70) + '...' : articulo.cuerpo}">
                         </p>
+
 
                         <div style="display: inline-block;"
                             th:if="${currentUser != null && (currentUser.administrator or currentUser.autor)}">
@@ -171,7 +174,10 @@
 
                 </th:block>
 
-                <div th:if="${not #lists.isEmpty(listArticulos)}">
+                </div>
+
+
+                <div th:if="${not #lists.isEmpty(listArticulos)}" id="pagination">
                     <nav aria-label="...">
                         <ul class="pagination">
                             <li class="page-item" th:if="${paginaActual > 1}">
@@ -257,6 +263,7 @@
         </div>
     </div>
 
+<script src="../AJAX/AjaxRequest.js" ></script>
 </body>
 
 </html>
