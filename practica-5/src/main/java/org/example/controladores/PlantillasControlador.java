@@ -88,22 +88,24 @@ public class PlantillasControlador extends ControladorClass {
                         dto.setId(articulo.getId());
                         dto.setTitulo(articulo.getTitulo());
                         dto.setCuerpo(articulo.getCuerpo());
-                        dto.setNombreAutor(articulo.getAutor().getNombre()); // Aquí asumo que hay un método getNombre() en la clase Usuario
+                        dto.setNombreAutor(articulo.getAutor().getNombre());
                         dto.setFecha(articulo.getFecha());
                         //dto.setListaComentarios(articulo.getListaComentarios().stream().map(Comentario::getComentario).collect(Collectors.toList()));
                         dto.setListaEtiquetas(articulo.getListaEtiquetas().stream().map(Etiqueta::getEtiqueta).collect(Collectors.toList()));
                         return dto;
                     }).collect(Collectors.toList());
 
+                    List<ArticuloDTO> invertidosListArti = articulosDTO.reversed();
                     System.out.println(articulosDTO.size());
-                    for(ArticuloDTO ar : articulosDTO){
+                    for(ArticuloDTO ar : invertidosListArti){
                         System.out.println(ar.getTitulo());
                     }
+
                     Map<String, Object> model = new HashMap<>();
                     model.put("paginaActual", numeroPagina);
                     model.put("totalPaginas", (int) Math.ceil((double) ArticuloServices.getInstancia().contarArticulos() / 5));
                     ctx.render("publico/html/blogUsuario.html", model);
-                    ctx.json(articulosDTO); // Serializar los datos como JSON y enviar como respuesta
+                    ctx.json(invertidosListArti); // Serializar los datos como JSON y enviar como respuesta
                 });
 
 
