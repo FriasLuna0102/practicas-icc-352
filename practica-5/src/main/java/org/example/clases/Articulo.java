@@ -126,10 +126,4 @@ public class Articulo implements Serializable {
         return false;
     }
 
-    public Articulo ultimoArticuloCreado(){
-        List<Articulo> listAr = ArticuloServices.getInstancia().obtenerTodosLosArticulosConEtiquetas();
-        return listAr.getLast();
-
-    }
-
 }
