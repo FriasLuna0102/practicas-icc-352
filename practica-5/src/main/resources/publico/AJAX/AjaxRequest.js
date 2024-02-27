@@ -24,7 +24,9 @@ $(document).ready(function() {
                     html += '<h1 class="mayusculaallmoment"><a href="/blogUsuario/articulo/' + articulo.id + '">' + articulo.titulo + '</a></h1>';
                     html += '<p class="lead"><i class="fa fa-user"></i> <a href="">' + articulo.nombreAutor + '</a></p>';
                     html += '<hr>';
-                    html += '<p> Posted on <i class="fa fa-calendar">' + articulo.fecha + '</i> </p>';
+                    var fecha = new Date(articulo.fecha);
+                    var opciones = { year: 'numeric', month: 'long', day: 'numeric', hour : 'numeric', minute: 'numeric', second: 'numeric' };
+                    html += '<p> Posted on <i class="fa fa-calendar">' + fecha.toLocaleDateString('es-ES', opciones) + '</i> </p>';
                     html += '<p><i class="fa fa-tags"></i> Tags: ';
                     for (var j = 0; j < articulo.listaEtiquetas.length; j++) {
                         html += '<span class="badge badge-info">' + articulo.listaEtiquetas[j] + '</span> ';

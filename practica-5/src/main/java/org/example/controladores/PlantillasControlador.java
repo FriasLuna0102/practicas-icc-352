@@ -21,6 +21,13 @@ public class PlantillasControlador extends ControladorClass {
 
     List<Usuario> usuarios = Blog.getInstance().getUsuarioList();
     List<Articulo> listArticulos = Blog.getInstance().getArticuloList();
+    public static <T> List<List<T>> partition(List<T> list, int size) {
+        List<List<T>> lists = new ArrayList<>();
+        for (int i = 0; i < list.size(); i += size) {
+            lists.add(new ArrayList<>(list.subList(i, Math.min(i + size, list.size()))));
+        }
+        return lists;
+    }
 
     @Override
     public void aplicarRutas() {
@@ -81,14 +88,17 @@ public class PlantillasControlador extends ControladorClass {
                 get("/blogUsuarioAjax", ctx -> {
                     int numeroPagina = Optional.ofNullable(ctx.queryParam("pagina")).map(Integer::parseInt).orElse(1);
 
-                    //int numeroPagina = Integer.parseInt(ctx.queryParam("pagina"));
-                    List<Articulo> listArticulos = ArticuloServices.getInstancia().obtenerArticulosConEtiquetasPorPagina(numeroPagina, 5);
-                    List<ArticuloDTO> articulosDTO = listArticulos.stream().map(articulo -> {
+                    List<Articulo> listArticulos = ArticuloServices.getInstancia().obtenerTodosLosArticulosConEtiquetas();
+                    Collections.reverse(listArticulos);
+                    List<List<Articulo>> paginas = partition(listArticulos, 5);
+                    List<Articulo> articulosPorPagina = paginas.get(numeroPagina - 1);
+
+                    List<ArticuloDTO> articulosDTO = articulosPorPagina.stream().map(articulo -> {
                         ArticuloDTO dto = new ArticuloDTO();
                         dto.setId(articulo.getId());
                         dto.setTitulo(articulo.getTitulo());
                         dto.setCuerpo(articulo.getCuerpo());
-                        dto.setNombreAutor(articulo.getAutor().getNombre()); // Aquí asumo que hay un método getNombre() en la clase Usuario
+                        dto.setNombreAutor(articulo.getAutor().getNombre());
                         dto.setFecha(articulo.getFecha());
                         //dto.setListaComentarios(articulo.getListaComentarios().stream().map(Comentario::getComentario).collect(Collectors.toList()));
                         dto.setListaEtiquetas(articulo.getListaEtiquetas().stream().map(Etiqueta::getEtiqueta).collect(Collectors.toList()));
@@ -99,12 +109,14 @@ public class PlantillasControlador extends ControladorClass {
                     for(ArticuloDTO ar : articulosDTO){
                         System.out.println(ar.getTitulo());
                     }
+
                     Map<String, Object> model = new HashMap<>();
                     model.put("paginaActual", numeroPagina);
                     model.put("totalPaginas", (int) Math.ceil((double) ArticuloServices.getInstancia().contarArticulos() / 5));
                     ctx.render("publico/html/blogUsuario.html", model);
                     ctx.json(articulosDTO); // Serializar los datos como JSON y enviar como respuesta
                 });
+
 
 
 
