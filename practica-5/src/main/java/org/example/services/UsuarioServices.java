@@ -3,6 +3,8 @@ package org.example.services;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
+import org.example.clases.Articulo;
+import org.example.clases.Comentario;
 import org.example.clases.Usuario;
 
 import java.util.List;
@@ -53,6 +55,17 @@ public class UsuarioServices extends GestionDb<Usuario>{
         EntityManager em = getEntityManager();
         try {
             return em.createQuery("SELECT u FROM Usuario u", Usuario.class).getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<Comentario> obtenerUsuariosConComentarios() {
+        EntityManager em = getEntityManager();
+        try {
+            // Utilizamos LEFT JOIN FETCH para traer todas las etiquetas asociadas a cada artículo en una sola consulta
+            return em.createQuery("SELECT DISTINCT u FROM Comentario u LEFT JOIN FETCH u.autor", Comentario.class)
+                    .getResultList();
         } finally {
             em.close();
         }
