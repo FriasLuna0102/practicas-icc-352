@@ -26,7 +26,11 @@ public class Login extends ControladorClass {
                 String username = textEncryptor.decrypt(cxt.cookie("username"));
                 usuario = UsuarioServices.getInstancia().findByUsername(username);
                 Blog.getInstance().setUsuario(usuario);
-                CockroachDB.insertarDataLogueo(usuario.getUsername());
+                try {
+                    CockroachDB.insertarDataLogueo(usuario.getUsername());
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
                 cxt.sessionAttribute("currentUser", usuario);
                 cxt.redirect("/blogUsuario");
                 return;
