@@ -63,6 +63,7 @@ public class Login extends ControladorClass {
                         e.printStackTrace();
                     }
                     // Si las credenciales coinciden, establecer el usuario en la sesión y redirigir
+                    Blog.getInstance().setUsuario(usuario);
                     cxt.sessionAttribute("currentUser", usuario);
                     cxt.redirect("/blogUsuario");
                     return;
