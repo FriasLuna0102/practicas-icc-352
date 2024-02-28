@@ -33,8 +33,20 @@ public class ArticuloServices extends GestionDb<Articulo>{
         return lista;
     }
 
-
-
+    public void eliminarArticuloByAutor(String username){
+        EntityManager em = getEntityManager();
+        em.getTransaction().begin();
+        Query query = em.createQuery("select a from Articulo a where a.autor.username = :username")
+                .setParameter("username", username);
+        List<Articulo> articuloList = query.getResultList();
+        try {
+            for (Articulo articulo: articuloList){
+                eliminarArticuloConComentarios(articulo.getId());
+            }
+        }finally {
+            em.close();
+        }
+    }
 
     public Articulo actualizar(Articulo articulo) {
         EntityManager em = getEntityManager();

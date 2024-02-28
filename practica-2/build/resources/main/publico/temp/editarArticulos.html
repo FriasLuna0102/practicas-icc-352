@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editar Articulo</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    /* Estilos CSS personalizados */
+    body {
+      background-color: #f8f9fa;
+    }
+
+    .container {
+      margin-top: 50px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    /* Puedes añadir más estilos aquí */
+  </style>
+</head>
+
+
+<style>
+  body{
+    background-image: url("/img/shapelined-_JBKdviweXI-unsplash.jpg");
+  }
+</style>
+
+<body>
+
+
+
+<form th:action="@{/actualizarArticulo}" method="post">
+
+  <div class="container">
+
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <h2>Editar Articulo</h2>
+        <div class="form-group">
+          <input type="hidden" name="idArticulo" th:value="${articulo.id}" />
+          <label for="titulo">Titulo:</label>
+          <input type="text" class="form-control" id="titulo" name="titulo" th:value="${articulo.titulo}" required>
+        </div>
+        <div class="form-group">
+          <label for="cuerpo">Cuerpo:</label>
+          <textarea class="form-control" id="cuerpo" name="cuerpo" rows="5" th:text="${articulo.cuerpo}" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="autor">Autor:</label>
+          <select class="form-control" id="autor" name="autor" required>
+            <option value="">Seleccionar Autor</option>
+
+            <th:block th:each="usuario : ${usuarios}">
+              <option th:value="${usuario.getUsername()}" th:text="${usuario.getNombre()}" th:selected="${usuario.getUsername == articulo.autor.username}"></option>
+            </th:block>
+
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="fecha">Fecha:</label>
+          <input type="date" class="form-control" id="fecha" name="fecha" th:value="${#dates.format(articulo.fecha, 'yyyy-MM-dd')}" required>
+        </div>
+
+        <div class="form-group">
+          <label for="etiquetas">Etiquetas:</label>
+          <input type="text" class="form-control" id="etiquetas" name="etiquetas" th:value="${etiquetasStr}" placeholder="Separadas por comas">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Editar</button>
+      </div>
+    </div>
+  </div>
+
+</form>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

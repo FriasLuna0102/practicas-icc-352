@@ -2,13 +2,9 @@ package org.example.services;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
-import jakarta.persistence.PersistenceException;
 import jakarta.persistence.Query;
-import org.example.clases.Articulo;
-import org.example.clases.Comentario;
 import org.example.clases.Usuario;
 
-import java.awt.dnd.DragGestureEvent;
 import java.util.List;
 
 public class UsuarioServices extends GestionDb<Usuario>{
@@ -27,7 +23,7 @@ public class UsuarioServices extends GestionDb<Usuario>{
         return instancia;
     }
 
-    public List<Usuario> findAllByNombre(String username){
+    public List<Usuario> findAllByUsername(String username){
         EntityManager em = getEntityManager();
         Query query = em.createQuery("select u from Usuario u where u.username like :username");
         query.setParameter("username", username+"%");
@@ -35,7 +31,12 @@ public class UsuarioServices extends GestionDb<Usuario>{
         return lista;
     }
 
-    public Usuario findByNombre(String username) {
+    public Usuario findById(long id) {
+        EntityManager em = getEntityManager();
+        return em.find(Usuario.class, id);
+    }
+
+    public Usuario findByUsername(String username) {
         EntityManager em = getEntityManager();
         try {
             Query query = em.createQuery("select u from Usuario u where u.username = :username", Usuario.class);
