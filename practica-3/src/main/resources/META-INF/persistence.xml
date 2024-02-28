@@ -22,7 +22,7 @@
             <!-- ver la documentación: https://docs.oracle.com/javaee/7/tutorial/persistence-intro005.htm -->
 
             <!-- Se deseamos que la informacion permanezca en la base de datos comentar el create-drop -->
-            <!-- <property name="jakarta.persistence.schema-generation.database.action" value="create-drop" /> -->
+             <property name="jakarta.persistence.schema-generation.database.action" value="create-drop" />
              <!--<property name="eclipselink.logging.level" value="ALL" />-->
         </properties>
     </persistence-unit>
