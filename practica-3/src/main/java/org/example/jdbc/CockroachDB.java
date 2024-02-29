@@ -19,7 +19,7 @@ public class CockroachDB {
         }
         Connection con = ds.getConnection();
 
-        String query = "CREATE TABLE IF NOT EXISTS actividadd (id SERIAL PRIMARY KEY, usuario VARCHAR(255), fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP)";
+        String query = "CREATE TABLE IF NOT EXISTS actividad (id SERIAL PRIMARY KEY, usuario VARCHAR(255), fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP)";
         try (Statement statement = con.createStatement()) {
             statement.executeUpdate(query);
             System.out.println("Tabla 'actividad' creada correctamente");
@@ -38,7 +38,7 @@ public class CockroachDB {
         crearTablaActividad();
 
         // Insertar datos en la tabla "actividad"
-        StringBuilder sb = new StringBuilder("INSERT INTO actividadd (usuario) VALUES (?)");
+        StringBuilder sb = new StringBuilder("INSERT INTO actividad (usuario) VALUES (?)");
         String query = sb.toString();
 
         try (PreparedStatement preparedStatement = con.prepareStatement(query)) {
