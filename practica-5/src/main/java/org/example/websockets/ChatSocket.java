@@ -11,8 +11,8 @@ import java.util.Map;
 
 public class ChatSocket extends ControladorClass {
 
-	private static List<String> adminsesions = new ArrayList<>();
-	private static List<String> usersessions = new ArrayList<>();
+	private static Map<String,String> adminSesions = new HashMap<>();
+	private static Map<String,String> userSessions = new HashMap<>();
 
 	public ChatSocket(Javalin app) {
 		super(app);
@@ -23,13 +23,23 @@ public class ChatSocket extends ControladorClass {
 		app.ws("/admin-chat", wsConfig -> {
 			wsConfig.onConnect(ctx -> {
 				String nombreAdmin = ctx.queryParam("adminName");
-				adminsesions.add(nombreAdmin);
+				adminSesions.put(ctx.getSessionId(), nombreAdmin);
+			});
+
+
+			wsConfig.onClose(ctx -> {
+
 			});
 		});
 
 		app.ws("/user-chat", wsConfig -> {
 			wsConfig.onConnect(ctx -> {
 				String nombreUser = ctx.queryParam("username");
+				userSessions.put(ctx.getSessionId(), nombreUser);
+			});
+
+			wsConfig.onClose(ctx -> {
+				userSessions.remove(ctx.getSessionId());
 			});
 		});
 	}
