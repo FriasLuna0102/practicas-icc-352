@@ -8,6 +8,7 @@ import org.example.controladores.*;
 import io.javalin.rendering.JavalinRenderer;
 import org.example.services.BootStrapServices;
 import org.example.services.UsuarioServices;
+import org.example.websockets.ChatSocket;
 
 
 public class Main {
@@ -69,7 +70,7 @@ public class Main {
         new editarArticulo(app).aplicarRutas();
         new agregarComentario(app).aplicarRutas();
         new mostrarUsuarios(app).aplicarRutas();
-
+        new ChatSocket(app).aplicarRutas();
 
         app.get("/blog", cxt -> {
             cxt.redirect("blog.html");
