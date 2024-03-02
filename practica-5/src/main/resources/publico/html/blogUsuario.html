@@ -144,34 +144,34 @@
                                 th:text="${#strings.length(articulo.cuerpo) &gt; 70 ? #strings.substring(articulo.cuerpo, 0, 70) + '...' : articulo.cuerpo}">
                             </p>
 
-                            <div id="botoness">
-                                <div style="display: inline-block;"
-                                    th:if="${currentUser != null && (currentUser.administrator or currentUser.autor)}">
-                                    <form th:action="@{/editarArticulo}" method="post">
-                                        <input type="hidden" name="idArticulo" th:value="${articulo.getId}" />
-                                        <button type="submit" class="btn btn-primary">Editar</button>
-                                    </form>
-                                </div>
+                            <th:block th:if="${usuario != null}">
+                                <div id="botoness">
+                                    <div style="display: inline-block;">
+                                        <form th:action="@{/editarArticulo}" method="post">
+                                            <input type="hidden" name="idArticulo" th:value="${articulo.getId}" />
+                                            <button type="submit" class="btn btn-primary">Editar</button>
+                                        </form>
+                                    </div>
 
-                                <div style="display: inline-block;" th:if="${currentUser != null}">
-                                    <form th:action="@{/agregarComentario}" method="post">
-                                        <input type="hidden" name="idArticulo" th:value="${articulo.getId}" />
-                                        <button type="submit" id="comment-button"
-                                            class="btn btn-primary">Comentar</button>
-                                    </form>
-                                </div>
+                                    <div style="display: inline-block;">
+                                        <form th:action="@{/agregarComentario}" method="post">
+                                            <input type="hidden" name="idArticulo" th:value="${articulo.getId}" />
+                                            <button type="submit" id="comment-button"
+                                                class="btn btn-primary">Comentar</button>
+                                        </form>
+                                    </div>
 
-                                <div style="display: inline-block;"
-                                    th:if="${currentUser != null && (currentUser.administrator or currentUser.autor)}">
-                                    <form th:action="@{/eliminarArticulo}" method="post">
-                                        <!-- Campo oculto para enviar el ID del artículo -->
-                                        <input type="hidden" name="idArticulo" th:value="${articulo.getId}" />
-                                        <button type="submit" id="delete-button"
-                                            style="background-color: red; color: white; padding: 5px 10px; border: none; cursor: pointer;">Eliminar</button>
-                                    </form>
-                                </div>
+                                    <div style="display: inline-block;">
+                                        <form th:action="@{/eliminarArticulo}" method="post">
+                                            <!-- Campo oculto para enviar el ID del artículo -->
+                                            <input type="hidden" name="idArticulo" th:value="${articulo.getId}" />
+                                            <button type="submit" id="delete-button" class="btn btn-danger"
+                                                style="background-color: red; color: white; padding: 5px 10px; border: none; cursor: pointer;">Eliminar</button>
+                                        </form>
+                                    </div>
 
-                            </div>
+                                </div>
+                            </th:block>
                         </th:block>
                         <hr>
 
@@ -252,7 +252,13 @@
 
                     <form method="post">
                         <div class="form-grid">
-                            <input type="text" name="chateador" class="form-control" placeholder="Nombre" required>
+                            <th:block th:if="${usuario != null}">
+                                <input type="text" name="chateador" class="form-control" th:value="${usuario.username}"
+                                    readonly required>
+                            </th:block>
+                            <th:block th:if="${usuario == null}">
+                                <input type="text" name="chateador" class="form-control" placeholder="Usuario" required>
+                            </th:block>
 
                             <button type="submit" class="btn form-control">Iniciar chat</button>
                         </div>

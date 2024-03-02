@@ -39,41 +39,38 @@ public class PlantillasControlador extends ControladorClass {
                 get(ctx -> {
                     // Retrieve the currentUser session attribute
                     Usuario currentUser = ctx.sessionAttribute("currentUser");
-                    if (currentUser != null) {
+
+                    // Get the page number from the query parameters, or default to 1 if it's not present
+                    int numeroPagina = Optional.ofNullable(ctx.queryParam("pagina")).map(Integer::parseInt).orElse(1);
+
+                    // Fetch the articles for the current page
+                    List<Articulo> listArticulos = ArticuloServices.getInstancia().obtenerArticulosConEtiquetasPorPagina(numeroPagina, 5);
+
+                    List<Etiqueta> listEtiqueta = EtiquetaServices.getInstancia().obtenerTodasLasEtiquetas();
+
+                    Map<String, Object> model = new HashMap<>();
+                    model.put("listArticulos", listArticulos);
+
+                    for (Articulo articulo : listArticulos) {
+                        List<Etiqueta> nuevasEtiquetas = articulo.getListaEtiquetas().stream()
+                                .filter(etiqueta -> !listEtiqueta.contains(etiqueta))
+                                .collect(Collectors.toList());
+                        articulo.setListaEtiquetas(nuevasEtiquetas);
+                    }
+
+                    model.put("listEtiquetas", listEtiqueta);
+                    if (currentUser != null){
                         // Set the currentUser attribute in the template context
                         ctx.attribute("currentUser", currentUser);
-
-                        // Get the page number from the query parameters, or default to 1 if it's not present
-                        int numeroPagina = Optional.ofNullable(ctx.queryParam("pagina")).map(Integer::parseInt).orElse(1);
-
-                        // Fetch the articles for the current page
-                        List<Articulo> listArticulos = ArticuloServices.getInstancia().obtenerArticulosConEtiquetasPorPagina(numeroPagina, 5);
-
-                        List<Etiqueta> listEtiqueta = EtiquetaServices.getInstancia().obtenerTodasLasEtiquetas();
-
-                        Map<String, Object> model = new HashMap<>();
-                        model.put("listArticulos", listArticulos);
-
-                        for (Articulo articulo : listArticulos) {
-                            List<Etiqueta> nuevasEtiquetas = articulo.getListaEtiquetas().stream()
-                                    .filter(etiqueta -> !listEtiqueta.contains(etiqueta))
-                                    .collect(Collectors.toList());
-                            articulo.setListaEtiquetas(nuevasEtiquetas);
-                        }
-
-                        model.put("listEtiquetas", listEtiqueta);
                         model.put("foto", currentUser.getFoto());
-
-                        // Add the current page number and total pages to the model
-                        model.put("paginaActual", numeroPagina);
-                        model.put("totalPaginas", (int) Math.ceil((double) ArticuloServices.getInstancia().contarArticulos() / 5));
-
-                        ctx.render("publico/html/blogUsuario.html", model);
-
-                    } else {
-                        // If the currentUser session attribute is not set, redirect to the login page
-                        ctx.redirect("/login");
+                        model.put("usuario", Blog.getInstance().getUsuario());
                     }
+
+                    // Add the current page number and total pages to the model
+                    model.put("paginaActual", numeroPagina);
+                    model.put("totalPaginas", (int) Math.ceil((double) ArticuloServices.getInstancia().contarArticulos() / 5));
+
+                    ctx.render("publico/html/blogUsuario.html", model);
                 });
 
                 get("/articuloAjax", cxt ->{
