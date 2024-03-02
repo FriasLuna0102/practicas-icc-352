@@ -26,7 +26,11 @@ public class Login extends ControladorClass {
                 String username = textEncryptor.decrypt(cxt.cookie("username"));
                 usuario = UsuarioServices.getInstancia().findByUsername(username);
                 Blog.getInstance().setUsuario(usuario);
-                CockroachDB.insertarDataLogueo(usuario.getUsername());
+                try {
+                    CockroachDB.insertarDataLogueo(usuario.getUsername());
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
                 cxt.sessionAttribute("currentUser", usuario);
                 cxt.redirect("/blogUsuario");
                 return;
@@ -53,9 +57,13 @@ public class Login extends ControladorClass {
                     if (remember){
                         cxt.cookie("username", textEncryptor.encrypt(usuario.getUsername()), 604800);
                     }
-                    CockroachDB.insertarDataLogueo(usuario.getUsername());
-                    Blog.getInstance().setUsuario(usuario);
+                    try {
+                        CockroachDB.insertarDataLogueo(usuario.getUsername());
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
                     // Si las credenciales coinciden, establecer el usuario en la sesión y redirigir
+                    Blog.getInstance().setUsuario(usuario);
                     cxt.sessionAttribute("currentUser", usuario);
                     cxt.redirect("/blogUsuario");
                     return;
