@@ -18,6 +18,7 @@ public class ChatSocket extends ControladorClass {
 		super(app);
 	}
 
+	@Override
 	public void aplicarRutas(){
 
 		app.ws("/admin-chat", wsConfig -> {
@@ -28,7 +29,7 @@ public class ChatSocket extends ControladorClass {
 
 
 			wsConfig.onClose(ctx -> {
-
+				adminSesions.remove(ctx.getSessionId());
 			});
 		});
 

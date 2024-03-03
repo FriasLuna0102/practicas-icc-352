@@ -71,6 +71,7 @@ public class Main {
         new agregarComentario(app).aplicarRutas();
         new mostrarUsuarios(app).aplicarRutas();
         new ChatSocket(app).aplicarRutas();
+        new ChatControlador(app).aplicarRutas();
 
         app.get("/blog", cxt -> {
             cxt.redirect("blog.html");
