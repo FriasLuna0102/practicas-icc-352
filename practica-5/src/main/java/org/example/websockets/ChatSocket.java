@@ -5,6 +5,7 @@ import org.eclipse.jetty.websocket.api.Session;
 import org.example.util.ControladorClass;
 import org.thymeleaf.processor.xmldeclaration.AbstractXMLDeclarationProcessor;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -42,7 +43,7 @@ public class ChatSocket extends ControladorClass {
 
 			wsConfig.onMessage(ctx -> {
 				System.out.println("Este es el mensaje: " + ctx.message());
-
+				enviarMensaje(ctx.message(), ctx.session);
 			});
 
 			wsConfig.onClose(ctx -> {
@@ -51,4 +52,8 @@ public class ChatSocket extends ControladorClass {
 		});
 	}
 
+	public static void enviarMensaje(String mensaje, Session session) throws IOException {
+
+		session.getRemote().sendString(mensaje);
+	}
 }
