@@ -1,6 +1,7 @@
 package org.example.websockets;
 
 import io.javalin.Javalin;
+import org.eclipse.jetty.websocket.api.Session;
 import org.example.util.ControladorClass;
 import org.thymeleaf.processor.xmldeclaration.AbstractXMLDeclarationProcessor;
 
@@ -11,8 +12,8 @@ import java.util.Map;
 
 public class ChatSocket extends ControladorClass {
 
-	private static Map<String,String> adminSesions = new HashMap<>();
-	private static Map<String,String> userSessions = new HashMap<>();
+	private static Map<Session,String> adminSesions = new HashMap<>();
+	private static Map<Session,String> userSessions = new HashMap<>();
 
 	public ChatSocket(Javalin app) {
 		super(app);
@@ -24,23 +25,28 @@ public class ChatSocket extends ControladorClass {
 		app.ws("/admin-chat", wsConfig -> {
 			wsConfig.onConnect(ctx -> {
 				String nombreAdmin = ctx.queryParam("adminName");
-				adminSesions.put(ctx.getSessionId(), nombreAdmin);
+				adminSesions.put(ctx.session, nombreAdmin);
 			});
 
 
 			wsConfig.onClose(ctx -> {
-				adminSesions.remove(ctx.getSessionId());
+				adminSesions.remove(ctx.session);
 			});
 		});
 
 		app.ws("/user-chat", wsConfig -> {
 			wsConfig.onConnect(ctx -> {
 				String nombreUser = ctx.queryParam("username");
-				userSessions.put(ctx.getSessionId(), nombreUser);
+				userSessions.put(ctx.session, nombreUser);
+			});
+
+			wsConfig.onMessage(ctx -> {
+				System.out.println("Este es el mensaje: " + ctx.message());
+
 			});
 
 			wsConfig.onClose(ctx -> {
-				userSessions.remove(ctx.getSessionId());
+				userSessions.remove(ctx.session);
 			});
 		});
 	}

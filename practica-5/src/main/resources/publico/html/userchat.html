@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
 
-
+    <script src="jquery-3.7.1.min.js"></script>
     <title>Chat Usuario</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -101,8 +101,9 @@
 
                         <div class="flex-grow-0 py-3 px-4 border-top">
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Type your message">
-                                <button class="btn btn-primary">Send</button>
+                                <input id="mensajeUser" type="text" class="form-control"
+                                    placeholder="Type your message">
+                                <button id="enviar" class="btn btn-primary">Enviar</button>
                             </div>
                         </div>
 
@@ -117,7 +118,9 @@
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript">
+    </script>
 
+    <script src="../js/socketUsuario.js">
     </script>
 </body>
 
