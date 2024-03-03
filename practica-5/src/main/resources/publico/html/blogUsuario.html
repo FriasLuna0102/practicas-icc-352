@@ -250,15 +250,19 @@
                         Chat
                     </h4>
 
-                    <form method="post">
+                    <form method="post" action="/chat/admin" th:if="${usuario != null}">
                         <div class="form-grid">
-                            <th:block th:if="${usuario != null}">
-                                <input type="text" name="chateador" class="form-control" th:value="${usuario.username}"
-                                    readonly required>
-                            </th:block>
-                            <th:block th:if="${usuario == null}">
-                                <input type="text" name="chateador" class="form-control" placeholder="Usuario" required>
-                            </th:block>
+                            <input type="text" name="chateador" class="form-control" th:value="${usuario.username}"
+                                readonly required>
+
+                            <button type="submit" class="btn form-control">Iniciar chat</button>
+                        </div>
+                    </form>
+
+
+                    <form method="post" action="/chat/user" th:if="${usuario == null}">
+                        <div class="form-grid">
+                            <input type="text" name="chateador" class="form-control" placeholder="Usuario" required>
 
                             <button type="submit" class="btn form-control">Iniciar chat</button>
                         </div>
