@@ -29,6 +29,9 @@ public class ChatSocket extends ControladorClass {
 				adminSesions.put(ctx.session, nombreAdmin);
 			});
 
+			wsConfig.onMessage(ctx -> {
+
+			});
 
 			wsConfig.onClose(ctx -> {
 				adminSesions.remove(ctx.session);
