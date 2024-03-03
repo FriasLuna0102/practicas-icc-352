@@ -31,6 +31,7 @@ public class ChatSocket extends ControladorClass {
 
 			wsConfig.onMessage(ctx -> {
 
+				System.out.println("Este es el mensaje: " + ctx.message());
 			});
 
 			wsConfig.onClose(ctx -> {
