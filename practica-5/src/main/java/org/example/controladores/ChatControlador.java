@@ -1,6 +1,8 @@
 package org.example.controladores;
 
 import io.javalin.Javalin;
+import org.example.clases.Blog;
+import org.example.clases.Usuario;
 import org.example.util.ControladorClass;
 
 import java.util.HashMap;
@@ -9,7 +11,6 @@ import java.util.Map;
 import static io.javalin.apibuilder.ApiBuilder.path;
 
 public class ChatControlador extends ControladorClass {
-
 
 	public ChatControlador(Javalin app) {
 		super(app);
@@ -24,7 +25,9 @@ public class ChatControlador extends ControladorClass {
 
 				app.post("/chat/admin", context -> {
 
-					context.render("publico/html/adminchat.html");
+					Map<String,Object> modelo = new HashMap<>();
+					modelo.put("usuario", Blog.getInstance().getUsuario());
+					context.render("publico/html/adminchat.html", modelo);
 				});
 
 				app.post("/chat/user", context -> {
