@@ -49,6 +49,10 @@ public class ChatSocket extends ControladorClass {
                 String nombreUser = ctx.queryParam("username");
                 userSessions.put(ctx.session, nombreUser);
 
+                //Enviando id a usuario para que este lo almacene
+                ctx.session.getRemote().sendString(ctx.getSessionId() + "[ID]");
+
+                //Enviando nombre de usuario para visualizar en chat de admin
                 for (Map.Entry<Session,String> entry : adminSesions.entrySet()){
                     entry.getKey().getRemote().sendString("1" + nombreUser);
                 }
