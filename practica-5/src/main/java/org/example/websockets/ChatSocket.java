@@ -30,6 +30,10 @@ public class ChatSocket extends ControladorClass {
 
             wsConfig.onMessage(ctx -> {
 
+                for (Map.Entry<Session,String> entry : userSessions.entrySet()){
+                    entry.getKey().getRemote().sendString(ctx.message());
+                }
+
                 System.out.println("Este es el mensaje: " + ctx.message());
             });
 
@@ -43,12 +47,17 @@ public class ChatSocket extends ControladorClass {
             wsConfig.onConnect(ctx -> {
                 String nombreUser = ctx.queryParam("username");
                 userSessions.put(ctx.session, nombreUser);
+
             });
 
             wsConfig.onMessage(ctx -> {
                 System.out.println("Este es el mensaje: " + ctx.message());
 
-                enviarMensajeToAdmin(ctx.message(), ctx.session);
+                for (Map.Entry<Session,String> entry : adminSesions.entrySet()){
+                    entry.getKey().getRemote().sendString(ctx.message());
+                }
+
+                //enviarMensajeToAdmin(ctx.message(), ctx.session);
             });
 
             wsConfig.onClose(ctx -> {

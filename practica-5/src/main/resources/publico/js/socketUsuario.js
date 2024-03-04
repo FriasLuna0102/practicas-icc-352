@@ -46,7 +46,7 @@ function conectar() {
   //
   //Cuando recibe mensaje del servidor (admin)
   webSocket.onmessage = function (data) {
-    insertarMensajeServidor(data);
+    insertarMensajeServidor(data.data);
   };
 
   webSocket.onopen = function (e) {console.log("Conectado - status " + this.readyState);};

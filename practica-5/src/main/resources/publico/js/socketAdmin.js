@@ -18,7 +18,7 @@ $(document).ready(function () {
 });
 
 function insertarMensajeAdmin(mensaje) {
-  let nuevoMensaje = $("<div>").addClass("chat-message-left mb-4").append(
+  let nuevoMensaje = $("<div>").addClass("chat-message-right mb-4").append(
     $("<div>").addClass("flex-shrink-1 bg-light rounded py-2 px-3 mr-3").append(
       $("<div>").addClass("font-weight-bold mb-1").text("You"),
       $("<p>").text(mensaje)
@@ -29,7 +29,7 @@ function insertarMensajeAdmin(mensaje) {
 }
 
 function insertarMensajeServidor(mensaje) {
-  let nuevoMensaje = $("<div>").addClass("chat-message-right mb-4").append(
+  let nuevoMensaje = $("<div>").addClass("chat-message-left mb-4").append(
     $("<div>").addClass("flex-shrink-1 bg-light rounded py-2 px-3 mr-3").append(
       $("<div>").addClass("font-weight-bold mb-1").text("Server"),
       $("<p>").text(mensaje)
@@ -44,7 +44,7 @@ function conectar() {
 
   //indicando los eventos:
   webSocket.onmessage = function (data) {
-    insertarMensajeServidor(data)
+    insertarMensajeServidor(data.data)
   };
   webSocket.onopen = function (e) {console.log("Conectado - status " + this.readyState);};
   webSocket.onclose = function (e) {
