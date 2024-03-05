@@ -67,7 +67,7 @@ public class ChatSocket extends ControladorClass {
             });
 
             wsConfig.onMessage(ctx -> {
-                String nombreUser = ctx.queryParam("username");
+                String nombreUser = ctx.queryParam("nombre");
                 System.out.println("Este es el mensaje: " + ctx.message());
 
                 for (Map.Entry<Session,String> entry : adminSesions.entrySet()){
