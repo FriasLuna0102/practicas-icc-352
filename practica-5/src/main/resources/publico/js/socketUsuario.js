@@ -47,15 +47,23 @@ function insertarMensajeServidor(mensaje) {
 function conectar() {
   webSocket = new WebSocket("ws://" + location.hostname + ":" + location.port + "/user-chat?nombre=" + nombreUser);
 
-  //indicando los eventos:
-  //
   //Cuando recibe mensaje del servidor (admin)
-  webSocket.onmessage = function (data) {
-    insertarMensajeServidor(data.data);
+  webSocket.onmessage = function (event) {
+    var message = event.data;
+    if (message.endsWith("[ID]")) {
+
+      // Este mensaje contiene el ID de sesión
+      var sessionId = message.substring(0, message.length - "[ID]".length);
+
+    } else {
+      insertarMensajeServidor(message);
+    }
   };
 
-  webSocket.onopen = function (e) {console.log("Conectado - status " + this.readyState);};
-  webSocket.onclose = function (e) {
+  webSocket.onopen = function () {
+    console.log("Conectado - status " + this.readyState);
+  };
+  webSocket.onclose = function () {
     console.log("Desconectado - status " + this.readyState);
   };
 }

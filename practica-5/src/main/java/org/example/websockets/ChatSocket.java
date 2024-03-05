@@ -52,6 +52,10 @@ public class ChatSocket extends ControladorClass {
                 userSessions.put(ctx.session, nombreUser);
                 System.out.println("Usuario conectado");
 
+                //Enviando id a usuario para que este lo almacene
+                ctx.session.getRemote().sendString(ctx.getSessionId() + "[ID]");
+
+                //Enviando nombre de usuario para visualizar en chat de admin
                 for (Map.Entry<Session,String> entry : adminSesions.entrySet()){
                     // URGENTE : 1 sera el identificador para nombre de usuario, cambiar
                     entry.getKey().getRemote().sendString("1" + nombreUser);
