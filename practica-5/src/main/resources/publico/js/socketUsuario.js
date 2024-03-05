@@ -4,6 +4,7 @@ let nombreUser = document.getElementById("nombre").textContent.trim();
 
 
 $(document).ready(function () {
+  console.info("Iniciando Jquery -  Ejemplo WebServices");
 
   conectar();
 
@@ -45,7 +46,7 @@ function insertarMensajeServidor(mensaje) {
 }
 
 function conectar() {
-  webSocket = new WebSocket("ws://" + location.hostname + ":" + location.port + "/user-chat?nombre=" + nombreUser);
+  webSocket = new WebSocket("ws://" + location.hostname + ":" + location.port + "/user-chat?username=" + nombreUser);
 
   //indicando los eventos:
   //
