@@ -26,6 +26,8 @@ public class ChatSocket extends ControladorClass {
                 String nombreAdmin = ctx.queryParam("adminName");
                 adminSesions.put(ctx.session, nombreAdmin);
                 adminToUserSessions.put(ctx.session, new HashSet<>());
+
+                System.out.println("Admin conectado");
             });
 
             wsConfig.onMessage(ctx -> {
@@ -46,11 +48,17 @@ public class ChatSocket extends ControladorClass {
 
         app.ws("/user-chat", wsConfig -> {
             wsConfig.onConnect(ctx -> {
-                String nombreUser = ctx.queryParam("username");
+                String nombreUser = ctx.queryParam("nombre");
                 userSessions.put(ctx.session, nombreUser);
+                System.out.println("Usuario conectado");
 
                 for (Map.Entry<Session,String> entry : adminSesions.entrySet()){
+                    // URGENTE : 1 sera el identificador para nombre de usuario, cambiar
                     entry.getKey().getRemote().sendString("1" + nombreUser);
+                    System.out.println(nombreUser);
+
+                    // URGENTE : 2 sera el identificador para la ruta al chat del usuario, cambiar
+                    //entry.getKey().getRemote().sendString("2" + "");
                 }
             });
 

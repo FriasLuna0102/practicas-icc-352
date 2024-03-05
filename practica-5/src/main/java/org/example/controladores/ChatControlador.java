@@ -7,6 +7,7 @@ import org.example.util.ControladorClass;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import static io.javalin.apibuilder.ApiBuilder.path;
 
@@ -32,6 +33,15 @@ public class ChatControlador extends ControladorClass {
 
 				app.post("/chat/user", context -> {
 					String nombre = context.formParam("chateador");
+					String idChat = UUID.randomUUID().toString();
+
+					context.redirect("/chat/user" + "?id=" + idChat + "&nombre=" + nombre);
+				});
+
+				app.get("/chat/user", context -> {
+
+					String id = context.queryParam("id");
+					String nombre = context.queryParam("nombre");
 
 					Map<String,Object> modelo = new HashMap<>();
 					modelo.put("nombre", nombre);
