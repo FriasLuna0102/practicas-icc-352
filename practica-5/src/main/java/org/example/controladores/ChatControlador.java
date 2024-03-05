@@ -40,7 +40,6 @@ public class ChatControlador extends ControladorClass {
 
 				app.get("/chat/user", context -> {
 
-					String id = context.queryParam("id");
 					String nombre = context.queryParam("nombre");
 
 					Map<String,Object> modelo = new HashMap<>();

@@ -1,6 +1,8 @@
 
 var websocket;
 let nombreAdmin = document.getElementById("nombre").textContent.trim();
+let params = new URLSearchParams(window.location.href);
+let id = params.get('id')
 
 $(document).ready(function () {
   console.info("Iniciando Jquery -  Ejemplo WebServices");
@@ -58,7 +60,7 @@ function addUsuarioToLista(nombre, rutaChatUsuario) {
 }
 
 function conectar() {
-  webSocket = new WebSocket("ws://" + location.hostname + ":" + location.port + "/admin-chat?adminName=" + nombreAdmin);
+  webSocket = new WebSocket("ws://" + location.hostname + ":" + location.port + "/admin-chat?adminName=" + nombreAdmin + "&id=" + id);
 
   //indicando los eventos:
   webSocket.onmessage = function (data) {
