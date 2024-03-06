@@ -25,6 +25,7 @@ $(document).ready(function () {
     // Obtener la URL de la página desde el atributo "data-url" del enlace
     var url = $(this).attr('href');
 
+
     // Realizar una solicitud AJAX para obtener el contenido de la página
     $.ajax({
       url: url,
@@ -76,9 +77,9 @@ function insertarMensajeServidor(mensaje) {
 
   $("#chat").append(nuevoMensaje);
 }
-function addUsuarioToLista(nombre, rutaChatUsuario) {
+function addUsuarioToLista(nombre, session) {
   // El id representará la ruta al chat del usuario
-  let user = $("<button>").attr("href", rutaChatUsuario).addClass("list-group-item list-group-item-action border-0 chatter").append(
+  let user = $("<button>").attr("href", session).addClass("list-group-item list-group-item-action border-0 chatter").append(
       $("<div>").addClass("badge bg-success float-right").text("2"),
       $("<div>").addClass("d-flex align-items-start").append(
           $("<div>").addClass("flex-grow-1 ml-3").text(nombre)
@@ -99,9 +100,9 @@ function conectar() {
     if (mensaje.charAt(0) === '1') {
       let separador = mensaje.indexOf(':');
       let nombre = mensaje.substring(1, separador);
-      let rutaAchat = mensaje.substring(separador + 1);
+      let session = mensaje.substring(separador + 1);
       
-      addUsuarioToLista(nombre, rutaAchat) 
+      addUsuarioToLista(nombre, session)
       
     }else{
       insertarMensajeServidor(mensaje)

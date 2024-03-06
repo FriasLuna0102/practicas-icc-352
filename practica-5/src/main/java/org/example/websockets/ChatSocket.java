@@ -14,7 +14,7 @@ public class ChatSocket extends ControladorClass {
     private static Map<Session,String> adminSesions = new HashMap<>();
     private static Map<Session, Set<Session>> adminToUserSessions = new HashMap<>();
     private static Map<Session,String> userSessions = new HashMap<>();
-    private static List<HistorialChatUsuario> historialChatUsuarios = new ArrayList<>();
+    public static List<HistorialChatUsuario> historialChatUsuarios = new ArrayList<>();
 
     public ChatSocket(Javalin app) {
         super(app);
@@ -62,25 +62,27 @@ public class ChatSocket extends ControladorClass {
                 //Enviando nombre de usuario para visualizar en chat de admin
                 for (Map.Entry<Session,String> entry : adminSesions.entrySet()){
                     // URGENTE : 1 sera el identificador para nombre de usuario, cambiar
-                    entry.getKey().getRemote().sendString("1" + nombreUser + ":" + ruta);
+                    entry.getKey().getRemote().sendString("1" + nombreUser + ":" + ctx.session);
                 }
 
                 // Guardando nuevo chat
-                HistorialChatUsuario historial = new HistorialChatUsuario(ctx.session, nombreUser, ruta);
+                HistorialChatUsuario historial = new HistorialChatUsuario(ctx.session, nombreUser, null);
                 historialChatUsuarios.add(historial);
             });
 
             wsConfig.onMessage(ctx -> {
                 String nombreUser = ctx.queryParam("nombre");
 
+                /*
                 for (Map.Entry<Session,String> entry : adminSesions.entrySet()){
                     entry.getKey().getRemote().sendString(ctx.message() + "," + nombreUser);
                 }
+                 */
 
                 for (HistorialChatUsuario historial : historialChatUsuarios){
                     if (historial.getSession().equals(ctx.session)){
                         historial.addMensaje(ctx.message());
-                        System.out.println("Este es el mensaje guardado: " + ctx.message());
+                        System.out.println("Este es el mensaje guardado: " + historial.getMensajes().getLast());
                     }
                 }
 
@@ -88,6 +90,7 @@ public class ChatSocket extends ControladorClass {
                 //enviarMensajeToAdmin(ctx.message(), ctx.session);
             });
 
+            // Eliminar usuario de la lista de historial
             wsConfig.onClose(ctx -> {
                 userSessions.remove(ctx.session);
             });
