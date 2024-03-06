@@ -30,12 +30,15 @@ $(document).ready(function () {
       url: url,
       type: 'GET',
       success: function(response) {
-        var chatContent = $(response).find('#chat').html();
+        // Obtener el contenido del div "chat" del response
+        var chatContent = $(response).find('#chat');
 
+        // Modificar las clases de los elementos dentro del div "chat"
+        chatContent.find('.chat-message-left').toggleClass('chat-message-left chat-message-right');
+        chatContent.find('.chat-message-right').toggleClass('chat-message-right chat-message-left');
 
-        // Actualizar el contenido del div "chat" con el contenido de la página cargada
+        // Actualizar el contenido del div "chat" con el contenido modificado
         $('#chat').html(chatContent);
-        console.log("exitoso")
       },
       error: function(xhr, status, error) {
         // Manejar errores si la solicitud AJAX falla
