@@ -2,6 +2,7 @@ package org.example.websockets;
 
 import io.javalin.Javalin;
 import org.eclipse.jetty.websocket.api.Session;
+import org.example.clases.HistorialChatUsuario;
 import org.example.util.ControladorClass;
 import org.thymeleaf.processor.xmldeclaration.AbstractXMLDeclarationProcessor;
 
@@ -13,6 +14,7 @@ public class ChatSocket extends ControladorClass {
     private static Map<Session,String> adminSesions = new HashMap<>();
     private static Map<Session, Set<Session>> adminToUserSessions = new HashMap<>();
     private static Map<Session,String> userSessions = new HashMap<>();
+    private static List<HistorialChatUsuario> historialChatUsuarios = new ArrayList<>();
 
     public ChatSocket(Javalin app) {
         super(app);
@@ -61,12 +63,11 @@ public class ChatSocket extends ControladorClass {
                 for (Map.Entry<Session,String> entry : adminSesions.entrySet()){
                     // URGENTE : 1 sera el identificador para nombre de usuario, cambiar
                     entry.getKey().getRemote().sendString("1" + nombreUser + ":" + ruta);
-                    System.out.println(nombreUser);
-                    System.out.println(ruta);
-
-                    // URGENTE : 2 sera el identificador para la ruta al chat del usuario, cambiar
-                    //entry.getKey().getRemote().sendString("2" + "");
                 }
+
+                // Guardando nuevo chat
+                HistorialChatUsuario historial = new HistorialChatUsuario(ctx.session, nombreUser, ruta);
+                historialChatUsuarios.add(historial);
             });
 
             wsConfig.onMessage(ctx -> {
