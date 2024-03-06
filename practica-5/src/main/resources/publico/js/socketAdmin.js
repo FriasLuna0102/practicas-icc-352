@@ -17,6 +17,20 @@ $(document).ready(function () {
     let input = document.getElementById("mensajeAdmin");
     input.value = "";
   });
+
+  $(".chatter").click(function (event) {
+    event.preventDefault();
+    console.log("Cargando con el boton");
+
+    var chatDivId = $(this).data("chat"); // Obtiene el ID del div desde un atributo chat
+    if (!chatDivId) {
+      console.error("No se encontró el atributo data-chat-id");
+      return;
+    }
+
+    $("#chat").load($(this).attr("href") + " #" + chatDivId);
+  });
+
 });
 
 function insertarMensajeAdmin(mensaje) {
@@ -48,7 +62,7 @@ function insertarMensajeServidor(mensaje) {
 
 function addUsuarioToLista(nombre, rutaChatUsuario) {
   //El id representara la ruta al chat del usuario
-  let user = $("<a>").attr("href", rutaChatUsuario).addClass("list-group-item list-group-item-action border-0").append(
+  let user = $("<a>").attr("href", rutaChatUsuario).addClass("list-group-item list-group-item-action border-0 chatter").append(
     $("<div>").addClass("badge bg-success float-right").text("2"),
     $("<div>").addClass("d-flex align-items-start").append(
       $("<div>").addClass("flex-grow-1 ml-3").text(nombre)
