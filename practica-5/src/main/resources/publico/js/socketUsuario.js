@@ -1,6 +1,7 @@
 
 var webSocket;
 let nombreUser = document.getElementById("nombre").textContent.trim();
+let ruta = window.location.href
 let params = new URLSearchParams(window.location.search)
 let id = params.get('id')
 
@@ -46,7 +47,7 @@ function insertarMensajeServidor(mensaje) {
 }
 
 function conectar() {
-  webSocket = new WebSocket("ws://" + location.hostname + ":" + location.port + "/user-chat?nombre=" + nombreUser + "&id=" + id);
+  webSocket = new WebSocket("ws://" + location.hostname + ":" + location.port + "/user-chat?nombre=" + nombreUser + "&ruta=" + ruta);
   console.log(id)
 
   //Cuando recibe mensaje del servidor (admin)
