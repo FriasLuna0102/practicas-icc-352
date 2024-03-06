@@ -11,7 +11,6 @@ $(document).ready(function () {
 
   $("#enviar").click(function () {
     let mensaje = $("#mensajeUser").val();
-    webSocket.send(mensaje);
     insertarMensajeUsuario(mensaje);
 
     let input = document.getElementById("mensajeUser");
@@ -27,6 +26,7 @@ function insertarMensajeUsuario(mensaje) {
     )
   );
 
+  webSocket.send(mensaje);
   $("#chat").append(nuevoMensaje);
 }
 

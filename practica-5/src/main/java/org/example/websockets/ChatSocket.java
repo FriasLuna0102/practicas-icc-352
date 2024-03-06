@@ -72,11 +72,18 @@ public class ChatSocket extends ControladorClass {
 
             wsConfig.onMessage(ctx -> {
                 String nombreUser = ctx.queryParam("nombre");
-                System.out.println("Este es el mensaje: " + ctx.message());
 
                 for (Map.Entry<Session,String> entry : adminSesions.entrySet()){
                     entry.getKey().getRemote().sendString(ctx.message() + "," + nombreUser);
                 }
+
+                for (HistorialChatUsuario historial : historialChatUsuarios){
+                    if (historial.getSession().equals(ctx.session)){
+                        historial.addMensaje(ctx.message());
+                        System.out.println("Este es el mensaje guardado: " + ctx.message());
+                    }
+                }
+
 
                 //enviarMensajeToAdmin(ctx.message(), ctx.session);
             });
