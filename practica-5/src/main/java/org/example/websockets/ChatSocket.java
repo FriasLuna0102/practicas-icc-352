@@ -43,6 +43,7 @@ public class ChatSocket extends ControladorClass {
             wsConfig.onClose(ctx -> {
                 adminSesions.remove(ctx.session);
                 adminToUserSessions.remove(ctx.session);
+                System.out.println("Admin desconectado");
             });
         });
 

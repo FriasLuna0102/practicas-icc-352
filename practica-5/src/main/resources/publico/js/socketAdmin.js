@@ -38,7 +38,8 @@ $(document).ready(function () {
         chatContent.find('.chat-message-right').toggleClass('chat-message-right chat-message-left');
 
         // Actualizar el contenido del div "chat" con el contenido modificado
-        $('#chat').html(chatContent);
+        $('#chat').html(chatContent.html());
+        console.log(response)
       },
       error: function(xhr, status, error) {
         // Manejar errores si la solicitud AJAX falla
@@ -75,14 +76,13 @@ function insertarMensajeServidor(mensaje) {
 
   $("#chat").append(nuevoMensaje);
 }
-
 function addUsuarioToLista(nombre, rutaChatUsuario) {
-  //El id representara la ruta al chat del usuario
-  let user = $("<a>").attr("href", rutaChatUsuario).addClass("list-group-item list-group-item-action border-0 chatter").append(
-    $("<div>").addClass("badge bg-success float-right").text("2"),
-    $("<div>").addClass("d-flex align-items-start").append(
-      $("<div>").addClass("flex-grow-1 ml-3").text(nombre)
-    )
+  // El id representará la ruta al chat del usuario
+  let user = $("<button>").attr("href", rutaChatUsuario).addClass("list-group-item list-group-item-action border-0 chatter").append(
+      $("<div>").addClass("badge bg-success float-right").text("2"),
+      $("<div>").addClass("d-flex align-items-start").append(
+          $("<div>").addClass("flex-grow-1 ml-3").text(nombre)
+      )
   );
 
   // Agregar el usuario a la lista
