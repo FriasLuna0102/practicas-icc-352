@@ -18,17 +18,30 @@ $(document).ready(function () {
     input.value = "";
   });
 
-  $(".chatter").click(function (event) {
+  $(document).on('click', '.chatter', function(event) {
+    // Evitar el comportamiento predeterminado del enlace
     event.preventDefault();
-    console.log("Cargando con el boton");
 
-    var chatDivId = $(this).data("chat"); // Obtiene el ID del div desde un atributo chat
-    if (!chatDivId) {
-      console.error("No se encontró el atributo data-chat-id");
-      return;
-    }
+    // Obtener la URL de la página desde el atributo "data-url" del enlace
+    var url = $(this).attr('href');
 
-    $("#chat").load($(this).attr("href") + " #" + chatDivId);
+    // Realizar una solicitud AJAX para obtener el contenido de la página
+    $.ajax({
+      url: url,
+      type: 'GET',
+      success: function(response) {
+        var chatContent = $(response).find('#chat').html();
+
+
+        // Actualizar el contenido del div "chat" con el contenido de la página cargada
+        $('#chat').html(chatContent);
+        console.log("exitoso")
+      },
+      error: function(xhr, status, error) {
+        // Manejar errores si la solicitud AJAX falla
+        console.error(error);
+      }
+    });
   });
 
 });
