@@ -62,11 +62,11 @@ public class ChatSocket extends ControladorClass {
                 //Enviando nombre de usuario para visualizar en chat de admin
                 for (Map.Entry<Session,String> entry : adminSesions.entrySet()){
                     // URGENTE : 1 sera el identificador para nombre de usuario, cambiar
-                    entry.getKey().getRemote().sendString("1" + nombreUser + ":" + ctx.session);
+                    entry.getKey().getRemote().sendString("1" + nombreUser + ":" + ctx.getSessionId());
                 }
 
                 // Guardando nuevo chat
-                HistorialChatUsuario historial = new HistorialChatUsuario(ctx.session, nombreUser, null);
+                HistorialChatUsuario historial = new HistorialChatUsuario(ctx.getSessionId(), nombreUser, null);
                 historialChatUsuarios.add(historial);
             });
 
@@ -80,7 +80,7 @@ public class ChatSocket extends ControladorClass {
                  */
 
                 for (HistorialChatUsuario historial : historialChatUsuarios){
-                    if (historial.getSession().equals(ctx.session)){
+                    if (historial.getSession().equals(ctx.getSessionId())){
                         historial.addMensaje(ctx.message());
                         System.out.println("Este es el mensaje guardado: " + historial.getMensajes().getLast());
                     }

@@ -23,7 +23,7 @@ $(document).ready(function () {
     event.preventDefault();
 
     // Obtener la URL de la página desde el atributo "data-url" del enlace
-    var url = $(this).attr('href');
+    let url = '/historial?websocket=' + $(this).attr('href');
 
 
     // Realizar una solicitud AJAX para obtener el contenido de la página
@@ -32,14 +32,14 @@ $(document).ready(function () {
       type: 'GET',
       success: function(response) {
         // Obtener el contenido del div "chat" del response
-        var chatContent = $(response).find('#chat');
+        let chatContent = $(response).find('#chat');
 
         // Modificar las clases de los elementos dentro del div "chat"
         chatContent.find('.chat-message-left').toggleClass('chat-message-left chat-message-right');
         chatContent.find('.chat-message-right').toggleClass('chat-message-right chat-message-left');
 
         // Actualizar el contenido del div "chat" con el contenido modificado
-        $('#chat').html(chatContent.html());
+        $('#chat').html(response);
         console.log(response)
       },
       error: function(xhr, status, error) {

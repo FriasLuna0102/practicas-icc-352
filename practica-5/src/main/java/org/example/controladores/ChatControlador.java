@@ -2,12 +2,12 @@ package org.example.controladores;
 
 import io.javalin.Javalin;
 import org.example.clases.Blog;
+import org.example.clases.HistorialChatUsuario;
 import org.example.clases.Usuario;
 import org.example.util.ControladorClass;
+import org.example.websockets.ChatSocket;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 import static io.javalin.apibuilder.ApiBuilder.path;
 
@@ -48,6 +48,27 @@ public class ChatControlador extends ControladorClass {
 					context.render("publico/html/userchat.html", modelo);
 				});
 
+				app.get("/historial", context -> {
+					String socket = context.queryParam("websocket");
+					StringBuilder stringBuilder = new StringBuilder();
+
+					for (HistorialChatUsuario historialChatUsuario: ChatSocket.historialChatUsuarios){
+						System.out.println(historialChatUsuario.getSession() + "\n" + socket);
+						if (historialChatUsuario.getSession().equals(socket)){
+							int i = historialChatUsuario.getMensajes().size();
+
+							System.out.println("\nMensajes = " + i + "\n");
+
+							for (int k = 0; k < i; k++){
+								stringBuilder.append(historialChatUsuario.getMensajes().get(k));
+								stringBuilder.append("\n");
+							}
+						}
+					}
+
+					System.out.println("Este es el string: " + stringBuilder);
+					context.result(stringBuilder.toString());
+				});
 			});
 		});
 	}
