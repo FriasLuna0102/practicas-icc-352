@@ -26,7 +26,7 @@ function insertarMensajeUsuario(mensaje) {
     )
   );
 
-  webSocket.send(nuevoMensaje.html());
+  webSocket.send(nuevoMensaje[0].outerHTML);
   $("#chat").append(nuevoMensaje);
 }
 
@@ -43,7 +43,7 @@ function insertarMensajeServidor(mensaje) {
     )
   );
 
-  webSocket.send(nuevoMensaje.html());
+  webSocket.send(nuevoMensaje[0].outerHTML);
   $("#chat").append(nuevoMensaje);
 }
 
