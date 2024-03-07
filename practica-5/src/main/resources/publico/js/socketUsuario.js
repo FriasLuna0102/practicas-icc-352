@@ -32,6 +32,7 @@ function insertarMensajeUsuario(mensaje) {
 
 function insertarMensajeServidor(mensaje) {
   let data = mensaje.split(",");
+  console.log("llega aqui")
   
   let info = data[0].trim();
   let nombre = data[1].trim();
@@ -43,17 +44,17 @@ function insertarMensajeServidor(mensaje) {
     )
   );
 
-  webSocket.send(nuevoMensaje[0].outerHTML);
+  //webSocket.send(nuevoMensaje[0].outerHTML);
   $("#chat").append(nuevoMensaje);
 }
 
 function conectar() {
   webSocket = new WebSocket("ws://" + location.hostname + ":" + location.port + "/user-chat?nombre=" + nombreUser + "&ruta=" + ruta);
-  console.log(id)
 
   //Cuando recibe mensaje del servidor (admin)
   webSocket.onmessage = function (event) {
     var message = event.data;
+    console.log(message);
     if (message.endsWith("[ID]")) {
 
       // Este mensaje contiene el ID de sesión

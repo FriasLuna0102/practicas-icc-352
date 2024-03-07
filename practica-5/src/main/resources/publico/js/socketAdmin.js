@@ -53,11 +53,12 @@ function insertarMensajeAdmin(mensaje) {
     )
   );
 
-  websocket.send(nuevoMensaje[0].outerHTML)
-  //$("#chat").append(nuevoMensaje);
+  //websocket.send(nuevoMensaje[0].outerHTML)
+  $("#chat").append(nuevoMensaje);
 }
 
 function insertarMensajeServidor(mensaje) {
+
   let data = mensaje.split(",");
   
   let info = data[0].trim();
@@ -70,7 +71,7 @@ function insertarMensajeServidor(mensaje) {
     )
   );
 
-  $("#chat").append(mensaje);
+  $("#chat").append(nuevoMensaje);
 }
 function addUsuarioToLista(nombre, session) {
   // El id representará la ruta al chat del usuario
@@ -99,11 +100,12 @@ function conectar() {
       
       addUsuarioToLista(nombre, session)
       
-    }
-    if (mensaje.endsWith("[@#Id#@]")) {
-        idSession = mensaje.slice(0, mensaje.indexOf("[@#Id#@]"))
+    } else if (mensaje.endsWith("[@#Id#@]")) {
+        idSession = mensaje.substring(0, mensaje.indexOf("[@#Id#@]"))
     } else{
-      insertarMensajeServidor(mensaje)
+      //insertarMensajeServidor(mensaje)
+
+      $("#chat").append(mensaje);
     }
   };
   webSocket.onopen = function (e) {console.log("Conectado - status " + this.readyState);};

@@ -13,6 +13,7 @@ public class ChatSocket extends ControladorClass {
 
     private static Map<Session,String> adminSesions = new HashMap<>();
     private static Map<String, Session> adminInfo = new HashMap<>();
+    private static Map<String, Session> userInfo = new HashMap<>();
     private static Map<Session, Set<Session>> adminToUserSessions = new HashMap<>();
     private static Map<Session,String> userSessions = new HashMap<>();
     public static List<HistorialChatUsuario> historialChatUsuarios = new ArrayList<>();
@@ -37,15 +38,20 @@ public class ChatSocket extends ControladorClass {
             });
 
             wsConfig.onMessage(ctx -> {
-                String nombreAdmin = ctx.queryParam("adminName");
 
+                /*
                 for (Map.Entry<Session,String> entry : userSessions.entrySet()){
-                    entry.getKey().getRemote().sendString(ctx.message() + "," + nombreAdmin);
+                    entry.getKey().getRemote().sendString(ctx.message() + "," + "jhonny");
                 }
 
+                 */
                 for (HistorialChatUsuario historial: historialChatUsuarios){
                     if (ctx.getSessionId().equals(historial.getAdminSession())){
-                        ctx.session.getRemote().sendString(ctx.message());
+
+                        System.out.println("Este es el mensaje del admin: " + ctx.message());
+
+                        userInfo.get(historial.getSession()).getRemote().sendString(ctx.message() + "," + "diablo");
+                        //ctx.session.getRemote().sendString(ctx.message());
                     }
                 }
 
@@ -63,6 +69,7 @@ public class ChatSocket extends ControladorClass {
                 String ruta = ctx.queryParam("ruta");
                 String nombreUser = ctx.queryParam("nombre");
                 userSessions.put(ctx.session, nombreUser);
+                userInfo.put(ctx.getSessionId(), ctx.session);
                 System.out.println("Usuario conectado");
 
                 //Enviando id a usuario para que este lo almacene
@@ -86,6 +93,7 @@ public class ChatSocket extends ControladorClass {
                 for (Map.Entry<Session,String> entry : adminSesions.entrySet()){
                     entry.getKey().getRemote().sendString(ctx.message() + "," + nombreUser);
                 }
+
                  */
 
                 for (HistorialChatUsuario historial : historialChatUsuarios){
@@ -93,7 +101,7 @@ public class ChatSocket extends ControladorClass {
                         historial.addMensaje(ctx.message());
                         if (historial.getAdminSession() != null){
                             adminInfo.get(historial.getAdminSession()).getRemote().sendString(ctx.message());
-                            System.out.println(ctx.message());
+                            System.out.println("Este es el mensaje del user: " + ctx.message());
                         }
                     }
                 }
@@ -105,6 +113,7 @@ public class ChatSocket extends ControladorClass {
             // Eliminar usuario de la lista de historial
             wsConfig.onClose(ctx -> {
                 userSessions.remove(ctx.session);
+                userInfo.remove(ctx.getSessionId());
             });
         });
     }
