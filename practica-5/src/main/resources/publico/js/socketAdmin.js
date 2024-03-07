@@ -1,4 +1,4 @@
-
+let idSession;
 var websocket;
 let nombreAdmin = document.getElementById("nombre").textContent.trim();
 let params = new URLSearchParams(window.location.href);
@@ -23,7 +23,7 @@ $(document).ready(function () {
     event.preventDefault();
 
     // Obtener la URL de la página desde el atributo "data-url" del enlace
-    let url = '/historial?websocket=' + $(this).attr('href');
+    let url = '/historial?websocket=' + $(this).attr('href') + "&idSessionAdmin=" + idSession;
 
 
     // Realizar una solicitud AJAX para obtener el contenido de la página
@@ -70,7 +70,7 @@ function insertarMensajeServidor(mensaje) {
     )
   );
 
-  $("#chat").append(nuevoMensaje);
+  $("#chat").append(mensaje);
 }
 function addUsuarioToLista(nombre, session) {
   // El id representará la ruta al chat del usuario
@@ -99,7 +99,10 @@ function conectar() {
       
       addUsuarioToLista(nombre, session)
       
-    }else{
+    }
+    if (mensaje.endsWith("[@#Id#@]")) {
+        idSession = mensaje.slice(0, mensaje.indexOf("[@#Id#@]"))
+    } else{
       insertarMensajeServidor(mensaje)
     }
   };

@@ -1,6 +1,7 @@
 package org.example.controladores;
 
 import io.javalin.Javalin;
+import org.eclipse.jetty.websocket.api.Session;
 import org.example.clases.Blog;
 import org.example.clases.HistorialChatUsuario;
 import org.example.clases.Usuario;
@@ -54,13 +55,14 @@ public class ChatControlador extends ControladorClass {
 
 				app.get("/historial", context -> {
 					String socket = context.queryParam("websocket");
+					String idSessionAdmin = context.queryParam("idSessionAdmin");
 					StringBuilder stringBuilder = new StringBuilder();
 
 					for (HistorialChatUsuario historialChatUsuario: ChatSocket.historialChatUsuarios){
 						System.out.println(historialChatUsuario.getSession() + "\n" + socket);
 						if (historialChatUsuario.getSession().equals(socket)){
 							int i = historialChatUsuario.getMensajes().size();
-
+							historialChatUsuario.setAdminSession(idSessionAdmin);
 
 							for (int k = 0; k < i; k++){
 								stringBuilder.append(historialChatUsuario.getMensajes().get(k));

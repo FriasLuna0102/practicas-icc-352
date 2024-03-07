@@ -12,6 +12,7 @@ import java.util.*;
 public class ChatSocket extends ControladorClass {
 
     private static Map<Session,String> adminSesions = new HashMap<>();
+    private static Map<String, Session> adminInfo = new HashMap<>();
     private static Map<Session, Set<Session>> adminToUserSessions = new HashMap<>();
     private static Map<Session,String> userSessions = new HashMap<>();
     public static List<HistorialChatUsuario> historialChatUsuarios = new ArrayList<>();
@@ -26,11 +27,13 @@ public class ChatSocket extends ControladorClass {
         app.ws("/admin-chat", wsConfig -> {
             wsConfig.onConnect(ctx -> {
                 String nombreAdmin = ctx.queryParam("adminName");
-                adminSesions.put(ctx.session, nombreAdmin);
-                adminToUserSessions.put(ctx.session, new HashSet<>());
+                adminSesions.put(ctx.session, ctx.getSessionId());
+                adminInfo.put(ctx.getSessionId(), ctx.session);
 
                 System.out.println("Admin conectado");
 
+                // Mandar al socket su id de sesion
+                ctx.session.getRemote().sendString( ctx.getSessionId() + "[@#Id#@]");
             });
 
             wsConfig.onMessage(ctx -> {
@@ -50,7 +53,7 @@ public class ChatSocket extends ControladorClass {
 
             wsConfig.onClose(ctx -> {
                 adminSesions.remove(ctx.session);
-                adminToUserSessions.remove(ctx.session);
+                adminInfo.remove(ctx.getSessionId());
                 System.out.println("Admin desconectado");
             });
         });
@@ -88,6 +91,10 @@ public class ChatSocket extends ControladorClass {
                 for (HistorialChatUsuario historial : historialChatUsuarios){
                     if (historial.getSession().equals(ctx.getSessionId())){
                         historial.addMensaje(ctx.message());
+                        if (historial.getAdminSession() != null){
+                            adminInfo.get(historial.getAdminSession()).getRemote().sendString(ctx.message());
+                            System.out.println(ctx.message());
+                        }
                     }
                 }
 
