@@ -35,8 +35,8 @@ $(document).ready(function () {
         let chatContent = $(response).find('#chat');
 
         // Modificar las clases de los elementos dentro del div "chat"
-        chatContent.find('.chat-message-left').toggleClass('chat-message-left chat-message-right');
-        chatContent.find('.chat-message-right').toggleClass('chat-message-right chat-message-left');
+        //response.find('.chat-message-left').toggleClass('chat-message-left chat-message-right');
+        //response.find('.chat-message-right').toggleClass('chat-message-right chat-message-left');
 
         // Actualizar el contenido del div "chat" con el contenido modificado
         $('#chat').html(response);

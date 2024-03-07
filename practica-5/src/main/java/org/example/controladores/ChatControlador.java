@@ -6,6 +6,10 @@ import org.example.clases.HistorialChatUsuario;
 import org.example.clases.Usuario;
 import org.example.util.ControladorClass;
 import org.example.websockets.ChatSocket;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.util.*;
 
@@ -66,10 +70,31 @@ public class ChatControlador extends ControladorClass {
 						}
 					}
 
-					System.out.println("Este es el string: " + stringBuilder);
-					context.result(stringBuilder.toString());
+					String resultado = invertirChat(stringBuilder.toString());
+					System.out.println("Este es el string: " + resultado);
+					context.result(resultado);
 				});
 			});
 		});
 	}
+
+	public String invertirChat(String mensaje){
+
+		Document document = Jsoup.parse(mensaje);
+
+		Elements mensajesToIzquierda = document.getElementsByClass("chat-message-right");
+		Elements mensajesToDerecha = document.getElementsByClass("chat-message-left");
+
+		for (Element element: mensajesToIzquierda){
+			element.removeClass("chat-message-right");
+			element.addClass("chat-message-left");
+		}
+
+		for (Element element: mensajesToDerecha){
+			element.removeClass("chat-message-left");
+			element.addClass("chat-message-right");
+		}
+
+		return document.toString();
+  }
 }
