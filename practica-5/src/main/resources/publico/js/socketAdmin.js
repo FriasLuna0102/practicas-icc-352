@@ -31,12 +31,6 @@ $(document).ready(function () {
       url: url,
       type: 'GET',
       success: function(response) {
-        // Obtener el contenido del div "chat" del response
-        let chatContent = $(response).find('#chat');
-
-        // Modificar las clases de los elementos dentro del div "chat"
-        //response.find('.chat-message-left').toggleClass('chat-message-left chat-message-right');
-        //response.find('.chat-message-right').toggleClass('chat-message-right chat-message-left');
 
         // Actualizar el contenido del div "chat" con el contenido modificado
         $('#chat').html(response);
@@ -59,7 +53,8 @@ function insertarMensajeAdmin(mensaje) {
     )
   );
 
-  $("#chat").append(nuevoMensaje);
+  websocket.send(nuevoMensaje[0].outerHTML)
+  //$("#chat").append(nuevoMensaje);
 }
 
 function insertarMensajeServidor(mensaje) {

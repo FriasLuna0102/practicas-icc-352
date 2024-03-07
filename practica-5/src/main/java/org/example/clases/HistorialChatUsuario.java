@@ -9,6 +9,7 @@ public class HistorialChatUsuario {
     private String session;
     private String nombre;
     private String uri;
+    private String adminSession;
     private List<String> mensajes;
 
     public HistorialChatUsuario(String session, String nombre, String uri) {
@@ -36,5 +37,13 @@ public class HistorialChatUsuario {
 
     public void addMensaje(String mensaje) {
         this.mensajes.add(mensaje);
+    }
+
+    public String getAdminSession() {
+        return adminSession;
+    }
+
+    public void setAdminSession(String adminSession) {
+        this.adminSession = adminSession;
     }
 }

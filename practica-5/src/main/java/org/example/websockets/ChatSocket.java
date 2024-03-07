@@ -30,6 +30,7 @@ public class ChatSocket extends ControladorClass {
                 adminToUserSessions.put(ctx.session, new HashSet<>());
 
                 System.out.println("Admin conectado");
+
             });
 
             wsConfig.onMessage(ctx -> {
@@ -39,7 +40,12 @@ public class ChatSocket extends ControladorClass {
                     entry.getKey().getRemote().sendString(ctx.message() + "," + nombreAdmin);
                 }
 
-                System.out.println("Este es el mensaje: " + ctx.message());
+                for (HistorialChatUsuario historial: historialChatUsuarios){
+                    if (ctx.getSessionId().equals(historial.getAdminSession())){
+                        ctx.session.getRemote().sendString(ctx.message());
+                    }
+                }
+
             });
 
             wsConfig.onClose(ctx -> {
@@ -82,7 +88,6 @@ public class ChatSocket extends ControladorClass {
                 for (HistorialChatUsuario historial : historialChatUsuarios){
                     if (historial.getSession().equals(ctx.getSessionId())){
                         historial.addMensaje(ctx.message());
-                        System.out.println("Este es el mensaje guardado: " + historial.getMensajes().getLast());
                     }
                 }
 

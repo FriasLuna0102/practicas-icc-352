@@ -61,7 +61,6 @@ public class ChatControlador extends ControladorClass {
 						if (historialChatUsuario.getSession().equals(socket)){
 							int i = historialChatUsuario.getMensajes().size();
 
-							System.out.println("\nMensajes = " + i + "\n");
 
 							for (int k = 0; k < i; k++){
 								stringBuilder.append(historialChatUsuario.getMensajes().get(k));
@@ -71,7 +70,6 @@ public class ChatControlador extends ControladorClass {
 					}
 
 					String resultado = invertirChat(stringBuilder.toString());
-					System.out.println("Este es el string: " + resultado);
 					context.result(resultado);
 				});
 			});
