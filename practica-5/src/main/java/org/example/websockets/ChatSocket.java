@@ -4,6 +4,10 @@ import io.javalin.Javalin;
 import org.eclipse.jetty.websocket.api.Session;
 import org.example.clases.HistorialChatUsuario;
 import org.example.util.ControladorClass;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.thymeleaf.processor.xmldeclaration.AbstractXMLDeclarationProcessor;
 
 import java.io.IOException;
@@ -100,7 +104,7 @@ public class ChatSocket extends ControladorClass {
                     if (historial.getSession().equals(ctx.getSessionId())){
                         historial.addMensaje(ctx.message());
                         if (historial.getAdminSession() != null){
-                            adminInfo.get(historial.getAdminSession()).getRemote().sendString(ctx.message());
+                            adminInfo.get(historial.getAdminSession()).getRemote().sendString(invertirMensajeToAdmin(ctx.message()));
                             System.out.println("Este es el mensaje del user: " + ctx.message());
                         }
                     }
@@ -118,6 +122,19 @@ public class ChatSocket extends ControladorClass {
         });
     }
 
+    public String invertirMensajeToAdmin(String mensaje){
+
+        org.jsoup.nodes.Document document = Jsoup.parse(mensaje);
+
+        Elements mensajesToIzquierda = document.getElementsByClass("chat-message-right");
+
+        for (org.jsoup.nodes.Element element: mensajesToIzquierda){
+            element.removeClass("chat-message-right");
+            element.addClass("chat-message-left");
+        }
+
+        return document.toString();
+    }
     private static void enviarMensajeToAdmin(String mensaje, Session sessionUsuario){
 
         for (Map.Entry<Session, String> entry : adminSesions.entrySet()){
