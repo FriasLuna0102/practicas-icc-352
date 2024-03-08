@@ -5,12 +5,8 @@ import org.eclipse.jetty.websocket.api.Session;
 import org.example.clases.HistorialChatUsuario;
 import org.example.util.ControladorClass;
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.thymeleaf.processor.xmldeclaration.AbstractXMLDeclarationProcessor;
 
-import java.io.IOException;
 import java.util.*;
 
 public class ChatSocket extends ControladorClass {
@@ -18,7 +14,6 @@ public class ChatSocket extends ControladorClass {
     private static Map<Session,String> adminSesions = new HashMap<>();
     private static Map<String, Session> adminInfo = new HashMap<>();
     private static Map<String, Session> userInfo = new HashMap<>();
-    private static Map<Session, Set<Session>> adminToUserSessions = new HashMap<>();
     private static Map<Session,String> userSessions = new HashMap<>();
     public static List<HistorialChatUsuario> historialChatUsuarios = new ArrayList<>();
 
@@ -31,7 +26,6 @@ public class ChatSocket extends ControladorClass {
 
         app.ws("/admin-chat", wsConfig -> {
             wsConfig.onConnect(ctx -> {
-                String nombreAdmin = ctx.queryParam("adminName");
                 adminSesions.put(ctx.session, ctx.getSessionId());
                 adminInfo.put(ctx.getSessionId(), ctx.session);
 
@@ -43,21 +37,14 @@ public class ChatSocket extends ControladorClass {
 
             wsConfig.onMessage(ctx -> {
 
-                /*
-                for (Map.Entry<Session,String> entry : userSessions.entrySet()){
-                    entry.getKey().getRemote().sendString(ctx.message() + "," + "jhonny");
-                }
-
-                 */
                 for (HistorialChatUsuario historial: historialChatUsuarios){
                     if (ctx.getSessionId().equals(historial.getAdminSession())){
 
                         System.out.println("Este es el mensaje del admin: " + ctx.message());
 
-                        String mensaje = invertirMensajeToAdmin(ctx.message());
+                        String mensaje = invertirMensaje(ctx.message());
                         historial.addMensaje(mensaje);
                         userInfo.get(historial.getSession()).getRemote().sendString(mensaje);
-                        //ctx.session.getRemote().sendString(ctx.message());
                     }
                 }
 
@@ -72,7 +59,6 @@ public class ChatSocket extends ControladorClass {
 
         app.ws("/user-chat", wsConfig -> {
             wsConfig.onConnect(ctx -> {
-                String ruta = ctx.queryParam("ruta");
                 String nombreUser = ctx.queryParam("nombre");
                 userSessions.put(ctx.session, nombreUser);
                 userInfo.put(ctx.getSessionId(), ctx.session);
@@ -93,27 +79,17 @@ public class ChatSocket extends ControladorClass {
             });
 
             wsConfig.onMessage(ctx -> {
-                String nombreUser = ctx.queryParam("nombre");
-
-                /*
-                for (Map.Entry<Session,String> entry : adminSesions.entrySet()){
-                    entry.getKey().getRemote().sendString(ctx.message() + "," + nombreUser);
-                }
-
-                 */
 
                 for (HistorialChatUsuario historial : historialChatUsuarios){
                     if (historial.getSession().equals(ctx.getSessionId())){
                         historial.addMensaje(ctx.message());
                         if (historial.getAdminSession() != null){
-                            adminInfo.get(historial.getAdminSession()).getRemote().sendString(invertirMensajeToAdmin(ctx.message()));
+                            adminInfo.get(historial.getAdminSession()).getRemote().sendString(invertirMensaje(ctx.message()));
                             System.out.println("Este es el mensaje del user: " + ctx.message());
                         }
                     }
                 }
 
-
-                //enviarMensajeToAdmin(ctx.message(), ctx.session);
             });
 
             // Eliminar usuario de la lista de historial
@@ -124,7 +100,7 @@ public class ChatSocket extends ControladorClass {
         });
     }
 
-    public String invertirMensajeToAdmin(String mensaje){
+    public String invertirMensaje(String mensaje){
 
         org.jsoup.nodes.Document document = Jsoup.parse(mensaje);
 
@@ -136,22 +112,5 @@ public class ChatSocket extends ControladorClass {
         }
 
         return document.toString();
-    }
-    private static void enviarMensajeToAdmin(String mensaje, Session sessionUsuario){
-
-        for (Map.Entry<Session, String> entry : adminSesions.entrySet()){
-            Session sessionAdmin = entry.getKey();
-
-            // Verificar si el administrador tiene al usuario conectado
-            Set<Session> userSessionsAdmin = adminToUserSessions.get(sessionAdmin);
-            if (userSessionsAdmin.contains(sessionUsuario)) {
-                try {
-                    // Enviar el mensaje al administrador
-                    sessionAdmin.getRemote().sendString(mensaje);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
     }
 }
