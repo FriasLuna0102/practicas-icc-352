@@ -88,31 +88,38 @@ public class PlantillasControlador extends ControladorClass {
                     List<Articulo> listArticulos = ArticuloServices.getInstancia().obtenerTodosLosArticulosConEtiquetas();
                     Collections.reverse(listArticulos);
                     List<List<Articulo>> paginas = partition(listArticulos, 5);
-                    List<Articulo> articulosPorPagina = paginas.get(numeroPagina - 1);
 
-                    List<ArticuloDTO> articulosDTO = articulosPorPagina.stream().map(articulo -> {
-                        ArticuloDTO dto = new ArticuloDTO();
-                        dto.setId(articulo.getId());
-                        dto.setTitulo(articulo.getTitulo());
-                        dto.setCuerpo(articulo.getCuerpo());
-                        dto.setNombreAutor(articulo.getAutor().getNombre());
-                        dto.setFecha(articulo.getFecha());
-                        //dto.setListaComentarios(articulo.getListaComentarios().stream().map(Comentario::getComentario).collect(Collectors.toList()));
-                        dto.setListaEtiquetas(articulo.getListaEtiquetas().stream().map(Etiqueta::getEtiqueta).collect(Collectors.toList()));
-                        return dto;
-                    }).collect(Collectors.toList());
+                    List<ArticuloDTO> articulosDTO;
+                    Map<String, Object> model = new HashMap<>();
 
-                    System.out.println(articulosDTO.size());
-                    for(ArticuloDTO ar : articulosDTO){
-                        System.out.println(ar.getTitulo());
+                    if (numeroPagina >= 1 && numeroPagina <= paginas.size()) { // Verificar que el número de página sea válido
+                        List<Articulo> articulosPorPagina = paginas.get(numeroPagina - 1);
+
+                        articulosDTO = articulosPorPagina.stream().map(articulo -> {
+                            ArticuloDTO dto = new ArticuloDTO();
+                            dto.setId(articulo.getId());
+                            dto.setTitulo(articulo.getTitulo());
+                            dto.setCuerpo(articulo.getCuerpo());
+                            dto.setNombreAutor(articulo.getAutor().getNombre());
+                            dto.setFecha(articulo.getFecha());
+                            //dto.setListaComentarios(articulo.getListaComentarios().stream().map(Comentario::getComentario).collect(Collectors.toList()));
+                            dto.setListaEtiquetas(articulo.getListaEtiquetas().stream().map(Etiqueta::getEtiqueta).collect(Collectors.toList()));
+                            return dto;
+                        }).collect(Collectors.toList());
+
+                        model.put("paginaActual", numeroPagina);
+                        model.put("totalPaginas", (int) Math.ceil((double) ArticuloServices.getInstancia().contarArticulos() / 5));
+                    } else {
+                        // Manejar el caso cuando el número de página no es válido
+                        articulosDTO = new ArrayList<>();
+                        model.put("paginaActual", 1);
+                        model.put("totalPaginas", 1); // Si no hay páginas válidas, establecer el total de páginas como 1
                     }
 
-                    Map<String, Object> model = new HashMap<>();
-                    model.put("paginaActual", numeroPagina);
-                    model.put("totalPaginas", (int) Math.ceil((double) ArticuloServices.getInstancia().contarArticulos() / 5));
                     ctx.render("publico/html/blogUsuario.html", model);
                     ctx.json(articulosDTO); // Serializar los datos como JSON y enviar como respuesta
                 });
+
 
 
 
