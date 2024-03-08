@@ -54,7 +54,9 @@ public class ChatSocket extends ControladorClass {
 
                         System.out.println("Este es el mensaje del admin: " + ctx.message());
 
-                        userInfo.get(historial.getSession()).getRemote().sendString(ctx.message());
+                        String mensaje = invertirMensajeToAdmin(ctx.message());
+                        historial.addMensaje(mensaje);
+                        userInfo.get(historial.getSession()).getRemote().sendString(mensaje);
                         //ctx.session.getRemote().sendString(ctx.message());
                     }
                 }
