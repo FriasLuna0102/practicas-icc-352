@@ -1,10 +1,8 @@
 package org.example.controladores;
 
 import io.javalin.Javalin;
-import org.eclipse.jetty.websocket.api.Session;
 import org.example.clases.Blog;
 import org.example.clases.HistorialChatUsuario;
-import org.example.clases.Usuario;
 import org.example.util.ControladorClass;
 import org.example.websockets.ChatSocket;
 import org.jsoup.Jsoup;

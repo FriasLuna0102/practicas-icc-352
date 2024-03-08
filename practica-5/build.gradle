@@ -34,6 +34,7 @@ dependencies {
 
     //Para procesar HTML
     implementation 'org.jsoup:jsoup:1.17.2'
+    //implementation 'org.jsoup:jsoup:1.14.3'
 
     //Procesamiento JSON para Javalin.
     implementation("com.fasterxml.jackson.core:jackson-core:2.15.2")
