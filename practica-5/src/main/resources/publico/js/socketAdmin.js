@@ -1,5 +1,4 @@
 let idSession;
-var websocket;
 let nombreAdmin = document.getElementById("nombre").textContent.trim();
 let params = new URLSearchParams(window.location.href);
 let id = params.get('id')
@@ -11,7 +10,6 @@ $(document).ready(function () {
 
   $("#enviar").click(function () {
     let mensaje = $("#mensajeAdmin").val();
-    webSocket.send(mensaje);
     insertarMensajeAdmin(mensaje);
 
     let input = document.getElementById("mensajeAdmin");
@@ -53,7 +51,7 @@ function insertarMensajeAdmin(mensaje) {
     )
   );
 
-  //websocket.send(nuevoMensaje[0].outerHTML)
+  webSocket.send(nuevoMensaje[0].outerHTML);
   $("#chat").append(nuevoMensaje);
 }
 

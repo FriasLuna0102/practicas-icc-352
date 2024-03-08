@@ -61,7 +61,8 @@ function conectar() {
       var sessionId = message.substring(0, message.length - "[ID]".length);
 
     } else {
-      insertarMensajeServidor(message);
+      //insertarMensajeServidor(message);
+      $("#chat").append(message);
     }
   };
 
