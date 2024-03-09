@@ -51,7 +51,19 @@ public class ChatControlador extends ControladorClass {
 					context.render("publico/html/userchat.html", modelo);
 				});
 
-				app.get("/historial", context -> {
+                app.get("/desconectar", context -> {
+                    String idSessionAdmin = context.queryParam("idSessionAdmin");
+
+                    for (HistorialChatUsuario historialChatUsuario: ChatSocket.historialChatUsuarios){
+                        if (historialChatUsuario.getAdminSession().equals(idSessionAdmin)){
+                            historialChatUsuario.setAdminSession(null);
+                        }
+                    }
+
+                    context.result("Desconectado con éxito");
+                });
+
+                app.get("/historial", context -> {
 					String socket = context.queryParam("websocket");
 					String idSessionAdmin = context.queryParam("idSessionAdmin");
 					StringBuilder stringBuilder = new StringBuilder();
