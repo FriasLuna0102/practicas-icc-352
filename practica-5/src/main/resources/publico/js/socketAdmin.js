@@ -58,15 +58,17 @@ function insertarMensajeAdmin(mensaje) {
 let chatsCargados = {};
 
 function addUsuarioToLista(nombre, session) {
-    // Verificar si el chat ya ha sido cargado
-    if (chatsCargados[session]) {
-        return;
+    console.log("Esta es la seccion:" + nombre.trim());
+
+    // Buscar si el nombre ya está presente en la lista de usuarios
+    var existingButton = $("#listaUsers button:contains('" + nombre.trim() + "')");
+
+    // Si el nombre ya está presente, eliminarlo de la lista
+    if (existingButton.length > 0) {
+        existingButton.remove();
     }
 
-    // Marcar el chat como cargado
-    chatsCargados[session] = true;
-
-    // El id representará la ruta al chat del usuario
+    // Crear el botón con la nueva sesión
     let user = $("<button>").attr("href", session).addClass("list-group-item list-group-item-action border-0 chatter").append(
         $("<div>").addClass("badge bg-success float-right").text("2"),
         $("<div>").addClass("d-flex align-items-start").append(
@@ -76,6 +78,18 @@ function addUsuarioToLista(nombre, session) {
 
     // Agregar el usuario a la lista
     $("#listaUsers").append(user);
+}
+
+
+
+function eliminarUsuarioDeLista(nombre) {
+    // Buscar el botón con el texto del nombre
+    $("#listaUsers button").each(function() {
+        if ($(this).text().trim() === nombre) {
+            // Eliminar el botón
+            $(this).remove();
+        }
+    });
 }
 
 function conectar() {
@@ -107,6 +121,8 @@ function conectar() {
         console.log("Desconectado - status " + this.readyState);
         // Reconectar después de un retraso
         // setTimeout(conectar, 1000);
+        //limpiarChatAdmin();
+        console.log("se cerro")
         conectar();
     };
 }

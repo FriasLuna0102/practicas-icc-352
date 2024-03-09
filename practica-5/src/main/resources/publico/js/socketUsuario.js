@@ -39,10 +39,17 @@ function insertarMensajeUsuario(mensaje) {
     webSocket.send(nuevoMensaje[0].outerHTML);
     $("#chat").append(nuevoMensaje);
 }
+function limpiarChatAdmin() {
+    // Limpiar el chat del administrador
+    $("#listaUsers").empty();
+}
 
+let i = 0;
 function conectar() {
     webSocket = new WebSocket("ws://" + location.hostname + ":" + location.port + "/user-chat?nombre=" + nombreUser + "&ruta=" + ruta);
 
+
+    console.log("Se llamo", i++);
     //Cuando recibe mensaje del servidor (admin)
     webSocket.onmessage = function (event) {
         var message = event.data;
@@ -66,6 +73,8 @@ function conectar() {
     webSocket.onclose = function () {
         console.log("Desconectado - status " + this.readyState);
         // Reconectar después de un retraso
+        limpiarChatAdmin();
+
         conectar();
     };
 }
