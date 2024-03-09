@@ -55,17 +55,27 @@ function insertarMensajeAdmin(mensaje) {
   $("#chat").append(nuevoMensaje);
 }
 
-function addUsuarioToLista(nombre, session) {
-  // El id representará la ruta al chat del usuario
-  let user = $("<button>").attr("href", session).addClass("list-group-item list-group-item-action border-0 chatter").append(
-      $("<div>").addClass("badge bg-success float-right").text("2"),
-      $("<div>").addClass("d-flex align-items-start").append(
-          $("<div>").addClass("flex-grow-1 ml-3").text(nombre)
-      )
-  );
+let chatsCargados = {};
 
-  // Agregar el usuario a la lista
-  $("#listaUsers").append(user);
+function addUsuarioToLista(nombre, session) {
+    // Verificar si el chat ya ha sido cargado
+    if (chatsCargados[session]) {
+        return;
+    }
+
+    // Marcar el chat como cargado
+    chatsCargados[session] = true;
+
+    // El id representará la ruta al chat del usuario
+    let user = $("<button>").attr("href", session).addClass("list-group-item list-group-item-action border-0 chatter").append(
+        $("<div>").addClass("badge bg-success float-right").text("2"),
+        $("<div>").addClass("d-flex align-items-start").append(
+            $("<div>").addClass("flex-grow-1 ml-3").text(nombre)
+        )
+    );
+
+    // Agregar el usuario a la lista
+    $("#listaUsers").append(user);
 }
 
 function conectar() {
@@ -80,7 +90,10 @@ function conectar() {
             let nombre = mensaje.substring(1, separador);
             let session = mensaje.substring(separador + 1);
 
-            addUsuarioToLista(nombre, session)
+            // Solo agregar el usuario a la lista si el chat no ha sido cargado
+            if (!chatsCargados[session]) {
+                addUsuarioToLista(nombre, session)
+            }
 
         } else if (mensaje.endsWith("[@#Id#@]")) {
             idSession = mensaje.substring(0, mensaje.indexOf("[@#Id#@]"))
@@ -93,7 +106,8 @@ function conectar() {
     webSocket.onclose = function (e) {
         console.log("Desconectado - status " + this.readyState);
         // Reconectar después de un retraso
-        setTimeout(conectar, 1000);
+        // setTimeout(conectar, 1000);
+        conectar();
     };
 }
 

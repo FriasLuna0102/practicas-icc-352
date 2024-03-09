@@ -18,16 +18,26 @@ $(document).ready(function () {
   });
 });
 
-function insertarMensajeUsuario(mensaje) {
-  let nuevoMensaje = $("<div>").addClass("chat-message-right mb-4").append(
-    $("<div>").addClass("flex-shrink-1 bg-light rounded py-2 px-3 mr-3").append(
-      $("<div>").addClass("font-weight-bold mb-1").text(nombreUser),
-      $("<p>").text(mensaje)
-    )
-  );
+let mensajesCargados = {};
 
-  webSocket.send(nuevoMensaje[0].outerHTML);
-  $("#chat").append(nuevoMensaje);
+function insertarMensajeUsuario(mensaje) {
+    // Verificar si el mensaje ya ha sido cargado
+    if (mensajesCargados[mensaje]) {
+        return;
+    }
+
+    // Marcar el mensaje como cargado
+    mensajesCargados[mensaje] = true;
+
+    let nuevoMensaje = $("<div>").addClass("chat-message-right mb-4").append(
+        $("<div>").addClass("flex-shrink-1 bg-light rounded py-2 px-3 mr-3").append(
+            $("<div>").addClass("font-weight-bold mb-1").text(nombreUser),
+            $("<p>").text(mensaje)
+        )
+    );
+
+    webSocket.send(nuevoMensaje[0].outerHTML);
+    $("#chat").append(nuevoMensaje);
 }
 
 function conectar() {
@@ -43,7 +53,10 @@ function conectar() {
             var sessionId = message.substring(0, message.length - "[ID]".length);
 
         } else {
-            $("#chat").append(message);
+            // Solo agregar el mensaje al chat si no ha sido cargado
+            if (!mensajesCargados[message]) {
+                $("#chat").append(message);
+            }
         }
     };
 
@@ -53,9 +66,10 @@ function conectar() {
     webSocket.onclose = function () {
         console.log("Desconectado - status " + this.readyState);
         // Reconectar después de un retraso
-        setTimeout(conectar, 5000);
+        conectar();
     };
 }
+
 
 
 

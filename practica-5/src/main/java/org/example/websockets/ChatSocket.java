@@ -28,18 +28,25 @@ public class ChatSocket extends ControladorClass {
 
         app.ws("/admin-chat", wsConfig -> {
             wsConfig.onConnect(ctx -> {
-                adminSesions.put(ctx.session, ctx.getSessionId());
-                adminInfo.put(ctx.getSessionId(), ctx.session);
+                String sessionId = ctx.getSessionId();
+
+                // Verificar si el administrador ya ha sido cargado
+                if (adminSesions.containsKey(ctx.session)) {
+                    return;
+                }
+
+                adminSesions.put(ctx.session, sessionId);
+                adminInfo.put(sessionId, ctx.session);
 
                 System.out.println("Admin conectado");
 
                 // Mandar al socket su id de sesion
-                ctx.session.getRemote().sendString(ctx.getSessionId() + "[@#Id#@]");
-
+                ctx.session.getRemote().sendString(sessionId + "[@#Id#@]");
 
                 // Revisar la cola de usuarios y enviar la información de todos los usuarios en la cola al administrador
                 while (!colaUsuarios.isEmpty()) {
                     String infoUsuario = colaUsuarios.remove();
+
                     ctx.session.getRemote().sendString(infoUsuario);
                 }
             });
@@ -69,19 +76,26 @@ public class ChatSocket extends ControladorClass {
         app.ws("/user-chat", wsConfig -> {
             wsConfig.onConnect(ctx -> {
                 String nombreUser = ctx.queryParam("nombre");
+                String sessionId = ctx.getSessionId();
+
+                // Verificar si el usuario ya ha sido cargado
+                if (userSessions.containsKey(ctx.session)) {
+                    return;
+                }
+
                 userSessions.put(ctx.session, nombreUser);
-                userInfo.put(ctx.getSessionId(), ctx.session);
+                userInfo.put(sessionId, ctx.session);
                 System.out.println("Usuario conectado");
 
                 //Enviando id a usuario para que este lo almacene
-                ctx.session.getRemote().sendString(ctx.getSessionId() + "[ID]");
+                ctx.session.getRemote().sendString(sessionId + "[ID]");
 
                 // Guardando nuevo chat
-                HistorialChatUsuario historial = new HistorialChatUsuario(ctx.getSessionId(), nombreUser, null);
+                HistorialChatUsuario historial = new HistorialChatUsuario(sessionId, nombreUser, null);
                 historialChatUsuarios.add(historial);
 
                 // Preparar la información del usuario
-                String infoUsuario = "1" + nombreUser + ":" + ctx.getSessionId();
+                String infoUsuario = "1" + nombreUser + ":" + sessionId;
 
                 // Verificar si hay alguna sesión de administrador activa
                 if (!adminSesions.isEmpty()) {
