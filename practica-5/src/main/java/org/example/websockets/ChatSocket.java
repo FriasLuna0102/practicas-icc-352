@@ -7,6 +7,7 @@ import org.example.util.ControladorClass;
 import org.jsoup.Jsoup;
 import org.jsoup.select.Elements;
 
+import java.io.IOException;
 import java.util.*;
 
 public class ChatSocket extends ControladorClass {
@@ -32,7 +33,10 @@ public class ChatSocket extends ControladorClass {
                 System.out.println("Admin conectado");
 
                 // Mandar al socket su id de sesion
-                ctx.session.getRemote().sendString( ctx.getSessionId() + "[@#Id#@]");
+                ctx.session.getRemote().sendString(ctx.getSessionId() + "[@#Id#@]");
+
+                // Enviar la lista de usuarios conectados al administrador recién conectado
+                enviarUsuariosConectadosAdmin(ctx.session);
             });
 
             wsConfig.onMessage(ctx -> {
@@ -112,5 +116,16 @@ public class ChatSocket extends ControladorClass {
         }
 
         return document.toString();
+    }
+
+    private void enviarUsuariosConectadosAdmin(Session adminSession) throws IOException {
+        // Itera sobre los usuarios conectados y envía sus nombres y sesiones al administrador
+        for (Map.Entry<Session, String> entry : userSessions.entrySet()) {
+            String nombreUser = entry.getValue();
+            String sessionId = entry.getKey().getRemote().toString(); // Aquí deberías obtener el ID de la sesión del usuario de manera adecuada
+
+            // Envía el mensaje al administrador
+            adminSession.getRemote().sendString("1" + nombreUser + ":" + sessionId);
+        }
     }
 }

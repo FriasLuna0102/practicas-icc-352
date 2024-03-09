@@ -48,6 +48,8 @@ dependencies {
     //Driver de la conexión en h2...
     implementation 'com.h2database:h2:2.1.214'
     implementation 'org.postgresql:postgresql:42.3.8'
+
+    implementation 'com.google.code.gson:gson:2.8.8' // Actualiza a la última versión disponible
 }
 
 
