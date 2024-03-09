@@ -21,6 +21,7 @@ public class ChatSocket extends ControladorClass {
     public ChatSocket(Javalin app) {
         super(app);
     }
+    Queue<String> colaUsuarios = new LinkedList<>();
 
     @Override
     public void aplicarRutas(){
@@ -37,6 +38,12 @@ public class ChatSocket extends ControladorClass {
 
                 // Enviar la lista de usuarios conectados al administrador recién conectado
                 enviarUsuariosConectadosAdmin(ctx.session);
+
+                // Revisar la cola de usuarios y enviar la información de todos los usuarios en la cola al administrador
+                while (!colaUsuarios.isEmpty()) {
+                    String infoUsuario = colaUsuarios.remove();
+                    ctx.session.getRemote().sendString(infoUsuario);
+                }
             });
 
             wsConfig.onMessage(ctx -> {
@@ -71,16 +78,25 @@ public class ChatSocket extends ControladorClass {
                 //Enviando id a usuario para que este lo almacene
                 ctx.session.getRemote().sendString(ctx.getSessionId() + "[ID]");
 
-                //Enviando nombre de usuario para visualizar en chat de admin
-                for (Map.Entry<Session,String> entry : adminSesions.entrySet()){
-                    // URGENTE : 1 sera el identificador para nombre de usuario, cambiar
-                    entry.getKey().getRemote().sendString("1" + nombreUser + ":" + ctx.getSessionId());
-                }
-
                 // Guardando nuevo chat
                 HistorialChatUsuario historial = new HistorialChatUsuario(ctx.getSessionId(), nombreUser, null);
                 historialChatUsuarios.add(historial);
+
+                // Preparar la información del usuario
+                String infoUsuario = "1" + nombreUser + ":" + ctx.getSessionId();
+
+                // Verificar si hay alguna sesión de administrador activa
+                if (!adminSesions.isEmpty()) {
+                    // Si hay una, enviar la información del usuario directamente al administrador
+                    for (Map.Entry<Session,String> entry : adminSesions.entrySet()){
+                        entry.getKey().getRemote().sendString(infoUsuario);
+                    }
+                } else {
+                    // Si no hay ninguna, agregar la información del usuario a la cola
+                    colaUsuarios.add(infoUsuario);
+                }
             });
+
 
             wsConfig.onMessage(ctx -> {
 
