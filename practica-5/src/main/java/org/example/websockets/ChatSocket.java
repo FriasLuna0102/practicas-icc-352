@@ -36,8 +36,6 @@ public class ChatSocket extends ControladorClass {
                 // Mandar al socket su id de sesion
                 ctx.session.getRemote().sendString(ctx.getSessionId() + "[@#Id#@]");
 
-                // Enviar la lista de usuarios conectados al administrador recién conectado
-                enviarUsuariosConectadosAdmin(ctx.session);
 
                 // Revisar la cola de usuarios y enviar la información de todos los usuarios en la cola al administrador
                 while (!colaUsuarios.isEmpty()) {
