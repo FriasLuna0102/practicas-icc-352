@@ -69,29 +69,33 @@ function addUsuarioToLista(nombre, session) {
 }
 
 function conectar() {
-  webSocket = new WebSocket("ws://" + location.hostname + ":" + location.port + "/admin-chat?adminName=" + nombreAdmin + "&id=" + id);
+    webSocket = new WebSocket("ws://" + location.hostname + ":" + location.port + "/admin-chat?adminName=" + nombreAdmin + "&id=" + id);
 
-  //indicando los eventos:
-  webSocket.onmessage = function (data) {
-    let mensaje = data.data
+    //indicando los eventos:
+    webSocket.onmessage = function (data) {
+        let mensaje = data.data
 
-    if (mensaje.charAt(0) === '1') {
-      let separador = mensaje.indexOf(':');
-      let nombre = mensaje.substring(1, separador);
-      let session = mensaje.substring(separador + 1);
-      
-      addUsuarioToLista(nombre, session)
-      
-    } else if (mensaje.endsWith("[@#Id#@]")) {
-        idSession = mensaje.substring(0, mensaje.indexOf("[@#Id#@]"))
-    } else{
+        if (mensaje.charAt(0) === '1') {
+            let separador = mensaje.indexOf(':');
+            let nombre = mensaje.substring(1, separador);
+            let session = mensaje.substring(separador + 1);
 
-      $("#chat").append(mensaje);
-    }
-  };
-  webSocket.onopen = function (e) {console.log("Conectado - status " + this.readyState);};
-  webSocket.onclose = function (e) {
-    console.log("Desconectado - status " + this.readyState);
-  };
+            addUsuarioToLista(nombre, session)
+
+        } else if (mensaje.endsWith("[@#Id#@]")) {
+            idSession = mensaje.substring(0, mensaje.indexOf("[@#Id#@]"))
+        } else{
+
+            $("#chat").append(mensaje);
+        }
+    };
+    webSocket.onopen = function (e) {console.log("Conectado - status " + this.readyState);};
+    webSocket.onclose = function (e) {
+        console.log("Desconectado - status " + this.readyState);
+        // Reconectar después de un retraso
+        setTimeout(conectar, 5000);
+    };
 }
+
+
 

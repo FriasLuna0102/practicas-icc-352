@@ -31,27 +31,31 @@ function insertarMensajeUsuario(mensaje) {
 }
 
 function conectar() {
-  webSocket = new WebSocket("ws://" + location.hostname + ":" + location.port + "/user-chat?nombre=" + nombreUser + "&ruta=" + ruta);
+    webSocket = new WebSocket("ws://" + location.hostname + ":" + location.port + "/user-chat?nombre=" + nombreUser + "&ruta=" + ruta);
 
-  //Cuando recibe mensaje del servidor (admin)
-  webSocket.onmessage = function (event) {
-    var message = event.data;
-    console.log(message);
-    if (message.endsWith("[ID]")) {
+    //Cuando recibe mensaje del servidor (admin)
+    webSocket.onmessage = function (event) {
+        var message = event.data;
+        console.log(message);
+        if (message.endsWith("[ID]")) {
 
-      // Este mensaje contiene el ID de sesión
-      var sessionId = message.substring(0, message.length - "[ID]".length);
+            // Este mensaje contiene el ID de sesión
+            var sessionId = message.substring(0, message.length - "[ID]".length);
 
-    } else {
-      $("#chat").append(message);
-    }
-  };
+        } else {
+            $("#chat").append(message);
+        }
+    };
 
-  webSocket.onopen = function () {
-    console.log("Conectado - status " + this.readyState);
-  };
-  webSocket.onclose = function () {
-    console.log("Desconectado - status " + this.readyState);
-  };
+    webSocket.onopen = function () {
+        console.log("Conectado - status " + this.readyState);
+    };
+    webSocket.onclose = function () {
+        console.log("Desconectado - status " + this.readyState);
+        // Reconectar después de un retraso
+        setTimeout(conectar, 5000);
+    };
 }
+
+
 
