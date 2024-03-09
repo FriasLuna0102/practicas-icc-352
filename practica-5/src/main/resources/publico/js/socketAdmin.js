@@ -16,43 +16,30 @@ $(document).ready(function () {
     input.value = "";
   });
 
-    $(document).on('click', '.chatter', async function(event) {
-        // Evitar el comportamiento predeterminado del enlace
-        event.preventDefault();
+  $(document).on('click', '.chatter', function(event) {
+    // Evitar el comportamiento predeterminado del enlace
+    event.preventDefault();
 
-        // Desconectar del chat actual
-        try {
-            await $.ajax({
-                url: '/desconectar?idSessionAdmin=' + idSession,
-                type: 'GET'
-            });
-            console.log("Desconectado del chat anterior");
-        } catch (error) {
-            console.error(error);
-        }
+    // Obtener la URL de la página desde el atributo "data-url" del enlace
+    let url = '/historial?websocket=' + $(this).attr('href') + "&idSessionAdmin=" + idSession;
 
-        // Conectar al nuevo chat
-        let url = '/historial?websocket=' + $(this).attr('href') + "&idSessionAdmin=" + idSession;
 
-        // Realizar una solicitud AJAX para obtener el contenido de la página
-        $.ajax({
-            url: url,
-            type: 'GET',
-            success: function(response) {
+    // Realizar una solicitud AJAX para obtener el contenido de la página
+    $.ajax({
+      url: url,
+      type: 'GET',
+      success: function(response) {
 
-                // Actualizar el contenido del div "chat" con el contenido modificado
-                $('#chat').html(response);
-                console.log(response)
-            },
-            error: function(xhr, status, error) {
-                // Manejar errores si la solicitud AJAX falla
-                console.error(error);
-            }
-        });
+        // Actualizar el contenido del div "chat" con el contenido modificado
+        $('#chat').html(response);
+        console.log(response)
+      },
+      error: function(xhr, status, error) {
+        // Manejar errores si la solicitud AJAX falla
+        console.error(error);
+      }
     });
-
-
-
+  });
 
 });
 
@@ -106,7 +93,7 @@ function conectar() {
     webSocket.onclose = function (e) {
         console.log("Desconectado - status " + this.readyState);
         // Reconectar después de un retraso
-        setTimeout(conectar, 5000);
+        setTimeout(conectar, 1000);
     };
 }
 

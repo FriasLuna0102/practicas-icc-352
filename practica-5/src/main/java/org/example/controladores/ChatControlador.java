@@ -64,27 +64,35 @@ public class ChatControlador extends ControladorClass {
                 });
 
                 app.get("/historial", context -> {
-					String socket = context.queryParam("websocket");
-					String idSessionAdmin = context.queryParam("idSessionAdmin");
-					StringBuilder stringBuilder = new StringBuilder();
+                    String socket = context.queryParam("websocket");
+                    String idSessionAdmin = context.queryParam("idSessionAdmin");
+                    StringBuilder stringBuilder = new StringBuilder();
 
-					for (HistorialChatUsuario historialChatUsuario: ChatSocket.historialChatUsuarios){
-						System.out.println(historialChatUsuario.getSession() + "\n" + socket);
-						if (historialChatUsuario.getSession().equals(socket)){
-							int i = historialChatUsuario.getMensajes().size();
-							historialChatUsuario.setAdminSession(idSessionAdmin);
+                    // Eliminar el idSessionAdmin de todos los historialChatUsuario
+                    for (HistorialChatUsuario historialChatUsuario: ChatSocket.historialChatUsuarios){
+                        if (historialChatUsuario.getAdminSession() != null && historialChatUsuario.getAdminSession().equals(idSessionAdmin)){
+                            historialChatUsuario.setAdminSession(null);
+                        }
+                    }
 
-							for (int k = 0; k < i; k++){
-								stringBuilder.append(historialChatUsuario.getMensajes().get(k));
-								stringBuilder.append("\n");
-							}
-						}
-					}
+                    // Establecer el idSessionAdmin para el chat actual
+                    for (HistorialChatUsuario historialChatUsuario: ChatSocket.historialChatUsuarios){
+                        if (historialChatUsuario.getSession().equals(socket)){
+                            int i = historialChatUsuario.getMensajes().size();
+                            historialChatUsuario.setAdminSession(idSessionAdmin);
 
-					String resultado = invertirChat(stringBuilder.toString());
-					context.result(resultado);
-				});
-			});
+                            for (int k = 0; k < i; k++){
+                                stringBuilder.append(historialChatUsuario.getMensajes().get(k));
+                                stringBuilder.append("\n");
+                            }
+                        }
+                    }
+
+                    String resultado = invertirChat(stringBuilder.toString());
+                    context.result(resultado);
+                });
+
+            });
 		});
 	}
 
