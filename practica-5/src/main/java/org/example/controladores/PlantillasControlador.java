@@ -78,7 +78,6 @@ public class PlantillasControlador extends ControladorClass {
                     //List<Articulo> lisAr = ArticuloServices.getInstancia().obtenerArticulosConEtiquetasPorPagina(1,5);
                     List<Comentario> lisU = UsuarioServices.getInstancia().obtenerUsuariosConComentarios();
                     cxt.json(lisU);
-                    System.out.println("hey");
                 });
 
                 // Controlador para manejar solicitudes AJAX de paginación
