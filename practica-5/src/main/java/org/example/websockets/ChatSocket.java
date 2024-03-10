@@ -38,7 +38,7 @@ public class ChatSocket extends ControladorClass {
                 adminSesions.put(ctx.session, sessionId);
                 adminInfo.put(sessionId, ctx.session);
 
-                System.out.println("Admin conectado");
+                System.out.println("Admin conectadoo");
 
                 // Mandar al socket su id de sesion
                 ctx.session.getRemote().sendString(sessionId + "[@#Id#@]");
