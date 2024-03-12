@@ -4,12 +4,25 @@ import io.javalin.Javalin;
 import io.javalin.http.staticfiles.Location;
 import io.javalin.rendering.JavalinRenderer;
 import io.javalin.rendering.template.JavalinThymeleaf;
+import org.example.services.BootStrapServices;
 
 public class Main {
+    private static String modoConexion = "";
+
     public static void main(String[] args) {
 
 
-        System.out.println("hey");
+
+        if(args.length >= 1){
+            modoConexion = args[0];
+            System.out.println("Modo de Operacion: "+modoConexion);
+        }
+
+        //Iniciando la base de datos.
+        if(modoConexion.isEmpty()) {
+            System.out.println("hey");
+            BootStrapServices.getInstancia().init();
+        }
 
         Javalin app = Javalin.create(config ->{
             //configurando los documentos estaticos.
@@ -37,6 +50,11 @@ public class Main {
             return Integer.parseInt(processBuilder.environment().get("PORT"));
         }
         return 7000; //Retorna el puerto por defecto en caso de no estar en Heroku.
+    }
+
+
+    public static String getModoConexion(){
+        return modoConexion;
     }
 
 }
