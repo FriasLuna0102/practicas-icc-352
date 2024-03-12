@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/formulario.css">
+    <title>Formulario de Captura</title>
+</head>
+<body>
+<h1>Formulario de Captura</h1>
+<form id="formularioCaptura" action="/captura" method="post">
+    <div>
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required>
+    </div>
+    <div>
+        <label for="sector">Sector:</label>
+        <input type="text" id="sector" name="sector" required>
+    </div>
+    <div>
+        <label for="nivelEscolar">Nivel Escolar:</label>
+        <select id="nivelEscolar" name="nivelEscolar" required>
+            <option value="">Seleccione un nivel</option>
+            <option value="Básico">Básico</option>
+            <option value="Medio">Medio</option>
+            <option value="Grado Universitario">Grado Universitario</option>
+            <option value="Postgrado">Postgrado</option>
+            <option value="Doctorado">Doctorado</option>
+        </select>
+    </div>
+    <!-- Usuario que registró el formulario (puede ser un campo oculto prellenado por la aplicación) -->
+    <input type="hidden" id="usuario" name="usuario" value="NombreUsuario">
+
+    <button type="submit">Enviar</button>
+</form>
+</body>
+</html>

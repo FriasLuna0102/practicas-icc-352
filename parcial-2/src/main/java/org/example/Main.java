@@ -40,7 +40,18 @@ public class Main {
         app.start(getHerokuAssignedPort());
 
         app.get("/", cxt ->{
-            cxt.result("Inicio.");
+            cxt.redirect("/html/formulario.html");
+        });
+
+        app.post("/captura", cxt ->{
+            String nombre = cxt.formParam("nombre");
+            String sector = cxt.formParam("sector");
+            String nivelEscolar = cxt.formParam("nivelEscolar");
+
+            System.out.println(nombre);
+            System.out.println(sector);
+            System.out.println(nivelEscolar);
+
         });
     }
 
