@@ -30,4 +30,13 @@ public class RolesServices extends GestionDb<RolesApp>{
         return em.find(RolesApp.class, codigo);
     }
 
+    public List<RolesApp> obtenerTodosLosRoles() {
+        EntityManager em = getEntityManager();
+        try {
+            return em.createQuery("SELECT u FROM RolesApp u", RolesApp.class).getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
 }

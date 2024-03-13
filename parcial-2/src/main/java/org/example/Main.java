@@ -44,7 +44,7 @@ public class Main {
         listRole.add(RolesServices.getInstancia().findByCodigo("1"));
 
         List<RolesApp> listRole2 = new ArrayList<>();
-        //listRole2.add(RolesServices.getInstancia().findByCodigo("1"));
+        listRole2.add(RolesServices.getInstancia().findByCodigo("1"));
         listRole2.add(RolesServices.getInstancia().findByCodigo("2"));
 
 

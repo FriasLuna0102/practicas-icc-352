@@ -32,7 +32,7 @@
 
         <td th:text="${user.nombreRoles}"></td>
         <td th:unless="${user.getUsuario} == ${usuario.getUsuario}">
-            <a th:href="'/blogUsuario/plantillaUsuarioModificar?username=' + ${user.getUsuario}"><button type="button" class="btn btn-warning btn-sm">Modificar</button></a>
+            <a th:href="'/plantillaGeneral/plantillaUsuarioModificar?username=' + ${user.getUsuario}"><button type="button" class="btn btn-warning btn-sm">Modificar</button></a>
 
             <a th:href="'/blogUsuario/eliminarUsuario?username=' + ${user.getUsuario}"><button type="button"
                                                                                              class="btn btn-danger btn-sm">Eliminar</button>
@@ -42,6 +42,11 @@
     </tbody>
 </table>
 
+<div class="container" >
+
+    <button class="styled-button" onclick="window.location.href = '/plantillaGeneral/plantillaCrearUsuario'" > Registrar Usuario</button>
+
+</div>
 <!-- Botón de atrás -->
 <div class="container" >
 

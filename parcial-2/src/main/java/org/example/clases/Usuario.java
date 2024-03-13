@@ -20,7 +20,7 @@ public class Usuario implements Serializable {
     //lo estaremos utilizando para los roles.
 //    @ManyToMany
 //    private Set<RolesApp> listaRoles;
-    @OneToMany (fetch = FetchType.EAGER)
+    @ManyToMany (fetch = FetchType.EAGER)
     private List<RolesApp> listaRoles;
 
     public Usuario(String usuario, String nombre, String password, List<RolesApp> listaRoles) {
@@ -28,6 +28,14 @@ public class Usuario implements Serializable {
         this.nombre = nombre;
         this.password = password;
         this.listaRoles = listaRoles;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public Usuario() {
