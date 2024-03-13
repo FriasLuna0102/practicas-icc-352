@@ -5,6 +5,7 @@ import io.javalin.http.staticfiles.Location;
 import io.javalin.rendering.JavalinRenderer;
 import io.javalin.rendering.template.JavalinThymeleaf;
 import org.example.clases.Usuario;
+import org.example.controladores.Formulario;
 import org.example.controladores.Login;
 import org.example.services.BootStrapServices;
 import org.example.services.RolesServices;
@@ -64,22 +65,13 @@ public class Main {
 
         //Llmadas de controladores:
         new Login(app).aplicarRutas();
+        new Formulario(app).aplicarRutas();
 
 
         app.get("/", cxt ->{
             cxt.redirect("/login");
         });
 
-        app.post("/captura", cxt ->{
-            String nombre = cxt.formParam("nombre");
-            String sector = cxt.formParam("sector");
-            String nivelEscolar = cxt.formParam("nivelEscolar");
-
-            System.out.println(nombre);
-            System.out.println(sector);
-            System.out.println(nivelEscolar);
-
-        });
     }
 
     static int getHerokuAssignedPort() {
