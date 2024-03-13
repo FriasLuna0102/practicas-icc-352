@@ -36,19 +36,21 @@
         <input id="altitud" type="hidden" name="altitud">
         <input id="longitud" type="hidden" name="longitud">
 
-        <button type="submit">Enviar</button>
+        <button id="form-send" type="submit" disabled>Enviar</button>
     </form>
 
     <script>
 
         let altitud = document.getElementById("altitud");
         let longitud = document.getElementById("longitud");
+        let enviar = document.getElementById("form-send");
 
         function success(position) {
             console.log(position.coords.latitude)
             altitud.value = position.coords.latitude
             console.log(position.coords.longitude)
             longitud.value = position.coords.longitude
+            enviar.disabled = false
         }
 
         navigator.geolocation.getCurrentPosition(success);
