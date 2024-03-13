@@ -36,7 +36,7 @@ public class Login extends ControladorClass {
                     // Si las credenciales coinciden, establecer el usuario en la sesión y redirigir
                     //Blog.getInstance().setUsuario(usuario);
                     cxt.sessionAttribute("currentUser", usuario);
-                    cxt.redirect("/formulario");
+                    cxt.render("publico/html/formulario.html");
                     return;
                 }
             }

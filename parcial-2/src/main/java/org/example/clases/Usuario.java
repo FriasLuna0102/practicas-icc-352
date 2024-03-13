@@ -19,7 +19,7 @@ public class Usuario implements Serializable {
     //lo estaremos utilizando para los roles.
 //    @ManyToMany
 //    private Set<RolesApp> listaRoles;
-    @ManyToMany
+    @OneToMany
     private List<RolesApp> listaRoles;
 
     public Usuario(String usuario, String nombre, String password, List<RolesApp> listaRoles) {

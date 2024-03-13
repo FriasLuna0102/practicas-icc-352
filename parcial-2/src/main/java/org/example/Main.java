@@ -7,6 +7,7 @@ import io.javalin.rendering.template.JavalinThymeleaf;
 import org.example.clases.Usuario;
 import org.example.controladores.Login;
 import org.example.services.BootStrapServices;
+import org.example.services.RolesServices;
 import org.example.services.UsuarioServices;
 import org.example.util.ControladorClass;
 import org.example.util.RolesApp;
@@ -36,11 +37,14 @@ public class Main {
 
         List<RolesApp> listRole = new ArrayList<>();
         listRole.add(new RolesApp());
+
+        RolesServices.getInstancia().crear(listRole.get(0));
+
         Usuario usuario1 = new Usuario("admin","RanStar","admin",listRole );
 
-        if (UsuarioServices.getInstancia().findAllByUsername(usuario1.getUsuario()) == null) {
+        //if (UsuarioServices.getInstancia().findAllByUsername(usuario1.getUsuario()) == null) {
             UsuarioServices.getInstancia().crear(usuario1);
-        }
+        //}
 
 
         Javalin app = Javalin.create(config ->{
