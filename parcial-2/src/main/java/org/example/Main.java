@@ -5,6 +5,7 @@ import io.javalin.http.staticfiles.Location;
 import io.javalin.rendering.JavalinRenderer;
 import io.javalin.rendering.template.JavalinThymeleaf;
 import org.example.clases.Usuario;
+import org.example.controladores.AdministrarUsuario;
 import org.example.controladores.Formulario;
 import org.example.controladores.Login;
 import org.example.controladores.PlantillaGeneral;
@@ -68,6 +69,7 @@ public class Main {
         new Login(app).aplicarRutas();
         new Formulario(app).aplicarRutas();
         new PlantillaGeneral(app).aplicarRutas();
+        new AdministrarUsuario(app).aplicarRutas();
 
         app.get("/", cxt ->{
             cxt.redirect("/login");
