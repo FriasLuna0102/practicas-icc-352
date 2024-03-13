@@ -29,6 +29,8 @@ public class Formulario extends ControladorClass {
             String nombre = context.formParam("nombre");
             String sector = context.formParam("sector");
             String nivelEscolar = context.formParam("nivelEscolar");
+
+            // Implementar seguridad para que esto no sea null en caso de que el usuario bloquee la ubicacion
             double altitud = Double.parseDouble(context.formParam("altitud"));
             double longitud = Double.parseDouble(context.formParam("longitud"));
 
@@ -38,6 +40,7 @@ public class Formulario extends ControladorClass {
             System.out.println(altitud);
             System.out.println(longitud);
 
+            context.redirect("/formulario");
         });
     }
 }
