@@ -38,7 +38,7 @@ public class Main {
         List<RolesApp> listRole = new ArrayList<>();
         listRole.add(new RolesApp());
 
-        RolesServices.getInstancia().crear(listRole.get(0));
+        RolesServices.getInstancia().crear(listRole.getFirst());
 
         Usuario usuario1 = new Usuario("admin","RanStar","admin",listRole );
 
