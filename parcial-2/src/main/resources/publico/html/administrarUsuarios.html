@@ -29,7 +29,8 @@
         <td th:text="${user.getNombre}"></td>
         <td th:text="${user.getUsuario}"></td>
         <td th:text="${user.getPassword}"></td>
-<!--        <td th:text="${user.getListaRoles}"></td>-->
+
+        <td th:text="${user.nombreRoles}"></td>
         <td th:unless="${user.getUsuario} == ${usuario.getUsuario}">
             <a th:href="'/blogUsuario/plantillaUsuarioModificar?username=' + ${user.getUsuario}"><button type="button" class="btn btn-warning btn-sm">Modificar</button></a>
 

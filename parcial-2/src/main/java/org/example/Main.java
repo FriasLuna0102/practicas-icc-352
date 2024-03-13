@@ -37,16 +37,24 @@ public class Main {
             BootStrapServices.getInstancia().init();
         }
 
+        RolesServices.getInstancia().crear(new RolesApp("1","admin"));
+        RolesServices.getInstancia().crear(new RolesApp("2","usuario"));
 
         List<RolesApp> listRole = new ArrayList<>();
-        listRole.add(new RolesApp());
+        listRole.add(RolesServices.getInstancia().findByCodigo("1"));
 
-        RolesServices.getInstancia().crear(listRole.getFirst());
+        List<RolesApp> listRole2 = new ArrayList<>();
+        //listRole2.add(RolesServices.getInstancia().findByCodigo("1"));
+        listRole2.add(RolesServices.getInstancia().findByCodigo("2"));
 
-        Usuario usuario1 = new Usuario("admin","RanStar","admin",listRole );
+
+        Usuario usuario1 = new Usuario("admin","RanStar","admin",listRole);
+        Usuario usuario2 = new Usuario("star","Starlin","123",listRole2);
 
         //if (UsuarioServices.getInstancia().findAllByUsername(usuario1.getUsuario()) == null) {
             UsuarioServices.getInstancia().crear(usuario1);
+            UsuarioServices.getInstancia().crear(usuario2);
+
         //}
 
 

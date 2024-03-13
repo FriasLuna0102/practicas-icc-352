@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.example.util.RolesApp;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -19,7 +20,7 @@ public class Usuario implements Serializable {
     //lo estaremos utilizando para los roles.
 //    @ManyToMany
 //    private Set<RolesApp> listaRoles;
-    @OneToMany
+    @OneToMany (fetch = FetchType.EAGER)
     private List<RolesApp> listaRoles;
 
     public Usuario(String usuario, String nombre, String password, List<RolesApp> listaRoles) {
@@ -63,5 +64,13 @@ public class Usuario implements Serializable {
 
     public void setListaRoles(List<RolesApp> listaRoles) {
         this.listaRoles = listaRoles;
+    }
+
+    public List<String> nombreRoles() {
+        List<String> nombresRoles = new ArrayList<>();
+        for(RolesApp rol : listaRoles){
+            nombresRoles.add(rol.getDescripcion());
+        }
+        return nombresRoles;
     }
 }
