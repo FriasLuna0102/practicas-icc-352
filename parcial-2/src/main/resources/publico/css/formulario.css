@@ -79,7 +79,7 @@ input[type="hidden"] {
     transition: 0.3s;
 }
 
-/* Cambia el color de fondo cuando se pasa el mouse sobre el botón */
+/* Cambia el color de fondo cuando se pasa el mouse sobre el botón  */
 .styled-button:hover {
     background-color: #45a049;
 }
