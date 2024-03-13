@@ -7,7 +7,7 @@
 
         <properties>
             <!--<property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:test" />-->
-            <property name="jakarta.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/frias" />
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/friasRandae" />
             <property name="jakarta.persistence.jdbc.driver" value="org.h2.Driver" />
             <property name="jakarta.persistence.jdbc.user" value="sa" />
             <property name="jakarta.persistence.jdbc.password" value="" />
@@ -19,7 +19,7 @@
             <!-- ver la documentación: https://docs.oracle.com/javaee/7/tutorial/persistence-intro005.htm -->
 
             <!-- Se deseamos que la informacion permanezca en la base de datos comentar el create-drop -->
-            <!-- <property name="jakarta.persistence.schema-generation.database.action" value="create-drop" /> -->
+             <property name="jakarta.persistence.schema-generation.database.action" value="create-drop" />
             <!--<property name="eclipselink.logging.level" value="ALL" />-->
         </properties>
     </persistence-unit>
@@ -28,7 +28,6 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <class>org.example.clases.Usuario</class>
-
 
         <properties>
             <property name="hibernate.archive.autodetection" value="class"/>

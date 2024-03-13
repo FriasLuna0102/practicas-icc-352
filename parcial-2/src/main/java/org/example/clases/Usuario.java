@@ -1,30 +1,44 @@
 package org.example.clases;
 
+import jakarta.persistence.*;
 import org.example.util.RolesApp;
 
+import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
-public class Usuario {
+@Entity
+public class Usuario implements Serializable {
 
-    private String usuario;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    private String username;
     private String nombre;
     private String password;
     //lo estaremos utilizando para los roles.
-    private Set<RolesApp> listaRoles;
+//    @ManyToMany
+//    private Set<RolesApp> listaRoles;
+    @ManyToMany
+    private List<RolesApp> listaRoles;
 
-    public Usuario(String usuario, String nombre, String password, Set<RolesApp> listaRoles) {
-        this.usuario = usuario;
+    public Usuario(String usuario, String nombre, String password, List<RolesApp> listaRoles) {
+        this.username = usuario;
         this.nombre = nombre;
         this.password = password;
         this.listaRoles = listaRoles;
     }
 
+    public Usuario() {
+
+    }
+
     public String getUsuario() {
-        return usuario;
+        return username;
     }
 
     public void setUsuario(String usuario) {
-        this.usuario = usuario;
+        this.username = usuario;
     }
 
     public String getNombre() {
@@ -43,11 +57,11 @@ public class Usuario {
         this.password = password;
     }
 
-    public Set<RolesApp> getListaRoles() {
+    public List<RolesApp> getListaRoles() {
         return listaRoles;
     }
 
-    public void setListaRoles(Set<RolesApp> listaRoles) {
+    public void setListaRoles(List<RolesApp> listaRoles) {
         this.listaRoles = listaRoles;
     }
 }
