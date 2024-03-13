@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/admnistrarUsuario.css">
+    <title>Listado de Usuarios</title>
+
+</head>
+
+<body>
+<h2>Listado de Usuarios</h2>
+<table>
+    <thead>
+    <tr>
+        <!-- <th>Fecha de Creación</th> -->
+        <th>Nombre</th>
+        <th>Username</th>
+        <th>Password</th>
+        <th>Rol</th>
+        <th>Opciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${listUsuario}">
+        <td th:text="${user.getNombre}"></td>
+        <td th:text="${user.getUsuario}"></td>
+        <td th:text="${user.getPassword}"></td>
+
+        <td th:text="${user.nombreRoles}"></td>
+        <td th:unless="${user.getUsuario} == ${usuario.getUsuario}">
+            <a th:href="'/plantillaGeneral/plantillaUsuarioModificar?username=' + ${user.getUsuario}"><button type="button" class="btn btn-warning btn-sm">Modificar</button></a>
+
+            <a th:href="'/blogUsuario/eliminarUsuario?username=' + ${user.getUsuario}"><button type="button"
+                                                                                             class="btn btn-danger btn-sm">Eliminar</button>
+            </a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="container" >
+
+    <button class="styled-button" onclick="window.location.href = '/plantillaGeneral/plantillaCrearUsuario'" > Registrar Usuario</button>
+
+</div>
+<!-- Botón de atrás -->
+<div class="container" >
+
+        <button class="styled-button" onclick="goBack()" > Atras</button>
+
+</div>
+
+<style>
+
+</style>
+
+<script>
+    // Función para retroceder en la historia del navegador al hacer clic en el botón
+    function goBack() {
+        window.history.back();
+    }
+</script>
+
+</body>
+
+</html>

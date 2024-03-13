@@ -16,11 +16,8 @@ public class RolesApp implements Serializable {
     private String codigo;
     private String descripcion;
 
-    @OneToOne
-    private Usuario user;
 
-    public RolesApp(Long id, String codigo, String descripcion) {
-        this.id = id;
+    public RolesApp(String codigo, String descripcion) {
         this.codigo = codigo;
         this.descripcion = descripcion;
     }

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title style="color: red;">Modificar Usuario</title>
+    <link href="/css/crearUsuario.css" rel="stylesheet">
+</head>
+
+
+<style>
+    body {
+        background-image: url("/img/360_F_391461057_5P0BOWl4lY442Zoo9rzEeJU0S2c1WDZR.jpg");
+    }
+</style>
+
+<body>
+<h2 style="background-color: #007bff">Modificar Usuario</h2>
+<form th:action="'/plantillaGeneral/modificarUsuario?username' + ${usuario.getUsuario}" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="idUsername" th:value="${usuario.getId}" />
+    <label for="username">Nombre de Usuario:</label><br>
+    <input type="text" id="username" name="username" th:value="${usuario.getUsuario}" required><br>
+
+    <label for="nombre">Nombre:</label><br>
+    <input type="text" id="nombre" name="nombre" th:value="${usuario.getNombre}" required><br>
+
+    <label for="password">Contrasena:</label><br>
+    <input type="text" id="password" name="password" th:value="${usuario.getPassword}" required><br>
+
+<!--    <input type="checkbox" id="isAdmin" name="isAdmin" th:checked="${usuario.isAdministrator}">-->
+<!--    <label for="isAdmin">Administrador</label><br>-->
+
+<!--    <input type="checkbox" id="isAutor" name="isAutor" th:checked="${usuario.isAutor}" >-->
+<!--    <label for="isAutor">Autor</label><br>-->
+
+
+    <button type="submit">Modificar</button>
+</form>
+
+</body>
+
+</html>
