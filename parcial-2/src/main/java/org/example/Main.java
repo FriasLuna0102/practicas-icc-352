@@ -7,6 +7,7 @@ import io.javalin.rendering.template.JavalinThymeleaf;
 import org.example.clases.Usuario;
 import org.example.controladores.Formulario;
 import org.example.controladores.Login;
+import org.example.controladores.PlantillaGeneral;
 import org.example.services.BootStrapServices;
 import org.example.services.RolesServices;
 import org.example.services.UsuarioServices;
@@ -66,7 +67,7 @@ public class Main {
         //Llmadas de controladores:
         new Login(app).aplicarRutas();
         new Formulario(app).aplicarRutas();
-
+        new PlantillaGeneral(app).aplicarRutas();
 
         app.get("/", cxt ->{
             cxt.redirect("/login");

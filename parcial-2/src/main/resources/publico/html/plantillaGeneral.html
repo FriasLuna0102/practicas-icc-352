@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body{
+            background-image: url("/img/6fe01f5fbe372a2b045f66a79be7b210.jpg");
+            background-size: cover;
+            background-repeat: no-repeat;
+            width: 100%;
+            height: 100%;
+        }
+
+        h1{
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="navbar-header">
+        <!-- Botón de Login -->
+        <span th:if="${usuario != null}">
+
+                <span th:text="${usuario.nombre}" style="color: white;"></span>
+                <a class="btn btn-sm btn-primary navbar-btn" href="/logout">Logout</a>
+
+            </span>
+        <!-- Nombre del usuario -->
+        <span th:if="${usuario == null}">
+                <a class="btn btn-sm btn-primary navbar-btn" href="/login">Login</a>
+
+            </span>
+        <!-- ... -->
+    </div>
+
+
+
+</nav>
+
+
+<div class="container mt-5 text-center">
+
+    <h1>Bienvenido <span th:text="${usuario.getNombre}"></span></h1>
+</div>
+
+<div class="container mt-5 text-center">
+    <div class="my-3">
+        <button class="btn btn-primary" onclick="window.location.href = '/plantillaGeneral/formulario';">Formulario</button>
+    </div>
+
+    <div class="my-3">
+        <button class="btn btn-secondary">Mapa</button>
+    </div>
+
+    <div class="my-3">
+        <button class="btn btn-success">Administrar Usuarios</button>
+    </div>
+
+    <div class="my-3">
+        <button class="btn btn-danger">Sincronizar</button>
+    </div>
+
+    <div class="my-3">
+        <button class="btn btn-warning">Administrar Registros</button>
+    </div>
+</div>
+
+</body>
+</html>

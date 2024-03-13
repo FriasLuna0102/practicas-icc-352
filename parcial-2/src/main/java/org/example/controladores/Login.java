@@ -20,8 +20,8 @@ public class Login extends ControladorClass {
     @Override
     public void aplicarRutas() {
 
+
         app.get("/login",cxt->{
-            System.out.println("Entro");
             cxt.render("publico/html/login.html");
         });
 
@@ -36,7 +36,7 @@ public class Login extends ControladorClass {
                     // Si las credenciales coinciden, establecer el usuario en la sesión y redirigir
                     //Blog.getInstance().setUsuario(usuario);
                     cxt.sessionAttribute("currentUser", usuario);
-                    cxt.redirect("/formulario");
+                    cxt.redirect("/plantillaGeneral");
                     return;
                 }
             }
@@ -44,5 +44,12 @@ public class Login extends ControladorClass {
             // Si ninguna credencial coincide o no se encuentra el usuario, redirigir de nuevo a la página de inicio de sesión
             cxt.redirect("/login");
         });
+
+        app.before("/logout", ctx -> {
+            //invalidando la sesion.
+            ctx.req().getSession().invalidate();
+            ctx.redirect("/login");
+        });
+
     }
 }

@@ -4,6 +4,8 @@ import io.javalin.Javalin;
 import org.example.clases.Usuario;
 import org.example.util.ControladorClass;
 
+import static io.javalin.apibuilder.ApiBuilder.*;
+
 public class Formulario extends ControladorClass {
     public Formulario(Javalin app) {
         super(app);
@@ -12,18 +14,30 @@ public class Formulario extends ControladorClass {
     @Override
     public void aplicarRutas() {
 
-        app.before("/formulario", context -> {
-            Usuario currentUser = context.sessionAttribute("currentUser");
-            if(currentUser != null){
-                context.redirect("/html/formulario.html");
-            }else {
-                context.redirect("/login");
-            }
-        });
-        app.get("/formulario",context -> {
+        app.routes(()->{
 
-            context.render("publico/html/formulario.html");
+            path("/plantillaGeneral", () -> {
+
+                before("/formulario", context -> {
+                    Usuario currentUser = context.sessionAttribute("currentUser");
+                    if(currentUser != null){
+                        context.render("publico/html/formulario.html");
+                    }else {
+                        context.redirect("/login");
+                    }
+                });
+
+
+                get("/formulario",context -> {
+
+                    context.render("publico/html/formulario.html");
+                });
+
+
+            });
+
         });
+
 
         app.post("/captura", context ->{
             String nombre = context.formParam("nombre");
