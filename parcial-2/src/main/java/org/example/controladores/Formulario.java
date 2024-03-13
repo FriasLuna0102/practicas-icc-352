@@ -25,14 +25,18 @@ public class Formulario extends ControladorClass {
             context.render("publico/html/formulario.html");
         });
 
-        app.post("/captura", cxt ->{
-            String nombre = cxt.formParam("nombre");
-            String sector = cxt.formParam("sector");
-            String nivelEscolar = cxt.formParam("nivelEscolar");
+        app.post("/captura", context ->{
+            String nombre = context.formParam("nombre");
+            String sector = context.formParam("sector");
+            String nivelEscolar = context.formParam("nivelEscolar");
+            double altitud = Double.parseDouble(context.formParam("altitud"));
+            double longitud = Double.parseDouble(context.formParam("longitud"));
 
             System.out.println(nombre);
             System.out.println(sector);
             System.out.println(nivelEscolar);
+            System.out.println(altitud);
+            System.out.println(longitud);
 
         });
     }
