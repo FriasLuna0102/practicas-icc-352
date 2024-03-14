@@ -52,5 +52,10 @@ public class Login extends ControladorClass {
             ctx.redirect("/login");
         });
 
+        app.after("publico/manifest.appcache", context -> {
+            System.out.println("Cargando offline");
+            context.contentType("text/cache-manifest");
+        });
+
     }
 }

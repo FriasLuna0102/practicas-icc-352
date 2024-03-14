@@ -1,0 +1,9 @@
+CACHE:
+/html/login.html
+/html/login.css
+
+NETWORK:
+network.html
+
+FALLBACK:
+/ /html/login.html
