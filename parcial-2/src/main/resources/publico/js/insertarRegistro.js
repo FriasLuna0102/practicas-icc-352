@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
       await db.registros.add(registro);
       console.log("Registro exitoso");
+      console.log(registro)
     } catch (error) {
       console.error("Error en registro:", error);
     }

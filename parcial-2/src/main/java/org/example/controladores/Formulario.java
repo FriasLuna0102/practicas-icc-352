@@ -18,7 +18,7 @@ public class Formulario extends ControladorClass {
 
             path("/plantillaGeneral", () -> {
 
-                before("/formulario", context -> {
+                before("/*", context -> {
                     Usuario currentUser = context.sessionAttribute("currentUser");
                     if(currentUser != null){
                         context.render("publico/html/formulario.html");
@@ -33,28 +33,28 @@ public class Formulario extends ControladorClass {
                     context.render("publico/html/formulario.html");
                 });
 
+                post("/captura", context ->{
+                    String nombre = context.formParam("nombre");
+                    String sector = context.formParam("sector");
+                    String nivelEscolar = context.formParam("nivelEscolar");
+
+                    // Implementar seguridad para que esto no sea null en caso de que el usuario bloquee la ubicacion
+                    double altitud = Double.parseDouble(context.formParam("altitud"));
+                    double longitud = Double.parseDouble(context.formParam("longitud"));
+
+                    System.out.println(nombre);
+                    System.out.println(sector);
+                    System.out.println(nivelEscolar);
+                    System.out.println(altitud);
+                    System.out.println(longitud);
+
+                    //context.redirect("/plantillaGeneral/formulario");
+                });
 
             });
 
         });
 
 
-        app.post("/captura", context ->{
-            String nombre = context.formParam("nombre");
-            String sector = context.formParam("sector");
-            String nivelEscolar = context.formParam("nivelEscolar");
-
-            // Implementar seguridad para que esto no sea null en caso de que el usuario bloquee la ubicacion
-            double altitud = Double.parseDouble(context.formParam("altitud"));
-            double longitud = Double.parseDouble(context.formParam("longitud"));
-
-            System.out.println(nombre);
-            System.out.println(sector);
-            System.out.println(nivelEscolar);
-            System.out.println(altitud);
-            System.out.println(longitud);
-
-            //context.redirect("/plantillaGeneral/formulario");
-        });
     }
 }
