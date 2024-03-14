@@ -54,7 +54,7 @@ public class Formulario extends ControladorClass {
             System.out.println(altitud);
             System.out.println(longitud);
 
-            context.redirect("/formulario");
+            //context.redirect("/plantillaGeneral/formulario");
         });
     }
 }

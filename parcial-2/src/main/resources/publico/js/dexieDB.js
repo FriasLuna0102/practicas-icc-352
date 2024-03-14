@@ -1,5 +1,3 @@
-import Dexie from 'dexie';
-
 // Declarar base de datos
 const db = new Dexie("FormularioDB");
 db.version(1).stores({
@@ -7,4 +5,4 @@ db.version(1).stores({
   usuarios: "&username, nombre, password"
 });
 
-export default db;
+window.db = db
