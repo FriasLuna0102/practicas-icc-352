@@ -1,13 +1,24 @@
 package org.example.clases;
 
-public class Registro {
+import jakarta.persistence.*;
+
+import java.io.Serializable;
+
+@Entity
+public class Registro implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String nombre;
 
     private String sector;
     private String nivelEscolar;
+    @OneToOne
     private Usuario usuario;
     private double latitud;
     private double longitud;
+
 
     public Registro(String nombre, String sector, String nivelEscolar, Usuario usuario, double latitud, double longitud) {
         this.nombre = nombre;
@@ -16,6 +27,10 @@ public class Registro {
         this.usuario = usuario;
         this.latitud = latitud;
         this.longitud = longitud;
+    }
+
+    public Registro() {
+
     }
 
     public String getNombre() {
@@ -64,5 +79,13 @@ public class Registro {
 
     public void setLongitud(double longitud) {
         this.longitud = longitud;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

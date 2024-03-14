@@ -9,41 +9,41 @@
 </head>
 
 <body>
-    <h1>Formulario de Captura</h1>
-    <form id="formularioCaptura" action="/captura" method="post">
-        <div>
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre" required>
-        </div>
-        <div>
-            <label for="sector">Sector:</label>
-            <input type="text" id="sector" name="sector" required>
-        </div>
-        <div>
-            <label for="nivelEscolar">Nivel Escolar:</label>
-            <select id="nivelEscolar" name="nivelEscolar" required>
-                <option value="">Seleccione un nivel</option>
-                <option value="Básico">Básico</option>
-                <option value="Medio">Medio</option>
-                <option value="Grado Universitario">Grado Universitario</option>
-                <option value="Postgrado">Postgrado</option>
-                <option value="Doctorado">Doctorado</option>
-            </select>
-        </div>
-        <!-- Usuario que registró el formulario (puede ser un campo oculto prellenado por la aplicación) -->
-        <input type="hidden" id="usuario" name="usuario" value="NombreUsuario">
+<h1>Formulario de Captura</h1>
+<form id="formularioCaptura" action="/captura" method="post">
+    <div>
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required>
+    </div>
+    <div>
+        <label for="sector">Sector:</label>
+        <input type="text" id="sector" name="sector" required>
+    </div>
+    <div>
+        <label for="nivelEscolar">Nivel Escolar:</label>
+        <select id="nivelEscolar" name="nivelEscolar" required>
+            <option value="">Seleccione un nivel</option>
+            <option value="Básico">Básico</option>
+            <option value="Medio">Medio</option>
+            <option value="Grado Universitario">Grado Universitario</option>
+            <option value="Postgrado">Postgrado</option>
+            <option value="Doctorado">Doctorado</option>
+        </select>
+    </div>
+    <!-- Usuario que registró el formulario (puede ser un campo oculto prellenado por la aplicación) -->
+    <input type="hidden" id="usuario" name="usuario" th:value="${usuario.getId}"> <!-- Usando Thymeleaf para establecer el valor del nombre de usuario -->
 
-        <input id="altitud" type="hidden" name="altitud">
-        <input id="longitud" type="hidden" name="longitud">
+    <input id="altitud" type="hidden" name="altitud">
+    <input id="longitud" type="hidden" name="longitud">
 
-        <button id="form-send" type="submit" disabled>Enviar</button>
+    <button id="form-send" type="submit" disabled>Enviar</button>
 
-        <div class="button-container">
-            <button class="styled-button" onclick="goBack()">Atras</button>
-        </div>
+    <div class="button-container">
+        <button class="styled-button" onclick="goBack()">Atras</button>
+    </div>
+</form>
+</body>
 
-
-    </form>
 
     <script>
         function goBack() {
