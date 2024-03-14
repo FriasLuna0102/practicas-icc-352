@@ -116,13 +116,15 @@ public class AdministrarUsuario extends ControladorClass {
                     List<String> rolesSeleccionados = context.formParams("roles");
                     List<RolesApp> rolesDescripcion = new ArrayList<>();
 
+                    System.out.println("Este es el user:" +username);
+
 
                     for(String lisrRol : rolesSeleccionados){
                         RolesApp rol = RolesServices.getInstancia().findByCodigo(lisrRol);
                         rolesDescripcion.add(rol);
                     }
                    // Actualiza los campos del usuario existente con los nuevos valores
-                    usuarioExistente.setNombre(username);
+                    usuarioExistente.setUsuario(username);
                     usuarioExistente.setNombre(nombre);
                     usuarioExistente.setPassword(password);
                     usuarioExistente.setListaRoles(rolesDescripcion);
