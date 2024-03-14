@@ -19,18 +19,34 @@ public class Registro implements Serializable {
     private double latitud;
     private double longitud;
 
+    private boolean estado;
 
-    public Registro(String nombre, String sector, String nivelEscolar, Usuario usuario, double latitud, double longitud) {
+
+    public Registro(String nombre, String sector, String nivelEscolar, Usuario usuario, double latitud, double longitud, boolean estado) {
         this.nombre = nombre;
         this.sector = sector;
         this.nivelEscolar = nivelEscolar;
         this.usuario = usuario;
         this.latitud = latitud;
         this.longitud = longitud;
+        this.estado = estado;
     }
 
     public Registro() {
 
+    }
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+
+    public Registro(boolean estado) {
+
+        this.estado = estado;
     }
 
     public String getNombre() {

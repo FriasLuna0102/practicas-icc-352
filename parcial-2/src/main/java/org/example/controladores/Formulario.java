@@ -8,6 +8,7 @@ import org.example.services.UsuarioServices;
 import org.example.util.ControladorClass;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static io.javalin.apibuilder.ApiBuilder.*;
@@ -61,8 +62,12 @@ public class Formulario extends ControladorClass {
                     System.out.println(altitud);
                     System.out.println(longitud);
 
-                    Registro nuevoRegistro = new Registro(nombre,sector,nivelEscolar,usuario,altitud,longitud);
+                    Registro nuevoRegistro = new Registro(nombre,sector,nivelEscolar,usuario,altitud,longitud,true);
                     RegistroServices.getInstancia().crear(nuevoRegistro);
+
+                    //List<Registro> listRegistro = RegistroServices.getInstancia().obtenerTodosLosRegistros();
+//                    Map<String, Object> model = new HashMap<>();
+//                    model.put("listRegistro",listRegistro);
 
                     context.redirect("/plantillaGeneral/administrarRegistros");
                 });
