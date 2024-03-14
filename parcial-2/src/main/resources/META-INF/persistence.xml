@@ -4,6 +4,8 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>org.example.clases.Usuario</class>
         <class>org.example.util.RolesApp</class>
+        <class>org.example.clases.Registro</class>
+
 
         <properties>
             <!--<property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:test" />-->

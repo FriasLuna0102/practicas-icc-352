@@ -89,15 +89,58 @@ public class AdministrarUsuario extends ControladorClass {
 
 
                 get("/plantillaUsuarioModificar", context -> {
+                    Usuario currentUser = context.sessionAttribute("currentUser");
+                    assert currentUser != null;
+                    if(currentUser == null){
+                        context.redirect("/login");
+                    }
                     String username = context.queryParam("username");
                     Usuario usuario = UsuarioServices.getInstancia().findByUsername(username);
+                    List<RolesApp> rolesUsuario = RolesServices.getInstancia().obtenerTodosLosRoles();
 
-                    System.out.println(usuario.getNombre());
                     Map<String, Object> model = new HashMap<>();
 
                     model.put("usuario", usuario);
-
+                    model.put("listRoles",rolesUsuario);
                     context.render("publico/html/modificarUsuario.html",model);
+                });
+
+
+                post("/modificarUsuario", context -> {
+                    long userId = Long.parseLong(context.formParam("idUsername")); // Recupera el ID del usuario existente
+                    Usuario usuarioExistente = UsuarioServices.getInstancia().findById(userId); // Busca el usuario por su ID
+
+                    String username = context.formParam("username");
+                    String nombre = context.formParam("nombre");
+                    String password = context.formParam("password");
+                    List<String> rolesSeleccionados = context.formParams("roles");
+                    List<RolesApp> rolesDescripcion = new ArrayList<>();
+
+
+                    for(String lisrRol : rolesSeleccionados){
+                        RolesApp rol = RolesServices.getInstancia().findByCodigo(lisrRol);
+                        rolesDescripcion.add(rol);
+                    }
+                   // Actualiza los campos del usuario existente con los nuevos valores
+                    usuarioExistente.setNombre(username);
+                    usuarioExistente.setNombre(nombre);
+                    usuarioExistente.setPassword(password);
+                    usuarioExistente.setListaRoles(rolesDescripcion);
+
+                    // Guarda los cambios en la base de datos
+                    UsuarioServices.getInstancia().editar(usuarioExistente);
+
+                    context.redirect("/plantillaGeneral/administrarUsuarios");
+                });
+
+
+                get("/eliminarUsuario", context -> {
+                    String username = context.queryParam("username");
+                    Usuario usuario = UsuarioServices.getInstancia().findByUsername(username);
+
+
+                    UsuarioServices.getInstancia().eliminar(usuario.getId());
+                    context.redirect("/plantillaGeneral/administrarUsuarios");
                 });
 
             });

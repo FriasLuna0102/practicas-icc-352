@@ -1,5 +1,7 @@
 package org.example.clases;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import org.example.services.UsuarioServices;
 
 import java.util.List;
@@ -39,6 +41,8 @@ public class Contraladora {
                 ,usuario.getListaRoles()));
         //usuarioList.add(usuario);
     }
+
+
 
 
 }

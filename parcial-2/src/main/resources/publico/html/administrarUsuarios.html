@@ -34,7 +34,7 @@
         <td th:unless="${user.getUsuario} == ${usuario.getUsuario}">
             <a th:href="'/plantillaGeneral/plantillaUsuarioModificar?username=' + ${user.getUsuario}"><button type="button" class="btn btn-warning btn-sm">Modificar</button></a>
 
-            <a th:href="'/blogUsuario/eliminarUsuario?username=' + ${user.getUsuario}"><button type="button"
+            <a th:href="'/plantillaGeneral/eliminarUsuario?username=' + ${user.getUsuario}"><button type="button"
                                                                                              class="btn btn-danger btn-sm">Eliminar</button>
             </a>
         </td>
@@ -50,13 +50,11 @@
 <!-- Botón de atrás -->
 <div class="container" >
 
-        <button class="styled-button" onclick="goBack()" > Atras</button>
+        <button class="styled-button" onclick="window.location.href='/plantillaGeneral'" > Atras</button>
 
 </div>
 
-<style>
 
-</style>
 
 <script>
     // Función para retroceder en la historia del navegador al hacer clic en el botón
