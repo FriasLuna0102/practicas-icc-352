@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,50 +9,58 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script src="https://unpkg.com/dexie/dist/dexie.js"></script>
     <style>
         body {
             background-image: url("/img/360_F_391461057_5P0BOWl4lY442Zoo9rzEeJU0S2c1WDZR.jpg");
         }
+
         form {
-            margin-bottom: 20px; /* Agrega margen inferior al formulario */
+            margin-bottom: 20px;
+            /* Agrega margen inferior al formulario */
         }
     </style>
 </head>
+
 <body>
-<h2 style="background-color: #007bff">Crear Nuevo Usuario</h2>
-<form action="/plantillaGeneral/crearUsuario" method="post" enctype="multipart/form-data">
-    <fieldset>
-        <legend>Datos de Usuario</legend>
-        <!-- Campos de usuario -->
-        <label for="username">Nombre de Usuario:</label><br>
-        <input type="text" id="username" name="username" required><br>
+    <h2 style="background-color: #007bff">Crear Nuevo Usuario</h2>
+    <form action="/plantillaGeneral/crearUsuario" method="post" enctype="multipart/form-data">
+        <fieldset>
+            <legend>Datos de Usuario</legend>
+            <!-- Campos de usuario -->
+            <label for="username">Nombre de Usuario:</label><br>
+            <input type="text" id="username" name="username" required><br>
 
-        <label for="nombre">Nombre:</label><br>
-        <input type="text" id="nombre" name="nombre" required><br>
+            <label for="nombre">Nombre:</label><br>
+            <input type="text" id="nombre" name="nombre" required><br>
 
-        <label for="password">Contrasena:</label><br>
-        <input type="password" id="password" name="password" required><br>
-    </fieldset>
+            <label for="password">Contrasena:</label><br>
+            <input type="password" id="password" name="password" required><br>
+        </fieldset>
 
-    <fieldset>
-        <legend>Roles</legend>
-        <!-- Selector de roles -->
-        <select id="roles" name="roles" multiple class="js-example-basic-multiple">
-            <option th:each="rol : ${listRoles}" th:value="${rol.codigo}" th:text="${rol.descripcion}">Rol</option>
-        </select><br>
-    </fieldset>
+        <fieldset>
+            <legend>Roles</legend>
+            <!-- Selector de roles -->
+            <select id="roles" name="roles" multiple class="js-example-basic-multiple">
+                <option th:each="rol : ${listRoles}" th:value="${rol.codigo}" th:text="${rol.descripcion}">Rol</option>
+            </select><br>
+        </fieldset>
 
-    <!-- Botón de enviar -->
-    <div>
-        <button type="submit">Crear Usuario</button>
-    </div>
-</form>
+        <!-- Botón de enviar -->
+        <div>
+            <button id="form-send" type="submit">Crear Usuario</button>
+        </div>
+    </form>
 
 
-<script>
-    $(document).ready(function() {
-        $('.js-example-basic-multiple').select2();
-    });
-</script>
+    <script>
+        $(document).ready(function () {
+            $('.js-example-basic-multiple').select2();
+        });
+    </script>
+
+    <script src="../js/dexieDB.js"></script>
+    <script src="../js/insertarUsuario.js"></script>
 </body>
+
 </html>
