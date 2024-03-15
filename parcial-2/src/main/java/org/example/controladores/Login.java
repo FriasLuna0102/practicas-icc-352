@@ -1,7 +1,7 @@
 package org.example.controladores;
 
 import io.javalin.Javalin;
-import org.example.clases.Contraladora;
+import org.example.clases.Encuesta;
 import org.example.clases.Usuario;
 import org.example.services.UsuarioServices;
 import org.example.util.ControladorClass;
@@ -33,7 +33,7 @@ public class Login extends ControladorClass {
                 if (usuario.getPassword().equals(passwordLogin)) {
 
                     // Si las credenciales coinciden, establecer el usuario en la sesión y redirigir
-                    Contraladora.getInstance().setUsuario(usuario);
+                    Encuesta.getInstance().setUsuario(usuario);
                     cxt.sessionAttribute("currentUser", usuario);
                     cxt.redirect("/plantillaGeneral");
                     return;

@@ -1,8 +1,7 @@
 package org.example.controladores;
 
 import io.javalin.Javalin;
-import io.javalin.http.UploadedFile;
-import org.example.clases.Contraladora;
+import org.example.clases.Encuesta;
 import org.example.clases.Usuario;
 import org.example.services.RolesServices;
 import org.example.services.UsuarioServices;
@@ -31,7 +30,7 @@ public class AdministrarUsuario extends ControladorClass {
                         List<Usuario> listUsuario = UsuarioServices.getInstancia().obtenerTodosLosUsuarios();
                         Map<String, Object> model = new HashMap<>();
                         model.put("listUsuario", listUsuario);
-                        model.put("usuario", Contraladora.getInstance().getUsuario());
+                        model.put("usuario", Encuesta.getInstance().getUsuario());
 
                         cxt.render("publico/html/administrarUsuarios.html",model);
                     }else {
@@ -76,7 +75,7 @@ public class AdministrarUsuario extends ControladorClass {
 
                         UsuarioServices.getInstancia().crear(nuevoUsuario);
 
-                        Contraladora.getInstance().addUsuario(nuevoUsuario);
+                        Encuesta.getInstance().addUsuario(nuevoUsuario);
                         // Redirigir a la página de administración u otra página según corresponda
                         ctx.redirect("/plantillaGeneral/administrarUsuarios");
                     } else {
