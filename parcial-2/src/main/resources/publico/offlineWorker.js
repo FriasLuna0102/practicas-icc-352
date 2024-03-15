@@ -19,7 +19,7 @@ var urlsToCache = [
     '/img/6fe01f5fbe372a2b045f66a79be7b210.jpg',
     '/html/administrarRegistros.html'
 ];
-var fallback = "/html/login.html"
+var fallback = "/html/plantillaGeneral.html"
 
 //representa el evento cuando se esta instalando el services workers.
 self.addEventListener('install', function(event) {
