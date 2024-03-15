@@ -6,8 +6,6 @@ import org.example.clases.Usuario;
 import org.example.services.UsuarioServices;
 import org.example.util.ControladorClass;
 
-import java.util.List;
-
 public class Login extends ControladorClass {
 
     private Usuario usuario;
@@ -52,7 +50,7 @@ public class Login extends ControladorClass {
             ctx.redirect("/login");
         });
 
-        app.after("publico/manifest.appcache", context -> {
+        app.after("manifest.appcache", context -> {
             System.out.println("Cargando offline");
             context.contentType("text/cache-manifest");
         });
