@@ -2,7 +2,7 @@ package org.example.util;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import org.example.clases.Contraladora;
+import org.example.clases.Encuesta;
 
 import javax.crypto.SecretKey;
 import java.time.LocalDateTime;
@@ -24,7 +24,7 @@ public class JwtUtil {
         token = Jwts.builder()
                 .setIssuer("ClienteWeb")
                 .setSubject("Auth JWT")
-                .claim("usuario", Contraladora.getInstance().getUsuario())
+                .claim("usuario", Encuesta.getInstance().getUsuario())
                 .setExpiration(exp)
                 .signWith(llave)
                 .compact();

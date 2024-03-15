@@ -1,20 +1,18 @@
 package org.example.clases;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.Query;
 import org.example.services.UsuarioServices;
 
 import java.util.List;
 
-public class Contraladora {
-    private static Contraladora instancia;
+public class Encuesta {
+    private static Encuesta instancia;
 
     private Usuario usuario;
 
 
-    public static Contraladora getInstance(){
+    public static Encuesta getInstance(){
         if (instancia == null){
-            instancia = new Contraladora();
+            instancia = new Encuesta();
         }
         return instancia;
     }
