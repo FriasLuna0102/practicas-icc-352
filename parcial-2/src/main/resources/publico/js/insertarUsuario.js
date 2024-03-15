@@ -8,12 +8,14 @@ document.addEventListener("DOMContentLoaded", function() {
       let username = document.getElementById("username").value;
       let nombre = document.getElementById("nombre").value;
       let password = document.getElementById("password").value;
+      let rolesSeleccionados = document.getElementById("roles").value;
 
       // Crear un objeto de registro con los valores obtenidos
       let registro = {
         nombre: nombre,
         username: username,
-        password: password
+        password: password,
+        roles: rolesSeleccionados
       };
 
       await db.usuarios.add(registro);

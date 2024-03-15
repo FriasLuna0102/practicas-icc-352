@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", function() {
       let nivelEscolar = document.getElementById("nivelEscolar").value;
       let altitud = document.getElementById("altitud").value;
       let longitud = document.getElementById("longitud").value;
+      let usuario = document.getElementById("usuario").value;
 
       // Crear un objeto de registro con los valores obtenidos
       let registro = {
@@ -17,7 +18,9 @@ document.addEventListener("DOMContentLoaded", function() {
         sector: sector,
         nivelEscolar: nivelEscolar,
         altitud: altitud,
-        longitud: longitud
+        longitud: longitud,
+        usuario: usuario,
+        estado: false
       };
 
       await db.registros.add(registro);
