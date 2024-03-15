@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Registros</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        table {
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        button {
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Registros</h1>
+    <table class="table table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>Nombre</th>
+            <th>Sector</th>
+            <th>Nivel Escolar</th>
+            <th>Usuario</th>
+            <th>Latitud</th>
+            <th>Longitud</th>
+            <th>Estado</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="registro : ${listRegistro}">
+            <td th:text="${registro.nombre}"></td>
+            <td th:text="${registro.sector}"></td>
+            <td th:text="${registro.nivelEscolar}"></td>
+            <td th:text="${registro.usuario.getNombre}"></td>
+            <td th:text="${registro.latitud}"></td>
+            <td th:text="${registro.longitud}"></td>
+            <td th:text="${registro.estado}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <button class="btn btn-primary">Sincronizar</button>
+    <button class="btn btn-success">Registrar Registro</button>
+    <button class="btn btn-warning">Modificar</button>
+    <button class="btn btn-danger">Eliminar</button>
+    <button class="btn btn-secondary">Cerrar</button>
+</div>
+</body>
+</html>
