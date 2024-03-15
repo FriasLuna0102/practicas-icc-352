@@ -16,7 +16,8 @@ var urlsToCache = [
     '/css/crearUsuario.css',
     '/css/formulario.css',
     '/css/login.css',
-    '/img/6fe01f5fbe372a2b045f66a79be7b210.jpg'
+    '/img/6fe01f5fbe372a2b045f66a79be7b210.jpg',
+    '/html/administrarRegistros.html'
 ];
 var fallback = "/html/login.html"
 

@@ -35,16 +35,8 @@
             <th>Estado</th>
         </tr>
         </thead>
-        <tbody>
-        <tr th:each="registro : ${listRegistro}">
-            <td th:text="${registro.nombre}"></td>
-            <td th:text="${registro.sector}"></td>
-            <td th:text="${registro.nivelEscolar}"></td>
-            <td th:text="${registro.usuario.getNombre}"></td>
-            <td th:text="${registro.latitud}"></td>
-            <td th:text="${registro.longitud}"></td>
-            <td th:text="${registro.estado}"></td>
-        </tr>
+        <tbody id="tablaRegistros">
+        <!-- Los registros se agregarán aquí -->
         </tbody>
     </table>
     <button class="btn btn-primary">Sincronizar</button>
@@ -53,5 +45,45 @@
     <button class="btn btn-danger">Eliminar</button>
     <button class="btn btn-secondary">Cerrar</button>
 </div>
+
+<script>
+    // Abre la base de datos
+    var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+    var dataBase = indexedDB.open("FormularioDB", 1);
+
+    // Manejador de éxito de la apertura de la base de datos
+    dataBase.onsuccess = function (e) {
+        var db = e.target.result;
+        var transaccion = db.transaction(["formularios"], "readonly");
+        var formularios = transaccion.objectStore("formularios");
+
+        // Abrir un cursor para recorrer los datos
+        formularios.openCursor().onsuccess = function (event) {
+            var cursor = event.target.result;
+            if (cursor) {
+                // Crear una nueva fila en la tabla para cada registro
+                var fila = document.createElement("tr");
+                fila.innerHTML = `
+                    <td>${cursor.value.nombre}</td>
+                    <td>${cursor.value.sector}</td>
+                    <td>${cursor.value.nivelEscolar}</td>
+                    <td>${cursor.value.usuario}</td>
+                    <td>${cursor.value.altitud}</td>
+                    <td>${cursor.value.longitud}</td>
+                    <td>${cursor.value.estado}</td>
+                `;
+                document.getElementById("tablaRegistros").appendChild(fila);
+
+                cursor.continue();
+            }
+        };
+    };
+
+    // Manejador de error de la apertura de la base de datos
+    dataBase.onerror = function (e) {
+        console.error('Error en el proceso: '+e.target.errorCode);
+    };
+</script>
+
 </body>
 </html>
