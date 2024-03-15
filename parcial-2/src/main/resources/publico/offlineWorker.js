@@ -13,7 +13,8 @@ var urlsToCache = [
     '/css/formulario.css',
     '/css/login.css',
     '/img/6fe01f5fbe372a2b045f66a79be7b210.jpg',
-    '/html/administrarRegistros.html'
+    '/html/administrarRegistros.html',
+    '/html/modificarRegistro.html'
 ];
 var fallback = "/html/plantillaGeneral.html"
 
