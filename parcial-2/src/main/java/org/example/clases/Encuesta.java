@@ -28,14 +28,14 @@ public class Encuesta {
     public void addUsuario(Usuario usuario){
 
         // Buscar el usuario en la base de datos utilizando Hibernate
-        List<Usuario> usuarios = UsuarioServices.getInstancia().findAllByUsername(usuario.getUsuario());
+        List<Usuario> usuarios = UsuarioServices.getInstancia().findAllByUsername(usuario.getUsername());
 
         for (Usuario user: usuarios){
-            if(user.getUsuario().equals(usuario.getUsuario()) || user.getNombre().equals(usuario.getNombre())){
+            if(user.getUsername().equals(usuario.getUsername()) || user.getNombre().equals(usuario.getNombre())){
                 return;
             }
         }
-        UsuarioServices.getInstancia().crear(new Usuario(usuario.getUsuario(),usuario.getNombre(),usuario.getPassword()
+        UsuarioServices.getInstancia().crear(new Usuario(usuario.getUsername(),usuario.getNombre(),usuario.getPassword()
                 ,usuario.getListaRoles()));
         //usuarioList.add(usuario);
     }
