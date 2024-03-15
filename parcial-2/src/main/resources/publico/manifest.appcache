@@ -1,9 +1,19 @@
+CACHE MANIFEST
+
 CACHE:
+/html/administrarUsuarios.html
+/html/crearUsuario.html
+/html/formulario.html
 /html/login.html
-/html/login.css
+/html/modificarUsuario.html
+/html/plantillaGeneral.html
+/js/dexieDB.js
+/js/insertarRegistro.js
+/js/insertarUsuario.js
+/js/offlineWorker.js
 
 NETWORK:
-network.html
+*
 
 FALLBACK:
-/ /html/login.html
+/ /html/plantillaGeneral.html
