@@ -1,6 +1,3 @@
-/**
- * Ejemplo de un script de service workers.
- */
 
 //Cache activo.
 var CACHE_NAME = 'offline-info';
@@ -18,8 +15,10 @@ var urlsToCache = [
     '/css/admnistrarUsuario.css',
     '/css/crearUsuario.css',
     '/css/formulario.css',
-    '/css/login.css',];//ruta para fallback.
-var fallback = "/html/plantillaGeneral.html"
+    '/css/login.css',
+    '/img/6fe01f5fbe372a2b045f66a79be7b210.jpg'
+];
+var fallback = "/html/login.html"
 
 //representa el evento cuando se esta instalando el services workers.
 self.addEventListener('install', function(event) {
