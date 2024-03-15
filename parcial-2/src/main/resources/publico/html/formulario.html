@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/formulario.css">
     <title>Formulario de Captura</title>
-    <script src="https://unpkg.com/dexie/dist/dexie.js"></script>
 </head>
 
 <body>
@@ -44,36 +43,34 @@
             <button class="styled-button" onclick="goBack()">Atras</button>
         </div>
     </form>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+
+
+    <script>
+
+        let altitud = document.getElementById("altitud");
+        let longitud = document.getElementById("longitud");
+        let enviar = document.getElementById("form-send");
+
+        function success(position) {
+            console.log(position.coords.latitude)
+            altitud.value = position.coords.latitude
+            console.log(position.coords.longitude)
+            longitud.value = position.coords.longitude
+            enviar.disabled = false
+        }
+
+        navigator.geolocation.getCurrentPosition(success);
+
+    </script>
+
 </body>
 
 
-<script>
-    function goBack() {
-        window.history.back();
-    }
-</script>
-
-
-<script>
-
-    let altitud = document.getElementById("altitud");
-    let longitud = document.getElementById("longitud");
-    let enviar = document.getElementById("form-send");
-
-    function success(position) {
-        console.log(position.coords.latitude)
-        altitud.value = position.coords.latitude
-        console.log(position.coords.longitude)
-        longitud.value = position.coords.longitude
-        enviar.disabled = false
-    }
-
-    navigator.geolocation.getCurrentPosition(success);
-
-</script>
-
-<script type="module" src="../js/dexieDB.js"></script>
-<script src="../js/insertarRegistro.js"></script>
-</body>
 
 </html>
