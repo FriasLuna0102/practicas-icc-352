@@ -33,6 +33,7 @@
             <th>Latitud</th>
             <th>Longitud</th>
             <th>Estado</th>
+            <th>Acciones</th> <!-- Nuevo encabezado para acciones -->
         </tr>
         </thead>
         <tbody id="tablaRegistros">
@@ -42,7 +43,6 @@
     <button class="btn btn-primary">Sincronizar</button>
     <button class="btn btn-success" onclick="window.location.href = '/html/formulario.html'">Registrar Registro</button>
     <button class="btn btn-warning">Modificar</button>
-    <button class="btn btn-danger">Eliminar</button>
     <button class="btn btn-secondary" onclick="window.location.href='/html/plantillaGeneral.html'">Cerrar</button>
 </div>
 
@@ -54,7 +54,7 @@
     // Manejador de éxito de la apertura de la base de datos
     dataBase.onsuccess = function (e) {
         var db = e.target.result;
-        var transaccion = db.transaction(["formularios"], "readonly");
+        var transaccion = db.transaction(["formularios"], "readwrite"); // Cambio a readwrite para poder eliminar
         var formularios = transaccion.objectStore("formularios");
 
         // Abrir un cursor para recorrer los datos
@@ -71,6 +71,7 @@
                     <td>${cursor.value.altitud}</td>
                     <td>${cursor.value.longitud}</td>
                     <td>${cursor.value.estado}</td>
+                    <td><button class="btn btn-danger btn-sm" onclick="eliminarRegistro(this, ${cursor.primaryKey})">Eliminar</button></td> <!-- Botón de eliminar -->
                 `;
                 document.getElementById("tablaRegistros").appendChild(fila);
 
@@ -83,6 +84,17 @@
     dataBase.onerror = function (e) {
         console.error('Error en el proceso: '+e.target.errorCode);
     };
+
+    // Función para eliminar un registro
+    function eliminarRegistro(button, primaryKey) {
+        var fila = button.closest('tr'); // Obtener la fila más cercana al botón
+        fila.remove(); // Eliminar la fila
+
+        // Eliminar el registro de la base de datos usando la clave primaria
+        var transaccion = dataBase.result.transaction(["formularios"], "readwrite");
+        var formularios = transaccion.objectStore("formularios");
+        formularios.delete(primaryKey);
+    }
 </script>
 
 </body>
