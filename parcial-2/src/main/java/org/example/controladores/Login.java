@@ -24,11 +24,11 @@ public class Login extends ControladorClass {
 
 
         app.get("/login",context->{
+            // Esto solo para verificar la jwt
             String jwt = "";
             try {
                 jwt = Objects.requireNonNull(context.header("Authorization")).replace("Bearer ", "");
-            }catch (Exception e){
-            }
+            }catch (Exception ignored){}
             System.out.println(jwt);
             context.render("publico/html/login.html");
         });
@@ -45,8 +45,8 @@ public class Login extends ControladorClass {
                     Encuesta.getInstance().setUsuario(usuario);
                     String token = JwtUtil.generarToken();
                     cxt.sessionAttribute("currentUser", usuario);
-                    cxt.html("<script>localStorage.setItem('jwt', '" + token + "'); window.location.href = '/plantillaGeneral';</script>");
-
+                    cxt.html("<script>localStorage.setItem('jwt', '" + token + "');</script>");
+                    cxt.html("<script>localStorage.setItem('username','" + Encuesta.getInstance().getUsuario().getUsername() +"'); window.location.href = '/plantillaGeneral';</script>");
                     //cxt.redirect("/plantillaGeneral");
                     return;
                 }
