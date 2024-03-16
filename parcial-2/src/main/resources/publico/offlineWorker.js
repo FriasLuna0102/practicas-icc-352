@@ -15,7 +15,10 @@ var urlsToCache = [
     '/css/login.css',
     '/img/6fe01f5fbe372a2b045f66a79be7b210.jpg',
     '/html/administrarRegistros.html',
-    '/html/modificarRegistro.html'
+    '/html/modificarRegistro.html',
+    '/js/offline.js',
+    '/js/offline-theme-slide-indicator.css',
+    '/js/offline-language-spanish-indicator.css'
 ];
 var fallback = "/html/plantillaGeneral.html"
 
