@@ -62,8 +62,8 @@
         <button class="btn btn-success" onclick="window.location.href = '/plantillaGeneral/administrarUsuarios';">Administrar Usuarios</button>
     </div>
 
-    <div class="my-3">
-        <button class="btn btn-danger" onclick="conectar()">Sincronizar</button>
+    <div class="my-3 text-center">
+        <button id="botonSincronizar" class="btn btn-danger" style="display: none; margin: 0 auto;" onclick="conectar()">Sincronizar</button>
     </div>
 
     <div class="my-3">
@@ -136,6 +136,50 @@
             // Puedes agregar aquí la lógica para manejar la respuesta del servidor si es necesario
         };
     }
+
+    // Función para verificar si la estructura de la base de datos IndexedDB existe
+    // Función para verificar la estructura de la base de datos
+    function verificarEstructuraIndexedDB() {
+        var request = indexedDB.open("FormularioDB", 1);
+
+        request.onsuccess = function (event) {
+            var db = event.target.result;
+
+            // Verificar si el almacén de objetos "formularios" existe en la base de datos
+            if (db.objectStoreNames.contains("formularios")) {
+                // El almacén de objetos "formularios" existe, muestra el botón de sincronización
+                document.getElementById("botonSincronizar").style.display = "block";
+            } else {
+                // El almacén de objetos "formularios" no existe, oculta el botón de sincronización
+                document.getElementById("botonSincronizar").style.display = "none";
+            }
+        };
+
+        request.onerror = function () {
+            // Error al abrir la base de datos, oculta el botón de sincronización
+            document.getElementById("botonSincronizar").style.display = "none";
+        };
+    }
+
+    // Función para verificar si la base de datos ya existe
+    function verificarExistenciaIndexedDB() {
+        indexedDB.databases().then(function (dbs) {
+            var existe = dbs.some(function (db) {
+                return db.name === "FormularioDB";
+            });
+
+            if (existe) {
+                // La base de datos ya existe, no es necesario abrirla nuevamente
+                console.log("La base de datos ya existe");
+                verificarEstructuraIndexedDB();
+            } else {
+                // La base de datos no existe, abrir para crearla
+                console.log("La base de datos no existe, creándola...");
+            }
+        });
+    }
+
+    window.onload = verificarExistenciaIndexedDB;
 </script>
 
 
