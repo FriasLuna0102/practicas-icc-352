@@ -6,7 +6,10 @@ var urlsToCache = [
     '/html/formulario.html',
     '/css/formulario.css',
     '/html/administrarRegistros.html',
-    '/html/modificarRegistro.html'
+    '/html/modificarRegistro.html',
+    '/js/offline.js',
+    '/js/offline-theme-slide-indicator.css',
+    '/js/offline-language-spanish-indicator.css'
 ];
 var fallback = "/html/formulario.html"
 
