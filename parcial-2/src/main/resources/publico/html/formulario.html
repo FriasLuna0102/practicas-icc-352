@@ -11,6 +11,8 @@
 
         var dataBase = indexedDB.open("FormularioDB", 1);
 
+        var user = localStorage.getItem("username");
+        console.log(user)
         dataBase.onupgradeneeded = function (e) {
             console.log("Creando la estructura de la tabla");
             var active = dataBase.result;
@@ -48,7 +50,7 @@
                 nombre: document.querySelector("#nombre").value,
                 sector: document.querySelector("#sector").value,
                 nivelEscolar: document.querySelector("#nivelEscolar").value,
-                usuario: document.querySelector("#usuario").value,
+                usuario: user,
                 longitud: document.querySelector("#longitud").value,
                 altitud: document.querySelector("#altitud").value,
                 estado: 0
@@ -65,7 +67,7 @@
                 console.log("Datos procesados correctamente");
                 document.querySelector("#nombre").value = "";
                 document.querySelector("#sector").value = "";
-                document.querySelector("#usuario").value = "";
+                document.querySelector("#usuario").value = user;
                 document.querySelector("#longitud").value = "";
                 document.querySelector("#altitud").value = "";
                 document.querySelector("#nivelEscolar").value = "";
