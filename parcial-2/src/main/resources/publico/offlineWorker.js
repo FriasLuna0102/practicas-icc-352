@@ -19,6 +19,8 @@ var urlsToCache = [
     '/js/offline.js',
     '/js/offline-theme-slide-indicator.css',
     '/js/offline-language-spanish-indicator.css'
+    '/html/modificarRegistro.html',
+    '/html/mapa.html'
 ];
 var fallback = "/html/plantillaGeneral.html"
 

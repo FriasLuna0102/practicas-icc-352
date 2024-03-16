@@ -11,6 +11,8 @@
 
         var dataBase = indexedDB.open("FormularioDB", 1);
 
+        var user = localStorage.getItem("username");
+        console.log(user)
         dataBase.onupgradeneeded = function (e) {
             console.log("Creando la estructura de la tabla");
             var active = dataBase.result;
@@ -48,7 +50,7 @@
                 nombre: document.querySelector("#nombre").value,
                 sector: document.querySelector("#sector").value,
                 nivelEscolar: document.querySelector("#nivelEscolar").value,
-                usuario: document.querySelector("#usuario").value,
+                usuario: user,
                 longitud: document.querySelector("#longitud").value,
                 altitud: document.querySelector("#altitud").value,
                 estado: 0
@@ -65,7 +67,7 @@
                 console.log("Datos procesados correctamente");
                 document.querySelector("#nombre").value = "";
                 document.querySelector("#sector").value = "";
-                document.querySelector("#usuario").value = "";
+                document.querySelector("#usuario").value = user;
                 document.querySelector("#longitud").value = "";
                 document.querySelector("#altitud").value = "";
                 document.querySelector("#nivelEscolar").value = "";
@@ -79,7 +81,15 @@
 
 <body>
 <h1>Formulario de Captura</h1>
-<form id="formularioCaptura" action="/plantillaGeneral/captura" method="post">
+
+<script>
+    function enviarFormulario() {
+        // Realiza la redirección al archivo HTML deseado
+        window.location.href = '/html/plantillaGeneral.html';
+    }
+</script>
+
+<form id="formularioCaptura" onsubmit="event.preventDefault(); enviarFormulario();">
     <div>
         <label for="nombre">Nombre:</label>
         <input type="text" id="nombre" name="nombre" required>
@@ -106,7 +116,8 @@
 <!--    <input type="hidden" id="estado" name="estado" value="false">-->
 
     <input id="altitud" type="hidden" name="altitud">
-    <input id="longitud" type="hidden" name="longitud">    <button id="form-send" type="submit" onclick="agregarFormulario()">Enviar</button>
+    <input id="longitud" type="hidden" name="longitud">
+    <button id="form-send" type="submit" onclick="agregarFormulario()">Enviar</button>
 
     <div class="button-container">
         <button class="styled-button" onclick="window.location.href='/html/plantillaGeneral.html'">Atras</button>

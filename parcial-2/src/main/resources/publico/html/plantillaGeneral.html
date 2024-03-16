@@ -54,7 +54,7 @@
     </div>
 
     <div class="my-3">
-        <button class="btn btn-secondary">Mapa</button>
+        <button class="btn btn-secondary" onclick="window.location.href='/html/mapa.html'">Mapa</button>
     </div>
 
     <div class="my-3">
@@ -62,13 +62,77 @@
     </div>
 
     <div class="my-3">
-        <button class="btn btn-danger">Sincronizar</button>
+        <button class="btn btn-danger" onclick="conectar()">Sincronizar</button>
     </div>
 
     <div class="my-3">
         <button class="btn btn-warning" onclick="window.location.href = '/html/administrarRegistros.html';">Administrar Registros</button>
     </div>
 </div>
+
+<!-- JavaScript para manejar la sincronización con WebSockets -->
+<script>
+    function conectar(){
+        // Conectar con el servidor WebSocket
+        const socket = new WebSocket("ws://"+location.hostname+":"+location.port+"/plantillaGeneral/sincronizar"); // Cambia la URL por la del servidor WebSocket
+
+        // Manejar la apertura de la conexión WebSocket
+        socket.onopen = function() {
+            console.log('Conexión establecida con el servidor WebSocket');
+
+            // Recuperar registros de IndexedDB
+            var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+            var request = indexedDB.open("FormularioDB", 1);
+
+            request.onerror = function(event) {
+                console.error('Error al abrir la base de datos:', event.target.errorCode);
+            };
+
+            request.onsuccess = function(event) {
+                var db = event.target.result;
+                var transaction = db.transaction(["formularios"], "readwrite"); // Cambiar a modo de escritura
+                var objectStore = transaction.objectStore("formularios");
+                var formularios = [];
+
+                // Obtener registros con estado = 0
+                objectStore.openCursor().onsuccess = function(event) {
+                    var cursor = event.target.result;
+                    if (cursor) {
+                        if (cursor.value.estado === 0) {
+                            // Actualizar el estado del registro a 1
+                            cursor.value.estado = 1;
+                            var updateRequest = cursor.update(cursor.value);
+                            updateRequest.onsuccess = function() {
+                                console.log("Estado actualizado a 1 para el registro con ID: " + cursor.value.id);
+                            };
+                            updateRequest.onerror = function() {
+                                console.error("Error al actualizar el estado del registro");
+                            };
+                            formularios.push(cursor.value);
+                        }
+                        cursor.continue();
+                    } else {
+                        // Enviar registros al servidor WebSocket
+                        socket.send(JSON.stringify(formularios));
+                    }
+                };
+            };
+
+        };
+
+        // Manejar los errores de la conexión WebSocket
+        socket.onerror = function(error) {
+            console.error('Error en la conexión WebSocket:', error);
+        };
+
+        // Manejar los mensajes recibidos del servidor WebSocket
+        socket.onmessage = function(event) {
+            console.log('Mensaje recibido del servidor WebSocket:', event.data);
+            // Puedes agregar aquí la lógica para manejar la respuesta del servidor si es necesario
+        };
+    }
+</script>
+
 
 </body>
 </html>

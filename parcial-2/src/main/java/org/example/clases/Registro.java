@@ -16,7 +16,7 @@ public class Registro implements Serializable {
     private String nivelEscolar;
     @OneToOne
     private Usuario usuario;
-    private double latitud;
+    private double altitud;
     private double longitud;
 
     private boolean estado;
@@ -27,7 +27,7 @@ public class Registro implements Serializable {
         this.sector = sector;
         this.nivelEscolar = nivelEscolar;
         this.usuario = usuario;
-        this.latitud = latitud;
+        this.altitud = latitud;
         this.longitud = longitud;
         this.estado = estado;
     }
@@ -81,12 +81,12 @@ public class Registro implements Serializable {
         this.usuario = usuario;
     }
 
-    public double getLatitud() {
-        return latitud;
+    public double getAltitud() {
+        return altitud;
     }
 
-    public void setLatitud(double latitud) {
-        this.latitud = latitud;
+    public void setAltitud(double latitud) {
+        this.altitud = latitud;
     }
 
     public double getLongitud() {

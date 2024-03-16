@@ -10,6 +10,7 @@
         var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
 
         var dataBase = indexedDB.open("FormularioDB", 1);
+        var user = localStorage.getItem("username");
 
         dataBase.onupgradeneeded = function (e) {
             console.log("Creando la estructura de la tabla");
@@ -39,6 +40,7 @@
                 document.getElementById("nombre").value = registro.nombre;
                 document.getElementById("sector").value = registro.sector;
                 document.getElementById("nivelEscolar").value = registro.nivelEscolar;
+                document.querySelector("#usuario").value = user;
                 document.getElementById("altitud").value = registro.latitude;
                 document.getElementById("longitud").value = registro.longitud;
                 document.getElementById("estado").value = registro.estado;
@@ -69,6 +71,7 @@
                     nombre: document.getElementById("nombre").value,
                     sector: document.getElementById("sector").value,
                     nivelEscolar: document.getElementById("nivelEscolar").value,
+                    usuario: user,
                     longitud: document.getElementById("longitud").value,
                     altitud: document.getElementById("altitud").value,
                     estado: 0
@@ -94,8 +97,14 @@
 </head>
 
 <body>
+<script>
+    function enviarFormulario() {
+        // Realiza la redirección al archivo HTML deseado
+        window.location.href = '/html/plantillaGeneral.html';
+    }
+</script>
 <h1>Formulario de Modificación</h1>
-<form id="formularioCaptura" action="/plantillaGeneral/captura" method="post">
+<form id="formularioCaptura" onsubmit="event.preventDefault(); enviarFormulario();" method="post">
     <div>
         <label for="nombre">Nombre:</label>
         <input type="text" id="nombre" name="nombre" required>
