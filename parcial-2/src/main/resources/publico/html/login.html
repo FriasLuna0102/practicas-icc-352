@@ -15,6 +15,35 @@
 
     <!--Custom styles-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="" href="../js/offline-theme-slide-indicator.css">
+    <link rel="stylesheet" type="" href="../js/offline-language-spanish-indicator.css">
+    <script src="../js/offline.js">
+    </script>
+    <script>
+        Offline.options = {
+            checks: {
+                xhr: {
+                    url: '/autenticar', // Cambia esto a una URL válida en tu sitio
+                    timeout: 5, // Tiempo de espera para la solicitud
+                },
+                // Otros tipos de verificaciones según tus necesidades
+            },
+            // Verificar el estado de conexión al cargar la página.
+            checkOnLoad: true,
+            // Monitorear las solicitudes AJAX para verificar la conexión.
+            interceptRequests: true,
+            // Volver a probar automáticamente periódicamente cuando la conexión está inactiva.
+            reconnect: {
+                // Retraso en segundos antes de volver a verificar.
+                initialDelay: 3,
+                // Intervalo de espera en segundos entre reintentos.
+                delay: 10
+            },
+            // Almacenar y volver a intentar solicitudes que fallaron mientras la conexión estaba inactiva.
+            requests: true
+        };
+        Offline.check()
+    </script>
 </head>
 
 <body>
@@ -92,11 +121,11 @@
     </div>
     <script>
         if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('/offlineWorker.js', { scope: '/' }).then(function(registration) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('/offlineWorker.js', {scope: '/'}).then(function (registration) {
                     // Notificando el registro del service workwe
                     console.log('Registrando el servicio en el ambiente: ', registration.scope);
-                }, function(err) {
+                }, function (err) {
                     console.log('Service Worker falló el registro: ', err);
                 });
             });
