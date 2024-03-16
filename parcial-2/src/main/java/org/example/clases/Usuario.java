@@ -42,7 +42,7 @@ public class Usuario implements Serializable {
 
     }
 
-    public String getUsuario() {
+    public String getUsername() {
         return username;
     }
 

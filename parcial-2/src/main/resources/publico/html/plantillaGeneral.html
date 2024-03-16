@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html lang="en">
 
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
@@ -9,7 +8,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body{
-            background-image: url("/img/6fe01f5fbe372a2b045f66a79be7b210.jpg");
+            background-image: url("../img/6fe01f5fbe372a2b045f66a79be7b210.jpg");
             background-size: cover;
             background-repeat: no-repeat;
             width: 100%;
@@ -47,12 +46,11 @@
 <div class="container mt-5 text-center">
 
     <h1>Bienvenido <span th:text="${usuario.getNombre}"></span></h1>
-
 </div>
 
 <div class="container mt-5 text-center">
     <div class="my-3">
-        <button class="btn btn-primary" onclick="window.location.href = '/plantillaGeneral/formulario';">Formulario</button>
+        <button class="btn btn-primary" onclick="window.location.href = '/html/formulario.html';">Formulario</button>
     </div>
 
     <div class="my-3">
@@ -68,7 +66,7 @@
     </div>
 
     <div class="my-3">
-        <button class="btn btn-warning" onclick="window.location.href ='/plantillaGeneral/administrarRegistros'">Administrar Registros</button>
+        <button class="btn btn-warning" onclick="window.location.href = '/html/administrarRegistros.html';">Administrar Registros</button>
     </div>
 </div>
 

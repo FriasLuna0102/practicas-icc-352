@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/formulario.css">
-    <title>Formulario de Captura</title>
+    <title>Formulario de Modificación</title>
     <script>
         var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
 
@@ -26,36 +26,60 @@
 
         dataBase.onsuccess = function (e) {
             console.log('Proceso ejecutado correctamente');
+            var dbActiva = dataBase.result;
+            var transaccion = dbActiva.transaction(["formularios"], "readwrite");
+            var formularios = transaccion.objectStore("formularios");
+
+            // Recuperar el registro para modificarlo
+            var id = sessionStorage.getItem('primaryKey'); // Recuperar el id del sessionStorage
+            var request = formularios.get(parseInt(id));
+
+            request.onsuccess = function(event) {
+                var registro = event.target.result;
+                document.getElementById("nombre").value = registro.nombre;
+                document.getElementById("sector").value = registro.sector;
+                document.getElementById("nivelEscolar").value = registro.nivelEscolar;
+                document.getElementById("altitud").value = registro.latitude;
+                document.getElementById("longitud").value = registro.longitud;
+                document.getElementById("estado").value = registro.estado;
+                // Puedes seguir con los demás campos
+            };
         };
 
         dataBase.onerror = function (e) {
             console.error('Error en el proceso: '+e.target.errorCode);
         };
 
-        function agregarFormulario() {
+        function modificarFormulario() {
             var dbActiva = dataBase.result;
             var transaccion = dbActiva.transaction(["formularios"], "readwrite");
             transaccion.onerror = function (e) {
                 alert(request.error.name + '\n\n' + request.error.message);
             };
             transaccion.oncomplete = function (e) {
-                document.querySelector("#nombre").value = '';
-                alert('Objeto agregado correctamente');
+                alert('Objeto modificado correctamente');
             };
             var formularios = transaccion.objectStore("formularios");
 
-            var request = formularios.put({
-                nombre: document.querySelector("#nombre").value,
-                sector: document.querySelector("#sector").value,
-                nivelEscolar: document.querySelector("#nivelEscolar").value,
-                usuario: document.querySelector("#usuario").value,
-                longitud: document.querySelector("#longitud").value,
-                altitud: document.querySelector("#altitud").value,
-                estado: 0
+            var id = sessionStorage.getItem('primaryKey'); // Recuperar el id del sessionStorage
+
+            if (id) {
+                var request = formularios.put({
+                    id: parseInt(id), // Utilizar el id recuperado del sessionStorage
+                    nombre: document.getElementById("nombre").value,
+                    sector: document.getElementById("sector").value,
+                    nivelEscolar: document.getElementById("nivelEscolar").value,
+                    longitud: document.getElementById("longitud").value,
+                    altitud: document.getElementById("altitud").value,
+                    estado: 0
+
+                });
+            } else {
+                console.error('El id recuperado del sessionStorage no es válido.'+id);
+                // Realiza alguna acción para manejar el error, como mostrar un mensaje al usuario.
+            }
 
 
-
-            });
             request.onerror = function (e) {
                 var mensaje = "Error: "+e.target.errorCode;
                 console.error(mensaje);
@@ -63,14 +87,6 @@
             };
             request.onsuccess = function (e) {
                 console.log("Datos procesados correctamente");
-                document.querySelector("#nombre").value = "";
-                document.querySelector("#sector").value = "";
-                document.querySelector("#usuario").value = "";
-                document.querySelector("#longitud").value = "";
-                document.querySelector("#altitud").value = "";
-                document.querySelector("#nivelEscolar").value = "";
-
-                // document.querySelector("#estado").value = estado;
             };
         }
 
@@ -78,7 +94,7 @@
 </head>
 
 <body>
-<h1>Formulario de Captura</h1>
+<h1>Formulario de Modificación</h1>
 <form id="formularioCaptura" action="/plantillaGeneral/captura" method="post">
     <div>
         <label for="nombre">Nombre:</label>
@@ -103,10 +119,11 @@
     <input type="hidden" id="usuario" name="usuario" th:value="${usuario.getId}">
     <!-- Usando Thymeleaf para establecer el valor del nombre de usuario -->
 
-<!--    <input type="hidden" id="estado" name="estado" value="false">-->
+    <!--    <input type="hidden" id="estado" name="estado" value="false">-->
 
     <input id="altitud" type="hidden" name="altitud">
-    <input id="longitud" type="hidden" name="longitud">    <button id="form-send" type="submit" onclick="agregarFormulario()">Enviar</button>
+    <input id="longitud" type="hidden" name="longitud">
+    <button id="form-send" type="button" onclick="modificarFormulario()">Enviar</button>
 
     <div class="button-container">
         <button class="styled-button" onclick="window.location.href='/html/plantillaGeneral.html'">Atras</button>

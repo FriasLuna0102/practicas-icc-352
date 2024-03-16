@@ -1,20 +1,18 @@
 package org.example.clases;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.Query;
 import org.example.services.UsuarioServices;
 
 import java.util.List;
 
-public class Contraladora {
-    private static Contraladora instancia;
+public class Encuesta {
+    private static Encuesta instancia;
 
     private Usuario usuario;
 
 
-    public static Contraladora getInstance(){
+    public static Encuesta getInstance(){
         if (instancia == null){
-            instancia = new Contraladora();
+            instancia = new Encuesta();
         }
         return instancia;
     }
@@ -30,14 +28,14 @@ public class Contraladora {
     public void addUsuario(Usuario usuario){
 
         // Buscar el usuario en la base de datos utilizando Hibernate
-        List<Usuario> usuarios = UsuarioServices.getInstancia().findAllByUsername(usuario.getUsuario());
+        List<Usuario> usuarios = UsuarioServices.getInstancia().findAllByUsername(usuario.getUsername());
 
         for (Usuario user: usuarios){
-            if(user.getUsuario().equals(usuario.getUsuario()) || user.getNombre().equals(usuario.getNombre())){
+            if(user.getUsername().equals(usuario.getUsername()) || user.getNombre().equals(usuario.getNombre())){
                 return;
             }
         }
-        UsuarioServices.getInstancia().crear(new Usuario(usuario.getUsuario(),usuario.getNombre(),usuario.getPassword()
+        UsuarioServices.getInstancia().crear(new Usuario(usuario.getUsername(),usuario.getNombre(),usuario.getPassword()
                 ,usuario.getListaRoles()));
         //usuarioList.add(usuario);
     }
