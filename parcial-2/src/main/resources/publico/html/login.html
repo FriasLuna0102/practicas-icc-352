@@ -14,7 +14,7 @@
         integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
     <!--Custom styles-->
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -56,7 +56,6 @@
                         </style>
 
 
-                        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
                         <!--                    <script>-->
                         <!--                        $(document).ready(function () {-->
                         <!--                            $('#rememberCheckbox').change(function () {-->
@@ -102,6 +101,32 @@
                 });
             });
         }
+    </script>
+    <script>
+        let URL_API = "http://localhost:7000/login";
+
+        // Escucha el evento DOMContentLoaded para ejecutar el código cuando la página esté completamente cargada
+        document.addEventListener('DOMContentLoaded', function () {
+            // Realiza la solicitud AJAX al cargar la página
+            $.ajax({
+                type: "GET",
+                url: URL_API,
+                crossDomain: true,
+                beforeSend: function (xhr) {
+                    // Adjunta la JWT del local storage al encabezado 'Authorization' de la solicitud
+                    xhr.setRequestHeader('Authorization', "Bearer " + localStorage.getItem("jwt"));
+                },
+                success: function (data) {
+                    // Manipula la respuesta del servidor si es necesario
+                    console.log("Exito")
+                },
+                error: function (xhr, status, error) {
+                    // Maneja los errores de la solicitud
+                    console.error("Error en la solicitud:", error);
+                }
+            });
+        });
+
     </script>
 
 </body>

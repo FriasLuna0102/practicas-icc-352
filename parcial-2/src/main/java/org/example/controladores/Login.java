@@ -7,6 +7,8 @@ import org.example.services.UsuarioServices;
 import org.example.util.ControladorClass;
 import org.example.util.JwtUtil;
 
+import java.util.Objects;
+
 public class Login extends ControladorClass {
 
     private Usuario usuario;
@@ -21,8 +23,14 @@ public class Login extends ControladorClass {
     public void aplicarRutas() {
 
 
-        app.get("/login",cxt->{
-            cxt.render("publico/html/login.html");
+        app.get("/login",context->{
+            String jwt = "";
+            try {
+                jwt = Objects.requireNonNull(context.header("Authorization")).replace("Bearer ", "");
+            }catch (Exception e){
+            }
+            System.out.println(jwt);
+            context.render("publico/html/login.html");
         });
 
         app.post("/login", cxt->{
