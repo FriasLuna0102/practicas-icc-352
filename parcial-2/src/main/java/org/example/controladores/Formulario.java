@@ -1,5 +1,8 @@
 package org.example.controladores;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.javalin.Javalin;
 import org.example.clases.Registro;
 import org.example.clases.Usuario;
@@ -42,35 +45,51 @@ public class Formulario extends ControladorClass {
                     context.render("publico/html/formulario.html");
                 });
 
-                post("/captura", context ->{
+                ws("/sincronizar", wsConfig -> {
+                    wsConfig.onConnect(context -> {
+                        String sessionId = context.getSessionId();
+                        System.out.println("Se conectó: " + sessionId);
 
-                    String nombre = context.formParam("nombre");
-                    String sector = context.formParam("sector");
-                    String nivelEscolar = context.formParam("nivelEscolar");
+                        // Mandar al socket su id de sesion
+                        context.session.getRemote().sendString(sessionId + "[@#Id#@]");
+                    });
 
-                    String user = context.formParam("usuario");
-                    assert user != null;
-                    Usuario usuario = UsuarioServices.getInstancia().findById(Long.parseLong(user));
+                    wsConfig.onMessage(cxt -> {
+                        // Manejar el mensaje recibido del cliente
+                        System.out.println("Mensaje recibido del cliente: " + cxt.message());
 
-                    // Implementar seguridad para que esto no sea null en caso de que el usuario bloquee la ubicacion
-                    double altitud = Double.parseDouble(context.formParam("altitud"));
-                    double longitud = Double.parseDouble(context.formParam("longitud"));
+                        // Analizar el mensaje JSON recibido
+                        ObjectMapper objectMapper = new ObjectMapper();
 
-                    System.out.println(usuario.getNombre());
-                    System.out.println(sector);
-                    System.out.println(nivelEscolar);
-                    System.out.println(altitud);
-                    System.out.println(longitud);
+                        try {
+                            // Convierte el mensaje JSON en una lista de registros
+                            List<Registro> registros = objectMapper.readValue(cxt.message(), new TypeReference<List<Registro>>() {});
 
-                    Registro nuevoRegistro = new Registro(nombre,sector,nivelEscolar,usuario,altitud,longitud,true);
-                    RegistroServices.getInstancia().crear(nuevoRegistro);
 
-                    //List<Registro> listRegistro = RegistroServices.getInstancia().obtenerTodosLosRegistros();
-//                    Map<String, Object> model = new HashMap<>();
-//                    model.put("listRegistro",listRegistro);
+                            for(Registro registro : registros){
+                                Usuario user = registro.getUsuario();
 
-                    context.redirect("/plantillaGeneral/administrarRegistros");
+                                Usuario usuar = UsuarioServices.getInstancia().findByUsername(user.getUsername());
+
+                                System.out.println(usuar.getNombre());
+                                System.out.println(usuar.getUsuario());
+                                System.out.println(usuar.getPassword());
+
+                                registro.setUsuario(usuar);
+                                registro.setEstado(true);
+                                RegistroServices.getInstancia().crear(registro);
+                            }
+
+                            // Enviar una respuesta al cliente si es necesario
+                            cxt.session.getRemote().sendString("Mensaje recibido por el servidor: " + cxt.message());
+                        } catch (JsonProcessingException e) {
+                            e.printStackTrace();
+                            cxt.session.getRemote().sendString("Error al procesar el mensaje JSON" + e.getMessage());
+                        }
+                    });
                 });
+
+
 
             });
 

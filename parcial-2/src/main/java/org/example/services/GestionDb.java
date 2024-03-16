@@ -103,7 +103,7 @@ public class GestionDb<T> {
         try {
 
             em.getTransaction().begin();
-            em.persist(entidad);
+            em.merge(entidad);
             em.getTransaction().commit();
 
         }finally {

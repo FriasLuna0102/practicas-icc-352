@@ -30,6 +30,17 @@ public class Usuario implements Serializable {
         this.listaRoles = listaRoles;
     }
 
+
+    // Constructor que acepta un valor String para el campo usuario
+    public Usuario(String usuario) {
+        this.username = usuario;
+    }
+
+    // Getters y setters
+    public String getUsuario() {
+        return username;
+    }
+
     public long getId() {
         return id;
     }
