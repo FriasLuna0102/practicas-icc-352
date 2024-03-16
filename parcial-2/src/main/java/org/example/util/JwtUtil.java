@@ -1,6 +1,7 @@
 package org.example.util;
 
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.example.clases.Encuesta;
 
@@ -10,7 +11,7 @@ import java.time.ZoneId;
 import java.util.Date;
 
 public class JwtUtil {
-    private static final String SECRETKEY = "4vWd!xTa6uM7&&TuYc!%";
+    private static final String SECRETKEY = "F%$VKj!KJWW$%&Un3L7dSjuD3h2ks*4*rMb#2XkL@XrQxpfLx*Rf&^CFw9Vctam#%Wpa9%";
 
     public static String generarToken(){
         String token = "";
@@ -26,7 +27,7 @@ public class JwtUtil {
                 .setSubject("Auth JWT")
                 .claim("usuario", Encuesta.getInstance().getUsuario())
                 .setExpiration(exp)
-                .signWith(llave)
+                .signWith(llave, SignatureAlgorithm.HS256)
                 .compact();
 
         return token;

@@ -5,6 +5,7 @@ import org.example.clases.Encuesta;
 import org.example.clases.Usuario;
 import org.example.services.UsuarioServices;
 import org.example.util.ControladorClass;
+import org.example.util.JwtUtil;
 
 public class Login extends ControladorClass {
 
@@ -34,8 +35,11 @@ public class Login extends ControladorClass {
 
                     // Si las credenciales coinciden, establecer el usuario en la sesión y redirigir
                     Encuesta.getInstance().setUsuario(usuario);
+                    String token = JwtUtil.generarToken();
                     cxt.sessionAttribute("currentUser", usuario);
-                    cxt.redirect("/plantillaGeneral");
+                    cxt.html("<script>localStorage.setItem('jwt', '" + token + "'); window.location.href = '/plantillaGeneral';</script>");
+
+                    //cxt.redirect("/plantillaGeneral");
                     return;
                 }
             }
