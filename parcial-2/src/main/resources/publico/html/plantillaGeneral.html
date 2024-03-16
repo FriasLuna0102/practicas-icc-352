@@ -115,6 +115,8 @@
                     } else {
                         // Enviar registros al servidor WebSocket
                         socket.send(JSON.stringify(formularios));
+                        // Mostrar mensaje de éxito
+                        alert('¡Sincronización exitosa!');
                     }
                 };
             };
@@ -123,8 +125,10 @@
 
         // Manejar los errores de la conexión WebSocket
         socket.onerror = function(error) {
-            console.error('Error en la conexión WebSocket:', error);
+            // Mostrar un mensaje emergente en el navegador con el error
+            alert('Error en la conexión WebSocket: ' + error.message);
         };
+
 
         // Manejar los mensajes recibidos del servidor WebSocket
         socket.onmessage = function(event) {
