@@ -75,7 +75,7 @@
 <script>
     function conectar(){
         // Conectar con el servidor WebSocket
-        const socket = new WebSocket("ws://"+location.hostname+":"+location.port+"/plantillaGeneral/sincronizar"); // Cambia la URL por la del servidor WebSocket
+        const socket = new WebSocket("wss://"+location.hostname+":"+location.port+"/plantillaGeneral/sincronizar"); // Cambia la URL por la del servidor WebSocket
 
         // Manejar la apertura de la conexión WebSocket
         socket.onopen = function() {
