@@ -31,4 +31,16 @@ public class JwtUtil {
 
         return token;
     }
+
+    public static boolean verificarToken(String token) {
+        try {
+            Jwts.parserBuilder()
+                    .setSigningKey(SECRETKEY.getBytes())
+                    .build()
+                    .parseClaimsJws(token);
+            return true; // El token es válido
+        } catch (Exception e) {
+            return false; // El token no es válido
+        }
+    }
 }
