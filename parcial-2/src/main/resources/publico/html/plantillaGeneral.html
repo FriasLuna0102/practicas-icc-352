@@ -7,7 +7,7 @@
     <title>Plantilla General</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-        body{
+        body {
             background-image: url("../img/6fe01f5fbe372a2b045f66a79be7b210.jpg");
             background-size: cover;
             background-repeat: no-repeat;
@@ -15,60 +15,96 @@
             height: 100%;
         }
 
-        h1{
+        h1 {
             color: white;
         }
     </style>
+
+    <link rel="stylesheet" type="" href="../js/offline-theme-slide-indicator.css">
+    <link rel="stylesheet" type="" href="../js/offline-language-spanish-indicator.css">
+    <script src="../js/offline.js">
+    </script>
+    <script>
+        Offline.options = {
+            checks: {
+                xhr: {
+                    url: '/autenticar', // Cambia esto a una URL válida en tu sitio
+                    timeout: 5, // Tiempo de espera para la solicitud
+                },
+                // Otros tipos de verificaciones según tus necesidades
+            },
+            // Verificar el estado de conexión al cargar la página.
+            checkOnLoad: true,
+            // Monitorear las solicitudes AJAX para verificar la conexión.
+            interceptRequests: true,
+            // Volver a probar automáticamente periódicamente cuando la conexión está inactiva.
+            reconnect: {
+                // Retraso en segundos antes de volver a verificar.
+                initialDelay: 3,
+                // Intervalo de espera en segundos entre reintentos.
+                delay: 10
+            },
+            // Almacenar y volver a intentar solicitudes que fallaron mientras la conexión estaba inactiva.
+            requests: true
+        };
+        Offline.check()
+    </script>
+
 </head>
+
 <body>
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="navbar-header">
-        <!-- Botón de Login -->
-        <span th:if="${usuario != null}">
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <!-- Botón de Login -->
+            <span th:if="${usuario != null}">
 
                 <span th:text="${usuario.nombre}" style="color: white;"></span>
                 <a class="btn btn-sm btn-primary navbar-btn" href="/logout">Logout</a>
 
             </span>
-        <!-- Nombre del usuario -->
-        <span th:if="${usuario == null}">
+            <!-- Nombre del usuario -->
+            <span th:if="${usuario == null}">
                 <a class="btn btn-sm btn-primary navbar-btn" href="/login">Login</a>
 
             </span>
-        <!-- ... -->
+            <!-- ... -->
+        </div>
+
+
+
+
+    </nav>
+
+
+    <div class="container mt-5 text-center">
+
+        <h1>Bienvenido <span th:text="${usuario.getNombre}"></span></h1>
     </div>
 
-
-
-</nav>
-
-
-<div class="container mt-5 text-center">
-
-    <h1>Bienvenido <span th:text="${usuario.getNombre}"></span></h1>
-</div>
-
-<div class="container mt-5 text-center">
-    <div class="my-3">
-        <button class="btn btn-primary" onclick="window.location.href = '/html/formulario.html';">Formulario</button>
-    </div>
+    <div class="container mt-5 text-center">
+        <div class="my-3">
+            <button class="btn btn-primary"
+                onclick="window.location.href = '/html/formulario.html';">Formulario</button>
+        </div>
 
     <div class="my-3">
         <button class="btn btn-secondary" onclick="window.location.href='/html/mapa.html'">Mapa</button>
     </div>
 
-    <div class="my-3">
-        <button class="btn btn-success" onclick="window.location.href = '/plantillaGeneral/administrarUsuarios';">Administrar Usuarios</button>
-    </div>
+        <div class="my-3">
+            <button class="btn btn-success"
+                onclick="window.location.href = '/plantillaGeneral/administrarUsuarios';">Administrar Usuarios</button>
+        </div>
 
     <div class="my-3">
         <button class="btn btn-danger" onclick="conectar()">Sincronizar</button>
     </div>
 
-    <div class="my-3">
-        <button class="btn btn-warning" onclick="window.location.href = '/html/administrarRegistros.html';">Administrar Registros</button>
+        <div class="my-3">
+            <button class="btn btn-warning"
+                onclick="window.location.href = '/html/administrarRegistros.html';">Administrar Registros</button>
+        </div>
     </div>
-</div>
 
 <!-- JavaScript para manejar la sincronización con WebSockets -->
 <script>
@@ -135,4 +171,5 @@
 
 
 </body>
+
 </html>

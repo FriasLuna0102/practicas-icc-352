@@ -18,7 +18,7 @@ var urlsToCache = [
     '/html/modificarRegistro.html',
     '/js/offline.js',
     '/js/offline-theme-slide-indicator.css',
-    '/js/offline-language-spanish-indicator.css'
+    '/js/offline-language-spanish-indicator.css',
     '/html/modificarRegistro.html',
     '/html/mapa.html'
 ];

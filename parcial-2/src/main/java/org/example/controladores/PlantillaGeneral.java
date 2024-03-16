@@ -26,6 +26,9 @@ public class PlantillaGeneral extends ControladorClass {
             }
         });
 
+        app.head("/autenticar", context -> {
+            context.status(200);
+        });
 
     }
 }
