@@ -97,8 +97,14 @@
 </head>
 
 <body>
+<script>
+    function enviarFormulario() {
+        // Realiza la redirección al archivo HTML deseado
+        window.location.href = '/html/plantillaGeneral.html';
+    }
+</script>
 <h1>Formulario de Modificación</h1>
-<form id="formularioCaptura" action="/plantillaGeneral/captura" method="post">
+<form id="formularioCaptura" onsubmit="event.preventDefault(); enviarFormulario();" method="post">
     <div>
         <label for="nombre">Nombre:</label>
         <input type="text" id="nombre" name="nombre" required>

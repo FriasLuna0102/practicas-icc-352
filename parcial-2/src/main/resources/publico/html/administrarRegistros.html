@@ -62,8 +62,9 @@
             var cursor = event.target.result;
             if (cursor) {
                 // Crear una nueva fila en la tabla para cada registro
-                var fila = document.createElement("tr");
-                fila.innerHTML = `
+                if(cursor.value.estado === 0){
+                    var fila = document.createElement("tr");
+                    fila.innerHTML = `
                     <td>${cursor.value.nombre}</td>
                     <td>${cursor.value.sector}</td>
                     <td>${cursor.value.nivelEscolar}</td>
@@ -76,9 +77,26 @@
                         <button class="btn btn-warning btn-sm" onclick="modificarRegistro(${cursor.primaryKey})">Modificar</button>
                     </td> <!-- Botones de eliminar y modificar -->
                 `;
-                document.getElementById("tablaRegistros").appendChild(fila);
+                    document.getElementById("tablaRegistros").appendChild(fila);
 
-                cursor.continue();
+                    cursor.continue();
+                }else{
+                    var fila = document.createElement("tr");
+                    fila.innerHTML = `
+                    <td>${cursor.value.nombre}</td>
+                    <td>${cursor.value.sector}</td>
+                    <td>${cursor.value.nivelEscolar}</td>
+                    <td>${cursor.value.usuario}</td>
+                    <td>${cursor.value.altitud}</td>
+                    <td>${cursor.value.longitud}</td>
+                    <td>${cursor.value.estado}</td>
+
+                `;
+                    document.getElementById("tablaRegistros").appendChild(fila);
+
+                    cursor.continue();
+                }
+
             }
         };
     };
