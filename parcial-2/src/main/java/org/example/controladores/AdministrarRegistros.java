@@ -1,7 +1,7 @@
 package org.example.controladores;
 
 import io.javalin.Javalin;
-import org.example.clases.Contraladora;
+import org.example.clases.Encuesta;
 import org.example.clases.Registro;
 import org.example.clases.Usuario;
 import org.example.services.RegistroServices;
