@@ -8,11 +8,13 @@ url_wsdl = 'http://localhost:7000/ws/EstudianteWebServices?wsdl'
 # Crear un cliente SOAP
 cliente = Client(url_wsdl)
 
+
 class Estudiante:
     def __init__(self, matricula, nombre, carrera):
         self.matricula = matricula
         self.nombre = nombre
         self.carrera = carrera
+
 
 def listar_estudiantes():
     # Llamar al método del servicio SOAP para listar estudiantes
@@ -28,6 +30,7 @@ def listar_estudiantes():
             print("\n")
         else:
             print("Nombre no disponible para este estudiante")
+
 
 def consultar_estudiantes():
     matricula = input("Introduce la matrícula del estudiante: ")
@@ -45,6 +48,7 @@ def consultar_estudiantes():
             print("Estudiante no encontrado.")
     except Exception as e:
         print("Error al consultar el estudiante:", str(e))
+
 
 def crear_estudiante():
     matricula = int(input("Matrícula: "))
@@ -68,19 +72,14 @@ def borrar_estudiante():
     matricula = input("Introduce la matrícula del estudiante a borrar: ")
 
     try:
-        # Construir la URL con la matrícula como parte de la ruta
-        url = f'http://localhost:7000/api/estudiante/{matricula}'
+        estudiante = cliente.service.getEstudiante(matricula)
+        cliente.service.eliminarEstudiante(estudiante)
 
-        # Realizar la solicitud HTTP con el método DELETE
-        response = requests.delete(url)
+        print("Estudiante borrado exitosamente.")
 
-        # Verificar el código de estado de la respuesta
-        if response.status_code == 200:
-            print("Estudiante borrado exitosamente.")
-        else:
-            print("Error al borrar el estudiante. Código de estado:", response.status_code)
     except Exception as e:
         print("Error al borrar el estudiante:", str(e))
+
 
 # Mapea las opciones a las funciones correspondientes
 opciones = {
