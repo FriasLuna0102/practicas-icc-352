@@ -67,6 +67,16 @@ public class Main {
 
             });
 
+
+            //Habilitando el CORS. Ver: https://javalin.io/plugins/cors#getting-started para más opciones.
+            config.plugins.enableCors(corsContainer -> {
+                corsContainer.add(corsPluginConfig -> {
+                    corsPluginConfig.anyHost();
+                });
+            });
+
+
+
         });
         app.start(7000);
 
