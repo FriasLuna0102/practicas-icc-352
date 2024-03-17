@@ -78,7 +78,10 @@
 
         // Conectar con el servidor WebSocket
         //Para trabajar local:
-         const socket = new WebSocket("wss://"+location.hostname+":"+location.port+"/plantillaGeneral/sincronizar"); // Cambia la URL por la del servidor WebSocket
+        //  const socket = new WebSocket("ws://"+location.hostname+":"+location.port+"/plantillaGeneral/sincronizar"); // Cambia la URL por la del servidor WebSocket
+
+        const socket = new WebSocket("ws://"+location.hostname+":"+80+"/plantillaGeneral/sincronizar"); // Cambia la URL por la del servidor WebSocket
+
 
         //En el servidor
         // const socket = new WebSocket("ws://parcial.friasluna.me/plantillaGeneral/sincronizar"); // Cambia la URL por la del servidor WebSocket
