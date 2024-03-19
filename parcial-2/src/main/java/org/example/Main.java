@@ -45,12 +45,12 @@ public class Main {
         listRole2.add(RolesServices.getInstancia().findByCodigo("2"));
 
 
-        Usuario usuario1 = new Usuario("admin","RanStar","admin",listRole);
-        Usuario usuario2 = new Usuario("star","Starlin","123",listRole2);
-
-        //if (UsuarioServices.getInstancia().findAllByUsername(usuario1.getUsuario()) == null) {
-            UsuarioServices.getInstancia().crear(usuario1);
-            UsuarioServices.getInstancia().crear(usuario2);
+//        Usuario usuario1 = new Usuario("admin","RanStar","admin",listRole);
+//        Usuario usuario2 = new Usuario("star","Starlin","123",listRole2);
+//
+//        //if (UsuarioServices.getInstancia().findAllByUsername(usuario1.getUsuario()) == null) {
+//            UsuarioServices.getInstancia().crear(usuario1);
+//            UsuarioServices.getInstancia().crear(usuario2);
 
         //}
 

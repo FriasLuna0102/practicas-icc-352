@@ -106,6 +106,7 @@ public class Formulario extends ControladorClass {
                             reg.setUsuario(usuar);
                             reg.setEstado(true);
                             RegistroServices.getInstancia().crear(reg);
+
                         }
 
                         // Manejar la respuesta del servidor
@@ -120,6 +121,15 @@ public class Formulario extends ControladorClass {
                         e.printStackTrace();
                         ctx.status(500).result("Error al procesar el mensaje JSON: " + e.getMessage());
                     }
+                });
+
+
+                get("/obtenerRegistros", cxt ->{
+                    List<Registro> todoRegistros = RegistroServices.getInstancia().obtenerTodosLosRegistros();
+                    for(Registro tod : todoRegistros){
+                        System.out.println(tod.getNombre());
+                    }
+                    cxt.json(todoRegistros);
                 });
 
 

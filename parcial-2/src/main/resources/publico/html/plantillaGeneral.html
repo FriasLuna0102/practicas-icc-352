@@ -188,15 +188,44 @@
                     let datosJson = JSON.stringify(formularios);
                     console.log("JSON enviado:"+datosJson);
                     // Usamos AJAX para enviar los datos al servidor
-                    $.post("/plantillaGeneral/sincronizar", datosJson, function (data,status){
-                        console.log("Estado es:"+status)
-                        console.log(data)
+                    $.ajax({
+                        url: "/plantillaGeneral/sincronizar",
+                        type: "post",
+                        data: datosJson,
+                        contentType: "application/json",
+                        success: function(data, status) {
+                            console.log(data);
+                            console.log("Estado es:" + status);
+                        }
                     });
 
-                    // let xhr = new XMLHttpRequest();
-                    // xhr.open("POST", "http://localhost/plantillaGeneral/sincronizar", true);
-                    // xhr.setRequestHeader("Content-Type", "application/json");
-                    // xhr.send(datosJson);
+
+                    $.ajax({
+                        url: "/plantillaGeneral/obtenerRegistros", // URL del endpoint para obtener registros
+                        type: "get",
+                        success: function(data, status) {
+                            var registros = data; // Deserializar los datos JSON
+                            console.log(data)
+
+                            // Abrir una transacción para agregar los registros a la base de datos
+                            var transaction = db.transaction(["formularios"], "readwrite");
+                            var objectStore = transaction.objectStore("formularios");
+
+                            for (var i = 0; i < registros.length; i++) {
+                                var request = objectStore.put(registros[i]); // Usar 'put' en lugar de 'add'
+
+                                request.onsuccess = function() {
+                                    console.log("Registro agregado a la base de datos");
+                                };
+
+                                request.onerror = function() {
+                                    console.error("Error al agregar el registro a la base de datos");
+                                };
+                            }
+                        }
+                    });
+
+
                 }
             };
         };

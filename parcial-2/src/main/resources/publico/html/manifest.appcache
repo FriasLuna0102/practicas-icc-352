@@ -1,24 +1,15 @@
 CACHE MANIFEST
 
 CACHE:
-administrarUsuarios.html
-/html/crearUsuario.html
 /html/formulario.html
-/html/login.html
-/html/modificarUsuario.html
-/html/plantillaGeneral.html
-/css/admnistrarUsuario.css
-/css/crearUsuario.css
 /css/formulario.css
-/css/login.css
-/img/6fe01f5fbe372a2b045f66a79be7b210.jpg
 /html/administrarRegistros.html
 /html/modificarRegistro.html
-/html/mapa.html
+
 
 NETWORK:
 /
 /api/*
 
 FALLBACK:
-/ /html/plantillaGeneral.html
+/ /html/formulario.html
