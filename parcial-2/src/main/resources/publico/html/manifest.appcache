@@ -3,12 +3,9 @@ CACHE MANIFEST
 CACHE:
 /html/formulario.html
 /css/formulario.css
+/img/6fe01f5fbe372a2b045f66a79be7b210.jpg
 /html/administrarRegistros.html
 /html/modificarRegistro.html
-/js/offline.js
-/js/offline-theme-slide-indicator.css
-/js/offline-language-spanish-indicator.css
-
 
 NETWORK:
 /
@@ -16,3 +13,4 @@ NETWORK:
 
 FALLBACK:
 / /html/formulario.html
+
