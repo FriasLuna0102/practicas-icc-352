@@ -8,186 +8,255 @@
     <title>Plantilla General</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-        body{
+        body {
             background-image: url("../img/6fe01f5fbe372a2b045f66a79be7b210.jpg");
             background-size: cover;
             background-repeat: no-repeat;
             width: 100%;
-            height: 100%;
+            height: 100vh;
         }
 
-        h1{
+        .navbar {
+            padding-top: 2%;
+        }
+
+        h1 {
             color: white;
         }
+
+        .container {
+            height: 100vh;
+        }
     </style>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
+
 <body>
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="navbar-header">
-        <!-- Botón de Login -->
-        <span th:if="${usuario != null}">
+    <div class="container">
+        <div class="row justify-content-center ">
 
-                <span th:text="${usuario.nombre}" style="color: white;"></span>
-                <a class="btn btn-sm btn-primary navbar-btn" href="/logout">Logout</a>
+            <nav class="navbar col-md-6 col-xs-6" role="navigation">
+                <div class="navbar-header">
+                    <!-- Botón de Login -->
+                    <span th:if="${usuario != null}">
 
-            </span>
-        <!-- Nombre del usuario -->
-        <span th:if="${usuario == null}">
-                <a class="btn btn-sm btn-primary navbar-btn" href="/login">Login</a>
+                        <span th:text="${usuario.nombre}" style="color: white;"></span>
+                        <a class="btn btn-sm btn-primary navbar-btn" href="/logout">Logout</a>
 
-            </span>
-        <!-- ... -->
+                    </span>
+                    <!-- Nombre del usuario -->
+                    <span th:if="${usuario == null}">
+                        <a class="btn btn-sm btn-primary navbar-btn" href="/login">Login</a>
+
+                    </span>
+                    <!-- ... -->
+                </div>
+            </nav>
+        </div>
+
+
+        <div class="mt-5 mb-3 text-center">
+            <h1>Bienvenido <span th:text="${usuario.getNombre}"></span></h1>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-xs-4 col-md-6 col-lg-6">
+                <div class="btn-group-vertical d-flex">
+                    <button class="btn btn-primary mb-2"
+                        onclick="window.location.href = '/html/formulario.html';">Formulario</button>
+                    <button class="btn btn-secondary mb-2"
+                        onclick="window.location.href='/html/mapa.html'">Mapa</button>
+                    <button class="btn btn-success mb-2"
+                        onclick="window.location.href = '/plantillaGeneral/administrarUsuarios';">Administrar
+                        Usuarios</button>
+                    <button id="botonSincronizar" class="btn btn-danger mb-2" style="display: none;"
+                        onclick="conectar()">Sincronizar</button>
+                    <button class="btn btn-warning mb-2"
+                        onclick="window.location.href = '/html/administrarRegistros.html';">Administrar
+                        Registros</button>
+                </div>
+            </div>
+        </div>
+
     </div>
 
+    <!-- JavaScript para manejar la sincronización con WebSockets -->
+    <script>
+        // function conectar(){
+        //     // Conectar con el servidor WebSocket
+        //     //Para trabajar local:
+        //     // const socket = new WebSocket("ws://"+location.hostname+":"+location.port+"/plantillaGeneral/sincronizar"); // Cambia la URL por la del servidor WebSocket
+        //
+        //     //En el servidor
+        //     const socket = new WebSocket("wss://parcial.friasluna.me/plantillaGeneral/sincronizar"); // Cambia la URL por la del servidor WebSocket
+        //
+        //     // Manejar la apertura de la conexión WebSocket
+        //     socket.onopen = function() {
+        //         console.log('Conexión establecida con el servidor WebSocket');
+        //
+        //         // Recuperar registros de IndexedDB
+        //         var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+        //         var request = indexedDB.open("FormularioDB", 1);
+        //
+        //         request.onerror = function(event) {
+        //             console.error('Error al abrir la base de datos:', event.target.errorCode);
+        //         };
+        //
+        //         request.onsuccess = function(event) {
+        //             var db = event.target.result;
+        //             var transaction = db.transaction(["formularios"], "readwrite"); // Cambiar a modo de escritura
+        //             var objectStore = transaction.objectStore("formularios");
+        //             var formularios = [];
+        //
+        //             // Obtener registros con estado = 0
+        //             objectStore.openCursor().onsuccess = function(event) {
+        //                 var cursor = event.target.result;
+        //                 if (cursor) {
+        //                     if (cursor.value.estado === 0) {
+        //                         // Actualizar el estado del registro a 1
+        //                         cursor.value.estado = 1;
+        //                         var updateRequest = cursor.update(cursor.value);
+        //                         updateRequest.onsuccess = function() {
+        //                             console.log("Estado actualizado a 1 para el registro con ID: " + cursor.value.id);
+        //                         };
+        //                         updateRequest.onerror = function() {
+        //                             console.error("Error al actualizar el estado del registro");
+        //                         };
+        //                         formularios.push(cursor.value);
+        //                     }
+        //                     cursor.continue();
+        //                 } else {
+        //                     // Enviar registros al servidor WebSocket
+        //                     socket.send(JSON.stringify(formularios));
+        //                     // Mostrar mensaje de éxito
+        //                     alert('¡Sincronización exitosa!');
+        //                 }
+        //             };
+        //         };
+        //
+        //     };
+
+        // // Manejar los errores de la conexión WebSocket
+        //     socket.onerror = function(error) {
+        //         // Mostrar un mensaje emergente en el navegador con el error
+        //         alert('Error en la conexión WebSocket: ' + error.message);
+        //     };
+        //
+        //
+        //     // Manejar los mensajes recibidos del servidor WebSocket
+        //     socket.onmessage = function(event) {
+        //         console.log('Mensaje recibido del servidor WebSocket:', event.data);
+        //         // Puedes agregar aquí la lógica para manejar la respuesta del servidor si es necesario
+        //     };
+        // }
 
 
-</nav>
 
 
-<div class="container mt-5 text-center">
-
-    <h1>Bienvenido <span th:text="${usuario.getNombre}"></span></h1>
-</div>
-
-<div class="container mt-5 text-center">
-    <div class="my-3">
-        <button class="btn btn-primary" onclick="window.location.href = '/html/formulario.html';">Formulario</button>
-    </div>
-
-
-    <div class="my-3">
-        <button class="btn btn-secondary" onclick="window.location.href='/html/mapa.html'">Mapa</button>
-    </div>
-
-    <div class="my-3">
-        <button class="btn btn-success" onclick="window.location.href = '/plantillaGeneral/administrarUsuarios';">Administrar Usuarios</button>
-    </div>
-
-    <div class="my-3 text-center">
-        <button id="botonSincronizar" class="btn btn-danger" style="display: none; margin: 0 auto;" onclick="conectar()">Sincronizar</button>
-    </div>
-
-    <div class="my-3">
-        <button class="btn btn-warning" onclick="window.location.href = '/html/administrarRegistros.html';">Administrar Registros</button>
-    </div>
-</div>
-
-<!-- JavaScript para manejar la sincronización con WebSockets -->
-<script>
-    function conectar(){
-
-        // Conectar con el servidor WebSocket
-        //Para trabajar local:
-         const socket = new WebSocket("ws://"+location.hostname+":"+location.port+"/plantillaGeneral/sincronizar"); // Cambia la URL por la del servidor WebSocket
-
-        //En el servidor
-        // const socket = new WebSocket("ws://parcial.friasluna.me/plantillaGeneral/sincronizar"); // Cambia la URL por la del servidor WebSocket
-
-        // Manejar la apertura de la conexión WebSocket
-        socket.onopen = function() {
-            console.log('Conexión establecida con el servidor WebSocket');
-
+        //USANDO AJAX:
+        function conectar() {
             // Recuperar registros de IndexedDB
             var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
             var request = indexedDB.open("FormularioDB", 1);
 
-            request.onerror = function(event) {
+            request.onerror = function (event) {
                 console.error('Error al abrir la base de datos:', event.target.errorCode);
             };
 
-            request.onsuccess = function(event) {
+            request.onsuccess = function (event) {
                 var db = event.target.result;
                 var transaction = db.transaction(["formularios"], "readwrite"); // Cambiar a modo de escritura
                 var objectStore = transaction.objectStore("formularios");
                 var formularios = [];
 
                 // Obtener registros con estado = 0
-                objectStore.openCursor().onsuccess = function(event) {
+                objectStore.openCursor().onsuccess = function (event) {
                     var cursor = event.target.result;
                     if (cursor) {
                         if (cursor.value.estado === 0) {
                             // Actualizar el estado del registro a 1
                             cursor.value.estado = 1;
                             var updateRequest = cursor.update(cursor.value);
-                            updateRequest.onsuccess = function() {
+                            updateRequest.onsuccess = function () {
                                 console.log("Estado actualizado a 1 para el registro con ID: " + cursor.value.id);
                             };
-                            updateRequest.onerror = function() {
+                            updateRequest.onerror = function () {
                                 console.error("Error al actualizar el estado del registro");
                             };
                             formularios.push(cursor.value);
                         }
                         cursor.continue();
                     } else {
-                        // Enviar registros al servidor WebSocket
-                        socket.send(JSON.stringify(formularios));
-                        // Mostrar mensaje de éxito
-                        alert('¡Sincronización exitosa!');
+                        // Enviar registros al servidor a través de AJAX
+                        // Convertimos los datos a JSON
+
+                        let datosJson = JSON.stringify(formularios);
+                        console.log("JSON enviado:" + datosJson);
+                        // Usamos AJAX para enviar los datos al servidor
+                        $.post("/plantillaGeneral/sincronizar", datosJson, function (data, status) {
+                            console.log("Estado es:" + status)
+                            console.log(data)
+                        });
+
+                        // let xhr = new XMLHttpRequest();
+                        // xhr.open("POST", "http://localhost/plantillaGeneral/sincronizar", true);
+                        // xhr.setRequestHeader("Content-Type", "application/json");
+                        // xhr.send(datosJson);
                     }
                 };
             };
-
-        };
-
-        // Manejar los errores de la conexión WebSocket
-        socket.onerror = function(error) {
-            // Mostrar un mensaje emergente en el navegador con el error
-            alert('Error en la conexión WebSocket: ' + error.message);
-        };
+        }
 
 
-        // Manejar los mensajes recibidos del servidor WebSocket
-        socket.onmessage = function(event) {
-            console.log('Mensaje recibido del servidor WebSocket:', event.data);
-            // Puedes agregar aquí la lógica para manejar la respuesta del servidor si es necesario
-        };
-    }
 
-    // Función para verificar si la estructura de la base de datos IndexedDB existe
-    // Función para verificar la estructura de la base de datos
-    function verificarEstructuraIndexedDB() {
-        var request = indexedDB.open("FormularioDB", 1);
+        // Función para verificar si la estructura de la base de datos IndexedDB existe
+        // Función para verificar la estructura de la base de datos
+        function verificarEstructuraIndexedDB() {
+            var request = indexedDB.open("FormularioDB", 1);
 
-        request.onsuccess = function (event) {
-            var db = event.target.result;
+            request.onsuccess = function (event) {
+                var db = event.target.result;
 
-            // Verificar si el almacén de objetos "formularios" existe en la base de datos
-            if (db.objectStoreNames.contains("formularios")) {
-                // El almacén de objetos "formularios" existe, muestra el botón de sincronización
-                document.getElementById("botonSincronizar").style.display = "block";
-            } else {
-                // El almacén de objetos "formularios" no existe, oculta el botón de sincronización
+                // Verificar si el almacén de objetos "formularios" existe en la base de datos
+                if (db.objectStoreNames.contains("formularios")) {
+                    // El almacén de objetos "formularios" existe, muestra el botón de sincronización
+                    document.getElementById("botonSincronizar").style.display = "block";
+                } else {
+                    // El almacén de objetos "formularios" no existe, oculta el botón de sincronización
+                    document.getElementById("botonSincronizar").style.display = "none";
+                }
+            };
+
+            request.onerror = function () {
+                // Error al abrir la base de datos, oculta el botón de sincronización
                 document.getElementById("botonSincronizar").style.display = "none";
-            }
-        };
+            };
+        }
 
-        request.onerror = function () {
-            // Error al abrir la base de datos, oculta el botón de sincronización
-            document.getElementById("botonSincronizar").style.display = "none";
-        };
-    }
+        // Función para verificar si la base de datos ya existe
+        function verificarExistenciaIndexedDB() {
+            indexedDB.databases().then(function (dbs) {
+                var existe = dbs.some(function (db) {
+                    return db.name === "FormularioDB";
+                });
 
-    // Función para verificar si la base de datos ya existe
-    function verificarExistenciaIndexedDB() {
-        indexedDB.databases().then(function (dbs) {
-            var existe = dbs.some(function (db) {
-                return db.name === "FormularioDB";
+                if (existe) {
+                    // La base de datos ya existe, no es necesario abrirla nuevamente
+                    console.log("La base de datos ya existe");
+                    verificarEstructuraIndexedDB();
+                } else {
+                    // La base de datos no existe, abrir para crearla
+                    console.log("La base de datos no existe, creándolaa...");
+                }
             });
+        }
 
-            if (existe) {
-                // La base de datos ya existe, no es necesario abrirla nuevamente
-                console.log("La base de datos ya existe");
-                verificarEstructuraIndexedDB();
-            } else {
-                // La base de datos no existe, abrir para crearla
-                console.log("La base de datos no existe, creándolaa...");
-            }
-        });
-    }
-
-    window.onload = verificarExistenciaIndexedDB;
-</script>
+        window.onload = verificarExistenciaIndexedDB;
+    </script>
 
 
 </body>
+
 </html>
