@@ -106,7 +106,6 @@ public class Formulario extends ControladorClass {
                             reg.setUsuario(usuar);
                             reg.setEstado(true);
                             RegistroServices.getInstancia().crear(reg);
-
                         }
 
                         // Manejar la respuesta del servidor
@@ -123,16 +122,10 @@ public class Formulario extends ControladorClass {
                     }
                 });
 
-
                 get("/obtenerRegistros", cxt ->{
                     List<Registro> todoRegistros = RegistroServices.getInstancia().obtenerTodosLosRegistros();
-                    for(Registro tod : todoRegistros){
-                        System.out.println(tod.getNombre());
-                    }
                     cxt.json(todoRegistros);
                 });
-
-
 
 
             });

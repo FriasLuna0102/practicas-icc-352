@@ -84,130 +84,155 @@
 
     <!-- JavaScript para manejar la sincronización con WebSockets -->
     <script>
-        // function conectar(){
-        //     // Conectar con el servidor WebSocket
-        //     //Para trabajar local:
-        //     // const socket = new WebSocket("ws://"+location.hostname+":"+location.port+"/plantillaGeneral/sincronizar"); // Cambia la URL por la del servidor WebSocket
-        //
-        //     //En el servidor
-        //     const socket = new WebSocket("wss://parcial.friasluna.me/plantillaGeneral/sincronizar"); // Cambia la URL por la del servidor WebSocket
-        //
-        //     // Manejar la apertura de la conexión WebSocket
-        //     socket.onopen = function() {
-        //         console.log('Conexión establecida con el servidor WebSocket');
-        //
-        //         // Recuperar registros de IndexedDB
-        //         var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
-        //         var request = indexedDB.open("FormularioDB", 1);
-        //
-        //         request.onerror = function(event) {
-        //             console.error('Error al abrir la base de datos:', event.target.errorCode);
-        //         };
-        //
-        //         request.onsuccess = function(event) {
-        //             var db = event.target.result;
-        //             var transaction = db.transaction(["formularios"], "readwrite"); // Cambiar a modo de escritura
-        //             var objectStore = transaction.objectStore("formularios");
-        //             var formularios = [];
-        //
-        //             // Obtener registros con estado = 0
-        //             objectStore.openCursor().onsuccess = function(event) {
-        //                 var cursor = event.target.result;
-        //                 if (cursor) {
-        //                     if (cursor.value.estado === 0) {
-        //                         // Actualizar el estado del registro a 1
-        //                         cursor.value.estado = 1;
-        //                         var updateRequest = cursor.update(cursor.value);
-        //                         updateRequest.onsuccess = function() {
-        //                             console.log("Estado actualizado a 1 para el registro con ID: " + cursor.value.id);
-        //                         };
-        //                         updateRequest.onerror = function() {
-        //                             console.error("Error al actualizar el estado del registro");
-        //                         };
-        //                         formularios.push(cursor.value);
-        //                     }
-        //                     cursor.continue();
-        //                 } else {
-        //                     // Enviar registros al servidor WebSocket
-        //                     socket.send(JSON.stringify(formularios));
-        //                     // Mostrar mensaje de éxito
-        //                     alert('¡Sincronización exitosa!');
-        //                 }
-        //             };
-        //         };
-        //
-        //     };
+        function conectar(){
+            // Conectar con el servidor WebSocket
+            //Para trabajar local:
+             const socket = new WebSocket("ws://"+location.hostname+":"+location.port+"/plantillaGeneral/sincronizar"); // Cambia la URL por la del servidor WebSocket
 
-        // // Manejar los errores de la conexión WebSocket
-        //     socket.onerror = function(error) {
-        //         // Mostrar un mensaje emergente en el navegador con el error
-        //         alert('Error en la conexión WebSocket: ' + error.message);
-        //     };
-        //
-        //
-        //     // Manejar los mensajes recibidos del servidor WebSocket
-        //     socket.onmessage = function(event) {
-        //         console.log('Mensaje recibido del servidor WebSocket:', event.data);
-        //         // Puedes agregar aquí la lógica para manejar la respuesta del servidor si es necesario
-        //     };
-        // }
+            //En el servidor
+            // const socket = new WebSocket("wss://parcial.friasluna.me/plantillaGeneral/sincronizar"); // Cambia la URL por la del servidor WebSocket
 
+            // Manejar la apertura de la conexión WebSocket
+            socket.onopen = function() {
+                console.log('Conexión establecida con el servidor WebSocket');
 
+                // Recuperar registros de IndexedDB
+                var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+                var request = indexedDB.open("FormularioDB", 1);
 
+                request.onerror = function(event) {
+                    console.error('Error al abrir la base de datos:', event.target.errorCode);
+                };
 
-        //USANDO AJAX:
-        function conectar() {
-            // Recuperar registros de IndexedDB
-            var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
-            var request = indexedDB.open("FormularioDB", 1);
+                request.onsuccess = function(event) {
+                    var db = event.target.result;
+                    var transaction = db.transaction(["formularios"], "readwrite"); // Cambiar a modo de escritura
+                    var objectStore = transaction.objectStore("formularios");
+                    var formularios = [];
 
-            request.onerror = function (event) {
-                console.error('Error al abrir la base de datos:', event.target.errorCode);
+                    // Obtener registros con estado = 0
+                    objectStore.openCursor().onsuccess = function(event) {
+                        var cursor = event.target.result;
+                        if (cursor) {
+                            if (cursor.value.estado === 0) {
+                                // Actualizar el estado del registro a 1
+                                cursor.value.estado = 1;
+                                var updateRequest = cursor.update(cursor.value);
+                                updateRequest.onsuccess = function() {
+                                    console.log("Estado actualizado a 1 para el registro con ID: " + cursor.value.id);
+                                };
+                                updateRequest.onerror = function() {
+                                    console.error("Error al actualizar el estado del registro");
+                                };
+                                formularios.push(cursor.value);
+                            }
+                            cursor.continue();
+                        } else {
+                            // Enviar registros al servidor WebSocket
+                            socket.send(JSON.stringify(formularios));
+                            // Mostrar mensaje de éxito
+                            alert('¡Sincronización exitosa!');
+                        }
+                    };
+                };
+
             };
 
-            request.onsuccess = function (event) {
-                var db = event.target.result;
-                var transaction = db.transaction(["formularios"], "readwrite"); // Cambiar a modo de escritura
-                var objectStore = transaction.objectStore("formularios");
-                var formularios = [];
+        // Manejar los errores de la conexión WebSocket
+            socket.onerror = function(error) {
+                // Mostrar un mensaje emergente en el navegador con el error
+                alert('Error en la conexión WebSocket: ' + error.message);
+            };
 
-                // Obtener registros con estado = 0
-                objectStore.openCursor().onsuccess = function (event) {
-                    var cursor = event.target.result;
-                    if (cursor) {
-                        if (cursor.value.estado === 0) {
-                            // Actualizar el estado del registro a 1
-                            cursor.value.estado = 1;
-                            var updateRequest = cursor.update(cursor.value);
-                            updateRequest.onsuccess = function () {
-                                console.log("Estado actualizado a 1 para el registro con ID: " + cursor.value.id);
-                            };
-                            updateRequest.onerror = function () {
-                                console.error("Error al actualizar el estado del registro");
-                            };
-                            formularios.push(cursor.value);
-                        }
-                        cursor.continue();
-                    } else {
-                        // Enviar registros al servidor a través de AJAX
-                        // Convertimos los datos a JSON
 
-                        let datosJson = JSON.stringify(formularios);
-                        console.log("JSON enviado:" + datosJson);
-                        // Usamos AJAX para enviar los datos al servidor
-                        $.post("/plantillaGeneral/sincronizar", datosJson, function (data, status) {
-                            console.log("Estado es:" + status)
-                            console.log(data)
-                        });
-
-                        // let xhr = new XMLHttpRequest();
-                        // xhr.open("POST", "http://localhost/plantillaGeneral/sincronizar", true);
-                        // xhr.setRequestHeader("Content-Type", "application/json");
-                        // xhr.send(datosJson);
-                    }
-                };
+            // Manejar los mensajes recibidos del servidor WebSocket
+            socket.onmessage = function(event) {
+                console.log('Mensaje recibido del servidor WebSocket:', event.data);
+                // Puedes agregar aquí la lógica para manejar la respuesta del servidor si es necesario
             };
         }
+
+        $.ajax({
+            url: "/plantillaGeneral/obtenerRegistros", // URL del endpoint para obtener registros
+            type: "get",
+            success: function(data, status) {
+                var registros = data; // Deserializar los datos JSON
+                console.log(data)
+
+                // Abrir una transacción para agregar los registros a la base de datos
+                var transaction = db.transaction(["formularios"], "readwrite");
+                var objectStore = transaction.objectStore("formularios");
+
+                for (var i = 0; i < registros.length; i++) {
+                    var request = objectStore.put(registros[i]); // Usar 'put' en lugar de 'add'
+
+                    request.onsuccess = function() {
+                        console.log("Registro agregado a la base de datos");
+                    };
+
+                    request.onerror = function() {
+                        console.error("Error al agregar el registro a la base de datos");
+                    };
+                }
+            }
+        });
+
+
+
+        //
+        // //USANDO AJAX:
+        // function conectar() {
+        //     // Recuperar registros de IndexedDB
+        //     var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+        //     var request = indexedDB.open("FormularioDB", 1);
+        //
+        //     request.onerror = function (event) {
+        //         console.error('Error al abrir la base de datos:', event.target.errorCode);
+        //     };
+        //
+        //     request.onsuccess = function (event) {
+        //         var db = event.target.result;
+        //         var transaction = db.transaction(["formularios"], "readwrite"); // Cambiar a modo de escritura
+        //         var objectStore = transaction.objectStore("formularios");
+        //         var formularios = [];
+        //
+        //         // Obtener registros con estado = 0
+        //         objectStore.openCursor().onsuccess = function (event) {
+        //             var cursor = event.target.result;
+        //             if (cursor) {
+        //                 if (cursor.value.estado === 0) {
+        //                     // Actualizar el estado del registro a 1
+        //                     cursor.value.estado = 1;
+        //                     var updateRequest = cursor.update(cursor.value);
+        //                     updateRequest.onsuccess = function () {
+        //                         console.log("Estado actualizado a 1 para el registro con ID: " + cursor.value.id);
+        //                     };
+        //                     updateRequest.onerror = function () {
+        //                         console.error("Error al actualizar el estado del registro");
+        //                     };
+        //                     formularios.push(cursor.value);
+        //                 }
+        //                 cursor.continue();
+        //             } else {
+        //                 // Enviar registros al servidor a través de AJAX
+        //                 // Convertimos los datos a JSON
+        //
+        //                 let datosJson = JSON.stringify(formularios);
+        //                 console.log("JSON enviado:" + datosJson);
+        //                 // Usamos AJAX para enviar los datos al servidor
+        //                 $.post("/plantillaGeneral/sincronizar", datosJson, function (data, status) {
+        //                     console.log("Estado es:" + status)
+        //                     console.log(data)
+        //                 });
+        //
+        //                 // let xhr = new XMLHttpRequest();
+        //                 // xhr.open("POST", "http://localhost/plantillaGeneral/sincronizar", true);
+        //                 // xhr.setRequestHeader("Content-Type", "application/json");
+        //                 // xhr.send(datosJson);
+        //             }
+        //         };
+        //     };
+        // }
 
 
 
