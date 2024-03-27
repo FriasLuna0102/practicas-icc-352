@@ -122,7 +122,10 @@ public class Formulario extends ControladorClass {
                     }
                 });
 
-
+                get("/obtenerRegistros", cxt ->{
+                    List<Registro> todoRegistros = RegistroServices.getInstancia().obtenerTodosLosRegistros();
+                    cxt.json(todoRegistros);
+                });
 
 
             });

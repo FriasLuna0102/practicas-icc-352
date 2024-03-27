@@ -8,6 +8,19 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
+    <style>
+        h1 {
+            color: white;
+        }
+
+        body {
+            background-image: url("../img/6fe01f5fbe372a2b045f66a79be7b210.jpg");
+            background-size: cover;
+            background-repeat: no-repeat;
+            width: 100%;
+            height: 100vh;
+        }
+    </style>
     <title>Formulario de Captura</title>
     <script>
         var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
@@ -83,7 +96,7 @@
 </head>
 
 <body>
-    <h1>Formulario de Captura</h1>
+    <h1 class="mt-5">Formulario de Captura</h1>
 
     <script>
         function enviarFormulario() {
@@ -120,10 +133,14 @@
 
         <input id="altitud" type="hidden" name="altitud">
         <input id="longitud" type="hidden" name="longitud">
-        <button id="form-send" type="submit" onclick="agregarFormulario()">Enviar</button>
+        <button id="form-send" type="submit" class="mt-2" onclick="agregarFormulario()">Enviar</button>
 
-        <div class="button-container">
-            <button class="styled-button" onclick="window.location.href='/html/plantillaGeneral.html'">Atras</button>
+        <div class="button-container justify-content-center">
+
+            <button class="styled-button"
+                onclick="window.location.href='/html/administrarRegistros.html'">Registros</button>
+
+            <a href="/plantillaGeneral"><button type="button" class="styled-button">Atras</button></a>
         </div>
     </form>
 </body>

@@ -15,6 +15,7 @@
 
     <!--Custom styles-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
@@ -92,11 +93,11 @@
     </div>
     <script>
         if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('/offlineWorker.js', { scope: '/' }).then(function(registration) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('/offlineWorker.js', {scope: '/'}).then(function (registration) {
                     // Notificando el registro del service workwe
                     console.log('Registrando el servicio en el ambiente: ', registration.scope);
-                }, function(err) {
+                }, function (err) {
                     console.log('Service Worker falló el registro: ', err);
                 });
             });

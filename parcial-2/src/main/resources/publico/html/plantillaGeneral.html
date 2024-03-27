@@ -68,14 +68,14 @@
                         onclick="window.location.href = '/html/formulario.html';">Formulario</button>
                     <button class="btn btn-secondary mb-2"
                         onclick="window.location.href='/html/mapa.html'">Mapa</button>
-                    <button class="btn btn-success mb-2"
+                    <button class="btn btn-secondary mb-2"
+                        onclick="window.location.href = '/html/administrarRegistros.html';">Administrar
+                        Registros</button>
+                    <button class="btn btn-secondary mb-2"
                         onclick="window.location.href = '/plantillaGeneral/administrarUsuarios';">Administrar
                         Usuarios</button>
                     <button id="botonSincronizar" class="btn btn-danger mb-2" style="display: none;"
                         onclick="conectar()">Sincronizar</button>
-                    <button class="btn btn-warning mb-2"
-                        onclick="window.location.href = '/html/administrarRegistros.html';">Administrar
-                        Registros</button>
                 </div>
             </div>
         </div>
@@ -193,17 +193,45 @@
                         // Convertimos los datos a JSON
 
                         let datosJson = JSON.stringify(formularios);
-                        console.log("JSON enviado:" + datosJson);
+                        console.log("JSON enviado:"+datosJson);
                         // Usamos AJAX para enviar los datos al servidor
-                        $.post("/plantillaGeneral/sincronizar", datosJson, function (data, status) {
-                            console.log("Estado es:" + status)
-                            console.log(data)
+                        $.ajax({
+                            url: "/plantillaGeneral/sincronizar",
+                            type: "post",
+                            data: datosJson,
+                            contentType: "application/json",
+                            success: function(data, status) {
+                                console.log(data);
+                                console.log("Estado es:" + status);
+                            }
                         });
 
-                        // let xhr = new XMLHttpRequest();
-                        // xhr.open("POST", "http://localhost/plantillaGeneral/sincronizar", true);
-                        // xhr.setRequestHeader("Content-Type", "application/json");
-                        // xhr.send(datosJson);
+                        $.ajax({
+                            url: "/plantillaGeneral/obtenerRegistros", // URL del endpoint para obtener registros
+                            type: "get",
+                            success: function(data, status) {
+                                var registros = data; // Deserializar los datos JSON
+                                console.log(data)
+
+                                // Abrir una transacción para agregar los registros a la base de datos
+                                var transaction = db.transaction(["formularios"], "readwrite");
+                                var objectStore = transaction.objectStore("formularios");
+
+                                for (var i = 0; i < registros.length; i++) {
+                                    var request = objectStore.put(registros[i]); // Usar 'put' en lugar de 'add'
+
+                                    request.onsuccess = function() {
+                                        console.log("Registro agregado a la base de datos");
+                                    };
+
+                                    request.onerror = function() {
+                                        console.error("Error al agregar el registro a la base de datos");
+                                    };
+                                }
+                            }
+
+                        });
+
                     }
                 };
             };
