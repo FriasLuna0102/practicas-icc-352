@@ -5,6 +5,7 @@ import io.javalin.http.staticfiles.Location;
 import io.javalin.rendering.JavalinRenderer;
 import io.javalin.rendering.template.JavalinThymeleaf;
 import javassist.CtBehavior;
+import org.example.controladores.IndexControlador;
 
 public class Main {
 	public static void main(String[] args) {
@@ -29,6 +30,7 @@ public class Main {
 		});
 		app.start(7000);
 
+		new IndexControlador(app).aplicarRutas();
 	}
 
 }

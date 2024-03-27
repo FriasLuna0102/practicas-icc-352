@@ -3,6 +3,8 @@ package org.example.encapsulaciones;
 import java.util.Date;
 
 public class ShortURL {
+
+	private long id;
 	private String urlBase;
 	private String urlCorta;
 	private Date fechaCreacion;
