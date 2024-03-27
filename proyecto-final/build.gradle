@@ -1,0 +1,36 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    //Para las plantillas:
+    implementation "io.javalin:javalin-rendering:5.6.0"
+    implementation 'org.thymeleaf:thymeleaf:3.1.2.RELEASE'
+    implementation 'io.javalin:javalin-rendering:5.3.2'
+
+    //Procesamiento JSON para Javalin.
+    implementation("com.fasterxml.jackson.core:jackson-core:2.15.2")
+    implementation('com.fasterxml.jackson.core:jackson-databind:2.15.2')
+    implementation("com.fasterxml.jackson.core:jackson-annotations:2.15.2")
+
+    //ORM - Hibernate.
+    implementation 'org.hibernate.orm:hibernate-core:6.0.2.Final'
+
+    //Driver de la conexión en h2...
+    implementation 'com.h2database:h2:2.1.214'
+
+    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+test {
+    useJUnitPlatform()
+}
