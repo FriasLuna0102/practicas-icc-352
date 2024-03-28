@@ -37,12 +37,10 @@ public class Main {
 
 		new IndexControlador(app).aplicarRutas();
 		new LoginControlador(app).aplicarRutas();
-        new UsuarioControlador(app).aplicarRutas();
-        new UrlControlador(app).aplicarRutas();
+		new UsuarioControlador(app).aplicarRutas();
+		new UrlControlador(app).aplicarRutas();
 
-        Usuario user1 = new Usuario("star","Starlin","123",false);
-
-
+		Usuario user1 = new Usuario("star","Starlin","123",false);
 	}
 
 }
