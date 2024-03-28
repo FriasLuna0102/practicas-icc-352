@@ -15,6 +15,7 @@ repositories {
 }
 
 dependencies {
+    //Javalin y manejo de logs
     implementation 'io.javalin:javalin:5.6.3'
     implementation "org.slf4j:slf4j-simple:2.0.7"
 
@@ -31,21 +32,21 @@ dependencies {
     //ORM - Hibernate.
     implementation 'org.hibernate.orm:hibernate-core:6.0.2.Final'
 
-
     //Librería de MongoDB
     // https://mvnrepository.com/artifact/org.mongodb/mongodb-driver-sync
     implementation group: 'org.mongodb', name: 'mongodb-driver-sync', version: '4.10.2'
+
+    //ODM (Object-Document Mapper)
+    implementation 'dev.morphia.morphia:morphia-core:2.1.7'
+    //implementation 'org.mongodb:bson:2.5.1'
 
     //librería faker
     implementation 'net.datafaker:datafaker:2.0.1'
 
     implementation 'com.j2html:j2html:1.6.0'
 
-
     testImplementation platform('org.junit:junit-bom:5.9.1')
     testImplementation 'org.junit.jupiter:junit-jupiter'
-
-
 }
 
 shadowJar{

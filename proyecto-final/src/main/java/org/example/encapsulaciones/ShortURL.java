@@ -1,10 +1,15 @@
 package org.example.encapsulaciones;
 
+import dev.morphia.annotations.Entity;
+import dev.morphia.annotations.Id;
+
 import java.time.Instant;
 import java.util.Date;
 
+@Entity("shortURL")
 public class ShortURL {
 
+	@Id
 	private String id;
 	private String urlBase;
 	private String urlCorta;

@@ -1,11 +1,17 @@
 package org.example.encapsulaciones;
 
+
+import dev.morphia.annotations.Entity;
+import dev.morphia.annotations.Id;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity("Usuarios")
 public class Usuario {
 
-    private String id;
+	@Id
+	private String id;
 	private String username;
 	private String nombre;
 	private String password;
