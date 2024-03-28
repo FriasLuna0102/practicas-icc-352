@@ -8,6 +8,8 @@ import org.example.utils.ControladorClass;
 
 import java.util.Date;
 
+import static io.javalin.apibuilder.ApiBuilder.path;
+
 public class UrlControlador extends ControladorClass {
     public UrlControlador(Javalin app) {
         super(app);
@@ -18,6 +20,15 @@ public class UrlControlador extends ControladorClass {
         EstadisticaURL esta = new EstadisticaURL();
         Date date = new Date();
         URLServices.getInstancia().crearUrl(new ShortURL("ddd","www.com","com",date,esta,"foto"));
+
+        app.routes(() -> {
+           path("/url", () -> {
+
+               app.post("generar", context -> {
+
+               });
+           });
+        });
 
         app.get("/{codigo}", context -> {
 
