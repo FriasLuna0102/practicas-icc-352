@@ -1,10 +1,17 @@
 package org.example.encapsulaciones;
 
+import dev.morphia.annotations.Entity;
+import dev.morphia.annotations.Id;
+import org.bson.types.ObjectId;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+@Entity("Estadistica")
 public class EstadisticaURL {
+	@Id
+	private ObjectId id;
 	private int cantidadAccesos;
 	private Map<String, Integer> navegadores;
 	private Map<String, Integer> direccionesIP;

@@ -17,6 +17,9 @@ public class LoginControlador extends ControladorClass {
 		});
 
 		app.post("/login", context -> {
+			String username = context.formParam("username");
+			String password = context.formParam("password");
+
 
 		});
 	}

@@ -5,10 +5,7 @@ import io.javalin.http.staticfiles.Location;
 import io.javalin.rendering.JavalinRenderer;
 import io.javalin.rendering.template.JavalinThymeleaf;
 import javassist.CtBehavior;
-import org.example.controladores.IndexControlador;
-import org.example.controladores.LoginControlador;
-import org.example.controladores.UrlControlador;
-import org.example.controladores.UsuarioControlador;
+import org.example.controladores.*;
 import org.example.encapsulaciones.Usuario;
 import org.example.servicios.URLServices;
 
@@ -37,6 +34,7 @@ public class Main {
 
 		new IndexControlador(app).aplicarRutas();
 		new LoginControlador(app).aplicarRutas();
+		new RegistroControlador(app).aplicarRutas();
 		new UsuarioControlador(app).aplicarRutas();
 		new UrlControlador(app).aplicarRutas();
 
