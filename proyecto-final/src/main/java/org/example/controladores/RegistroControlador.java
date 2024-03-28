@@ -23,10 +23,23 @@ public class RegistroControlador extends ControladorClass {
 			String username = context.formParam("username");
 			String password = context.formParam("password");
 
-			Usuario usuario = new Usuario(username,nombre,password,true);
+			if (verificarExistenciaOfUsuario(username)){
+				context.redirect("/registro");
+				return;
+			}
 
+			Usuario usuario = new Usuario(username,nombre,password,true);
 			UsuarioODM UsuarioODM = new UsuarioODM();
 			UsuarioODM.guardarUsuario(usuario);
 		});
+	}
+
+	public boolean verificarExistenciaOfUsuario(String username){
+		boolean existe = false;
+		UsuarioODM usuarioODM = new UsuarioODM();
+		if (usuarioODM.buscarUsuarioByUsername(username) != null){
+			existe = true;
+		}
+		return existe;
 	}
 }
