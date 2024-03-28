@@ -5,6 +5,8 @@ import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoClients;
 import dev.morphia.Datastore;
 import dev.morphia.Morphia;
+import dev.morphia.query.Query;
+import dev.morphia.query.experimental.filters.Filter;
 import org.example.encapsulaciones.Usuario;
 
 public class UsuarioODM {
@@ -24,5 +26,11 @@ public class UsuarioODM {
 
 	public void guardarUsuario(Usuario usuario){
 		datastore.save(usuario);
+	}
+
+	public Usuario buscarUsuarioByUsername(String username){
+		Query<Usuario> usuarios = datastore.find(Usuario.class).filter("username",username);
+
+		return usuarios.first();
 	}
 }
