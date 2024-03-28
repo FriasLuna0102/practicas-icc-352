@@ -12,5 +12,12 @@ public class LoginControlador extends ControladorClass {
 	@Override
 	public void aplicarRutas() {
 
+		app.get("/login", context -> {
+			context.render("publico/html/login.html");
+		});
+
+		app.post("/login", context -> {
+
+		});
 	}
 }
