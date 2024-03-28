@@ -1,70 +1,82 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <title>Registros</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         table {
             width: 100%;
         }
-        th, td {
+
+        th,
+        td {
             border: 1px solid black;
             padding: 8px;
             text-align: left;
         }
+
         th {
             background-color: #f2f2f2;
         }
+
         button {
             margin: 5px;
         }
     </style>
 </head>
+
 <body>
-<div class="container">
-    <h1>Registros</h1>
-    <table class="table table-striped">
-        <thead class="thead-dark">
-        <tr>
-            <th>Nombre</th>
-            <th>Sector</th>
-            <th>Nivel Escolar</th>
-            <th>Usuario</th>
-            <th>Latitud</th>
-            <th>Longitud</th>
-            <th>Estado</th>
-            <th>Acciones</th> <!-- Nuevo encabezado para acciones -->
-        </tr>
-        </thead>
-        <tbody id="tablaRegistros">
-        <!-- Los registros se agregarán aquí -->
-        </tbody>
-    </table>
-    <button class="btn btn-primary">Sincronizar</button>
-    <button class="btn btn-success" onclick="window.location.href = '/html/formulario.html'">Registrar Registro</button>
-    <button class="btn btn-warning" onclick="modificarRegistro()">Modificar</button>
-    <button class="btn btn-secondary" onclick="window.location.href='/html/plantillaGeneral.html'">Cerrar</button>
-</div>
+    <div class="container">
+        <div class="row">
 
-<script>
-    // Abre la base de datos
-    var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
-    var dataBase = indexedDB.open("FormularioDB", 1);
+            <h1>Registros</h1>
+            <table class="table table-striped text-center">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Sector</th>
+                        <th>Nivel Escolar</th>
+                        <th>Usuario</th>
+                        <th>Latitud</th>
+                        <th>Longitud</th>
+                        <th>Estado</th>
+                        <th>Acciones</th> <!-- Nuevo encabezado para acciones -->
+                    </tr>
+                </thead>
+                <tbody id="tablaRegistros">
+                    <!-- Los registros se agregarán aquí -->
+                </tbody>
+            </table>
+            <!--    <button class="btn btn-primary">Sincronizar</button>-->
+            <button class="btn btn-success" onclick="window.location.href = '/html/formulario.html'">Registrar
+            </button>
+            <!--    <button class="btn btn-warning" onclick="modificarRegistro()">Modificar</button>-->
+            <a href="/plantillaGeneral"><button type="button" class="btn btn-secondary styled-button">Atras</button></a>
+        </div>
+    </div>
 
-    // Manejador de éxito de la apertura de la base de datos
-    dataBase.onsuccess = function (e) {
-        var db = e.target.result;
-        var transaccion = db.transaction(["formularios"], "readonly");
-        var formularios = transaccion.objectStore("formularios");
 
-        // Abrir un cursor para recorrer los datos
-        formularios.openCursor().onsuccess = function (event) {
-            var cursor = event.target.result;
-            if (cursor) {
-                // Crear una nueva fila en la tabla para cada registro
-                if(cursor.value.estado === 0){
-                    var fila = document.createElement("tr");
-                    fila.innerHTML = `
+    <script>
+        // Abre la base de datos
+        var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+        var dataBase = indexedDB.open("FormularioDB", 1);
+
+        // Manejador de éxito de la apertura de la base de datos
+        dataBase.onsuccess = function (e) {
+            var db = e.target.result;
+            var transaccion = db.transaction(["formularios"], "readonly");
+            var formularios = transaccion.objectStore("formularios");
+
+            // Abrir un cursor para recorrer los datos
+            formularios.openCursor().onsuccess = function (event) {
+                var cursor = event.target.result;
+                if (cursor) {
+                    // Crear una nueva fila en la tabla para cada registro
+                    if (cursor.value.estado === 0) {
+                        var fila = document.createElement("tr");
+                        fila.innerHTML = `
                     <td>${cursor.value.nombre}</td>
                     <td>${cursor.value.sector}</td>
                     <td>${cursor.value.nivelEscolar}</td>
@@ -77,12 +89,12 @@
                         <button class="btn btn-warning btn-sm" onclick="modificarRegistro(${cursor.primaryKey})">Modificar</button>
                     </td> <!-- Botones de eliminar y modificar -->
                 `;
-                    document.getElementById("tablaRegistros").appendChild(fila);
+                        document.getElementById("tablaRegistros").appendChild(fila);
 
-                    cursor.continue();
-                }else{
-                    var fila = document.createElement("tr");
-                    fila.innerHTML = `
+                        cursor.continue();
+                    } else {
+                        var fila = document.createElement("tr");
+                        fila.innerHTML = `
                     <td>${cursor.value.nombre}</td>
                     <td>${cursor.value.sector}</td>
                     <td>${cursor.value.nivelEscolar}</td>
@@ -92,36 +104,37 @@
                     <td>${cursor.value.estado}</td>
 
                 `;
-                    document.getElementById("tablaRegistros").appendChild(fila);
+                        document.getElementById("tablaRegistros").appendChild(fila);
 
-                    cursor.continue();
+                        cursor.continue();
+                    }
+
                 }
-
-            }
+            };
         };
-    };
 
-    // Manejador de error de la apertura de la base de datos
-    dataBase.onerror = function (e) {
-        console.error('Error en el proceso: '+e.target.errorCode);
-    };
+        // Manejador de error de la apertura de la base de datos
+        dataBase.onerror = function (e) {
+            console.error('Error en el proceso: ' + e.target.errorCode);
+        };
 
-    // Función para eliminar un registro
-    function eliminarRegistro(primaryKey) {
-        var transaccion = dataBase.result.transaction(["formularios"], "readwrite");
-        var formularios = transaccion.objectStore("formularios");
-        formularios.delete(primaryKey);
-        location.reload(); // Recargar la página después de eliminar el registro
-    }
+        // Función para eliminar un registro
+        function eliminarRegistro(primaryKey) {
+            var transaccion = dataBase.result.transaction(["formularios"], "readwrite");
+            var formularios = transaccion.objectStore("formularios");
+            formularios.delete(primaryKey);
+            location.reload(); // Recargar la página después de eliminar el registro
+        }
 
-    // Función para modificar un registro
-    function modificarRegistro(primaryKey) {
-        // Guardar el primaryKey en sessionStorage
-        sessionStorage.setItem('primaryKey', primaryKey);
-        // Redirigir a la página modificarRegistro.html
-        window.location.href = '/html/modificarRegistro.html';
-    }
-</script>
+        // Función para modificar un registro
+        function modificarRegistro(primaryKey) {
+            // Guardar el primaryKey en sessionStorage
+            sessionStorage.setItem('primaryKey', primaryKey);
+            // Redirigir a la página modificarRegistro.html
+            window.location.href = '/html/modificarRegistro.html';
+        }
+    </script>
 
 </body>
+
 </html>

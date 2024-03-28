@@ -1,0 +1,59 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+mainClassName = 'org.example.Main'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'io.javalin:javalin:5.6.3'
+    implementation "org.slf4j:slf4j-simple:2.0.7"
+
+    //Para las plantillas:
+    implementation "io.javalin:javalin-rendering:5.6.0"
+    implementation 'org.thymeleaf:thymeleaf:3.1.2.RELEASE'
+    implementation 'io.javalin:javalin-rendering:5.3.2'
+
+    //Procesamiento JSON para Javalin.
+    implementation("com.fasterxml.jackson.core:jackson-core:2.15.2")
+    implementation('com.fasterxml.jackson.core:jackson-databind:2.15.2')
+    implementation("com.fasterxml.jackson.core:jackson-annotations:2.15.2")
+
+    //ORM - Hibernate.
+    implementation 'org.hibernate.orm:hibernate-core:6.0.2.Final'
+
+
+    //Librería de MongoDB
+    // https://mvnrepository.com/artifact/org.mongodb/mongodb-driver-sync
+    implementation group: 'org.mongodb', name: 'mongodb-driver-sync', version: '4.10.2'
+
+    //librería faker
+    implementation 'net.datafaker:datafaker:2.0.1'
+
+    implementation 'com.j2html:j2html:1.6.0'
+
+
+    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+
+
+}
+
+shadowJar{
+    archiveBaseName.set("crud-dns")
+    archiveClassifier.set('')
+    archiveVersion.set('')
+}
+
+test {
+    useJUnitPlatform()
+}

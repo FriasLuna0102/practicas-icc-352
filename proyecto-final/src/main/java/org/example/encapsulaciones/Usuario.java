@@ -1,0 +1,83 @@
+package org.example.encapsulaciones;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Usuario {
+
+    private String id;
+	private String username;
+	private String nombre;
+	private String password;
+	private boolean user;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setUrlList(List<ShortURL> urlList) {
+        this.urlList = urlList;
+    }
+
+    private List<ShortURL> urlList;
+
+	public Usuario(String username, String nombre, String password, boolean user) {
+		this.username = username;
+		this.nombre = nombre;
+		this.password = password;
+		this.user = user;
+		this.urlList = new ArrayList<>();
+	}
+
+    public Usuario(String username, String nombre, String password, boolean user, String id) {
+        this.username = username;
+        this.nombre = nombre;
+        this.password = password;
+        this.user = user;
+        this.urlList = new ArrayList<>();
+        this.id = id;
+    }
+
+    public Usuario() {
+    }
+
+    public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public void setUser(boolean user) {
+		this.user = user;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public boolean isUser() {
+		return user;
+	}
+
+	public List<ShortURL> getUrlList() {
+		return urlList;
+	}
+}

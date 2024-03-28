@@ -3,26 +3,13 @@
 var CACHE_NAME = 'offline-info';
 //listado de
 var urlsToCache = [
-    '/html/administrarUsuarios.html',
-    '/html/crearUsuario.html',
     '/html/formulario.html',
-    '/html/login.html',
-    '/html/modificarUsuario.html',
-    '/html/plantillaGeneral.html',
-    '/css/admnistrarUsuario.css',
-    '/css/crearUsuario.css',
     '/css/formulario.css',
-    '/css/login.css',
     '/img/6fe01f5fbe372a2b045f66a79be7b210.jpg',
     '/html/administrarRegistros.html',
     '/html/modificarRegistro.html',
-    '/js/offline.js',
-    '/js/offline-theme-slide-indicator.css',
-    '/js/offline-language-spanish-indicator.css',
-    '/html/modificarRegistro.html',
-    '/html/mapa.html'
 ];
-var fallback = "/html/plantillaGeneral.html"
+var fallback = "/html/formulario.html"
 
 //representa el evento cuando se esta instalando el services workers.
 self.addEventListener('install', function(event) {

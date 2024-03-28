@@ -1,1 +1,7 @@
 Contenido parcial-2
+
+Enlace al video explicativo:
+
+https://cepucmmedu.sharepoint.com/:v:/s/Starlin/EUSjxfuIv4dHq59bpYIlLtEBb2JGGVCOdWfHRLqeT9tpsg?e=yK2UB7&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D
+
+En caso de no tener acceso, dejar saberlo.
