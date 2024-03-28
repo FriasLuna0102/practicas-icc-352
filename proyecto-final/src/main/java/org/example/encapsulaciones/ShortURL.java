@@ -11,11 +11,20 @@ public class ShortURL {
 
 	@Id
 	private String id;
+	private String codigo;
 	private String urlBase;
 	private String urlCorta;
 	private Date fechaCreacion;
 
-    public void setUrlBase(String urlBase) {
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
+
+	public void setUrlBase(String urlBase) {
         this.urlBase = urlBase;
     }
 
