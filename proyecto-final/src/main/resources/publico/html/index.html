@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-bs-theme="auto">
+<html lang="en" data-bs-theme="auto" xmlns:th="http://www.thymeleaf.org">
 
 <head>
   <script src="../assets/js/color-modes.js"></script>
@@ -19,7 +19,7 @@
 
   <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="../css/index.css">
+  <link rel="stylesheet" href="../css/index.css">
 
 
   <!-- Custom styles for this template -->
@@ -31,9 +31,9 @@
 </head>
 
 <body>
-<div id="contenido-ajax" class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
+  <div id="contenido-ajax" class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
 
-</div>
+  </div>
 
   <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
     <symbol id="check2" viewBox="0 0 16 16">
@@ -180,27 +180,41 @@
             Mis URL's
           </a>
         </li>
-          <li>
-              <a href="#" class="nav-link text-white" id="cargar-usuarios">
-                  <svg class="bi pe-none me-2" width="16" height="16">
-                      <use xlink:href="#people-circle" />
-                  </svg>
-                  Customers
-              </a>
-          </li>
+        <li>
+          <a href="#" class="nav-link text-white" id="cargar-usuarios">
+            <svg class="bi pe-none me-2" width="16" height="16">
+              <use xlink:href="#people-circle" />
+            </svg>
+            Customers
+          </a>
+        </li>
 
       </ul>
       <hr>
-      <div class="dropdown">
-        <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
-          data-bs-toggle="dropdown" aria-expanded="false">
-          <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-          <strong>Username aqui</strong>
-        </a>
-        <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-          <li><a class="dropdown-item" href="#">Sign out</a></li>
-        </ul>
-      </div>
+
+      <th:block th:if="${usuario == null}">
+        <div>
+          <a href="/login"><button type="button" class="btn btn-secondary">Login</button></a>
+          <a href="/registro"><button type="button" class="btn btn-secondary">Registrarse</button></a>
+        </div>
+      </th:block>
+
+      <th:block th:if="${usuario != null}">
+        <div class="dropdown">
+
+          <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+            <strong>Username aqui</strong>
+          </a>
+
+          <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+            <li><a class="dropdown-item" href="#">Sign out</a></li>
+          </ul>
+
+        </div>
+      </th:block>
+
     </div>
 
     <div class="b-example-divider b-example-vr"></div>
@@ -244,24 +258,24 @@
 
   <script src="../js/sidebars.js"></script>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<script>
-    $(document).ready(function() {
-        // Agregar el evento click al elemento con id "cargar-usuarios"
-        $("#cargar-usuarios").on("click", function(event) {
-            console.log("Entro")
-            event.preventDefault(); // Evitar el comportamiento predeterminado del enlace
-            cargarContenidoHTML("/registrarUsuarios");
-        });
+  <script>
+    $(document).ready(function () {
+      // Agregar el evento click al elemento con id "cargar-usuarios"
+      $("#cargar-usuarios").on("click", function (event) {
+        console.log("Entro")
+        event.preventDefault(); // Evitar el comportamiento predeterminado del enlace
+        cargarContenidoHTML("/registrarUsuarios");
+      });
     });
 
     function cargarContenidoHTML(url) {
-        $.get(url, function(data) {
-            $("#contenido-ajax").html(data);
-        });
+      $.get(url, function (data) {
+        $("#contenido-ajax").html(data);
+      });
     }
-</script>
+  </script>
 
 
 </body>
