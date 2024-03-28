@@ -1,6 +1,9 @@
 package org.example.controladores;
 
 import io.javalin.Javalin;
+import org.example.encapsulaciones.Usuario;
+import org.example.servicios.UsuarioServices;
+import org.example.servicios.mongo.UsuarioODM;
 import org.example.utils.ControladorClass;
 
 public class LoginControlador extends ControladorClass {
@@ -20,7 +23,14 @@ public class LoginControlador extends ControladorClass {
 			String username = context.formParam("username");
 			String password = context.formParam("password");
 
+			Usuario usuario = UsuarioODM.getInstance().buscarUsuarioByUsername(username);
 
+			if (usuario != null && usuario.getPassword().equals(password)){
+				UsuarioServices.getInstancia().setUsuarioLogueado(usuario);
+				context.redirect("/");
+			}
+
+			context.redirect("/login");
 		});
 	}
 }
