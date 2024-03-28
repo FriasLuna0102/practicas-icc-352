@@ -18,5 +18,9 @@ public class UrlControlador extends ControladorClass {
         EstadisticaURL esta = new EstadisticaURL();
         Date date = new Date();
         URLServices.getInstancia().crearUrl(new ShortURL("ddd","www.com","com",date,esta,"foto"));
+
+        app.get("/{codigo}", context -> {
+
+        });
     }
 }
