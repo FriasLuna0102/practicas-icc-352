@@ -13,6 +13,22 @@ public class UsuarioControlador extends ControladorClass {
     @Override
     public void aplicarRutas() {
 
-        UsuarioServices.getInstancia().crearEstudiante(new Usuario("star","starlin","123",false));
+        app.get("/registrarUsuarios", cxt ->{
+            cxt.render("publico/html/registrarUsuarios.html");
+        });
+
+        app.post("/registrarUsuarios", cxt ->{
+
+            String username = cxt.formParam("username");
+            String nombre = cxt.formParam("nombre");
+            String password = cxt.formParam("password");
+            boolean user = Boolean.parseBoolean(cxt.formParam("isUser"));
+
+            Usuario tpm = new Usuario(username,nombre,password,user);
+
+            UsuarioServices.getInstancia().crearEstudiante(tpm);
+
+        });
+
     }
 }

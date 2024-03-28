@@ -7,8 +7,10 @@ import io.javalin.rendering.template.JavalinThymeleaf;
 import javassist.CtBehavior;
 import org.example.controladores.IndexControlador;
 import org.example.controladores.LoginControlador;
+import org.example.controladores.UrlControlador;
 import org.example.controladores.UsuarioControlador;
 import org.example.encapsulaciones.Usuario;
+import org.example.servicios.URLServices;
 
 public class Main {
 	public static void main(String[] args) {
@@ -36,6 +38,7 @@ public class Main {
 		new IndexControlador(app).aplicarRutas();
 		new LoginControlador(app).aplicarRutas();
         new UsuarioControlador(app).aplicarRutas();
+        new UrlControlador(app).aplicarRutas();
 
         Usuario user1 = new Usuario("star","Starlin","123",false);
 

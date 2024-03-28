@@ -100,7 +100,8 @@ public class UsuarioServices {
         //
         Document document = new Document("username", usuario.getUsername())
                 .append("nombre", usuario.getNombre())
-                .append("password", usuario.getPassword());
+                .append("password", usuario.getPassword())
+                .append("user", usuario.isUser());
 
         //
         MongoCollection<Document> estudiantes = mongoDbConexion.getBaseDatos().getCollection(TablasMongo.USUARIOS.getValor());
@@ -129,6 +130,7 @@ public class UsuarioServices {
         Document document = new Document("username", usuario.getUsername())
                 .append("nombre", usuario.getNombre())
                 .append("password", usuario.getPassword())
+                .append("user",usuario.isUser())
                 .append("_id", new ObjectId(usuario.getId()));
         //
         usuarios.findOneAndUpdate(filtro, new Document("$set", document));

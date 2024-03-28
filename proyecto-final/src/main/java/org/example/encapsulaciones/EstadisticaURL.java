@@ -47,4 +47,8 @@ public class EstadisticaURL {
 	public Map<Date, Integer> getHorasAcceso() {
 		return horasAcceso;
 	}
+
+    public void setCantidadAccesos(int cantidadAccesos) {
+        this.cantidadAccesos = cantidadAccesos;
+    }
 }

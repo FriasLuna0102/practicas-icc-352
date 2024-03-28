@@ -1,10 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Nuevo Usuario</title>
+    <link href="/css/crearUsuario.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script src="https://unpkg.com/dexie/dist/dexie.js"></script>
+    <style>
+        body {
+            background-image: url("/img/360_F_391461057_5P0BOWl4lY442Zoo9rzEeJU0S2c1WDZR.jpg");
+        }
+
+        form {
+            margin-bottom: 20px;
+            /* Agrega margen inferior al formulario */
+        }
+    </style>
 </head>
+
 <body>
+<h2 style="background-color: #007bff">Crear Nuevo Usuario</h2>
+<form action="/registrarUsuarios" method="post" enctype="multipart/form-data">
+    <fieldset>
+        <legend>Datos de Usuario</legend>
+        <!-- Campos de usuario -->
+        <label for="username">Nombre de Usuario:</label><br>
+        <input type="text" id="username" name="username" required><br>
+
+        <label for="nombre">Nombre:</label><br>
+        <input type="text" id="nombre" name="nombre" required><br>
+
+        <label for="password">Contrasena:</label><br>
+        <input type="password" id="password" name="password" required><br>
+
+        <input type="checkbox" id="isUser" name="isUser">
+        <label for="isUser">Usuario</label><br>
+    </fieldset>
+
+
+
+    <!-- Botón de enviar -->
+    <div>
+        <button id="form-send" type="submit">Crear Usuario</button>
+    </div>
+    <button class="styled-button" onclick="window.location.href='/plantillaGeneral/administrarUsuarios'">
+        Atras</button>
+</form>
+
+<script>
+    $(document).ready(function () {
+        $('.js-example-basic-multiple').select2();
+    });
+</script>
 
 </body>
+
 </html>
