@@ -1,6 +1,8 @@
 plugins {
     id 'java'
     id 'application'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+
 }
 
 group = 'org.example'
@@ -29,11 +31,27 @@ dependencies {
     //ORM - Hibernate.
     implementation 'org.hibernate.orm:hibernate-core:6.0.2.Final'
 
-    //Driver de la conexión en h2...
-    implementation 'com.h2database:h2:2.1.214'
+
+    //Librería de MongoDB
+    // https://mvnrepository.com/artifact/org.mongodb/mongodb-driver-sync
+    implementation group: 'org.mongodb', name: 'mongodb-driver-sync', version: '4.10.2'
+
+    //librería faker
+    implementation 'net.datafaker:datafaker:2.0.1'
+
+    implementation 'com.j2html:j2html:1.6.0'
+
 
     testImplementation platform('org.junit:junit-bom:5.9.1')
     testImplementation 'org.junit.jupiter:junit-jupiter'
+
+
+}
+
+shadowJar{
+    archiveBaseName.set("crud-dns")
+    archiveClassifier.set('')
+    archiveVersion.set('')
 }
 
 test {
