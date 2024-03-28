@@ -28,6 +28,7 @@ public class LoginControlador extends ControladorClass {
 			if (usuario != null && usuario.getPassword().equals(password)){
 				UsuarioServices.getInstancia().setUsuarioLogueado(usuario);
 				context.redirect("/");
+				return;
 			}
 
 			context.redirect("/login");
