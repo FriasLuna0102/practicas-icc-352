@@ -29,17 +29,11 @@ public class RegistroControlador extends ControladorClass {
 			}
 
 			Usuario usuario = new Usuario(username,nombre,password,true);
-			UsuarioODM UsuarioODM = new UsuarioODM();
-			UsuarioODM.guardarUsuario(usuario);
+			UsuarioODM.getInstance().guardarUsuario(usuario);
 		});
 	}
 
 	public boolean verificarExistenciaOfUsuario(String username){
-		boolean existe = false;
-		UsuarioODM usuarioODM = new UsuarioODM();
-		if (usuarioODM.buscarUsuarioByUsername(username) != null){
-			existe = true;
-		}
-		return existe;
+		return UsuarioODM.getInstance().buscarUsuarioByUsername(username) != null;
 	}
 }

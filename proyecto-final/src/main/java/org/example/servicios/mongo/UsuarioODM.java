@@ -1,19 +1,24 @@
 package org.example.servicios.mongo;
 
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoClients;
 import dev.morphia.Datastore;
 import dev.morphia.Morphia;
 import dev.morphia.query.Query;
-import dev.morphia.query.experimental.filters.Filter;
 import org.example.encapsulaciones.Usuario;
 
 public class UsuarioODM {
 
+	private static UsuarioODM instance;
 	private final Datastore datastore;
 
-	public UsuarioODM(){
+	public static UsuarioODM getInstance(){
+		if (instance == null){
+			instance = new UsuarioODM();
+		}
+		return instance;
+	}
+
+	private UsuarioODM(){
 
 		ProcessBuilder processBuilder = new ProcessBuilder();
 		String URL_MONGODB = processBuilder.environment().get("URL_MONGO");
