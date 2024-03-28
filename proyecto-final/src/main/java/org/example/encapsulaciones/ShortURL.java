@@ -46,8 +46,8 @@ public class ShortURL {
 
     public ShortURL(String urlBase, String imgBase64) {
         this.urlBase = urlBase;
-        this.urlCorta = shortener(urlBase);
-        this.estadisticas = new EstadisticaURL();
+		this.codigo = "ponercodigo";
+        this.urlCorta = shortener(this.codigo);
         this.imgBase64 = imgBase64;
         this.fechaCreacion = Date.from(Instant.now());
     }
@@ -73,8 +73,8 @@ public class ShortURL {
     }
 
     // URL corta debe ser nombre de dominio + id
-	public String shortener(String url){
-		return "";
+	public String shortener(String codigo){
+		return "http://localhost:7000/" + codigo;
 	}
 
 	public String getId() {

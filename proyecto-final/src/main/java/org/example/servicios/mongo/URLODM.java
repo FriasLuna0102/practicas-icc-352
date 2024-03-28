@@ -7,12 +7,14 @@ import dev.morphia.query.Query;
 import org.example.encapsulaciones.ShortURL;
 import org.example.encapsulaciones.Usuario;
 
+import java.awt.*;
+
 public class URLODM {
 
 	private static URLODM instance;
 	private final Datastore datastore;
 
-	public URLODM getInstance(){
+	public static URLODM getInstance(){
 		if (instance == null){
 			instance = new URLODM();
 		}
