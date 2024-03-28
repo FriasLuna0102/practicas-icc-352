@@ -33,5 +33,10 @@ public class LoginControlador extends ControladorClass {
 
 			context.redirect("/login");
 		});
+
+		app.get("/logout", context -> {
+			UsuarioServices.getInstancia().setUsuarioLogueado(null);
+			context.redirect("/");
+		});
 	}
 }
