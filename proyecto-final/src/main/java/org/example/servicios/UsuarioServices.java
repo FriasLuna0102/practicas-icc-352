@@ -16,8 +16,15 @@ public class UsuarioServices {
 
     private static UsuarioServices instancia;
     private MongoDbConexion mongoDbConexion;
+    private Usuario usuarioLogueado;
 
+    public Usuario getUsuarioLogueado() {
+        return usuarioLogueado;
+    }
 
+    public void setUsuarioLogueado(Usuario usuarioLogueado) {
+        this.usuarioLogueado = usuarioLogueado;
+    }
 
     /**
      * Constructor privado.

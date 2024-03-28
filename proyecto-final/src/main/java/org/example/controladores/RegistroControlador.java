@@ -2,6 +2,7 @@ package org.example.controladores;
 
 import io.javalin.Javalin;
 import org.example.encapsulaciones.Usuario;
+import org.example.servicios.UsuarioServices;
 import org.example.servicios.mongo.UsuarioODM;
 import org.example.utils.ControladorClass;
 
@@ -30,6 +31,8 @@ public class RegistroControlador extends ControladorClass {
 
 			Usuario usuario = new Usuario(username,nombre,password,true);
 			UsuarioODM.getInstance().guardarUsuario(usuario);
+			UsuarioServices.getInstancia().setUsuarioLogueado(usuario);
+			context.redirect("/");
 		});
 	}
 
