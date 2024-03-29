@@ -3,6 +3,7 @@ package org.example.encapsulaciones;
 import dev.morphia.annotations.Entity;
 import dev.morphia.annotations.Id;
 
+import java.security.SecureRandom;
 import java.time.Instant;
 import java.util.Date;
 
@@ -46,7 +47,7 @@ public class ShortURL {
 
     public ShortURL(String urlBase, String imgBase64) {
         this.urlBase = urlBase;
-		this.codigo = "ponercodigo";
+		this.codigo = generateUniqueId();
         this.urlCorta = shortener(this.codigo);
         this.imgBase64 = imgBase64;
         this.fechaCreacion = Date.from(Instant.now());
@@ -71,6 +72,18 @@ public class ShortURL {
 
     public ShortURL() {
     }
+	public static String generateUniqueId() {
+		SecureRandom random = new SecureRandom();
+		String alphanumericCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+		StringBuilder sb = new StringBuilder();
+
+		for (int i = 0; i < 8; i++) {
+			int randomIndex = random.nextInt(alphanumericCharacters.length());
+			sb.append(alphanumericCharacters.charAt(randomIndex));
+		}
+
+		return sb.toString();
+	}
 
     // URL corta debe ser nombre de dominio + id
 	public String shortener(String codigo){
