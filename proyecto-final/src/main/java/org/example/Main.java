@@ -8,6 +8,7 @@ import javassist.CtBehavior;
 import org.example.controladores.*;
 import org.example.encapsulaciones.Usuario;
 import org.example.servicios.URLServices;
+import org.example.servicios.mongo.UsuarioODM;
 
 public class Main {
 	public static void main(String[] args) {
@@ -38,7 +39,11 @@ public class Main {
 		new UsuarioControlador(app).aplicarRutas();
 		new UrlControlador(app).aplicarRutas();
 
-		Usuario user1 = new Usuario("star","Starlin","123",false);
+		// Crear usuario administrador
+		if (UsuarioODM.getInstance().buscarUsuarioByUsername("admin") == null){
+			Usuario admin = new Usuario("admin","admin","admin", false);
+			UsuarioODM.getInstance().guardarUsuario(admin);
+		}
 	}
 
 }
