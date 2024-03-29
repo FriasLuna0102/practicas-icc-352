@@ -1,6 +1,7 @@
 package org.example.controladores;
 
 import io.javalin.Javalin;
+import org.example.encapsulaciones.Usuario;
 import org.example.servicios.UsuarioServices;
 import org.example.utils.ControladorClass;
 
@@ -18,8 +19,10 @@ public class IndexControlador extends ControladorClass {
 
 		app.get("/", context -> {
 
+			Usuario usuario = UsuarioServices.getInstancia().getUsuarioLogueado();
+
 			Map<String,Object> model = new HashMap<>();
-			model.put("usuario", UsuarioServices.getInstancia().getUsuarioLogueado());
+			model.put("usuario", usuario);
 
 			context.render("publico/html/index.html", model);
 		});
