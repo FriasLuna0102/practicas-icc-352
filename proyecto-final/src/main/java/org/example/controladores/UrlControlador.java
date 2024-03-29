@@ -35,6 +35,7 @@ public class UrlControlador extends ControladorClass {
                         URLODM.getInstance().guardarURL(shortURL);
                     }
 
+                    context.result(shortURL.getUrlCorta());
                });
            });
         });
