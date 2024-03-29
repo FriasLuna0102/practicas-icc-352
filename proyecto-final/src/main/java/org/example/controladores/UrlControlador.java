@@ -1,6 +1,7 @@
 package org.example.controladores;
 
 import io.javalin.Javalin;
+import io.javalin.http.HttpStatus;
 import org.example.encapsulaciones.EstadisticaURL;
 import org.example.encapsulaciones.ShortURL;
 import org.example.servicios.URLServices;
@@ -41,7 +42,14 @@ public class UrlControlador extends ControladorClass {
         });
 
         app.get("/{codigo}", context -> {
+            String codigo = context.pathParam("codigo");
+            String url = URLODM.getInstance().buscarUrlByCodigo(codigo);
 
+            if (url == null){
+                context.result("Pagina no encontrada").status(404);
+            }
+
+            context.redirect(url);
         });
     }
 }
