@@ -27,24 +27,8 @@
     <!-- react + styled-components + microlink -->
     <script src="https://cdn.jsdelivr.net/combine/npm/react@16/umd/react.production.min.js,npm/react-dom@16/umd/react-dom.production.min.js,npm/react-is@16/umd/react-is.production.min.js,npm/styled-components@5/dist/styled-components.min.js,npm/@microlink/mql@latest/dist/mql.min.js,npm/@microlink/vanilla@5/dist/microlink.min.js"></script>
 
-    <style>
-        .link-preview-container {
-            width: 400px; /* Ancho ajustable según tu preferencia */
-            height: 300px; /* Altura ajustable según tu preferencia */
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            overflow: hidden;
-            position: relative;
-        }
-        .link-preview-container a {
-            display: block;
-            width: 100%;
-            height: 100%;
-            text-decoration: none;
-            color: inherit;
-            cursor: pointer;
-        }
-    </style>
+<script src="../assets/js/cargarComponentes.js"></script>
+    <script src="../assets/js/vistaPrevia.js"></script>
 
 </head>
 
@@ -167,7 +151,7 @@
       <hr>
       <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
-          <a href="/" class="nav-link active" aria-current="page">
+          <a href="/" class="nav-link active" aria-current="page" id="vistaPrincipal">
             <svg class="bi pe-none me-2" width="16" height="16">
               <use xlink:href="#home" />
             </svg>
@@ -190,17 +174,18 @@
             Orders
           </a>
         </li>
-        <li>
-          <a href="#" class="nav-link text-white">
-            <svg class="bi pe-none me-2" width="16" height="16">
-              <use xlink:href="#grid" />
-            </svg>
-            Mis URL's
-          </a>
-        </li>
-        <th:block th:if="${usuario != null}">
+          <li>
+              <a href="" class="nav-link text-white" onclick="cargarComponente(event)" id="misUrls">
+                  <svg class="bi pe-none me-2" width="16" height="16">
+                      <use xlink:href="#grid" />
+                  </svg>
+                  Mis URL's
+              </a>
+          </li>
+
+          <th:block th:if="${usuario != null}">
           <li th:if="${usuario.user == false}">
-            <a href="#" class="nav-link text-white" id="cargar-usuarios">
+            <a href="#" class="nav-link text-white" id="cargar-usuarios" onclick="cargarRegistroUsuario(event)">
               <svg class="bi pe-none me-2" width="16" height="16">
                 <use xlink:href="#people-circle" />
               </svg>
@@ -240,7 +225,7 @@
     <div class="b-example-divider b-example-vr"></div>
 
     <div class="container p-3">
-
+        <div id="componentContainer">
       <div class="row align-items-center" style="height: 100%;">
         <div class="col-6">
 
@@ -271,11 +256,11 @@
                   <a href="" id="link" class="link-preview"></a>
               </div>
           </div>
-
-
-
       </div>
 
+
+
+        </div>
     </div>
 
     <div class="b-example-divider b-example-vr"></div>
@@ -287,60 +272,6 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="../js/generarUrlCorta.js"></script>
 
-  <script>
-      document.addEventListener("DOMContentLoaded", function (event){
-          function obtenerURL() {
-              return document.getElementById("urlBase").value; // Obtener el valor de la URL
-          }
-
-          // Obtener el enlace
-          var link = document.getElementById("link");
-
-          // Agregar un event listener para el evento click al enlace
-          link.addEventListener("click", function(event) {
-              // Prevenir el comportamiento predeterminado del enlace
-              event.preventDefault();
-
-              // Obtener la URL
-              var url = obtenerURL();
-
-              // Abrir la URL en una nueva ventana
-              window.open(url, '_blank');
-          });
-      });
-  </script>
-
-
-
-
-  <script>
-    $(document).ready(function () {
-      // Agregar el evento click al elemento con id "cargar-usuarios"
-      $("#cargar-usuarios").on("click", function (event) {
-        console.log("Entro")
-        event.preventDefault(); // Evitar el comportamiento predeterminado del enlace
-        cargarContenidoHTML("/registrarUsuarios");
-      });
-    });
-
-    function cargarContenidoHTML(url) {
-      $.get(url, function (data) {
-        $("#contenido-ajax").html(data);
-      });
-    }
-  </script>
-
-
-
-  <script>
-      document.addEventListener('DOMContentLoaded', function (event) {
-          document.getElementById('previewButton').addEventListener('click', function () {
-              var url = document.getElementById('urlBase').value;
-              console.log(url);
-              microlink('.link-preview', {url: url});
-          });
-      });
-  </script>
 
 
 

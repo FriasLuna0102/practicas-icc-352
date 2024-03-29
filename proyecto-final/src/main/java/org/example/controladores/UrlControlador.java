@@ -7,18 +7,21 @@ import org.example.servicios.URLServices;
 import org.example.servicios.mongo.URLODM;
 import org.example.utils.ControladorClass;
 
-import java.util.Date;
+import java.util.*;
 
-import static io.javalin.apibuilder.ApiBuilder.path;
-import static io.javalin.apibuilder.ApiBuilder.post;
+import static io.javalin.apibuilder.ApiBuilder.*;
 
 public class UrlControlador extends ControladorClass {
     public UrlControlador(Javalin app) {
         super(app);
     }
 
+
     @Override
     public void aplicarRutas() {
+
+        List<ShortURL> listUrlsBase = new ArrayList<>();
+
         EstadisticaURL esta = new EstadisticaURL();
         Date date = new Date();
         URLServices.getInstancia().crearUrl(new ShortURL("ddd","www.com","com",date,esta,"foto"));
@@ -29,15 +32,26 @@ public class UrlControlador extends ControladorClass {
                post("generar", context -> {
                     String url = context.formParam("urlBase");
                     ShortURL shortURL = URLODM.getInstance().buscarUrlByUrlLarga(url);
-
+                   listUrlsBase.add(shortURL);
                     if (shortURL == null){
                         shortURL = new ShortURL(url,null);
+                        listUrlsBase.add(shortURL);
                         URLODM.getInstance().guardarURL(shortURL);
                     }
 
                     context.result(shortURL.getUrlCorta());
                });
+
+               get("misUrl", cxt ->{
+                   Map<String, Object> model = new HashMap<>();
+                   model.put("listUrl", listUrlsBase);
+
+                   cxt.render("publico/html/misUrl.html",model);
+               });
+
            });
+
+
         });
 
         app.get("/{codigo}", context -> {

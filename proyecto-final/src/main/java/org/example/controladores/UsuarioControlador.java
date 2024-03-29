@@ -3,6 +3,7 @@ package org.example.controladores;
 import io.javalin.Javalin;
 import org.example.encapsulaciones.Usuario;
 import org.example.servicios.UsuarioServices;
+import org.example.servicios.mongo.UsuarioODM;
 import org.example.utils.ControladorClass;
 
 public class UsuarioControlador extends ControladorClass {
@@ -26,7 +27,8 @@ public class UsuarioControlador extends ControladorClass {
 
             Usuario tpm = new Usuario(username,nombre,password,user);
 
-            UsuarioServices.getInstancia().crearEstudiante(tpm);
+            UsuarioODM.getInstance().guardarUsuario(tpm);
+            //UsuarioServices.getInstancia().crearEstudiante(tpm);
 
         });
 
