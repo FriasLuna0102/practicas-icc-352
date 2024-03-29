@@ -6,6 +6,10 @@ import dev.morphia.Morphia;
 import dev.morphia.query.Query;
 import org.example.encapsulaciones.Usuario;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 public class UsuarioODM {
 
 	private static UsuarioODM instance;
@@ -38,4 +42,16 @@ public class UsuarioODM {
 
 		return usuarios.first();
 	}
+
+    public List<Usuario> buscarTodosLosUsuarios(){
+        List<Usuario> usuarios = new ArrayList<>();
+        Iterator<Usuario> iterator = datastore.find(Usuario.class).iterator();
+        while(iterator.hasNext()){
+            usuarios.add(iterator.next());
+        }
+        return usuarios;
+    }
+
+
+
 }

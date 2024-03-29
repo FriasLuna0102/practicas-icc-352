@@ -39,7 +39,7 @@ function cargarRegistroUsuario(event) {
     document.getElementById('cargar-usuarios').classList.add('active');
 
     // Realizar la solicitud GET al servidor para obtener el contenido del componente
-    fetch('/registrarUsuarios')
+    fetch('/listarUsuarios')
         .then(response => response.text())
         .then(data => {
             // Insertar el contenido del componente en la página
