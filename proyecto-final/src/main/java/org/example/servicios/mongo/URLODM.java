@@ -39,4 +39,10 @@ public class URLODM {
 
 		return shortURLS.first();
 	}
+
+	public String buscarUrlByCodigo(String codigo){
+		Query<ShortURL> url = datastore.find(ShortURL.class).filter("codigo", codigo);
+
+		return url.first().getUrlBase();
+	}
 }
