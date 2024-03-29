@@ -175,12 +175,12 @@
             Mis URL's
           </a>
         </li>
-        <li>
+        <li th:if="${usuario != null && usuario.user == false}">
           <a href="#" class="nav-link text-white" id="cargar-usuarios">
             <svg class="bi pe-none me-2" width="16" height="16">
               <use xlink:href="#people-circle" />
             </svg>
-            Customers
+            Usuarios
           </a>
         </li>
 
