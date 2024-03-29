@@ -3,6 +3,7 @@ package org.example.encapsulaciones;
 
 import dev.morphia.annotations.Entity;
 import dev.morphia.annotations.Id;
+import dev.morphia.annotations.Reference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,8 @@ public class Usuario {
 	private String nombre;
 	private String password;
 	private boolean user;
+	@Reference
+	private List<ShortURL> urlList;
 
     public String getId() {
         return id;
@@ -32,8 +35,6 @@ public class Usuario {
     public void setUrlList(List<ShortURL> urlList) {
         this.urlList = urlList;
     }
-
-    private List<ShortURL> urlList;
 
 	public Usuario(String username, String nombre, String password, boolean user) {
 		this.username = username;
