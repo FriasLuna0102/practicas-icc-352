@@ -13,21 +13,16 @@
 
   <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/sidebars/">
 
-
-
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
 
   <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <link rel="stylesheet" href="../css/index.css">
 
-
   <!-- Custom styles for this template -->
   <link href="../css/sidebars.css" rel="stylesheet">
 
-
-
-
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -227,13 +222,12 @@
           <form method="post" action="/url/generar">
             <div class="form-group mb-2">
               <label for="formGroupExampleInput">URL</label>
-              <input type="text" class="form-control" id="formGroupExampleInput" name="urlBase"
-                placeholder="Inserte su url">
+              <input type="text" class="form-control" id="urlBase" name="urlBase" placeholder="Inserte su url">
             </div>
 
             <div class="form-group mb-2">
               <label for="formGroupExampleInput2">URL Acortada</label>
-              <input readonly type="text" class="form-control" id="formGroupExampleInput2" placeholder="url corta">
+              <input readonly type="text" class="form-control" id="urlCorta" placeholder="url corta">
             </div>
 
             <div class="text-center">
@@ -260,7 +254,7 @@
   <script src="../js/sidebars.js"></script>
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+  <script src="../js/generarUrlCorta.js"></script>
   <script>
     $(document).ready(function () {
       // Agregar el evento click al elemento con id "cargar-usuarios"
