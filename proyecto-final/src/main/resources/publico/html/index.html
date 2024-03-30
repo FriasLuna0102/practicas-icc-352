@@ -185,7 +185,7 @@
 
           <th:block th:if="${usuario != null}">
           <li th:if="${usuario.user == false}">
-            <a href="#" class="nav-link text-white" id="cargar-usuarios" onclick="cargarRegistroUsuario(event)">
+            <a href="#" class="nav-link text-white" id="cargar-usuarios" onclick="cargarListaUsuario(event)">
               <svg class="bi pe-none me-2" width="16" height="16">
                 <use xlink:href="#people-circle" />
               </svg>
@@ -193,6 +193,17 @@
             </a>
           </li>
         </th:block>
+
+          <th:block th:if="${usuario != null}">
+              <li th:if="${usuario.user == false}">
+                  <a href="#" class="nav-link text-white" id="registrarUsuario" onclick="cargarRegistrarUsuario(event)">
+                      <svg class="bi pe-none me-2" width="16" height="16">
+                          <use xlink:href="#people-circle" />
+                      </svg>
+                      Registrar Usuarios
+                  </a>
+              </li>
+          </th:block>
 
       </ul>
       <hr>

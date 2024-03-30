@@ -26,7 +26,6 @@ public class UsuarioControlador extends ControladorClass {
 
         app.get("/listarUsuarios", cxt ->{
             Usuario user =  UsuarioServices.getInstancia().getUsuarioLogueado();
-            System.out.println(user.getNombre());
             listUsuario = UsuarioODM.getInstance().buscarTodosLosUsuarios();
             Map<String,Object> model = new HashMap<>();
             model.put("listUsuarios",listUsuario);
@@ -43,13 +42,33 @@ public class UsuarioControlador extends ControladorClass {
             String password = cxt.formParam("password");
             String isUserParam = cxt.formParam("isUser");
             boolean user = isUserParam != null && !isUserParam.isEmpty();
-            System.out.println(user);
 
             Usuario tpm = new Usuario(username,nombre,password,user);
 
             UsuarioODM.getInstance().guardarUsuario(tpm);
-            //UsuarioServices.getInstancia().crearEstudiante(tpm);
 
+            cxt.redirect("/");
+
+        });
+
+        app.get("/eliminarUsuario", ctx -> {
+
+            String username = ctx.queryParam("username");
+            //Usuario user = UsuarioODM.getInstance().buscarUsuarioByUsername(username);
+            UsuarioODM.getInstance().eliminarUsuario(username);
+            ctx.redirect("/");
+        });
+
+        app.post("/cambiarPermisos", cxt ->{
+            String username = cxt.queryParam("username");
+            Usuario user = UsuarioODM.getInstance().buscarUsuarioByUsername(username);
+            if(user.isUser()){
+                user.setUser(false);
+            }else {
+                user.setUser(true);
+            }
+            UsuarioODM.getInstance().actualizarPermisos(user);
+            cxt.redirect("/");
         });
 
     }

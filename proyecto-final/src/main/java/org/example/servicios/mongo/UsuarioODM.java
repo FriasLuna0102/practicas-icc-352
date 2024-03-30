@@ -53,5 +53,24 @@ public class UsuarioODM {
     }
 
 
+    public void eliminarUsuario(String username){
+        Usuario usuario = buscarUsuarioByUsername(username);
+        if (usuario != null) {
+            // Aquí podrías agregar lógica adicional, como comprobaciones de permisos, antes de eliminar al usuario.
+            datastore.delete(usuario);
+            System.out.println("Usuario eliminado: " + username);
+        } else {
+            System.out.println("El usuario con el nombre de usuario " + username + " no fue encontrado.");
+        }
+    }
+
+    public void actualizarPermisos(Usuario user){
+        if(user != null){
+            datastore.merge(user);
+        }else {
+            System.out.println("Usuario no actualizado.");
+        }
+    }
+
 
 }

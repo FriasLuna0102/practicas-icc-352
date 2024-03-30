@@ -44,14 +44,27 @@
         <td th:text="${user.getPassword}"></td>
         <td th:text="${user.isUser}"></td>
 
+
+
         <th:block>
         <td th:unless="${user.getUsername} == ${usuario.getUsername}">
 <!--            <a th:href="'/plantillaGeneral/plantillaUsuarioModificar?username=' + ${user.getUsername}"><button type="button" class="btn btn-warning btn-sm">Modificar</button></a>-->
 
+            <div>
+                <a th:href="'/eliminarUsuario?username=' + ${user.getUsername}" th:if="${user.isUser == true}"><button type="button"
+                                                                                                                       class="btn btn-danger btn-sm">Eliminar</button>
+                </a>
 
-            <a th:href="'/plantillaGeneral/eliminarUsuario?username=' + ${user.getUsername}" th:if="${user.isUser == true}"><button type="button"
-                                                                                                    class="btn btn-danger btn-sm">Eliminar</button>
-            </a>
+
+                <form th:action="'/cambiarPermisos?username=' + ${user.getUsername}" method="post">
+                    <input type="hidden" name="username" th:value="${user.getUsername}" />
+                    <button type="submit" class="btn btn-primary btn-sm">Cambiar Estado</button>
+                </form>
+            </div>
+
+
+
+
         </td>
         </th:block>
     </tr>
