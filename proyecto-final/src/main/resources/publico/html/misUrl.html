@@ -40,13 +40,21 @@
         <li class="list-group-item" th:each="url : ${listUrl}">
             <div class="row">
                 <div class="col-md-6">
-                    <a class="url-base mb-0" th:href="${url.urlBase}" th:text="${url.urlBase}"></a>
+                    <a class="url-base mb-0" th:href="${url.urlBase}" th:text="${url.urlBase}" style="word-break: break-all;"></a>
                 </div>
-                <div class="col-md-6">
-                    <a class="url-corta" th:href="${url.urlCorta}" th:text="${url.urlCorta}"></a>
+                <div class="col-md-6 d-flex align-items-center justify-content-between"> <!-- Agrega justify-content-between para separar los elementos -->
+                    <a class="url-corta" th:href="${url.urlCorta}" th:text="${url.urlCorta}" style="word-break: break-all;"></a>
+                    <th:block th:if="${usuario != null && usuario.isUser == false}">
+                        <div class="text-end">
+                            <a th:href="'/url/eliminarURL?codigoUrl=' + ${url.codigo}" type="button" class="btn btn-danger btn-sm align-self-center">Eliminar</a>
+                        </div>
+                    </th:block>
+
+
                 </div>
             </div>
         </li>
+
     </ul>
 </div>
 </body>

@@ -3,7 +3,9 @@ package org.example.controladores;
 import io.javalin.Javalin;
 import org.example.encapsulaciones.EstadisticaURL;
 import org.example.encapsulaciones.ShortURL;
+import org.example.encapsulaciones.Usuario;
 import org.example.servicios.URLServices;
+import org.example.servicios.UsuarioServices;
 import org.example.servicios.mongo.URLODM;
 import org.example.utils.ControladorClass;
 
@@ -12,6 +14,9 @@ import java.util.*;
 import static io.javalin.apibuilder.ApiBuilder.*;
 
 public class UrlControlador extends ControladorClass {
+
+    List<ShortURL> listUrlsBase = URLODM.getInstance().obtenerTodasLasUrl();
+
     public UrlControlador(Javalin app) {
         super(app);
     }
@@ -20,19 +25,20 @@ public class UrlControlador extends ControladorClass {
     @Override
     public void aplicarRutas() {
 
-        List<ShortURL> listUrlsBase = new ArrayList<>();
 
-        EstadisticaURL esta = new EstadisticaURL();
-        Date date = new Date();
-        URLServices.getInstancia().crearUrl(new ShortURL("ddd","www.com","com",date,esta,"foto"));
+
+//        EstadisticaURL esta = new EstadisticaURL();
+//        Date date = new Date();
+//        URLServices.getInstancia().crearUrl(new ShortURL("ddd","www.com","com",date,esta,"foto"));
 
         app.routes(() -> {
            path("/url", () -> {
 
+
                post("generar", context -> {
                     String url = context.formParam("urlBase");
                     ShortURL shortURL = URLODM.getInstance().buscarUrlByUrlLarga(url);
-                   listUrlsBase.add(shortURL);
+
                     if (shortURL == null){
                         shortURL = new ShortURL(url,null);
                         listUrlsBase.add(shortURL);
@@ -44,9 +50,18 @@ public class UrlControlador extends ControladorClass {
 
                get("misUrl", cxt ->{
                    Map<String, Object> model = new HashMap<>();
+                   listUrlsBase = URLODM.getInstance().obtenerTodasLasUrl();
                    model.put("listUrl", listUrlsBase);
-
+                   Usuario user = UsuarioServices.getInstancia().getUsuarioLogueado();
+                   model.put("usuario",user);
                    cxt.render("publico/html/misUrl.html",model);
+               });
+
+               get("eliminarURL", cxt ->{
+                   String codigoUrl = cxt.queryParam("codigoUrl");
+                   ShortURL url = URLODM.getInstance().buscarUrlByCodig(codigoUrl);
+                   URLODM.getInstance().eliminarUrl(url);
+                   cxt.redirect("/");
                });
 
            });

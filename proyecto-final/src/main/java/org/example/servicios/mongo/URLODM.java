@@ -5,6 +5,11 @@ import dev.morphia.Datastore;
 import dev.morphia.Morphia;
 import dev.morphia.query.Query;
 import org.example.encapsulaciones.ShortURL;
+import org.example.encapsulaciones.Usuario;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class URLODM {
 
@@ -42,4 +47,26 @@ public class URLODM {
 
 		return url.first().getUrlBase();
 	}
+
+    public ShortURL buscarUrlByCodig(String codigo){
+        Query<ShortURL> query = datastore.find(ShortURL.class).filter("codigo", codigo);
+        ShortURL url = query.first();
+        return url;
+    }
+
+
+
+    public void eliminarUrl(ShortURL url){
+
+        datastore.delete(url);
+    }
+
+    public List<ShortURL> obtenerTodasLasUrl(){
+        List<ShortURL> urls = new ArrayList<>();
+        Iterator<ShortURL> iterator = datastore.find(ShortURL.class).iterator();
+        while(iterator.hasNext()){
+            urls.add(iterator.next());
+        }
+        return urls;
+    }
 }
