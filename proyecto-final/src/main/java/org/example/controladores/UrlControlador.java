@@ -54,7 +54,14 @@ public class UrlControlador extends ControladorClass {
 
                get("misUrl", cxt ->{
                    Map<String, Object> model = new HashMap<>();
-                   listUrlsBase = URLODM.getInstance().obtenerTodasLasUrl();
+                   usuarioLogueado = UsuarioServices.getInstancia().getUsuarioLogueado();
+                   if (usuarioLogueado != null){
+                       if (usuarioLogueado.isUser()){
+                           listUrlsBase = usuarioLogueado.getUrlList();
+                       }else {
+                           listUrlsBase = URLODM.getInstance().obtenerTodasLasUrl();
+                       }
+                   }
                    model.put("listUrl", listUrlsBase);
                    Usuario user = UsuarioServices.getInstancia().getUsuarioLogueado();
                    model.put("usuario",user);
