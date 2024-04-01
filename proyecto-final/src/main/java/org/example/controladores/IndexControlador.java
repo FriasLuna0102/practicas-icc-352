@@ -11,6 +11,8 @@ import org.example.servicios.mongo.VisitanteODM;
 import org.example.utils.ControladorClass;
 import org.example.utils.JWTutils;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -34,10 +36,14 @@ public class IndexControlador extends ControladorClass {
 				Visitante visitante;
 				if (context.cookie("visitorID") == null){
 					visitante = new Visitante(UUID.randomUUID().toString());
-					context.cookie("visitorID", visitante.getId());
+					Instant now = Instant.now();
+					Instant expiration = now.plus(30, ChronoUnit.DAYS);
+					long expirationInSeconds = expiration.getEpochSecond();
+					context.cookie("visitorID", visitante.getId(), (int) (expirationInSeconds - now.getEpochSecond()));
 					VisitanteODM.getInstance().guardarVisitante(visitante);
 				}else {
-					visitante = new Visitante();
+					String idVisitante = context.cookie("visitorID");
+					visitante = VisitanteODM.getInstance().buscarVisitanteById(idVisitante);
 				}
 				UsuarioServices.getInstancia().setVisitanteActual(visitante);
 			}
