@@ -8,6 +8,7 @@ import org.example.servicios.URLServices;
 import org.example.servicios.UsuarioServices;
 import org.example.servicios.mongo.URLODM;
 import org.example.servicios.mongo.UsuarioODM;
+import org.example.servicios.mongo.VisitanteODM;
 import org.example.utils.ControladorClass;
 
 import java.util.*;
@@ -45,8 +46,13 @@ public class UrlControlador extends ControladorClass {
                         shortURL = new ShortURL(url,null);
                         URLODM.getInstance().guardarURL(shortURL);
                         usuarioLogueado = UsuarioServices.getInstancia().getUsuarioLogueado();
-                        usuarioLogueado.getUrlList().add(shortURL);
-                        UsuarioODM.getInstance().guardarUsuario(usuarioLogueado);
+                        if (usuarioLogueado != null){
+                            usuarioLogueado.getUrlList().add(shortURL);
+                            UsuarioODM.getInstance().guardarUsuario(usuarioLogueado);
+                        }else {
+                            UsuarioServices.getInstancia().getVisitanteActual().getUrlList().add(shortURL);
+                            VisitanteODM.getInstance().guardarVisitante(UsuarioServices.getInstancia().getVisitanteActual());
+                        }
                     }
 
                     context.result(shortURL.getUrlCorta());
@@ -61,6 +67,8 @@ public class UrlControlador extends ControladorClass {
                        }else {
                            listUrlsBase = URLODM.getInstance().obtenerTodasLasUrl();
                        }
+                   }else {
+                        listUrlsBase = UsuarioServices.getInstancia().getVisitanteActual().getUrlList();
                    }
                    model.put("listUrl", listUrlsBase);
                    Usuario user = UsuarioServices.getInstancia().getUsuarioLogueado();

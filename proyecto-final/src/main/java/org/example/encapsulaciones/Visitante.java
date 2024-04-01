@@ -3,6 +3,7 @@ package org.example.encapsulaciones;
 import dev.morphia.annotations.Entity;
 import dev.morphia.annotations.Id;
 import dev.morphia.annotations.Reference;
+import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,17 +12,21 @@ import java.util.UUID;
 @Entity
 public class Visitante {
 	@Id
-	private UUID id;
+	private String id;
 
 	@Reference
 	private List<ShortURL> urlList;
 
-	public Visitante() {
-		this.id = UUID.randomUUID();
+	public Visitante(String uuid) {
+		this.id = uuid;
 		this.urlList = new ArrayList<>();
 	}
 
-	public UUID getId() {
+	public Visitante(){
+		this.urlList = new ArrayList<>();
+	}
+
+	public String getId() {
 		return id;
 	}
 

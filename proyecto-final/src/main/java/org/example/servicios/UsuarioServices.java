@@ -6,6 +6,7 @@ import com.mongodb.client.result.InsertOneResult;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.example.encapsulaciones.Usuario;
+import org.example.encapsulaciones.Visitante;
 import org.jetbrains.annotations.NotNull;
 import org.example.utils.TablasMongo;
 
@@ -17,6 +18,16 @@ public class UsuarioServices {
     private static UsuarioServices instancia;
     private MongoDbConexion mongoDbConexion;
     private Usuario usuarioLogueado;
+    private Visitante visitanteActual;
+
+
+    public Visitante getVisitanteActual() {
+        return visitanteActual;
+    }
+
+    public void setVisitanteActual(Visitante visitanteActual) {
+        this.visitanteActual = visitanteActual;
+    }
 
     public Usuario getUsuarioLogueado() {
         return usuarioLogueado;
