@@ -5,6 +5,7 @@ import org.example.encapsulaciones.Usuario;
 import org.example.servicios.UsuarioServices;
 import org.example.servicios.mongo.UsuarioODM;
 import org.example.utils.ControladorClass;
+import org.example.utils.JWTutils;
 
 public class LoginControlador extends ControladorClass {
 
@@ -27,6 +28,7 @@ public class LoginControlador extends ControladorClass {
 
 			if (usuario != null && usuario.getPassword().equals(password)){
 				UsuarioServices.getInstancia().setUsuarioLogueado(usuario);
+				context.cookie("jwt", JWTutils.generateJwt(username));
 				context.redirect("/");
 				return;
 			}
@@ -36,6 +38,7 @@ public class LoginControlador extends ControladorClass {
 
 		app.get("/logout", context -> {
 			UsuarioServices.getInstancia().setUsuarioLogueado(null);
+			context.removeCookie("jwt");
 			context.redirect("/");
 		});
 	}
