@@ -7,6 +7,7 @@ import org.example.encapsulaciones.Usuario;
 import org.example.servicios.URLServices;
 import org.example.servicios.UsuarioServices;
 import org.example.servicios.mongo.URLODM;
+import org.example.servicios.mongo.UsuarioODM;
 import org.example.utils.ControladorClass;
 
 import java.util.*;
@@ -15,6 +16,7 @@ import static io.javalin.apibuilder.ApiBuilder.*;
 
 public class UrlControlador extends ControladorClass {
 
+    Usuario usuarioLogueado;
     List<ShortURL> listUrlsBase = URLODM.getInstance().obtenerTodasLasUrl();
 
     public UrlControlador(Javalin app) {
@@ -41,8 +43,10 @@ public class UrlControlador extends ControladorClass {
 
                     if (shortURL == null){
                         shortURL = new ShortURL(url,null);
-                        listUrlsBase.add(shortURL);
                         URLODM.getInstance().guardarURL(shortURL);
+                        usuarioLogueado = UsuarioServices.getInstancia().getUsuarioLogueado();
+                        usuarioLogueado.getUrlList().add(shortURL);
+                        UsuarioODM.getInstance().guardarUsuario(usuarioLogueado);
                     }
 
                     context.result(shortURL.getUrlCorta());

@@ -17,6 +17,7 @@ public class Usuario {
 	private String nombre;
 	private String password;
 	private boolean user;
+
 	@Reference
 	private List<ShortURL> urlList;
 
