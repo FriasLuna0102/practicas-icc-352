@@ -73,6 +73,7 @@ public class UrlControlador extends ControladorClass {
                    model.put("listUrl", listUrlsBase);
                    Usuario user = UsuarioServices.getInstancia().getUsuarioLogueado();
                    model.put("usuario",user);
+
                    cxt.render("publico/html/misUrl.html",model);
                });
 
