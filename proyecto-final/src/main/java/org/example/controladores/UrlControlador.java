@@ -19,7 +19,6 @@ public class UrlControlador extends ControladorClass {
 
     Usuario usuarioLogueado;
     List<ShortURL> listUrlsBase = URLODM.getInstance().obtenerTodasLasUrl();
-    List<ShortURL> listTem = new ArrayList<>();
 
     public UrlControlador(Javalin app) {
         super(app);
@@ -48,9 +47,7 @@ public class UrlControlador extends ControladorClass {
                         URLODM.getInstance().guardarURL(shortURL);
                         usuarioLogueado = UsuarioServices.getInstancia().getUsuarioLogueado();
                         if (usuarioLogueado != null){
-                            listTem.add(shortURL);
-//                            usuarioLogueado.getUrlList().add(shortURL);
-                            usuarioLogueado.setUrlList(listTem);
+                            usuarioLogueado.getUrlList().add(shortURL);
                             UsuarioODM.getInstance().guardarUsuario(usuarioLogueado);
                         }else {
                             UsuarioServices.getInstancia().getVisitanteActual().getUrlList().add(shortURL);
