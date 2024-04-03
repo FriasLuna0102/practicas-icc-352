@@ -37,19 +37,23 @@ public class UsuarioControlador extends ControladorClass {
 
         app.post("/registrarUsuarios", cxt ->{
 
-            String username = cxt.formParam("username");
             String nombre = cxt.formParam("nombre");
+            String username = cxt.formParam("username");
             String password = cxt.formParam("password");
             String isUserParam = cxt.formParam("isUser");
             boolean user = isUserParam != null && !isUserParam.isEmpty();
 
+            if (verificarExistenciaOfUsuario(username)){
+                cxt.redirect("/registro");
+                return;
+            }
             Usuario tpm = new Usuario(username,nombre,password,user);
-
             UsuarioODM.getInstance().guardarUsuario(tpm);
-
+            UsuarioServices.getInstancia().setUsuarioLogueado(tpm);
             cxt.redirect("/");
 
         });
+
 
         app.get("/eliminarUsuario", ctx -> {
 
@@ -71,5 +75,9 @@ public class UsuarioControlador extends ControladorClass {
             cxt.redirect("/");
         });
 
+    }
+
+    public boolean verificarExistenciaOfUsuario(String username){
+        return UsuarioODM.getInstance().buscarUsuarioByUsername(username) != null;
     }
 }
