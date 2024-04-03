@@ -35,27 +35,19 @@ public class UsuarioControlador extends ControladorClass {
             cxt.render("publico/html/ListarUsuarios.html", model);
         });
 
-        app.post("/registrarUsuarios", context ->{
+        app.post("/registrarUsuarios", cxt ->{
 
-
-
-
-            String nombre = context.formParam("nombre");
-            String username = context.formParam("username");
-            String password = context.formParam("password");
-            String isUserParam = context.formParam("isUser");
+            String username = cxt.formParam("username");
+            String nombre = cxt.formParam("nombre");
+            String password = cxt.formParam("password");
+            String isUserParam = cxt.formParam("isUser");
             boolean user = isUserParam != null && !isUserParam.isEmpty();
 
+            Usuario tpm = new Usuario(username,nombre,password,user);
 
-            if (verificarExistenciaOfUsuario(username)){
-                context.redirect("/registro");
-                return;
-            }
+            UsuarioODM.getInstance().guardarUsuario(tpm);
 
-            Usuario usuario = new Usuario(username,nombre,password,user);
-            UsuarioODM.getInstance().guardarUsuario(usuario);
-            UsuarioServices.getInstancia().setUsuarioLogueado(usuario);
-            context.redirect("/");
+            cxt.redirect("/");
 
         });
 
@@ -79,9 +71,5 @@ public class UsuarioControlador extends ControladorClass {
             cxt.redirect("/");
         });
 
-    }
-
-    public boolean verificarExistenciaOfUsuario(String username){
-        return UsuarioODM.getInstance().buscarUsuarioByUsername(username) != null;
     }
 }
