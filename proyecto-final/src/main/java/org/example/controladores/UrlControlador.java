@@ -6,6 +6,7 @@ import org.example.encapsulaciones.ShortURL;
 import org.example.encapsulaciones.Usuario;
 import org.example.servicios.URLServices;
 import org.example.servicios.UsuarioServices;
+import org.example.servicios.mongo.EstadisticaODM;
 import org.example.servicios.mongo.URLODM;
 import org.example.servicios.mongo.UsuarioODM;
 import org.example.servicios.mongo.VisitanteODM;
@@ -53,6 +54,8 @@ public class UrlControlador extends ControladorClass {
                             UsuarioServices.getInstancia().getVisitanteActual().getUrlList().add(shortURL);
                             VisitanteODM.getInstance().guardarVisitante(UsuarioServices.getInstancia().getVisitanteActual());
                         }
+                        EstadisticaURL estadisticaURL = new EstadisticaURL(shortURL);
+                        EstadisticaODM.getInstance().guardarEstadistica(estadisticaURL);
                     }
 
                     context.result(shortURL.getUrlCorta());
