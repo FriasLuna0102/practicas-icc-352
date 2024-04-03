@@ -2,6 +2,7 @@ package org.example.encapsulaciones;
 
 import dev.morphia.annotations.Entity;
 import dev.morphia.annotations.Id;
+import dev.morphia.annotations.Reference;
 import org.bson.types.ObjectId;
 
 import java.util.Date;
@@ -19,13 +20,28 @@ public class EstadisticaURL {
 	private Map<String, Integer> plataformasSO;
 	private Map<Date, Integer> horasAcceso;
 
-	public EstadisticaURL() {
+	@Reference
+	private ShortURL shortURL;
+
+	public EstadisticaURL(ShortURL shortURL) {
 		this.cantidadAccesos = 1;
 		this.navegadores = new HashMap<>();
 		this.direccionesIP = new HashMap<>();
 		this.dominiosClientes = new HashMap<>();
 		this.plataformasSO = new HashMap<>();
 		this.horasAcceso = new HashMap<>();
+		this.shortURL = shortURL;
+	}
+
+	public EstadisticaURL() {
+	}
+
+	public ObjectId getId() {
+		return id;
+	}
+
+	public ShortURL getShortURL() {
+		return shortURL;
 	}
 
 	public void aumentarCantAcceso(){
