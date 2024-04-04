@@ -17,6 +17,15 @@ public class ShortURL {
 	private String urlCorta;
 	private Date fechaCreacion;
 
+    private int contadorAccesos; // Contador de accesos
+
+    // Constructor y otros métodos de la clase
+
+    // Método para incrementar el contador de accesos
+    public void incrementarContadorAccesos() {
+        this.contadorAccesos++;
+    }
+
 	public String getCodigo() {
 		return codigo;
 	}

@@ -4,11 +4,13 @@ import io.javalin.Javalin;
 import io.javalin.http.staticfiles.Location;
 import io.javalin.rendering.JavalinRenderer;
 import io.javalin.rendering.template.JavalinThymeleaf;
-import javassist.CtBehavior;
 import org.example.controladores.*;
 import org.example.encapsulaciones.Usuario;
-import org.example.servicios.URLServices;
 import org.example.servicios.mongo.UsuarioODM;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Main {
 	public static void main(String[] args) {
@@ -44,6 +46,9 @@ public class Main {
 			Usuario admin = new Usuario("admin","admin","admin", false);
 			UsuarioODM.getInstance().guardarUsuario(admin);
 		}
+
+    }
+
+
 	}
 
-}

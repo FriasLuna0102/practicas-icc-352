@@ -23,7 +23,35 @@ public class EstadisticaURL {
 	@Reference
 	private ShortURL shortURL;
 
-	public EstadisticaURL(ShortURL shortURL) {
+    public void setId(ObjectId id) {
+        this.id = id;
+    }
+
+    public void setNavegadores(Map<String, Integer> navegadores) {
+        this.navegadores = navegadores;
+    }
+
+    public void setDireccionesIP(Map<String, Integer> direccionesIP) {
+        this.direccionesIP = direccionesIP;
+    }
+
+    public void setDominiosClientes(Map<String, Integer> dominiosClientes) {
+        this.dominiosClientes = dominiosClientes;
+    }
+
+    public void setPlataformasSO(Map<String, Integer> plataformasSO) {
+        this.plataformasSO = plataformasSO;
+    }
+
+    public void setHorasAcceso(Map<Date, Integer> horasAcceso) {
+        this.horasAcceso = horasAcceso;
+    }
+
+    public void setShortURL(ShortURL shortURL) {
+        this.shortURL = shortURL;
+    }
+
+    public EstadisticaURL(ShortURL shortURL) {
 		this.cantidadAccesos = 1;
 		this.navegadores = new HashMap<>();
 		this.direccionesIP = new HashMap<>();
