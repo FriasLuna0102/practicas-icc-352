@@ -7,6 +7,9 @@ import dev.morphia.query.Query;
 import org.example.encapsulaciones.ShortURL;
 import org.example.encapsulaciones.Visitante;
 
+import java.util.Iterator;
+import java.util.List;
+
 public class VisitanteODM {
 	private static VisitanteODM instance;
 	private final Datastore datastore;
@@ -36,5 +39,36 @@ public class VisitanteODM {
 
 		return visitanteQuery.first();
 	}
+
+    public void eliminarUrl(ShortURL url){
+
+        datastore.delete(url);
+    }
+
+
+    public void eliminarUrlDeVisitante(String visitanteId, String shortUrlIdToRemove) {
+        // Obtener el visitante por su ID
+        Visitante visitante = buscarVisitanteById(visitanteId);
+
+        if (visitante != null) {
+            // Obtener la lista de URLs del visitante
+            List<ShortURL> urlList = visitante.getUrlList();
+
+            // Iterar sobre la lista de URLs del visitante y eliminar el elemento deseado
+            Iterator<ShortURL> iterator = urlList.iterator();
+            while (iterator.hasNext()) {
+                ShortURL url = iterator.next();
+                if (url.getId().equals(shortUrlIdToRemove)) {
+                    iterator.remove();
+                    break; // Terminar el bucle después de eliminar el elemento
+                }
+            }
+
+            // Guardar el visitante actualizado en la base de datos
+            guardarVisitante(visitante);
+        }
+    }
+
+
 
 }

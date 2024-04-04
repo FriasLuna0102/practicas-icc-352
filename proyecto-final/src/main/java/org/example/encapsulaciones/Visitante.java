@@ -17,6 +17,14 @@ public class Visitante {
 	@Reference
 	private List<ShortURL> urlList;
 
+    private static Visitante instance;
+    public static Visitante getInstance(){
+        if(instance == null){
+            instance = new Visitante();
+        }
+        return instance;
+    }
+
 	public Visitante(String uuid) {
 		this.id = uuid;
 		this.urlList = new ArrayList<>();

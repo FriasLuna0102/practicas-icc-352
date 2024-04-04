@@ -4,6 +4,7 @@ import io.javalin.Javalin;
 import org.example.encapsulaciones.EstadisticaURL;
 import org.example.encapsulaciones.ShortURL;
 import org.example.encapsulaciones.Usuario;
+import org.example.encapsulaciones.Visitante;
 import org.example.servicios.URLServices;
 import org.example.servicios.UsuarioServices;
 import org.example.servicios.mongo.URLODM;
@@ -19,6 +20,8 @@ public class UrlControlador extends ControladorClass {
 
     Usuario usuarioLogueado;
     List<ShortURL> listUrlsBase = URLODM.getInstance().obtenerTodasLasUrl();
+
+    List<Visitante> listVisitante = new ArrayList<>();
 
     public UrlControlador(Javalin app) {
         super(app);
@@ -74,13 +77,35 @@ public class UrlControlador extends ControladorClass {
                    Usuario user = UsuarioServices.getInstancia().getUsuarioLogueado();
                    model.put("usuario",user);
 
+//                   List<ShortURL> lis = UsuarioServices.getInstancia().getVisitanteActual().getUrlList();
+//                   String idVisitante = UsuarioServices.getInstancia().getVisitanteActual().getId();
+//                   String idUrl = "660ec94b3ac092111c9fbf61";
+//                   System.out.println("Visitante id: "+idVisitante);
+//                   VisitanteODM.getInstance().eliminarUrlDeVisitante(idVisitante,idUrl);
+
                    cxt.render("publico/html/misUrl.html",model);
                });
+
 
                get("eliminarURL", cxt ->{
                    String codigoUrl = cxt.queryParam("codigoUrl");
                    ShortURL url = URLODM.getInstance().buscarUrlByCodig(codigoUrl);
-                   URLODM.getInstance().eliminarUrl(url);
+
+                   List<ShortURL> lis = UsuarioServices.getInstancia().getVisitanteActual().getUrlList();
+                   String idVisitante = UsuarioServices.getInstancia().getVisitanteActual().getId();
+                   String idURL = url.getId();
+
+                   for (ShortURL ur: lis){
+
+                       if (ur.getCodigo().equals(url.getCodigo())){
+                           VisitanteODM.getInstance().eliminarUrlDeVisitante(idVisitante,idURL);
+                           URLODM.getInstance().eliminarUrl(url);
+                           System.out.println("Son iguales");
+                       }else {
+                           URLODM.getInstance().eliminarUrl(url);
+                       }
+
+                   }
                    cxt.redirect("/");
                });
 
