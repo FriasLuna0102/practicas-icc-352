@@ -4,7 +4,6 @@ import io.javalin.Javalin;
 import org.example.encapsulaciones.EstadisticaURL;
 import org.example.encapsulaciones.ShortURL;
 import org.example.encapsulaciones.Usuario;
-import org.example.servicios.URLServices;
 import org.example.servicios.UsuarioServices;
 import org.example.servicios.mongo.EstadisticaODM;
 import org.example.servicios.mongo.URLODM;
@@ -104,6 +103,14 @@ public class UrlControlador extends ControladorClass {
             if (url == null){
                 context.result("Pagina no encontrada").status(404);
             }
+
+            try {
+                EstadisticaURL estadisticaURL = EstadisticaODM.getInstance().buscarEstadisticaByCodigoOfUrl(codigo);
+                estadisticaURL.aumentarCantAcceso();
+                EstadisticaODM.getInstance().guardarEstadistica(estadisticaURL);
+            }catch (Exception ignored){}
+            System.out.println(context.ip());
+            System.out.println(context.userAgent());
 
 	        assert url != null;
 	        context.redirect(url);
