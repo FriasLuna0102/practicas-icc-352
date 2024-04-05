@@ -18,7 +18,7 @@ public class EstadisticaURL {
 	private Map<String, Integer> direccionesIP;
 	private Map<String, Integer> dominiosClientes;
 	private Map<String, Integer> plataformasSO;
-	private Map<Date, Integer> horasAcceso;
+	private Map<String, Integer> horasAcceso;
 
 	@Reference
 	private ShortURL shortURL;
@@ -43,7 +43,7 @@ public class EstadisticaURL {
         this.plataformasSO = plataformasSO;
     }
 
-    public void setHorasAcceso(Map<Date, Integer> horasAcceso) {
+    public void setHorasAcceso(Map<String, Integer> horasAcceso) {
         this.horasAcceso = horasAcceso;
     }
 
@@ -52,7 +52,7 @@ public class EstadisticaURL {
     }
 
     public EstadisticaURL(ShortURL shortURL) {
-		this.cantidadAccesos = 1;
+		this.cantidadAccesos = 0;
 		this.navegadores = new HashMap<>();
 		this.direccionesIP = new HashMap<>();
 		this.dominiosClientes = new HashMap<>();
@@ -95,7 +95,7 @@ public class EstadisticaURL {
 		return plataformasSO;
 	}
 
-	public Map<Date, Integer> getHorasAcceso() {
+	public Map<String, Integer> getHorasAcceso() {
 		return horasAcceso;
 	}
 

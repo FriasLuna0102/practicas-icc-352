@@ -137,20 +137,16 @@ public class UrlControlador extends ControladorClass {
                 context.result("Pagina no encontrada").status(404);
             }
 
-//            // Obtener la fecha y hora actual
-//            LocalDateTime now = LocalDateTime.now();
-//
-//            // Formatear la fecha y hora según el formato deseado
-//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-//            String dateTime = now.format(formatter);
+            // Obtener la fecha y hora actual
+            LocalDateTime now = LocalDateTime.now();
+
+            // Formatear la fecha y hora según el formato deseado
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            String dateTime = now.format(formatter);
 
 
             if(!codigo.equals("favicon.ico")){
                 ShortURL shorurl = URLODM.getInstance().buscarUrlByCodig(codigo);
-
-                System.out.println(codigo);
-                System.out.println(shorurl.getUrlBase());
-                // Incrementar el contador de accesos
 
                 // Registrar información sobre la solicitud
                 String userAgent = context.userAgent();
@@ -161,20 +157,9 @@ public class UrlControlador extends ControladorClass {
 
                 EstadisticaURL estadisticaURL = EstadisticaODM.getInstance().buscarEstadisticaByCodigoOfUrl(shorurl.getCodigo());
 
-                System.out.println(estadisticaURL.getShortURL().getUrlBase());
-                estadisticaDatos(estadisticaURL,ipAddress,clientDomain,operatingSystem,navegador);
 
+                estadisticaDatos(estadisticaURL,ipAddress,clientDomain,operatingSystem,navegador,dateTime);
 
-
-
-
-                // Imprimir la información en la consola
-//            System.out.println("Fecha y hora actual: " + dateTime);
-                System.out.println("Usuario Agente: " + userAgent);
-                System.out.println("Dirección IP: " + ipAddress);
-                System.out.println("Dominio del Cliente: " + clientDomain);
-                System.out.println("Sistema Operativo: " + operatingSystem);
-                System.out.println("Navegador: " + navegador);
             }
 
 
@@ -185,12 +170,13 @@ public class UrlControlador extends ControladorClass {
 
     }
 
-    private static void estadisticaDatos(EstadisticaURL estadisticaURL, String ipAddress, String clientDomain, String operatingSystem, String navegador){
+    private static void estadisticaDatos(EstadisticaURL estadisticaURL, String ipAddress, String clientDomain, String operatingSystem, String navegador, String dateTime){
         // Obtenemos los mapas de la instancia de EstadisticaURL
         Map<String, Integer> direccionesIP = estadisticaURL.getDireccionesIP();
         Map<String, Integer> dominioCliente = estadisticaURL.getDominiosClientes();
         Map<String, Integer> sistemaOperativo = estadisticaURL.getPlataformasSO();
         Map<String, Integer> navegadores = estadisticaURL.getNavegadores();
+        Map<String, Integer> horaAcceso = estadisticaURL.getHorasAcceso();
 
         int cantAcceso = estadisticaURL.getCantidadAccesos();
         cantAcceso++;
@@ -210,17 +196,23 @@ public class UrlControlador extends ControladorClass {
             navegadores = new HashMap<>();
         }
 
+        if(horaAcceso == null){
+            horaAcceso = new HashMap<>();
+        }
+
         // Verificamos y aumentamos el valor de la clave si ya está presente
         direccionesIP.put(ipAddress, direccionesIP.getOrDefault(ipAddress, 0) + 1);
         dominioCliente.put(clientDomain, dominioCliente.getOrDefault(clientDomain, 0) + 1);
         sistemaOperativo.put(operatingSystem, sistemaOperativo.getOrDefault(operatingSystem, 0) + 1);
         navegadores.put(navegador, navegadores.getOrDefault(navegador, 0) + 1);
+        horaAcceso.put(dateTime, horaAcceso.getOrDefault(dateTime, 0) + 1);
 
         // Establecemos los mapas actualizados en la instancia de EstadisticaURL
         estadisticaURL.setDireccionesIP(direccionesIP);
         estadisticaURL.setDominiosClientes(dominioCliente);
         estadisticaURL.setPlataformasSO(sistemaOperativo);
         estadisticaURL.setNavegadores(navegadores);
+        estadisticaURL.setHorasAcceso(horaAcceso);
 
         // Guardamos la estadística actualizada
         EstadisticaODM.getInstance().guardarEstadistica(estadisticaURL);
