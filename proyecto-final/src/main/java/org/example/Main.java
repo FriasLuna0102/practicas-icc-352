@@ -40,6 +40,7 @@ public class Main {
 		new RegistroControlador(app).aplicarRutas();
 		new UsuarioControlador(app).aplicarRutas();
 		new UrlControlador(app).aplicarRutas();
+		new EstadisticaControlador(app).aplicarRutas();
 
 		// Crear usuario administrador
 		if (UsuarioODM.getInstance().buscarUsuarioByUsername("admin") == null){
