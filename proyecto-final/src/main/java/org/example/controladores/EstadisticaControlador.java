@@ -40,13 +40,11 @@ public class EstadisticaControlador extends ControladorClass {
 					Map<String,Object> model = new HashMap<>();
 					model.put("url", shortURL);
 
-					obtenerDataByDiasOfSemana();
-
 					context.render("publico/html/estadistica.html", model);
 				});
 
-				get("dias", context -> {
-					context.result(obtenerDataByDiasOfSemana());
+				get("info/dias", context -> {
+					context.json(obtenerDataByDiasOfSemana());
 				});
 
 			});
@@ -74,8 +72,7 @@ public class EstadisticaControlador extends ControladorClass {
 			contador.put(dayOfWeekString, contador.getOrDefault(dayOfWeekString, 0) + 1);
 		}
 
-		json = gson.toJson(contador.values());
-		System.out.println(json);
+		json = gson.toJson(contador);
 		return json;
 	}
 
