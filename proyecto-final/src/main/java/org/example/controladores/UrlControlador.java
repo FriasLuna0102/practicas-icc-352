@@ -46,25 +46,25 @@ public class UrlControlador extends ControladorClass {
 
 
                post("generar", context -> {
-                    String url = context.formParam("urlBase");
-                    ShortURL shortURL = URLODM.getInstance().buscarUrlByUrlLarga(url);
+                   String url = context.formParam("urlBase");
+                   ShortURL shortURL = URLODM.getInstance().buscarUrlByUrlLarga(url);
 
-                    if (shortURL == null){
-                        shortURL = new ShortURL(url,null);
-                        URLODM.getInstance().guardarURL(shortURL);
-                        usuarioLogueado = UsuarioServices.getInstancia().getUsuarioLogueado();
-                        if (usuarioLogueado != null){
-                            usuarioLogueado.getUrlList().add(shortURL);
-                            UsuarioODM.getInstance().guardarUsuario(usuarioLogueado);
-                        }else {
-                            UsuarioServices.getInstancia().getVisitanteActual().getUrlList().add(shortURL);
-                            VisitanteODM.getInstance().guardarVisitante(UsuarioServices.getInstancia().getVisitanteActual());
-                        }
-                    }
+                   if (shortURL == null){
+                       shortURL = new ShortURL(url,null);
+                       URLODM.getInstance().guardarURL(shortURL);
+                       usuarioLogueado = UsuarioServices.getInstancia().getUsuarioLogueado();
+                       if (usuarioLogueado != null){
+                           usuarioLogueado.getUrlList().add(shortURL);
+                           UsuarioODM.getInstance().guardarUsuario(usuarioLogueado);
+                       }else {
+                           UsuarioServices.getInstancia().getVisitanteActual().getUrlList().add(shortURL);
+                           VisitanteODM.getInstance().guardarVisitante(UsuarioServices.getInstancia().getVisitanteActual());
+                       }
+                   }
 
                    EstadisticaURL estadisticaURL = new EstadisticaURL(shortURL);
-                    EstadisticaODM.getInstance().guardarEstadistica(estadisticaURL);
-                    context.result(shortURL.getUrlCorta());
+                   EstadisticaODM.getInstance().guardarEstadistica(estadisticaURL);
+                   context.result(shortURL.getUrlCorta());
                });
 
                get("misUrl", cxt ->{
