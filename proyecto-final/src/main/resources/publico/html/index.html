@@ -24,11 +24,12 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-    <!-- react + styled-components + microlink -->
-    <script src="https://cdn.jsdelivr.net/combine/npm/react@16/umd/react.production.min.js,npm/react-dom@16/umd/react-dom.production.min.js,npm/react-is@16/umd/react-is.production.min.js,npm/styled-components@5/dist/styled-components.min.js,npm/@microlink/mql@latest/dist/mql.min.js,npm/@microlink/vanilla@5/dist/microlink.min.js"></script>
+  <!-- react + styled-components + microlink -->
+  <script
+    src="https://cdn.jsdelivr.net/combine/npm/react@16/umd/react.production.min.js,npm/react-dom@16/umd/react-dom.production.min.js,npm/react-is@16/umd/react-is.production.min.js,npm/styled-components@5/dist/styled-components.min.js,npm/@microlink/mql@latest/dist/mql.min.js,npm/@microlink/vanilla@5/dist/microlink.min.js"></script>
 
-<script src="../assets/js/cargarComponentes.js"></script>
-    <script src="../assets/js/vistaPrevia.js"></script>
+  <script src="../assets/js/cargarComponentes.js"></script>
+  <script src="../assets/js/vistaPrevia.js"></script>
 
 </head>
 
@@ -174,16 +175,16 @@
             Orders
           </a>
         </li>
-          <li>
-              <a href="" class="nav-link text-white" onclick="cargarComponente(event)" id="misUrls">
-                  <svg class="bi pe-none me-2" width="16" height="16">
-                      <use xlink:href="#grid" />
-                  </svg>
-                  Mis URL's
-              </a>
-          </li>
+        <li>
+          <a href="" class="nav-link text-white" onclick="cargarComponente(event)" id="misUrls">
+            <svg class="bi pe-none me-2" width="16" height="16">
+              <use xlink:href="#grid" />
+            </svg>
+            Mis URL's
+          </a>
+        </li>
 
-          <th:block th:if="${usuario != null}">
+        <th:block th:if="${usuario != null}">
           <li th:if="${usuario.user == false}">
             <a href="#" class="nav-link text-white" id="cargar-usuarios" onclick="cargarListaUsuario(event)">
               <svg class="bi pe-none me-2" width="16" height="16">
@@ -194,16 +195,16 @@
           </li>
         </th:block>
 
-          <th:block th:if="${usuario != null}">
-              <li th:if="${usuario.user == false}">
-                  <a href="#" class="nav-link text-white" id="registrarUsuario" onclick="cargarRegistrarUsuario(event)">
-                      <svg class="bi pe-none me-2" width="16" height="16">
-                          <use xlink:href="#people-circle" />
-                      </svg>
-                      Registrar Usuarios
-                  </a>
-              </li>
-          </th:block>
+        <th:block th:if="${usuario != null}">
+          <li th:if="${usuario.user == false}">
+            <a href="#" class="nav-link text-white" id="registrarUsuario" onclick="cargarRegistrarUsuario(event)">
+              <svg class="bi pe-none me-2" width="16" height="16">
+                <use xlink:href="#people-circle" />
+              </svg>
+              Registrar Usuarios
+            </a>
+          </li>
+        </th:block>
 
       </ul>
       <hr>
@@ -236,42 +237,42 @@
     <div class="b-example-divider b-example-vr"></div>
 
     <div class="container p-3">
-        <div id="componentContainer">
-      <div class="row align-items-center" style="height: 100%;">
-        <div class="col-6">
+      <div id="componentContainer">
+        <div class="row align-items-center" style="height: 100%;">
+          <div class="col-6">
 
-          <form method="post" action="/url/generar">
-            <div class="form-group mb-2">
-              <label for="formGroupExampleInput">URL</label>
-              <input type="text" class="form-control" id="urlBase" name="urlBase" placeholder="Inserte su url">
-            </div>
+            <form method="post" action="/url/generar">
+              <div class="form-group mb-2">
+                <label for="formGroupExampleInput">URL</label>
+                <input type="text" class="form-control" id="urlBase" name="urlBase" placeholder="Inserte su url">
+              </div>
 
-            <div class="form-group mb-2">
-              <label for="formGroupExampleInput2">URL Acortada</label>
-              <input readonly type="text" class="form-control" id="urlCorta" placeholder="url corta">
-            </div>
+              <div class="form-group mb-2">
+                <label for="formGroupExampleInput2">URL Acortada</label>
+                <input readonly type="text" class="form-control" id="urlCorta" placeholder="url corta">
+              </div>
 
-            <div class="text-center">
-              <button type="submit" class="btn btn-primary" id="previewButton">Generar URL</button>
-            </div>
-          </form>
+              <div class="text-center">
+                <button type="submit" class="btn btn-primary" id="previewButton">Generar URL</button>
+              </div>
+            </form>
 
-        </div>
+          </div>
 
           <div class="col-6 text-center">
-              <h2>Vista Previa</h2>
+            <h2>Vista Previa</h2>
 
-              <!-- Container for the preview -->
-              <div id="linkContainer">
-                  <!-- Clickable preview -->
-                  <a href="" id="link" class="link-preview"></a>
-              </div>
+            <!-- Container for the preview -->
+            <div id="linkContainer">
+              <!-- Clickable preview -->
+              <a href="" id="link" class="link-preview"></a>
+            </div>
           </div>
-      </div>
-
-
-
         </div>
+
+
+
+      </div>
     </div>
 
     <div class="b-example-divider b-example-vr"></div>
