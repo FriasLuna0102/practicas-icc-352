@@ -72,3 +72,16 @@ function cargarRegistrarUsuario(event) {
         })
         .catch(error => console.error('Error al cargar el componente:', error));
 }
+
+function cargarEstadistica(event) {
+    event.preventDefault();
+    let url = $(this).attr('href');
+
+    $.get(url, function(data) {
+        // Insertar el contenido del componente en la página
+        $('#componentContainer').html(data);
+    }).fail(function(error) {
+        console.error('Error al cargar el componente:', error);
+    });
+}
+
