@@ -9,7 +9,12 @@ import org.example.utils.ControladorClass;
 import java.util.HashMap;
 import java.util.Map;
 
+import static io.javalin.apibuilder.ApiBuilder.get;
+import static io.javalin.apibuilder.ApiBuilder.path;
+
 public class EstadisticaControlador extends ControladorClass {
+
+	private ShortURL shortURL;
 
 	public EstadisticaControlador(Javalin app){
 		super(app);
@@ -18,14 +23,25 @@ public class EstadisticaControlador extends ControladorClass {
 	@Override
 	public void aplicarRutas() {
 
-		app.get("/estadistica/{codigo}", context -> {
-			String codigoUrl = context.pathParam("codigo");
-			ShortURL shortURL = URLODM.getInstance().buscarUrlByCodig(codigoUrl);
+		app.routes(() ->{
+			path("/estadistica", () -> {
 
-			Map<String,Object> model = new HashMap<>();
-			model.put("url", shortURL);
+				get("{codigo}", context -> {
+					String codigoUrl = context.pathParam("codigo");
+					shortURL = URLODM.getInstance().buscarUrlByCodig(codigoUrl);
 
-			context.render("publico/html/estadistica.html", model);
+					Map<String,Object> model = new HashMap<>();
+					model.put("url", shortURL);
+
+					context.render("publico/html/estadistica.html", model);
+				});
+
+				get("obtenerDias", context -> {
+
+				});
+
+			});
 		});
+
 	}
 }
