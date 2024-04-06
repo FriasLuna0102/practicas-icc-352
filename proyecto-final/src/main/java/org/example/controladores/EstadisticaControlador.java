@@ -11,10 +11,13 @@ import org.example.utils.ControladorClass;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static io.javalin.apibuilder.ApiBuilder.get;
 import static io.javalin.apibuilder.ApiBuilder.path;
@@ -40,6 +43,8 @@ public class EstadisticaControlador extends ControladorClass {
 					Map<String,Object> model = new HashMap<>();
 					model.put("url", shortURL);
 
+					System.out.println(obtenerDataByHorasDelDia());
+
 					context.render("publico/html/estadistica.html", model);
 				});
 
@@ -47,9 +52,36 @@ public class EstadisticaControlador extends ControladorClass {
 					context.json(obtenerDataByDiasOfSemana());
 				});
 
+				get("info/horas", context -> {
+					context.json(obtenerDataByHorasDelDia());
+				});
+
 			});
 		});
 
+	}
+
+	public String obtenerDataByHorasDelDia(){
+		EstadisticaURL estadisticaURL = EstadisticaODM.getInstance().buscarEstadisticaByCodigoOfUrl(shortURL.getCodigo());
+		Map<String, Integer> contador = new LinkedHashMap<>();
+		inicializarContadorOfHoras(contador);
+
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+		for (Map.Entry<String, Integer> entry: estadisticaURL.getHorasAcceso().entrySet()){
+			LocalDateTime dateTime = LocalDateTime.parse(entry.getKey(), formatter);
+			String horaString = String.format("%02d", dateTime.getHour()); // Asegurar que siempre haya dos dígitos en la hora
+			contador.put(horaString, contador.getOrDefault(horaString, 0) + 1);
+		}
+
+		return new Gson().toJson(contador);
+	}
+	public void inicializarContadorOfHoras(Map<String, Integer> contador){
+		// Inicializar el mapa con las 24 horas del día en formato de 24 horas
+		for (int i = 0; i < 24; i++) {
+			String hora = String.format("%02d", i); // Formato de hora sin minutos ni segundos
+			contador.put(hora, 0);
+		}
 	}
 
 	public String obtenerDataByDiasOfSemana(){
