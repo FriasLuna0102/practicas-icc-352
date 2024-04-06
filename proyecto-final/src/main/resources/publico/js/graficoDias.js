@@ -1,8 +1,7 @@
-// Hacer una solicitud al servidor para obtener los datos
 $.ajax({
     url: '/estadistica/info/dias',
     method: 'GET',
-    dataType: 'json', // Especificar el tipo de datos esperados
+    dataType: 'json',
     success: function(data) {
         // Usar los datos en el gráfico de Chart.js
         const ctx = document.getElementById('graficoDias');
