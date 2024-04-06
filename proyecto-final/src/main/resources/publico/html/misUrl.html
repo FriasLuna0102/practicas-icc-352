@@ -55,7 +55,8 @@
                         <a class="url-corta" th:href="${url.urlCorta}" th:text="${url.urlCorta}"
                             style="word-break: break-all;"></a>
                         <br>
-                        <a class="link" th:href="@{'/estadistica/' + ${url.codigo}}">estadistica</a>
+                        <a class="link" onclick="cargarEstadistica(event)"
+                            th:href="@{'/estadistica/' + ${url.codigo}}">estadistica</a>
 
                         <th:block th:if="${usuario != null && usuario.isUser == false}">
                             <div class="text-end">
@@ -72,9 +73,6 @@
         </ul>
     </div>
 
-    <script src="../js/cargarEstadistica.js">
-
-    </script>
 </body>
 
 </html>

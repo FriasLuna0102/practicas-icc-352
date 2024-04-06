@@ -75,7 +75,7 @@ function cargarRegistrarUsuario(event) {
 
 function cargarEstadistica(event) {
     event.preventDefault();
-    let url = $(this).attr('href');
+    let url = $('.link').attr('href');
 
     $.get(url, function(data) {
         // Insertar el contenido del componente en la página
