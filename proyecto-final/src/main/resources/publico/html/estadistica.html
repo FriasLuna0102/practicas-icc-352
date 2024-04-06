@@ -15,6 +15,8 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js">
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 
 <body>
@@ -29,11 +31,11 @@
             <div class="col-8 text-center my-3">
 
                 <input id="urlCorta" type="hidden" name="url" th:value="${url.urlCorta}">
-                <div id="qrcode" class="text-center"></div>
+                <div id="qrcode" class="text-center border"></div>
 
                 <script type="text/javascript">
                     let url = $("#urlCorta").val();
-                    console.log(url)
+
                     var qrcode = new QRCode(document.getElementById("qrcode"), {
                         text: url,
                         width: 128,
@@ -48,13 +50,17 @@
         </div>
         <div class="row my-3">
             <div class="col-md-6">
+                <canvas id="graficoHoras"></canvas>
 
             </div>
             <div class="col-md-6">
+                <canvas id="graficoDias"></canvas>
 
             </div>
         </div>
     </div>
+    <script src="../js/graficoDias.js"></script>
+    <script src="../js/graficoHoras.js"></script>
 </body>
 
 </html>
