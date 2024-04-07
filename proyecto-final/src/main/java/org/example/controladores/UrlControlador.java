@@ -13,6 +13,10 @@ import org.example.servicios.mongo.UsuarioODM;
 import org.example.servicios.mongo.VisitanteODM;
 import org.example.utils.ControladorClass;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -121,11 +125,17 @@ public class UrlControlador extends ControladorClass {
         });
 
 
+        app.get("/serviceworkers.js", context -> {
+            // Cargar el contenido del archivo del Service Worker
+            String contenidoServiceworker = obtenerContenidoServiceworker(); // Implementa esta función para cargar el contenido del archivo
 
+            // Configurar la respuesta HTTP con el contenido del Service Worker
+            context.contentType("application/javascript").result(contenidoServiceworker);
+        });
 
         app.get("/{codigo}", context -> {
             String codigo = context.pathParam("codigo");
-
+            System.out.println(codigo);
             String url = "";
             try {
                 //url tira null pero no le hagan caso
@@ -144,8 +154,10 @@ public class UrlControlador extends ControladorClass {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             String dateTime = now.format(formatter);
 
+            if(codigo.equalsIgnoreCase("serviceworkers.js") || codigo.equalsIgnoreCase("favicon.ico")){
+                return;
+            }
 
-            if(!codigo.equals("favicon.ico")){
                 ShortURL shorurl = URLODM.getInstance().buscarUrlByCodig(codigo);
 
                 // Registrar información sobre la solicitud
@@ -160,15 +172,37 @@ public class UrlControlador extends ControladorClass {
 
                 estadisticaDatos(estadisticaURL,ipAddress,clientDomain,operatingSystem,navegador,dateTime);
 
-            }
-
-
-
             assert url != null;
 	        context.redirect(url);
         });
 
     }
+
+    private String obtenerContenidoServiceworker() {
+        // Obtener la ruta del directorio actual
+        String rutaDirectorioActual = System.getProperty("user.dir");
+
+        // Construir la ruta absoluta al archivo serviceworkers.js
+        String rutaArchivo = rutaDirectorioActual + "/src/main/resources/publico/serviceworkers.js";
+
+        // Verificar si el archivo existe
+        File archivo = new File(rutaArchivo);
+        if (!archivo.exists() || archivo.isDirectory()) {
+            // Manejar el caso en el que el archivo no exista o sea un directorio
+            System.err.println("El archivo serviceworkers.js no existe en la ruta especificada.");
+            return ""; // Retornar una cadena vacía o manejar el error de otra forma
+        }
+
+        try {
+            // Leer el contenido del archivo y devolverlo como una cadena
+            return new String(Files.readAllBytes(Paths.get(rutaArchivo)));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ""; // Manejar el caso de error de lectura del archivo
+        }
+    }
+
+
 
     private static void estadisticaDatos(EstadisticaURL estadisticaURL, String ipAddress, String clientDomain, String operatingSystem, String navegador, String dateTime){
         // Obtenemos los mapas de la instancia de EstadisticaURL

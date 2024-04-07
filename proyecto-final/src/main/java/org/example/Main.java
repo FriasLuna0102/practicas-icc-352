@@ -42,6 +42,15 @@ public class Main {
 		new UrlControlador(app).aplicarRutas();
 		new EstadisticaControlador(app).aplicarRutas();
 
+//        //Filtro para enviar el header de validación
+//        app.after(ctx -> {
+//            if(ctx.path().equalsIgnoreCase("/serviceworkers.js")){
+//                System.out.println("Enviando el header de seguridad para el Service Worker");
+//                ctx.header("Content-Type","application/javascript");
+//                ctx.header("Service-Worker-Allowed", "/");
+//            }
+//        });
+
 		// Crear usuario administrador
 		if (UsuarioODM.getInstance().buscarUsuarioByUsername("admin") == null){
 			Usuario admin = new Usuario("admin","admin","admin", false);
