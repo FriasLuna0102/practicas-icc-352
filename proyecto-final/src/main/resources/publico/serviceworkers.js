@@ -3,11 +3,11 @@
 var CACHE_NAME = 'offline-info';
 //listado de
 var urlsToCache = [
-    '/html/misUrl.html',
+    '/html/misUrlOffiline.html',
     '/css/index.css',
     '/css/sidebars.css'
 ];
-var fallback = "/html/misUrl.html"
+var fallback = "/html/misUrlOffiline.html"
 
 //representa el evento cuando se esta instalando el services workers.
 self.addEventListener('install', function(event) {
