@@ -299,37 +299,40 @@
       }
   </script>
 
-<script>
-    document.getElementById('previewButton').addEventListener('click', function(event) {
-        event.preventDefault();
 
-        var urlBase = document.getElementById('urlBase').value;
+  <th:block th:if="${usuario != null}">
+      <script>
+          document.getElementById('previewButton').addEventListener('click', function(event) {
+              event.preventDefault();
 
-        // Hacer una solicitud AJAX para obtener la URL corta
-        $.post('/url/generar', { urlBase: urlBase }, function(urlCorta) {
-            // Obtener el arreglo actual de URLs de IndexedDB
-            localforage.getItem('urls').then(function(urls) {
-                // Si no existe, crear un nuevo arreglo
-                if (!urls) {
-                    urls = [];
-                }
+              var urlBase = document.getElementById('urlBase').value;
 
-                // Añadir la nueva URL al arreglo
-                urls.push({ urlBase: urlBase, urlCorta: urlCorta });
+              // Hacer una solicitud AJAX para obtener la URL corta
+              $.post('/url/generar', { urlBase: urlBase }, function(urlCorta) {
+                  // Obtener el arreglo actual de URLs de IndexedDB
+                  localforage.getItem('urls').then(function(urls) {
+                      // Si no existe, crear un nuevo arreglo
+                      if (!urls) {
+                          urls = [];
+                      }
 
-                // Guardar el arreglo actualizado en IndexedDB
-                return localforage.setItem('urls', urls);
-            }).then(function() {
-                console.log('URL acortada guardada con éxito');
-            }).catch(function(err) {
-                console.error('Error al guardar la URL acortada: ', err);
-            });
-        });
-    });
+                      // Añadir la nueva URL al arreglo
+                      urls.push({ urlBase: urlBase, urlCorta: urlCorta });
 
+                      // Guardar el arreglo actualizado en IndexedDB
+                      return localforage.setItem('urls', urls);
+                  }).then(function() {
+                      console.log('URL acortada guardada con éxito');
+                  }).catch(function(err) {
+                      console.error('Error al guardar la URL acortada: ', err);
+                  });
+              });
+          });
 
+      </script>
 
-</script>
+  </th:block>
+
 </body>
 
 </html>
