@@ -4,7 +4,10 @@ import com.mongodb.client.MongoClients;
 import dev.morphia.Datastore;
 import dev.morphia.Morphia;
 import org.example.encapsulaciones.EstadisticaURL;
+import org.example.encapsulaciones.ShortURL;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class EstadisticaODM {
@@ -43,5 +46,14 @@ public class EstadisticaODM {
 
 		return estadistica;
 	}
+
+    public List<EstadisticaURL> obtenerTodasLasEstadisticas(){
+        List<EstadisticaURL> estadisticaURLS = new ArrayList<>();
+        Iterator<EstadisticaURL> iterator = datastore.find(EstadisticaURL.class).iterator();
+        while(iterator.hasNext()){
+            estadisticaURLS.add(iterator.next());
+        }
+        return estadisticaURLS;
+    }
 
 }

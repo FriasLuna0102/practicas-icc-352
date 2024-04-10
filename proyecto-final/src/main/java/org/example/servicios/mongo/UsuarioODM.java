@@ -43,6 +43,12 @@ public class UsuarioODM {
 		return usuarios.first();
 	}
 
+    public Usuario buscarUsuarioByNombre(String nombre){
+        Query<Usuario> usuarios = datastore.find(Usuario.class).filter("nombre",nombre);
+
+        return usuarios.first();
+    }
+
     public List<Usuario> buscarTodosLosUsuarios(){
         List<Usuario> usuarios = new ArrayList<>();
         Iterator<Usuario> iterator = datastore.find(Usuario.class).iterator();
