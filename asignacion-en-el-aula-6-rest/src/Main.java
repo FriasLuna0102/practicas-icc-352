@@ -14,7 +14,7 @@ public class Main {
     private static final HttpClient cliente = HttpClient.newBuilder().build();
 
     public static void main(String[] args) throws IOException, URISyntaxException, InterruptedException {
-        urlApi = new URI("http://localhost:7000/list/").toURL();
+        urlApi = new URI("http://localhost:7000/api/estudiante/").toURL();
         Scanner scanner = new Scanner(System.in);
         boolean seguir = true;
 
@@ -31,7 +31,7 @@ public class Main {
 
             switch (option){
                 case 1:
-                    listarUrl(scanner.nextLine());
+                    listarEstudiantes(response);
                     break;
                 case 2:
                     System.out.print("Ingrese matricula: ");
@@ -53,15 +53,6 @@ public class Main {
     public static void listarEstudiantes(HttpResponse<String> response) throws IOException, InterruptedException, URISyntaxException {
         request = HttpRequest.newBuilder()
                 .uri(urlApi.toURI())
-                .build();
-
-        response = cliente.send(request, HttpResponse.BodyHandlers.ofString());
-        System.out.println(response.body());
-    }
-
-    public static void listarUrl(String nombre) throws IOException, InterruptedException, URISyntaxException {
-        request = HttpRequest.newBuilder()
-                .uri(URI.create(urlApi.toURI() + nombre))
                 .build();
 
         response = cliente.send(request, HttpResponse.BodyHandlers.ofString());
