@@ -81,15 +81,9 @@ public class ServicesRest {
                                        System.out.println("Son iguales");
                                        listUrlConEstadisticas.add(url);
                                    }
-
                                }
-
-
                            }
-
                        }
-
-
                    }
                }
            }
@@ -100,9 +94,9 @@ public class ServicesRest {
            return null;
        }
 
-
-
     }
+
+
 
 
 
