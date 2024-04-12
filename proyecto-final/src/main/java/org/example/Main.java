@@ -5,11 +5,14 @@ import io.javalin.http.staticfiles.Location;
 import io.javalin.rendering.JavalinRenderer;
 import io.javalin.rendering.template.JavalinThymeleaf;
 import org.example.controladores.*;
+import org.example.encapsulaciones.EstadisticaURL;
 import org.example.encapsulaciones.Usuario;
+import org.example.servicios.mongo.EstadisticaODM;
 import org.example.servicios.mongo.UsuarioODM;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Main {
@@ -35,6 +38,7 @@ public class Main {
 		});
 		app.start(7000);
 
+        new ApiControlador(app).aplicarRutas();
 		new IndexControlador(app).aplicarRutas();
 		new LoginControlador(app).aplicarRutas();
 		new RegistroControlador(app).aplicarRutas();
@@ -42,11 +46,29 @@ public class Main {
 		new UrlControlador(app).aplicarRutas();
 		new EstadisticaControlador(app).aplicarRutas();
 
+//        //Filtro para enviar el header de validación
+//        app.after(ctx -> {
+//            if(ctx.path().equalsIgnoreCase("/serviceworkers.js")){
+//                System.out.println("Enviando el header de seguridad para el Service Worker");
+//                ctx.header("Content-Type","application/javascript");
+//                ctx.header("Service-Worker-Allowed", "/");
+//            }
+//        });
+
 		// Crear usuario administrador
 		if (UsuarioODM.getInstance().buscarUsuarioByUsername("admin") == null){
 			Usuario admin = new Usuario("admin","admin","admin", false);
 			UsuarioODM.getInstance().guardarUsuario(admin);
 		}
+
+
+        List<Usuario> listUsuarios = UsuarioODM.getInstance().buscarTodosLosUsuarios();
+
+
+////
+//        for(Usuario es: listUsuarios){
+//            System.out.println(es.getNombre());
+//        }
 
     }
 
