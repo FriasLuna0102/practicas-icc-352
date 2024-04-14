@@ -104,8 +104,8 @@ public class UrlServiceImpl extends UrlServiceGrpc.UrlServiceImplBase {
 		for (Map.Entry<String, Integer> entry : estadisticaURL.getHorasAcceso().entrySet()) {
 			builder.putHorasAcceso(entry.getKey(), entry.getValue());
 		}
-
 		builder.setShortURL(convertirUrl(estadisticaURL.getShortURL()));
+
 
 		return builder.build();
 	}
