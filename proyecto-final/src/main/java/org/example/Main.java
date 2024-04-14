@@ -77,7 +77,6 @@ public class Main {
 		Server server = ServerBuilder
 				.forPort(50051)
 				.addService(new UrlServiceImpl())
-				.addService(new UrlCreateService())
 				.build();
 
 		server.start();

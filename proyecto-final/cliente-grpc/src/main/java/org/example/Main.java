@@ -81,7 +81,7 @@ public class Main {
 		List<UrlServiceOuterClass.ShortURL> urlList = urlListResponse.getUrlListList();
 
 		for (int i = 0; i < count; i++){
-			System.out.println("Url #"+i+1);
+			System.out.println("Url #"+(i+1));
 			System.out.println("Codigo Url: " + urlList.get(i).getCodigo());
 			System.out.println("Url Base: " + urlList.get(i).getUrlBase() );
 			System.out.println("Url Corta: " + urlList.get(i).getUrlCorta());
