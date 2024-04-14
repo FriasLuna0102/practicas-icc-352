@@ -43,6 +43,7 @@ public class Main {
 		});
 		app.start(7000);
 
+
         new ApiControlador(app).aplicarRutas();
 		new IndexControlador(app).aplicarRutas();
 		new LoginControlador(app).aplicarRutas();
@@ -51,7 +52,6 @@ public class Main {
 		new UrlControlador(app).aplicarRutas();
 		new EstadisticaControlador(app).aplicarRutas();
 
-		startGrpcServer();
 
 //        //Filtro para enviar el header de validación
 //        app.after(ctx -> {
@@ -62,21 +62,22 @@ public class Main {
 //            }
 //        });
 
+
 		// Crear usuario administrador
 		if (UsuarioODM.getInstance().buscarUsuarioByUsername("admin") == null){
 			Usuario admin = new Usuario("admin","admin","admin", false);
 			UsuarioODM.getInstance().guardarUsuario(admin);
 		}
-
         List<Usuario> listUsuarios = UsuarioODM.getInstance().buscarTodosLosUsuarios();
 
+		startGrpcServer();
     }
 
 	private static void startGrpcServer() throws IOException, InterruptedException {
 		Server server = ServerBuilder
 				.forPort(50051)
 				.addService(new UrlServiceImpl())
-				//.addService(new UrlCreateService())
+				.addService(new UrlCreateService())
 				.build();
 
 		server.start();

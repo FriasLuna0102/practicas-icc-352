@@ -38,14 +38,31 @@ public class Main {
 					System.out.print("Username: ");
 					username = scanner.next();
 					listarUrls(urlInterfaz, username);
+					break;
 				case 2:
-
+					System.out.print("Username: ");
+					username = scanner.next();
+					System.out.print("Url: ");
+					String url = scanner.next();
+					crearUrl(urlInterfaz, username, url);
+					break;
 				case 3:
 					continuar = false;
 			}
 		}
 	}
 
+	public static void crearUrl(UrlServiceGrpc.UrlServiceBlockingStub urlInterfaz, String username, String url){
+
+		UrlServiceOuterClass.UrlCreateResponse urlCreateResponse = urlInterfaz
+				.createUrl(UrlServiceOuterClass.UrlCreateRequest
+						.newBuilder()
+						.setUsername(username)
+						.setUrlBase(url)
+						.build());
+
+
+	}
 
 	public static void listarUrls(UrlServiceGrpc.UrlServiceBlockingStub urlInterfaz, String username){
 
