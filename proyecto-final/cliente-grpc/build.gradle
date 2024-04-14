@@ -8,7 +8,7 @@ group = 'org.example'
 version = '1.0-SNAPSHOT'
 
 mainClassName = 'org.example.Main'
-
+run.standardInput =  System.in
 
 def grpcVersion = '1.63.0' // CURRENT_GRPC_VERSION
 def protobufVersion = '3.25.1'

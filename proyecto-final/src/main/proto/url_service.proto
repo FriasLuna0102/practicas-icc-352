@@ -32,7 +32,18 @@ message UrlListResponse {
   repeated EstadisticaURL estadisticaUrlList = 2;
 }
 
+message UrlCreateRequest {
+  string username = 1;
+  string urlBase = 2;
+}
+
+message UrlCreateResponse {
+  ShortURL shortUrl = 1;
+  EstadisticaURL estadisticaUrl = 2;
+}
+
 service UrlService {
   rpc listUrls(UrlListRequest) returns (UrlListResponse);
+  rpc createUrl(UrlCreateRequest) returns (UrlCreateResponse);
 }
 

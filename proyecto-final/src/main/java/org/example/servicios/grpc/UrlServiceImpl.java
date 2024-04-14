@@ -1,6 +1,5 @@
 package org.example.servicios.grpc;
 
-import com.google.protobuf.Message;
 import com.google.protobuf.Timestamp;
 import io.grpc.stub.StreamObserver;
 import org.example.encapsulaciones.EstadisticaURL;
@@ -8,9 +7,7 @@ import org.example.encapsulaciones.ShortURL;
 import org.example.encapsulaciones.Usuario;
 import org.example.grpc.org.example.url_service.UrlServiceGrpc;
 import org.example.grpc.org.example.url_service.UrlServiceOuterClass;
-import org.example.servicios.UsuarioServices;
 import org.example.servicios.mongo.EstadisticaODM;
-import org.example.servicios.mongo.URLODM;
 import org.example.servicios.mongo.UsuarioODM;
 
 import java.util.*;
@@ -60,7 +57,7 @@ public class UrlServiceImpl extends UrlServiceGrpc.UrlServiceImplBase {
 
 	}
 
-	private UrlServiceOuterClass.ShortURL convertirUrl(ShortURL shortURL){
+	public static UrlServiceOuterClass.ShortURL convertirUrl(ShortURL shortURL){
 		return UrlServiceOuterClass.ShortURL.newBuilder()
 				.setId(shortURL.getId())
 				.setCodigo(shortURL.getCodigo())
@@ -70,7 +67,7 @@ public class UrlServiceImpl extends UrlServiceGrpc.UrlServiceImplBase {
 				.build();
 	}
 
-	private Timestamp convertirAfechaProto(Date fecha){
+	public static Timestamp convertirAfechaProto(Date fecha){
 
 		long segundos = fecha.getTime() / 1000; // Convertir milisegundos a segundos
 		int nanosegundos = (int) ((fecha.getTime() % 1000) * 1000000); // Obtener los nanosegundos
@@ -81,7 +78,7 @@ public class UrlServiceImpl extends UrlServiceGrpc.UrlServiceImplBase {
 				.build();
 	}
 
-	private UrlServiceOuterClass.EstadisticaURL convertirEstadistica(EstadisticaURL estadisticaURL){
+	public static UrlServiceOuterClass.EstadisticaURL convertirEstadistica(EstadisticaURL estadisticaURL){
 
 		UrlServiceOuterClass.EstadisticaURL.Builder builder = UrlServiceOuterClass.EstadisticaURL
 				.newBuilder()

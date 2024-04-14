@@ -9,7 +9,7 @@ import io.javalin.rendering.template.JavalinThymeleaf;
 import org.example.controladores.*;
 import org.example.encapsulaciones.EstadisticaURL;
 import org.example.encapsulaciones.Usuario;
-import org.example.servicios.grpc.GrpcServer;
+import org.example.servicios.grpc.UrlCreateService;
 import org.example.servicios.grpc.UrlServiceImpl;
 import org.example.servicios.mongo.EstadisticaODM;
 import org.example.servicios.mongo.UsuarioODM;
@@ -76,6 +76,7 @@ public class Main {
 		Server server = ServerBuilder
 				.forPort(50051)
 				.addService(new UrlServiceImpl())
+				//.addService(new UrlCreateService())
 				.build();
 
 		server.start();
