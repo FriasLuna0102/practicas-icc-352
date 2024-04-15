@@ -26,7 +26,7 @@ public class Main {
     public static void main(String[] args) throws IOException, URISyntaxException, InterruptedException {
         urlApi = new URI("http://localhost:7000/list/").toURL();
         urlApiCrear = new URI("http://localhost:7000/generar").toURL();
-        jwt = autenticarUsuario("lol","123");
+        jwt = autenticarUsuario("randae","randae");
         Scanner scanner = new Scanner(System.in);
         boolean seguir = true;
 
