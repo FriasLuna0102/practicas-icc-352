@@ -1,11 +1,12 @@
 package org.example.controladores;
 
+import com.github.siyoon210.ogparser4j.OgParser;
+import com.github.siyoon210.ogparser4j.OpenGraph;
 import io.javalin.Javalin;
 import org.example.encapsulaciones.EstadisticaURL;
 import org.example.encapsulaciones.ShortURL;
 import org.example.encapsulaciones.Usuario;
 import org.example.encapsulaciones.Visitante;
-import org.example.servicios.URLServices;
 import org.example.servicios.UsuarioServices;
 import org.example.servicios.mongo.EstadisticaODM;
 import org.example.servicios.mongo.URLODM;
@@ -15,12 +16,12 @@ import org.example.utils.ControladorClass;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import static io.javalin.apibuilder.ApiBuilder.*;
 
@@ -35,6 +36,17 @@ public class UrlControlador extends ControladorClass {
         super(app);
     }
 
+    public String imgToBase64(String imgUrl) throws MalformedURLException {
+        OgParser ogParser = new OgParser();
+        String imgBase64 = null;
+        try {
+            OpenGraph openGraph = ogParser.getOpenGraphOf(imgUrl);
+            byte[] bytes = openGraph.getContentOf("image").getValue().getBytes();
+            imgBase64 = Base64.getEncoder().encodeToString(bytes);
+        }catch (Exception ignored){}
+
+        return imgBase64;
+    }
 
     @Override
     public void aplicarRutas() {
@@ -54,7 +66,7 @@ public class UrlControlador extends ControladorClass {
                    ShortURL shortURL = URLODM.getInstance().buscarUrlByUrlLarga(url);
 
                    if (shortURL == null){
-                       shortURL = new ShortURL(url,null);
+                       shortURL = new ShortURL(url,imgToBase64(url));
                        URLODM.getInstance().guardarURL(shortURL);
                        usuarioLogueado = UsuarioServices.getInstancia().getUsuarioLogueado();
                        if (usuarioLogueado != null){

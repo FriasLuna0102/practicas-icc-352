@@ -58,6 +58,11 @@
                         <a class="link" onclick="cargarEstadistica(event)"
                             th:href="@{'/estadistica/' + ${url.codigo}}">estadistica</a>
 
+                        <span th:if="${url.foto != null}">
+                            <img th:src="@{'data:'+${foto.getMimeType()}+';base64,'+${foto.getFotoBase64()}}"
+                             class="card-img-top" alt="Foto enviada" id="foto">
+                        </span>
+
                         <th:block th:if="${usuario != null && usuario.isUser == false}">
                             <div class="text-end">
                                 <a th:href="'/url/eliminarURL?codigoUrl=' + ${url.codigo}" type="button"
