@@ -196,38 +196,49 @@ public class UrlControlador extends ControladorClass {
             if(codigo.equalsIgnoreCase("listlol")){
                 return;
             }
-                ShortURL shorurl = URLODM.getInstance().buscarUrlByCodig(codigo);
 
-                // Registrar información sobre la solicitud
-                String userAgent = context.userAgent();
-                String ipAddress = context.ip();
-                String clientDomain = context.host();
-                String operatingSystem = parseOperatingSystem(userAgent);
-                String navegador = parseBrowser(userAgent);
-
-                EstadisticaURL estadisticaURL = EstadisticaODM.getInstance().buscarEstadisticaByCodigoOfUrl(shorurl.getCodigo());
+            if(codigo.equalsIgnoreCase("list")){
+                return;
+            }
 
 
-                estadisticaDatos(estadisticaURL,ipAddress,clientDomain,operatingSystem,navegador,dateTime);
+
+            ShortURL shorurl = URLODM.getInstance().buscarUrlByCodig(codigo);
+
+            // Registrar información sobre la solicitud
+            String userAgent = context.userAgent();
+            String ipAddress = context.ip();
+            String clientDomain = context.host();
+            String operatingSystem = parseOperatingSystem(userAgent);
+            String navegador = parseBrowser(userAgent);
+
+            EstadisticaURL estadisticaURL = EstadisticaODM.getInstance().buscarEstadisticaByCodigoOfUrl(shorurl.getCodigo());
+
+
+            estadisticaDatos(estadisticaURL,ipAddress,clientDomain,operatingSystem,navegador,dateTime);
 
             assert url != null;
-	        context.redirect(url);
+            context.redirect(url);
         });
 
     }
 
+
     private String obtenerContenidoServiceworker() {
         // Obtener la ruta del directorio actual
-        String rutaDirectorioActual = System.getProperty("user.dir");
+        //String rutaDirectorioActual = System.getProperty("user.dir");
 
         // Construir la ruta absoluta al archivo serviceworkers.js
-        String rutaArchivo = rutaDirectorioActual + "/src/main/resources/publico/serviceworkers.js";
+        //String rutaArchivo = rutaDirectorioActual + "/src/main/resources/publico/serviceworkers.js";
+
+        // Definir la ruta del archivo
+        String rutaArchivo = "/home/azureuser/practicas-icc-352/proyecto-final/src/main/resources/publico/serviceworkers.js";
 
         // Verificar si el archivo existe
         File archivo = new File(rutaArchivo);
         if (!archivo.exists() || archivo.isDirectory()) {
             // Manejar el caso en el que el archivo no exista o sea un directorio
-            System.err.println("El archivo serviceworkers.js no existe en la ruta especificada.");
+            System.err.println("El archivo serviceworkers.js no existe en la ruta especificada: " + rutaArchivo);
             return ""; // Retornar una cadena vacía o manejar el error de otra forma
         }
 
@@ -238,6 +249,7 @@ public class UrlControlador extends ControladorClass {
             e.printStackTrace();
             return ""; // Manejar el caso de error de lectura del archivo
         }
+
     }
 
 
