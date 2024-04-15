@@ -48,8 +48,8 @@ public class Main {
 		new IndexControlador(app).aplicarRutas();
 		new LoginControlador(app).aplicarRutas();
 		new RegistroControlador(app).aplicarRutas();
-		new UsuarioControlador(app).aplicarRutas();
 		new UrlControlador(app).aplicarRutas();
+		new UsuarioControlador(app).aplicarRutas();
 		new EstadisticaControlador(app).aplicarRutas();
 
 

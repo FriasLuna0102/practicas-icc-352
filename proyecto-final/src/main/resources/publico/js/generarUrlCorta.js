@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('form').submit(function(event) {
+    $('#form').submit(function(event) {
         event.preventDefault(); // Evitar que el formulario se envíe automáticamente
 
         // Obtener el valor de la URL base del input
@@ -11,6 +11,7 @@ $(document).ready(function() {
             $('#urlCorta').val(data);
         })
         .fail(function(error) {
+            console.log("no funciona")
             console.error('Error:', error);
         });
     });
