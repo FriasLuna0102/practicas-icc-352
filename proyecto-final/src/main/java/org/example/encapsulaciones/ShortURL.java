@@ -106,11 +106,14 @@ public class ShortURL {
 	}
 
     // URL corta debe ser nombre de dominio + id
-	public String shortener(String codigo){
-		return "http://localhost:7000/" + codigo;
-	}
+    // URL corta debe ser nombre de dominio + id
+    public String shortener(String codigo){
+        return "https://proyectofinal.friasluna.me/" + codigo;
+    }
 
-	public String getId() {
+
+
+    public String getId() {
 		return id;
 	}
 
