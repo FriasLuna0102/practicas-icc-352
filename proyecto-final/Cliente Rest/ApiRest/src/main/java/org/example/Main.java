@@ -24,9 +24,9 @@ public class Main {
     private static final HttpClient cliente = HttpClient.newBuilder().build();
 
     public static void main(String[] args) throws IOException, URISyntaxException, InterruptedException {
-        urlApi = new URI("http://localhost:7000/list/").toURL();
-        urlApiCrear = new URI("http://localhost:7000/generar").toURL();
-        jwt = autenticarUsuario("randae","randae");
+        urlApi = new URI("https://proyectofinal.friasluna.me/list/").toURL();
+        urlApiCrear = new URI("https://proyectofinal.friasluna.me/generar").toURL();
+        jwt = autenticarUsuario("lol","lol");
         Scanner scanner = new Scanner(System.in);
         boolean seguir = true;
 
