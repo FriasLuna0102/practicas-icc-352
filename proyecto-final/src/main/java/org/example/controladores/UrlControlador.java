@@ -14,9 +14,10 @@ import org.example.servicios.mongo.UsuarioODM;
 import org.example.servicios.mongo.VisitanteODM;
 import org.example.utils.ControladorClass;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
@@ -41,11 +42,33 @@ public class UrlControlador extends ControladorClass {
         String imgBase64 = null;
         try {
             OpenGraph openGraph = ogParser.getOpenGraphOf(imgUrl);
-            byte[] bytes = openGraph.getContentOf("image").getValue().getBytes();
-            imgBase64 = Base64.getEncoder().encodeToString(bytes);
+
+            URL url = new URL(openGraph.getContentOf("image").getValue());
+            URLConnection conn = url.openConnection();
+            InputStream inputStream = conn.getInputStream();
+            BufferedInputStream bis = new BufferedInputStream(inputStream);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            int bytesRead;
+            while ((bytesRead = bis.read()) != -1) {
+                baos.write(bytesRead);
+            }
+
+            byte[] imageBytes = baos.toByteArray();
+            imgBase64 = Base64.getEncoder().encodeToString(imageBytes);
         }catch (Exception ignored){}
 
         return imgBase64;
+    }
+
+    public String obtenerMimeType(String imgUrl){
+        OgParser ogParser = new OgParser();
+        String mimetype = null;
+        try {
+            OpenGraph openGraph = ogParser.getOpenGraphOf(imgUrl);
+            mimetype = openGraph.getContentOf("image").getExtraDataValueOf("type");
+        }catch (Exception ignored){}
+
+        return mimetype;
     }
 
     @Override
@@ -66,7 +89,7 @@ public class UrlControlador extends ControladorClass {
                    ShortURL shortURL = URLODM.getInstance().buscarUrlByUrlLarga(url);
 
                    if (shortURL == null){
-                       shortURL = new ShortURL(url,imgToBase64(url));
+                       shortURL = new ShortURL(url,imgToBase64(url), obtenerMimeType(url));
                        URLODM.getInstance().guardarURL(shortURL);
                        usuarioLogueado = UsuarioServices.getInstancia().getUsuarioLogueado();
                        if (usuarioLogueado != null){

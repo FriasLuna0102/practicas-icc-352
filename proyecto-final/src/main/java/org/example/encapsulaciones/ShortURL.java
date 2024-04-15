@@ -133,4 +133,8 @@ public class ShortURL {
 	public String getImgBase64() {
 		return imgBase64;
 	}
+
+	public String getMimeType() {
+		return mimeType;
+	}
 }
