@@ -2,6 +2,8 @@ plugins {
     id 'java'
     //Agregar esto para que se pueda correr desde la terminal sin necesidad de Intellij.
     id 'application'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+
 }
 
 group = 'org.example'
@@ -46,7 +48,15 @@ dependencies {
     implementation 'com.h2database:h2:2.1.214'
     implementation 'org.postgresql:postgresql:42.3.8'
 }
+shadowJar{
+    archiveBaseName.set("app")
+    archiveClassifier.set('')
+    archiveVersion.set('')
+}
 
+tasks.register('stage') {
+    dependsOn shadowJar
+}
 
 tasks.named('test') {
     useJUnitPlatform()
