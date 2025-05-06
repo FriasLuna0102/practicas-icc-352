@@ -17,29 +17,26 @@ public class CrearArticulo extends ControladorClass {
     @Override
     public void aplicarRutas() {
 
-        app.post("/crearArticulo", cxt ->{
+        app.post("/crearArticulo", cxt -> {
 
-            //Lista de comentarios:
             List<Comentario> listaComentarios = Comentario.getComentarios();
 
             String titulo = cxt.formParam("titulo");
             String cuerpo = cxt.formParam("cuerpo");
             Usuario autor = cxt.sessionAttribute("currentUser");
 
-            // Obtenemos la fecha del sistema:
             Date fechaActual = Calendar.getInstance().getTime();
 
             String etiquetas = cxt.formParam("etiquetas");
 
             List<Etiqueta> listaEtiquetas = Blog.getInstance().stringToEtiqueta(etiquetas);
 
+            Articulo newArticulo = new Articulo(titulo, cuerpo, autor, fechaActual, listaComentarios, listaEtiquetas);
 
-            Articulo newArticulo = new Articulo(titulo,cuerpo,autor,fechaActual,listaComentarios,listaEtiquetas);
-
-            // Guarda el nuevo Articulo en la base de datos
             ArticuloServices.getInstancia().crear(newArticulo);
 
-            Blog.getInstance().getArticuloList().addFirst(newArticulo);
+            // ✅ CORREGIDO: Usamos add(0, ...) en lugar de addFirst
+            Blog.getInstance().getArticuloList().add(0, newArticulo);  // Agregar al inicio de la lista
             cxt.redirect("/blogUsuario");
 
         });

@@ -19,6 +19,7 @@ public class PlantillasControlador extends ControladorClass {
     }
 
     List<Usuario> usuarios = Blog.getInstance().getUsuarioList();
+
     List<Articulo> listArticulos = Blog.getInstance().getArticuloList();
 
     @Override

@@ -24,12 +24,8 @@ public class editarArticulo extends ControladorClass {
     @Override
     public void aplicarRutas() {
 
-        // Manejar la solicitud POST para eliminar un artículo
         app.post("/editarArticulo", ctx -> {
-            // Obtener el ID del artículo a eliminar desde el formulario
             long idArticulo = Long.parseLong(ctx.formParam("idArticulo"));
-
-            // Eliminar el artículo de la lista de artículos
             Articulo articuloEditar = Blog.getInstance().obtenerArticuloPorId(idArticulo);
 
             Map<String, Object> model = new HashMap<>();
@@ -40,38 +36,25 @@ public class editarArticulo extends ControladorClass {
 
             String etiquetasStr = String.join(",", etiquetas);
 
-            //Este nombre de "articulo" sera el que la plantilla podra identificar:
-            //Ejemplo: th:value="${articulo.titulo}", deben ser iguales.
             model.put("articulo", articuloEditar);
             model.put("etiquetasStr", etiquetasStr);
-            List<Usuario> listUsuarios = UsuarioServices.getInstancia().obtenerTodosLosUsuarios();
-            model.put("usuarios",listUsuarios);
-            ctx.render("publico/temp/editarArticulos.html", model);
 
+            List<Usuario> listUsuarios = UsuarioServices.getInstancia().obtenerTodosLosUsuarios();
+            model.put("usuarios", listUsuarios);
+
+            ctx.render("publico/temp/editarArticulos.html", model);
         });
 
-
-        app.post("/actualizarArticulo", cxt ->{
-
+        app.post("/actualizarArticulo", cxt -> {
             long id = Long.parseLong(cxt.formParam("idArticulo"));
             String titulo = cxt.formParam("titulo");
             String cuerpo = cxt.formParam("cuerpo");
             String autor = cxt.formParam("autor");
 
-
-            Usuario user = Blog.getInstance().buscarUsuario(autor);
-
             Usuario autorr = UsuarioServices.getInstancia().findByUsername(autor);
-
-            //Usuario autorNew = new Usuario(user.getUsername(),user.getNombre(),user.getPassword()
-            //,user.isAdministrator(),user.isAutor());
-
-            //UsuarioServices.getInstancia().crear(new Usuario(user.getUsername(),user.getNombre(),user.getPassword()
-              //      ,user.isAdministrator(),user.isAutor()));
 
             String fecha = cxt.formParam("fecha");
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
             Date fechaDate = sdf.parse(fecha);
 
             String etiqueta = cxt.formParam("etiquetas");
@@ -84,19 +67,17 @@ public class editarArticulo extends ControladorClass {
             actiEditado.setFecha(fechaDate);
             actiEditado.setListaEtiquetas(lisEtiquetas);
 
-            // Actualiza el Articulo en la base de datos
             ArticuloServices.getInstancia().actualizar(actiEditado);
 
             boolean eliminado = Blog.getInstance().eliminarArticuloById(id);
 
-            listArticulos.addFirst(actiEditado);
+            listArticulos.add(0, actiEditado);  // ✅ CORREGIDO: addFirst → add(0, ...)
 
-            if(eliminado){
+            if (eliminado) {
                 cxt.redirect("/blogUsuario");
-            }else {
+            } else {
                 cxt.result("No se pudo editar");
             }
-
         });
     }
 }
